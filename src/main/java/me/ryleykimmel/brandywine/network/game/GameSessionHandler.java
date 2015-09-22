@@ -68,14 +68,7 @@ public final class GameSessionHandler extends SimpleChannelInboundHandler<Messag
 	@Override
 	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
 		if (evt instanceof IdleStateEvent) {
-			IdleStateEvent event = (IdleStateEvent) evt;
-			switch (event.state()) {
-			case ALL_IDLE:
-			case READER_IDLE:
-			case WRITER_IDLE:
-				session.close();
-				break;
-			}
+			session.close();
 		}
 	}
 

@@ -1,5 +1,6 @@
 package me.ryleykimmel.brandywine.network.msg.codec;
 
+import io.netty.buffer.ByteBufAllocator;
 import me.ryleykimmel.brandywine.network.game.frame.DataOrder;
 import me.ryleykimmel.brandywine.network.game.frame.DataTransformation;
 import me.ryleykimmel.brandywine.network.game.frame.DataType;
@@ -18,8 +19,8 @@ import me.ryleykimmel.brandywine.network.msg.impl.InitializePlayerMessage;
 public final class InitializePlayerMessageEncoder implements MessageEncoder<InitializePlayerMessage> {
 
 	@Override
-	public Frame encode(InitializePlayerMessage message) {
-		FrameBuilder builder = new FrameBuilder(249);
+	public Frame encode(InitializePlayerMessage message, ByteBufAllocator alloc) {
+		FrameBuilder builder = new FrameBuilder(249, alloc);
 		builder.put(DataType.BYTE, DataTransformation.ADD, message.isMember() ? 1 : 0);
 		builder.put(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD, message.getIndex());
 		return builder.build();

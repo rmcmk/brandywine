@@ -1,5 +1,6 @@
 package me.ryleykimmel.brandywine.network.msg.codec;
 
+import io.netty.buffer.ByteBufAllocator;
 import me.ryleykimmel.brandywine.network.game.frame.Frame;
 import me.ryleykimmel.brandywine.network.msg.Encodes;
 import me.ryleykimmel.brandywine.network.msg.MessageEncoder;
@@ -14,7 +15,7 @@ import me.ryleykimmel.brandywine.network.msg.impl.ResetDestinationMessage;
 public class ResetDestinationMessageEncoder implements MessageEncoder<ResetDestinationMessage> {
 
 	@Override
-	public Frame encode(ResetDestinationMessage message) {
+	public Frame encode(ResetDestinationMessage message, ByteBufAllocator alloc) {
 		return new Frame(78);
 	}
 

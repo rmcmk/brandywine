@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.moandjiezana.toml.Toml;
 
+import io.netty.buffer.ByteBufAllocator;
 import io.netty.util.internal.StringUtil;
 import me.ryleykimmel.brandywine.common.Suppliers;
 import me.ryleykimmel.brandywine.common.util.ClassUtil;
@@ -71,7 +72,7 @@ public final class MessageCodecParser extends TomlParser {
 		private static final Frame DEFAULT_FRAME = new Frame(-1);
 
 		@Override
-		public Frame encode(Message message) {
+		public Frame encode(Message message, ByteBufAllocator alloc) {
 			logger.error("The {} has no attached MessageEncoder or is not intended to be encoded.", message);
 			return DEFAULT_FRAME;
 		}
@@ -143,12 +144,13 @@ public final class MessageCodecParser extends TomlParser {
 	 * Encodes the specified Message into a Frame.
 	 *
 	 * @param message The Message to encode.
+	 * @param alloc The ByteBufAllocator used for allocating new ByteBufs.
 	 * @return The encoded Frame, wrapped in an Optional.
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends Message> Frame encode(T message) {
+	public <T extends Message> Frame encode(T message, ByteBufAllocator alloc) {
 		MessageEncoder<T> encoder = (MessageEncoder<T>) encoders.getOrDefault(message.getClass(), DEFAULT_MESSAGE_ENCODER);
-		return encoder.encode(message);
+		return encoder.encode(message, alloc);
 	}
 
 	/**

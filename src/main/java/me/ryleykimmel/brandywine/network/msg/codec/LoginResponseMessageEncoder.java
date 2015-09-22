@@ -1,5 +1,6 @@
 package me.ryleykimmel.brandywine.network.msg.codec;
 
+import io.netty.buffer.ByteBufAllocator;
 import me.ryleykimmel.brandywine.network.game.frame.DataType;
 import me.ryleykimmel.brandywine.network.game.frame.Frame;
 import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
@@ -16,8 +17,8 @@ import me.ryleykimmel.brandywine.network.msg.impl.LoginResponseMessage;
 public final class LoginResponseMessageEncoder implements MessageEncoder<LoginResponseMessage> {
 
 	@Override
-	public Frame encode(LoginResponseMessage message) {
-		FrameBuilder builder = new FrameBuilder();
+	public Frame encode(LoginResponseMessage message, ByteBufAllocator alloc) {
+		FrameBuilder builder = new FrameBuilder(alloc);
 		builder.put(DataType.BYTE, message.getStatus());
 		if (message.getStatus() == LoginResponseMessage.STATUS_OK) {
 			builder.put(DataType.BYTE, message.getPrivilege());

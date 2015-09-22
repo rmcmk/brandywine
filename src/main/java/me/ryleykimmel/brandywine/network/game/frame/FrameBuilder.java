@@ -5,7 +5,7 @@ import org.apache.commons.lang3.builder.Builder;
 import com.google.common.base.Preconditions;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import io.netty.buffer.ByteBufAllocator;
 import me.ryleykimmel.brandywine.common.util.ByteBufUtil;
 import me.ryleykimmel.brandywine.network.game.frame.FrameBuffer.WritingFrameBuffer;
 
@@ -28,42 +28,41 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
 	private final FrameType type;
 
 	/**
-	 * Constructs a new headless {@link FrameBuilder}.
+	 * The ByteBufAllocator, used to allocate ByteBufs.
 	 */
-	public FrameBuilder() {
-		this(-1);
+	private final ByteBufAllocator alloc;
+
+	/**
+	 * Constructs a new headless {@link FrameBuilder} with the specified ByteBufAllocator.
+	 * 
+	 * @param alloc The ByteBufAllocator for allocating ByteBufs.
+	 */
+	public FrameBuilder(ByteBufAllocator alloc) {
+		this(-1, alloc);
 	}
 
 	/**
-	 * Constructs a new {@link FrameBuilder} with the specified opcode, {@link FrameType#FIXED fixed FrameType} and a default unpooled ByteBuf backing.
+	 * Constructs a new {@link FrameBuilder} with the specified opcode, {@link FrameType#FIXED fixed FrameType} and ByteBufAllocator.
 	 *
 	 * @param opcode The opcode of the Frame.
+	 * @param alloc The ByteBufAllocator for allocating ByteBufs.
 	 */
-	public FrameBuilder(int opcode) {
-		this(opcode, FrameType.FIXED);
+	public FrameBuilder(int opcode, ByteBufAllocator alloc) {
+		this(opcode, FrameType.FIXED, alloc);
 	}
 
 	/**
-	 * Constructs a new {@link FrameBuilder} with the specified opcode, FrameType and a default unpooled ByteBuf backing.
+	 * Constructs a new {@link FrameBuilder} with the specified opcode, FrameType and ByteBufAllocator.
 	 *
 	 * @param opcode The opcode of the Frame.
 	 * @param type The type of the Frame.
+	 * @param alloc The ByteBufAllocator for allocating ByteBufs.
 	 */
-	public FrameBuilder(int opcode, FrameType type) {
-		this(opcode, type, Unpooled.buffer());
-	}
-
-	/**
-	 * Constructs a new {@link FrameBuilder} with the specified opcode, FrameType and backing ByteBuf.
-	 *
-	 * @param opcode The opcode of the Frame.
-	 * @param type The type of the Frame.
-	 * @param buffer The backing ByteBuf.
-	 */
-	public FrameBuilder(int opcode, FrameType type, ByteBuf buffer) {
-		super(buffer);
+	public FrameBuilder(int opcode, FrameType type, ByteBufAllocator alloc) {
+		super(alloc.buffer());
 		this.opcode = opcode;
 		this.type = type;
+		this.alloc = alloc;
 	}
 
 	@Override
@@ -352,6 +351,15 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
 	public void putString(String value) {
 		checkByteAccess();
 		ByteBufUtil.writeJString(buffer, value);
+	}
+
+	/**
+	 * Gets this FrameBuilders ByteBufAllocator.
+	 * 
+	 * @return This FrameBuilders ByteBufAllocator.
+	 */
+	public ByteBufAllocator alloc() {
+		return alloc;
 	}
 
 }

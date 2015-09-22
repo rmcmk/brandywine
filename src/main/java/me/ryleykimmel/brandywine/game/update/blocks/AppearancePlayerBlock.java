@@ -26,7 +26,7 @@ public final class AppearancePlayerBlock extends PlayerBlock {
 
 	@Override
 	public void encode(PlayerUpdateMessage message, FrameBuilder builder) {
-		FrameBuilder propertiesBuilder = new FrameBuilder();
+		FrameBuilder propertiesBuilder = new FrameBuilder(builder.alloc());
 
 		Appearance appearance = mob.getAppearance();
 

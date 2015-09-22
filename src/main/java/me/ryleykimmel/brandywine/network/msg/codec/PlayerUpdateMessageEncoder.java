@@ -1,5 +1,6 @@
 package me.ryleykimmel.brandywine.network.msg.codec;
 
+import io.netty.buffer.ByteBufAllocator;
 import me.ryleykimmel.brandywine.game.update.PlayerDescriptor;
 import me.ryleykimmel.brandywine.network.game.frame.Frame;
 import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
@@ -17,9 +18,9 @@ import me.ryleykimmel.brandywine.network.msg.impl.PlayerUpdateMessage;
 public final class PlayerUpdateMessageEncoder implements MessageEncoder<PlayerUpdateMessage> {
 
 	@Override
-	public Frame encode(PlayerUpdateMessage message) {
-		FrameBuilder builder = new FrameBuilder(81, FrameType.VARIABLE_SHORT);
-		FrameBuilder blockBuilder = new FrameBuilder();
+	public Frame encode(PlayerUpdateMessage message, ByteBufAllocator alloc) {
+		FrameBuilder builder = new FrameBuilder(81, FrameType.VARIABLE_SHORT, alloc);
+		FrameBuilder blockBuilder = new FrameBuilder(alloc);
 		builder.switchToBitAccess();
 
 		message.getDescriptor().encode(message, builder, blockBuilder);

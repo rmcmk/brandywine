@@ -1,5 +1,6 @@
 package me.ryleykimmel.brandywine.network.msg.codec;
 
+import io.netty.buffer.ByteBufAllocator;
 import me.ryleykimmel.brandywine.network.game.frame.DataTransformation;
 import me.ryleykimmel.brandywine.network.game.frame.DataType;
 import me.ryleykimmel.brandywine.network.game.frame.Frame;
@@ -17,8 +18,8 @@ import me.ryleykimmel.brandywine.network.msg.impl.RebuildRegionMessage;
 public final class RebuildRegionMessageEncoder implements MessageEncoder<RebuildRegionMessage> {
 
 	@Override
-	public Frame encode(RebuildRegionMessage message) {
-		FrameBuilder builder = new FrameBuilder(73);
+	public Frame encode(RebuildRegionMessage message, ByteBufAllocator alloc) {
+		FrameBuilder builder = new FrameBuilder(73, alloc);
 		builder.put(DataType.SHORT, DataTransformation.ADD, message.getPosition().getCentralRegionX());
 		builder.put(DataType.SHORT, message.getPosition().getCentralRegionY());
 		return builder.build();

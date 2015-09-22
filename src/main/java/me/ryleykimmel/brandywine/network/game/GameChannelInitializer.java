@@ -34,7 +34,7 @@ public final class GameChannelInitializer extends ChannelInitializer<SocketChann
 		GameSession session = new GameSession(context, channel);
 
 		channel.pipeline().addLast(new FrameEncoder(session), new MessageEncoder(session), new FrameDecoder(session), new MessageDecoder(session), new GameSessionHandler(session),
-				new IdleStateHandler(NetworkConstants.IDLE_TIME, NetworkConstants.IDLE_TIME, NetworkConstants.IDLE_TIME));
+				new IdleStateHandler(NetworkConstants.IDLE_TIME, 0, 0));
 	}
 
 }
