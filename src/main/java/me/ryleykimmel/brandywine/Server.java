@@ -9,11 +9,13 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.MoreObjects;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.ServerChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -40,6 +42,11 @@ final class Server {
 	 * The context of this Server.
 	 */
 	private final ServerContext context = new ServerContext(this);
+
+	/**
+	 * Special EventExecutorGroup which allows registering Channels that get processed for later selection during the event loop.
+	 */
+	private final EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
 
 	/**
 	 * The name of this Server.
@@ -138,10 +145,11 @@ final class Server {
 		logger.info("Setting up service on address {}...", address);
 
 		bootstrap.channel(NioServerSocketChannel.class);
-		bootstrap.group(new NioEventLoopGroup());
+		bootstrap.group(eventLoopGroup);
 		bootstrap.childHandler(initializer);
 		bootstrap.childOption(ChannelOption.TCP_NODELAY, true);
 		bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
+		bootstrap.childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
 		bootstrap.bind(address).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
 	}
 
