@@ -19,7 +19,7 @@ public final class FrameReader extends ReadingFrameBuffer {
 	 * @param frame The Frame to read.
 	 */
 	public FrameReader(Frame frame) {
-		super(frame.getPayload());
+		super(frame.content());
 	}
 
 	/**

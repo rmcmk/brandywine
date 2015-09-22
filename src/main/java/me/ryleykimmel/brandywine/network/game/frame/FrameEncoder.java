@@ -48,9 +48,7 @@ public final class FrameEncoder extends MessageToByteEncoder<Frame> {
 			}
 		}
 
-		ByteBuf payload = frame.getPayload();
-		out.writeBytes(payload);
-		payload.release();
+		out.writeBytes(frame.content());
 	}
 
 }

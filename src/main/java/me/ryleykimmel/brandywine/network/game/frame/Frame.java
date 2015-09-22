@@ -5,6 +5,7 @@ import java.util.Objects;
 import com.google.common.base.MoreObjects;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.DefaultByteBufHolder;
 import io.netty.buffer.Unpooled;
 
 /**
@@ -12,7 +13,7 @@ import io.netty.buffer.Unpooled;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class Frame {
+public final class Frame extends DefaultByteBufHolder {
 
 	/**
 	 * The maximum opcode a Frame may have.
@@ -30,11 +31,6 @@ public final class Frame {
 	private final FrameType type;
 
 	/**
-	 * The payload of this Frame.
-	 */
-	private final ByteBuf payload;
-
-	/**
 	 * The length of this Frame.
 	 */
 	private final int length;
@@ -47,9 +43,9 @@ public final class Frame {
 	 * @param payload The payload of this Frame.
 	 */
 	public Frame(int opcode, FrameType type, ByteBuf payload) {
+		super(payload);
 		this.opcode = opcode;
 		this.type = type;
-		this.payload = payload;
 		this.length = payload.readableBytes();
 	}
 
@@ -81,15 +77,6 @@ public final class Frame {
 	}
 
 	/**
-	 * Gets the payload of this Frame.
-	 *
-	 * @return The payload of this Frame.
-	 */
-	public ByteBuf getPayload() {
-		return payload;
-	}
-
-	/**
 	 * Gets the type of this Frame.
 	 *
 	 * @return The type of this Frame.
@@ -109,14 +96,14 @@ public final class Frame {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(opcode, type, payload);
+		return Objects.hash(opcode, type);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Frame) {
 			Frame other = (Frame) obj;
-			return opcode == other.opcode && type == other.type && Objects.equals(payload, other.payload);
+			return opcode == other.opcode && type == other.type;
 		}
 
 		return false;
@@ -124,7 +111,7 @@ public final class Frame {
 
 	@Override
 	public String toString() {
-		return MoreObjects.toStringHelper(this).add("opcode", opcode).add("type", type).add("payload", payload).toString();
+		return MoreObjects.toStringHelper(this).add("opcode", opcode).add("type", type).toString();
 	}
 
 }

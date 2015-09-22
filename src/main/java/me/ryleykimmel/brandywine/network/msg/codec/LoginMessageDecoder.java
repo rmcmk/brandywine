@@ -41,7 +41,7 @@ public final class LoginMessageDecoder implements MessageDecoder<LoginMessage> {
 
 	@Override
 	public LoginMessage decode(Frame frame) {
-		ByteBuf buffer = frame.getPayload();
+		ByteBuf buffer = frame.content();
 
 		int magic = buffer.readUnsignedByte();
 		int clientVersion = buffer.readShort();
