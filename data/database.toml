@@ -1,0 +1,4 @@
+url = "jdbc:mysql://localhost/game_server"
+port = 3306
+username = "root"
+password = ""

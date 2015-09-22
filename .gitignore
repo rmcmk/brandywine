@@ -1,0 +1,12 @@
+.settings/
+.classpath
+.project
+
+main_file_cache.dat
+main_file_cache.idx[0-9]
+
+*.class
+*.jar
+hs_err_pid*
+/bin/
+/target/

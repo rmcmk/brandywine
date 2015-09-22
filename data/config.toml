@@ -1,0 +1,4 @@
+name = "Brandywine"
+fs_directory = "data/fs"
+game_port = 43594
+connection_limit = 2

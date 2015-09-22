@@ -1,0 +1,161 @@
+[[frames]]
+
+	[[unciphered]]
+	    name = "Login request"
+		opcode = 14
+		length = 1
+
+	[[unciphered]]
+		name = "Login"
+		opcode = 16
+		length = -1
+
+	[[unciphered]]
+		name = "Login reconnection"
+		opcode = 18
+		length = -1
+
+	[[ciphered]]
+		name = "Ping"
+		opcode = 0
+		length = 0
+
+	[[ciphered]]
+		name = "Focus change"
+		opcode = 3
+		length = 1
+
+	[[ciphered]]
+		name = "Chat"
+		opcode = 4
+		length = -1
+
+	[[ciphered]]
+		name = "Item on player"
+		opcode = 14
+		length = 8
+
+	[[ciphered]]
+		name = "Third item option"
+		opcode = 16
+		length = 6
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 36
+		length = 4
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 77
+		length = -1
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 78
+		length = 0
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 85
+		length = 1
+
+	[[ciphered]]
+		name = "Camera position update"
+		opcode = 86
+		length = 4
+
+	[[ciphered]]
+	    name = "Command movement"
+		opcode = 98
+		length = -1
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 121
+		length = 0
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 136
+		length = 0
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 148
+		length = 0
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 150
+		length = 0
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 152
+		length = 1
+
+	[[ciphered]]
+	    name = "Game movement"
+		opcode = 164
+		length = -1
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 165
+		length = -1
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 183
+		length = 3
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 189
+		length = 1
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 200
+		length = 2
+
+	[[ciphered]]
+		name = "Idle notification"
+		opcode = 202
+		length = 0
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 210
+		length = 4
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 226
+		length = -1
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 230
+		length = 1
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 238
+		length = 1
+
+	[[ciphered]]
+		name = "Mouse click"
+		opcode = 241
+		length = 4
+
+	[[ciphered]]
+		name = "Anti-cheat"
+		opcode = 246
+		length = -1
+
+	[[ciphered]]
+	    name = "Minimap movement"
+		opcode = 248
+		length = -1

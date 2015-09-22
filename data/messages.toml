@@ -1,0 +1,26 @@
+[codecs]
+
+	decoders = [
+		"me.ryleykimmel.brandywine.network.msg.codec.LoginHandshakeMessageDecoder",
+		"me.ryleykimmel.brandywine.network.msg.codec.LoginMessageDecoder",
+		"me.ryleykimmel.brandywine.network.msg.codec.MovementMessageDecoder",
+		"me.ryleykimmel.brandywine.network.msg.codec.ChatMessageDecoder",
+	]
+
+	encoders = [
+		"me.ryleykimmel.brandywine.network.msg.codec.LoginHandshakeResponseMessageEncoder",
+		"me.ryleykimmel.brandywine.network.msg.codec.LoginResponseMessageEncoder",
+		"me.ryleykimmel.brandywine.network.msg.codec.ServerChatMessageEncoder",
+		"me.ryleykimmel.brandywine.network.msg.codec.RebuildRegionMessageEncoder",
+		"me.ryleykimmel.brandywine.network.msg.codec.PlayerUpdateMessageEncoder",
+		"me.ryleykimmel.brandywine.network.msg.codec.ResetDestinationMessageEncoder",
+		"me.ryleykimmel.brandywine.network.msg.codec.InitializePlayerMessageEncoder",
+		"me.ryleykimmel.brandywine.network.msg.codec.UpdateSkillMessageEncoder",
+	]
+
+	handlers = [
+	    "me.ryleykimmel.brandywine.network.msg.handler.LoginHandshakeMessageHandler",
+	    "me.ryleykimmel.brandywine.network.msg.handler.LoginMessageHandler",
+	    "me.ryleykimmel.brandywine.network.msg.handler.MovementMessageHandler",
+		"me.ryleykimmel.brandywine.network.msg.handler.ChatMessageHandler",
+	]

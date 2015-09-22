@@ -1,0 +1,28 @@
+# Any new parser, Json, Toml, Archive or other may be added here
+# as long as it accepts ServerContext/Path or both will be parsed automatically on startup.
+
+[[parsers]]
+
+	[[parser]]
+		path = "data/config.toml"
+		name = "me.ryleykimmel.brandywine.parser.impl.ConfigurationParser"
+
+	[[parser]]
+		path = "data/database.toml"
+		name = "me.ryleykimmel.brandywine.parser.impl.DatabaseParser"
+
+	[[parser]]
+		path = "data/frames.toml"
+		name = "me.ryleykimmel.brandywine.parser.impl.FrameParser"
+
+	[[parser]]
+		path = "data/messages.toml"
+		name = "me.ryleykimmel.brandywine.parser.impl.MessageCodecParser"
+
+	[[parser]]
+		path = "data/messages.toml"
+		name = "me.ryleykimmel.brandywine.parser.impl.MessageHandlerParser"
+
+	[[parser]]
+		path = "data/services.toml"
+		name = "me.ryleykimmel.brandywine.parser.impl.ServiceParser"
