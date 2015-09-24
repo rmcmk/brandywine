@@ -20,7 +20,7 @@ public final class SkillSet {
 		add(Skill.createCombatSkill(Skill.ATTACK, "Attack"));
 		add(Skill.createCombatSkill(Skill.DEFENCE, "Defence"));
 		add(Skill.createCombatSkill(Skill.STRENGTH, "Strength"));
-		add(Skill.createCombatSkill(Skill.HITPOINTS, "Hitpoints", 10)); // 		Default level for HP is 10
+		add(Skill.createCombatSkill(Skill.HITPOINTS, "Hitpoints", 10)); // Default level for HP is 10
 		add(Skill.createCombatSkill(Skill.RANGED, "Ranged"));
 		add(Skill.createCombatSkill(Skill.PRAYER, "Prayer"));
 		add(Skill.createCombatSkill(Skill.MAGIC, "Magic"));
@@ -141,12 +141,13 @@ public final class SkillSet {
 		int defence = get(Skill.DEFENCE).getLevel();
 		int strength = get(Skill.STRENGTH).getLevel();
 		int hitpoints = get(Skill.HITPOINTS).getLevel();
-		int prayer = get(Skill.PRAYER).getLevel();
-		int ranged = get(Skill.RANGED).getLevel();
-		int magic = get(Skill.MAGIC).getLevel();
 
-		double base = Ints.max(strength + attack, magic * 2, ranged * 2);
-		double combatLevel = (base * 1.3 + defence + hitpoints + prayer / 2) / 4;
+		int prayer = get(Skill.PRAYER).getLevel() / 2;
+		int ranged = Math.round(get(Skill.RANGED).getLevel() * 1.5F);
+		int magic = Math.round(get(Skill.MAGIC).getLevel() * 1.5F);
+
+		float base = Ints.max(strength + attack, magic, ranged) * 1.3F;
+		float combatLevel = (base + defence + hitpoints + prayer) / 4;
 
 		this.combatLevel = (int) combatLevel;
 	}
