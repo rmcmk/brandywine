@@ -3,11 +3,9 @@ package me.ryleykimmel.brandywine.game.auth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import me.ryleykimmel.brandywine.ServerContext;
 import me.ryleykimmel.brandywine.game.GameService;
-import me.ryleykimmel.brandywine.game.model.World;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.network.game.GameSession;
 import me.ryleykimmel.brandywine.network.msg.impl.LoginResponseMessage;
@@ -73,55 +71,39 @@ public final class AuthenticationWorker implements Runnable {
 		GameService service = context.getService(GameService.class);
 
 		Player player = new Player(session, request.getCredentials());
-		World world = service.getWorld();
 
 		try {
 			AuthenticationResponse response = strategy.authenticate(player);
 
 			if (response.getStatus() != LoginResponseMessage.STATUS_OK) {
-				sendResponse(session, response.getStatus());
+				closeWithResponse(session, response.getStatus());
 				return;
 			}
 
-			if (service.isQueued(player) || world.isOnline(player)) {
-				sendResponse(session, LoginResponseMessage.STATUS_ACCOUNT_ONLINE);
+			if (service.isPlayerOnline(player)) {
+				closeWithResponse(session, LoginResponseMessage.STATUS_ACCOUNT_ONLINE);
 				return;
 			}
 
 			if (!service.queuePlayer(player)) {
-				sendResponse(session, LoginResponseMessage.STATUS_SERVER_FULL);
+				closeWithResponse(session, LoginResponseMessage.STATUS_SERVER_FULL);
 				return;
 			}
 
 		} catch (Exception cause) {
 			logger.error("Error occured while authenticating.", cause);
-			sendResponse(session, LoginResponseMessage.STATUS_COULD_NOT_COMPLETE);
+			closeWithResponse(session, LoginResponseMessage.STATUS_COULD_NOT_COMPLETE);
 		}
 	}
 
 	/**
-	 * Sends the {@link LoginResponseMessage} with the specified status, should only be used to send invalid login requests.
-	 *
-	 * @param session The GameSession sending the response.
-	 * @param status The status of the response.
+	 * Closes the specified GameSession after sending the specified response code.
+	 * 
+	 * @param session The GameSession to close.
+	 * @param response The response to send.
 	 */
-	private void sendResponse(GameSession session, int status) {
-		sendResponse(session, status, 0, false);
-	}
-
-	/**
-	 * Sends the {@link LoginResponseMessgae} with the specified status, privilege and flagged state.
-	 *
-	 * @param session The GameSession sending the response.
-	 * @param status The status of the response.
-	 * @param privilege The privilege level of the Player.
-	 * @param flagged Whether or not the Player is flagged and should be monitored.
-	 */
-	private void sendResponse(GameSession session, int status, int privilege, boolean flagged) {
-		ChannelFuture future = session.writeAndFlush(new LoginResponseMessage(status, privilege, flagged));
-		if (status != LoginResponseMessage.STATUS_OK) {
-			future.addListener(ChannelFutureListener.CLOSE);
-		}
+	private void closeWithResponse(GameSession session, int response) {
+		session.writeAndFlush(new LoginResponseMessage(response)).addListener(ChannelFutureListener.CLOSE);
 	}
 
 }

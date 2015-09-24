@@ -2,9 +2,7 @@ package me.ryleykimmel.brandywine.network.game;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.timeout.IdleStateHandler;
 import me.ryleykimmel.brandywine.ServerContext;
-import me.ryleykimmel.brandywine.network.NetworkConstants;
 import me.ryleykimmel.brandywine.network.game.frame.FrameDecoder;
 import me.ryleykimmel.brandywine.network.game.frame.FrameEncoder;
 
@@ -33,8 +31,8 @@ public final class GameChannelInitializer extends ChannelInitializer<SocketChann
 	protected void initChannel(SocketChannel channel) {
 		GameSession session = new GameSession(context, channel);
 
-		channel.pipeline().addLast(new FrameEncoder(session), new MessageEncoder(session), new FrameDecoder(session), new MessageDecoder(session), new GameSessionHandler(session),
-				new IdleStateHandler(NetworkConstants.IDLE_TIME, 0, 0));
+		channel.pipeline().addLast(new FrameEncoder(session), new MessageEncoder(session), 
+				new FrameDecoder(session), new MessageDecoder(session), new GameSessionHandler(session));
 	}
 
 }

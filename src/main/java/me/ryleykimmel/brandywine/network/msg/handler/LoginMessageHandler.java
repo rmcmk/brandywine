@@ -55,7 +55,7 @@ public final class LoginMessageHandler implements MessageHandler<LoginMessage> {
 			closeWithResponse(session, LoginResponseMessage.STATUS_LOGIN_SERVER_REJECTED_SESSION);
 			return;
 		}
-
+		
 		GameService gameService = session.getContext().getService(GameService.class);
 		if (!gameService.addChannel(session)) {
 			closeWithResponse(session, LoginResponseMessage.STATUS_TOO_MANY_CONNECTIONS);

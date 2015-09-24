@@ -71,13 +71,22 @@ public final class GameService extends Service {
 	}
 
 	/**
-	 * Tests whether or not the specified Player is already queued for registration.
+	 * Removes the specified Player from the World.
+	 * 
+	 * @param player The Player to remove.
+	 */
+	public synchronized void removePlayer(Player player) {
+		world.removePlayer(player);
+	}
+
+	/**
+	 * Tests whether or not the specified Player is online or is queued to become online.
 	 * 
 	 * @param player The Player to test.
-	 * @return {@code true} if and only if the specified Player is queued.
+	 * @return {@code true} if the Player is online or is awaiting login otherwise {@code false}.
 	 */
-	public synchronized boolean isQueued(Player player) {
-		return queuedPlayers.contains(player);
+	public synchronized boolean isPlayerOnline(Player player) {
+		return world.isOnline(player.getEncodedUsername()) || queuedPlayers.contains(player);
 	}
 
 	@Override

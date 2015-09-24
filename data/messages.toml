@@ -5,6 +5,7 @@
 		"me.ryleykimmel.brandywine.network.msg.codec.LoginMessageDecoder",
 		"me.ryleykimmel.brandywine.network.msg.codec.MovementMessageDecoder",
 		"me.ryleykimmel.brandywine.network.msg.codec.ChatMessageDecoder",
+		"me.ryleykimmel.brandywine.network.msg.codec.DummyMessageDecoder",
 	]
 
 	encoders = [

@@ -2,7 +2,6 @@ package me.ryleykimmel.brandywine.game.update.blocks;
 
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.update.PlayerBlock;
-import me.ryleykimmel.brandywine.network.game.frame.DataOrder;
 import me.ryleykimmel.brandywine.network.game.frame.DataTransformation;
 import me.ryleykimmel.brandywine.network.game.frame.DataType;
 import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
@@ -35,7 +34,8 @@ public class ChatPlayerBlock extends PlayerBlock {
 	public void encode(PlayerUpdateMessage message, FrameBuilder builder) {
 		byte[] bytes = chatMessage.getCompressedMessage();
 
-		builder.put(DataType.SHORT, DataOrder.LITTLE, chatMessage.getTextColor() << 8 | chatMessage.getTextEffects());
+		builder.put(DataType.BYTE, chatMessage.getTextEffects());
+		builder.put(DataType.BYTE, chatMessage.getTextColor());
 		builder.put(DataType.BYTE, 0); // TODO: Privileges!
 		builder.put(DataType.BYTE, DataTransformation.NEGATE, bytes.length);
 		builder.putBytesReverse(bytes);

@@ -3,12 +3,10 @@ package me.ryleykimmel.brandywine.network.game;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.IdleStateEvent;
 import me.ryleykimmel.brandywine.game.GameService;
-import me.ryleykimmel.brandywine.game.model.World;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.network.msg.Message;
 
@@ -17,7 +15,6 @@ import me.ryleykimmel.brandywine.network.msg.Message;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-@Sharable
 public final class GameSessionHandler extends SimpleChannelInboundHandler<Message> {
 
 	/**
@@ -41,12 +38,7 @@ public final class GameSessionHandler extends SimpleChannelInboundHandler<Messag
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) {
-		GameService service = session.getContext().getService(GameService.class);
-		Player player = session.attr().get();
-		if (player != null) {
-			World world = service.getWorld();
-			world.removePlayer(player);
-		}
+		close();
 	}
 
 	@Override
@@ -66,10 +58,23 @@ public final class GameSessionHandler extends SimpleChannelInboundHandler<Messag
 	}
 
 	@Override
-	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
-		if (evt instanceof IdleStateEvent) {
+	public void userEventTriggered(ChannelHandlerContext ctx, Object event) {
+		if (event instanceof IdleStateEvent) {
 			session.close();
 		}
+	}
+
+	/**
+	 * Performs closing logic when this GameSession is closed.
+	 */
+	private void close() {
+		Player player = session.attr().get();
+		if (player == null) {
+			return;
+		}
+
+		GameService service = session.getContext().getService(GameService.class);
+		service.removePlayer(player);
 	}
 
 }

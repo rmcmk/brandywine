@@ -25,6 +25,7 @@ import java.util.Random;
  * @author Bob Jenkins
  */
 public final class IsaacRandom extends Random {
+
 	/** use serialVersionUID from JDK 1.1 for interoperability */
 	private static final long serialVersionUID = 7408360375871648078L;
 
@@ -184,7 +185,7 @@ public final class IsaacRandom extends Random {
 			a += b;
 		}
 
-		for (i = 0; i < SIZE; i += 8) { /* fill in mem[] with messy stuff */
+		for (i = 0; i < SIZE; i += 8) {
 			a += results[i];
 			b += results[i + 1];
 			c += results[i + 2];
