@@ -21,30 +21,60 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Stopwatch;
 
+/**
+ * A utility class which generates RSA public and private keypairs.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ */
 public final class RsaKeygen {
 
+	/**
+	 * The logger for this class.
+	 */
 	private static final Logger logger = LoggerFactory.getLogger(RsaKeygen.class);
 
+	/**
+	 * The RSA algorithm name.
+	 */
 	private static final String ALGORITHM = "RSA";
+
+	/**
+	 * The modulus' length, specified in the number of bits.
+	 */
 	private static final int BITS = 1024;
 
+	/**
+	 * Generates a public and private RSA keypair.
+	 * 
+	 * @throws NoSuchAlgorithmException If the specified algorithm is not available in this environment.
+	 * @throws InvalidKeySpecException If any key cannot be processed.
+	 * @throws IOException If some I/O exception occurs.
+	 */
 	public void generate() throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
-		KeyPairGenerator keyGen = KeyPairGenerator.getInstance(ALGORITHM);
-		keyGen.initialize(BITS);
+		KeyPairGenerator generator = KeyPairGenerator.getInstance(ALGORITHM);
+		generator.initialize(BITS);
 
-		KeyPair keyPair = keyGen.generateKeyPair();
+		KeyPair pair = generator.generateKeyPair();
 		KeyFactory factory = KeyFactory.getInstance(ALGORITHM);
 
-		RSAPublicKeySpec publicSpec = factory.getKeySpec(keyPair.getPublic(), RSAPublicKeySpec.class);
-		RSAPrivateKeySpec privateSpec = factory.getKeySpec(keyPair.getPrivate(), RSAPrivateKeySpec.class);
+		RSAPublicKeySpec publicSpec = factory.getKeySpec(pair.getPublic(), RSAPublicKeySpec.class);
+		RSAPrivateKeySpec privateSpec = factory.getKeySpec(pair.getPrivate(), RSAPrivateKeySpec.class);
 
 		write("rsa_public", publicSpec.getModulus(), publicSpec.getPublicExponent());
 		write("rsa_private", privateSpec.getModulus(), privateSpec.getPrivateExponent());
 	}
 
-	private void write(String prefix, BigInteger modulus, BigInteger exponent) throws IOException {
-		Path path = Paths.get("data", prefix);
-		
+	/**
+	 * Writes a RSA keypair to disk.
+	 * 
+	 * @param root The root directory to write the RSA keypair.
+	 * @param modulus The RSA modulus.
+	 * @param exponent The RSA exponent.
+	 * @throws IOException If some I/O exception occurs.
+	 */
+	private void write(String root, BigInteger modulus, BigInteger exponent) throws IOException {
+		Path path = Paths.get("data", root);
+
 		// Create the directories if they don't exist.
 		if (Files.notExists(path)) {
 			Files.createDirectories(path);
@@ -63,6 +93,11 @@ public final class RsaKeygen {
 		}
 	}
 
+	/**
+	 * The entry point of this application which implements the command line-interface.
+	 *
+	 * @param args The command-line arguments.
+	 */
 	public static void main(String[] args) {
 		RsaKeygen keygen = new RsaKeygen();
 
