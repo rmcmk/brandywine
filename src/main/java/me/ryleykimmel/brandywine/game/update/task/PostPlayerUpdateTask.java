@@ -33,6 +33,8 @@ public final class PostPlayerUpdateTask implements UpdateTask {
 		} else {
 			player.incrementViewingDistance();
 		}
+
+		player.getSession().flush();
 	}
 
 }

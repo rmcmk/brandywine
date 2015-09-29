@@ -1,6 +1,5 @@
 package me.ryleykimmel.brandywine.game.model;
 
-import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -46,9 +45,9 @@ public final class World {
 	private final MobRepository<Npc> npcRepository = new MobRepository<>(MAXIMUM_NPCS);
 
 	/**
-	 * A {@link Map} of encoded Player usernames to a weak reference of Players.
+	 * A {@link Map} of encoded Player usernames to Players.
 	 */
-	private final Map<Long, WeakReference<Player>> players = new HashMap<>();
+	private final Map<Long, Player> players = new HashMap<>();
 
 	/**
 	 * A {@link Queue} of old Players which need removed.
@@ -68,7 +67,7 @@ public final class World {
 	 */
 	public boolean addPlayer(Player player) {
 		if (playerRepository.add(player)) {
-			players.put(player.getEncodedUsername(), new WeakReference<>(player));
+			players.put(player.getEncodedUsername(), player);
 			return true;
 		}
 
@@ -121,12 +120,8 @@ public final class World {
 	 * @return The Player, wrapped in an Optional.
 	 */
 	public Optional<Player> get(long username) {
-		WeakReference<Player> reference = players.get(username);
-		if (reference != null) {
-			return Optional.ofNullable(reference.get());
-		}
-
-		return Optional.empty();
+		Player player = players.get(username);
+		return Optional.ofNullable(player);
 	}
 
 	/**

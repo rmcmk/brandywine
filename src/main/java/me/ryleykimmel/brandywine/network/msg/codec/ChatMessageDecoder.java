@@ -20,7 +20,7 @@ public final class ChatMessageDecoder implements MessageDecoder<ChatMessage> {
 	@Override
 	public ChatMessage decode(Frame frame) {
 		FrameReader reader = new FrameReader(frame);
-		
+
 		int effects = (int) reader.getUnsigned(DataType.BYTE, DataTransformation.SUBTRACT);
 		int color = (int) reader.getUnsigned(DataType.BYTE, DataTransformation.SUBTRACT);
 		int length = frame.getLength() - 2;

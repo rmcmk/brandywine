@@ -1,9 +1,10 @@
 package me.ryleykimmel.brandywine.game.update;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import com.google.common.collect.ImmutableSet;
 
 import me.ryleykimmel.brandywine.game.model.Mob;
 
@@ -88,8 +89,8 @@ public abstract class Descriptor<T extends Mob> {
 	 *
 	 * @return A Collection of this Descriptors UpdateBlocks.
 	 */
-	public Collection<UpdateBlock<T>> getBlocks() {
-		return blocks.values();
+	public ImmutableSet<UpdateBlock<T>> getBlocks() {
+		return ImmutableSet.copyOf(blocks.values());
 	}
 
 }

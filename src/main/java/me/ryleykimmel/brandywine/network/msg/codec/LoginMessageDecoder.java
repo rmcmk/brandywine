@@ -18,7 +18,7 @@ import me.ryleykimmel.brandywine.network.msg.impl.LoginMessage;
  */
 @Decodes({ 16, 18 })
 public final class LoginMessageDecoder implements MessageDecoder<LoginMessage> {
-	
+
 	/**
 	 * A flag denoting whether or not RSA encryption is enabled.
 	 */

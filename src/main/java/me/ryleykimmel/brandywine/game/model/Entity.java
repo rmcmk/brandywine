@@ -22,9 +22,9 @@ public abstract class Entity {
 	}
 
 	/**
-	 * Gets this Entities current Position.
+	 * Gets this Entity's current Position.
 	 *
-	 * @return This Entities current Position.
+	 * @return This Entity's current Position.
 	 */
 	public final Position getPosition() {
 		return position;

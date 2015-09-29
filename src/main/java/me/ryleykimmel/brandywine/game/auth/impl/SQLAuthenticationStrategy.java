@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.sql2o.Connection;
+import org.sql2o.Query;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 import org.sql2o.data.Row;
@@ -64,8 +65,10 @@ public final class SQLAuthenticationStrategy implements AuthenticationStrategy {
 		try (Connection connection = sql2o.open()) {
 			String remoteAddress = player.getSession().getRemoteAddress().getHostString();
 
-			List<Row> results = connection.createQuery("SELECT * FROM failed_logins WHERE remote_addr = :remote_addr").addParameter("remote_addr", remoteAddress)
-					.executeAndFetchTable().rows();
+			Query select = connection.createQuery("SELECT * FROM failed_logins WHERE remote_addr = :remote_addr");
+			select.addParameter("remote_addr", remoteAddress);
+
+			List<Row> results = select.executeAndFetchTable().rows();
 
 			int count = 0;
 			for (Row result : results) {
@@ -76,13 +79,18 @@ public final class SQLAuthenticationStrategy implements AuthenticationStrategy {
 				Instant now = Instant.now();
 
 				if (now.isAfter(expire)) {
-					connection.createQuery("DELETE FROM failed_logins WHERE remote_addr = :remote_addr").addParameter("remote_addr", remoteAddress).executeUpdate();
+					Query delete = connection.createQuery("DELETE FROM failed_logins WHERE remote_addr = :remote_addr");
+					delete.addParameter("remote_addr", remoteAddress);
+					delete.executeUpdate();
 				} else if (count >= 5) {
 					return AuthenticationResponse.TOO_MANY_LOGINS;
 				}
 			}
 
-			results = connection.createQuery("SELECT * FROM players WHERE username = :username").addParameter("username", username).executeAndFetchTable().rows();
+			select = connection.createQuery("SELECT * FROM players WHERE username = :username");
+			select.addParameter("username", username);
+
+			results = select.executeAndFetchTable().rows();
 
 			if (results.isEmpty()) {
 				// Account does not exist, maybe create response code for 'you must create an
@@ -95,10 +103,13 @@ public final class SQLAuthenticationStrategy implements AuthenticationStrategy {
 				String remotePassword = result.getString("password");
 
 				if (!BCrypt.checkpw(password, remotePassword)) {
-					connection
-							.createQuery("INSERT INTO failed_logins (count, timestamp, remote_addr) VALUES (:count, :timestamp, :remote_addr) "
-									+ "ON DUPLICATE KEY UPDATE count = VALUES(count), timestamp = VALUES(timestamp), remote_addr = VALUES(remote_addr)")
-							.addParameter("count", count + 1).addParameter("timestamp", System.currentTimeMillis()).addParameter("remote_addr", remoteAddress).executeUpdate();
+					Query insert = connection.createQuery(
+							"INSERT INTO failed_logins (count, timestamp, remote_addr) VALUES (:count, :timestamp, :remote_addr) ON DUPLICATE KEY UPDATE count = VALUES(count), timestamp = VALUES(timestamp), remote_addr = VALUES(remote_addr)");
+					insert.addParameter("count", count + 1);
+					insert.addParameter("timestamp", System.currentTimeMillis());
+					insert.addParameter("remote_addr", remoteAddress);
+					insert.executeUpdate();
+
 					return AuthenticationResponse.INVALID_CREDENTIALS;
 				}
 

@@ -12,7 +12,7 @@ public final class StringsTest {
 		String expected = "Hello world";
 
 		assertEquals(expected, Strings.toFirstUpper(input));
-		
+
 		String internationalInput = "Ï€Ï€Ï€Ï€Ï€Ï€Ï€Ï€";
 		String internationalExpected = "Ï€ï€ï€ï€ï€ï€ï€ï€";
 

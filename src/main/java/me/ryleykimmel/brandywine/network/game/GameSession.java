@@ -5,9 +5,6 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Random;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 
@@ -30,11 +27,6 @@ import me.ryleykimmel.brandywine.parser.impl.MessageHandlerParser;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class GameSession {
-
-	/**
-	 * The logger for this class.
-	 */
-	private static final Logger logger = LoggerFactory.getLogger(GameSession.class);
 
 	/**
 	 * An AttributeKey representing a Player attribute.
@@ -189,14 +181,9 @@ public final class GameSession {
 	 * @param message The Message to dispatch.
 	 */
 	public void dispatch(Message message) {
-		try {
-			MessageHandlerParser parser = getContext().getParser(MessageHandlerParser.class);
-			MessageHandler<Message> handler = parser.getHandler(message);
-			handler.handle(this, message);
-		} catch (Throwable cause) {
-			logger.error("Error while handling game message, closing session.", cause);
-			close();
-		}
+		MessageHandlerParser parser = getContext().getParser(MessageHandlerParser.class);
+		MessageHandler<Message> handler = parser.getHandler(message);
+		handler.handle(this, message);
 	}
 
 	/**

@@ -1,7 +1,6 @@
 package me.ryleykimmel.brandywine.network.msg.handler;
 
 import io.netty.channel.ChannelFutureListener;
-import me.ryleykimmel.brandywine.game.GameService;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationRequest;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationService;
 import me.ryleykimmel.brandywine.game.model.player.PlayerCredentials;
@@ -55,12 +54,6 @@ public final class LoginMessageHandler implements MessageHandler<LoginMessage> {
 			closeWithResponse(session, LoginResponseMessage.STATUS_LOGIN_SERVER_REJECTED_SESSION);
 			return;
 		}
-		
-		GameService gameService = session.getContext().getService(GameService.class);
-		if (!gameService.addChannel(session)) {
-			closeWithResponse(session, LoginResponseMessage.STATUS_TOO_MANY_CONNECTIONS);
-			return;
-		}
 
 		int[] sessionKeys = message.getSessionKeys();
 
@@ -70,8 +63,8 @@ public final class LoginMessageHandler implements MessageHandler<LoginMessage> {
 			return;
 		}
 
-		AuthenticationService authenticationService = session.getContext().getService(AuthenticationService.class);
-		authenticationService.submit(new AuthenticationRequest(session, new PlayerCredentials(message.getUserId(), message.getUsername(), message.getPassword(), sessionKeys)));
+		AuthenticationService service = session.getContext().getService(AuthenticationService.class);
+		service.submit(new AuthenticationRequest(session, new PlayerCredentials(message.getUserId(), message.getUsername(), message.getPassword(), sessionKeys)));
 	}
 
 	/**
