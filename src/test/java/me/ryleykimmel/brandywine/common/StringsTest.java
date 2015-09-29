@@ -7,28 +7,25 @@ import org.junit.Test;
 public final class StringsTest {
 
 	@Test
-	public void test_to_first_upper() {
+	public void testToFirstUpper() {
 		String input = "hEllo WORLd";
 		String expected = "Hello world";
 
 		assertEquals(expected, Strings.toFirstUpper(input));
-	}
+		
+		String internationalInput = "Ï€Ï€Ï€Ï€Ï€Ï€Ï€Ï€";
+		String internationalExpected = "Ï€ï€ï€ï€ï€ï€ï€ï€";
 
-	@Test
-	public void test_international_chars() {
-		String input = "Ï€Ï€Ï€Ï€Ï€Ï€Ï€Ï€";
-		String expected = "Ï€ï€ï€ï€ï€ï€ï€ï€";
-
-		assertEquals(expected, Strings.toFirstUpper(input));
+		assertEquals(internationalExpected, Strings.toFirstUpper(internationalInput));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void test_zero_length_strings() {
+	public void failToFirstUpperZeroLength() {
 		Strings.toFirstUpper("");
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void test_null_Strings() {
+	public void failToFirstUpperNull() {
 		Strings.toFirstUpper(null);
 	}
 

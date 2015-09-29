@@ -8,7 +8,7 @@ import org.junit.Test;
 public final class CharactersTest {
 
 	@Test
-	public void test_is_vowel() {
+	public void testIsVowel() {
 		char vowel = 'a';
 		char not_vowel = 'b';
 

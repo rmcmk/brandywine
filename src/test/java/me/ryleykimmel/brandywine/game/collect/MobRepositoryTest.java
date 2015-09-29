@@ -2,7 +2,6 @@ package me.ryleykimmel.brandywine.game.collect;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,16 +11,7 @@ import me.ryleykimmel.brandywine.game.model.Mob;
 
 public final class MobRepositoryTest {
 
-	// For testing purposes
-	private static final AtomicInteger count = new AtomicInteger(0);
-
 	private static final class MobStub extends Mob {
-		private final int id = count.getAndIncrement();
-
-		@Override
-		public String toString() {
-			return Integer.toString(id);
-		}
 	}
 
 	private MobRepository<MobStub> repo;
@@ -32,18 +22,18 @@ public final class MobRepositoryTest {
 	}
 
 	@Test
-	public void test_capacity() {
+	public void testCapacity() {
 		Assert.assertEquals(10, repo.capacity());
 	}
 
 	@Test
-	public void test_add() {
+	public void testAdd() {
 		repo.add(new MobStub());
 		Assert.assertEquals(1, repo.size());
 	}
 
 	@Test
-	public void test_remove() {
+	public void testRemove() {
 		MobStub stub = new MobStub();
 
 		repo.add(stub);
@@ -60,7 +50,7 @@ public final class MobRepositoryTest {
 	}
 
 	@Test
-	public void test_get() {
+	public void testGet() {
 		MobStub stub = new MobStub();
 		MobStub stub1 = new MobStub();
 
@@ -72,7 +62,7 @@ public final class MobRepositoryTest {
 	}
 
 	@Test
-	public void test_iterator() {
+	public void testCreateIterator() {
 		MobStub stub = new MobStub();
 		MobStub stub1 = new MobStub();
 
@@ -108,7 +98,7 @@ public final class MobRepositoryTest {
 	}
 
 	@Test
-	public void test_iterator_has_next() {
+	public void testIteratorHasNext() {
 		MobStub stub = new MobStub();
 		MobStub stub1 = new MobStub();
 
@@ -128,7 +118,7 @@ public final class MobRepositoryTest {
 	}
 
 	@Test(expected = NoSuchElementException.class)
-	public void test_iterator_nsee_next() {
+	public void testIteratorNextFailure() {
 		MobStub stub = new MobStub();
 		MobStub stub1 = new MobStub();
 

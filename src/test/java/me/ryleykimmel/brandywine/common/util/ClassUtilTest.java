@@ -15,7 +15,7 @@ import org.junit.Test;
 public final class ClassUtilTest {
 
 	@Test
-	public void test_get_annotation() {
+	public void testGetAnnotation() {
 		Optional<TestAnnotation> trueOptional = ClassUtil.getAnnotation(AnnotatedClass.class, TestAnnotation.class);
 		assertTrue(trueOptional.isPresent());
 
@@ -24,17 +24,17 @@ public final class ClassUtilTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void fail_get_annotation_null_class() {
+	public void failGetAnnotationNullClass() {
 		ClassUtil.getAnnotation(null, TestAnnotation.class);
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void fail_get_annotation_null_annotation() {
+	public void failGetAnnotationNullAnnotation() {
 		ClassUtil.getAnnotation(AnnotatedClass.class, null);
 	}
 
 	@Test(expected = NoSuchElementException.class)
-	public void fail_get_annotation_no_arg() {
+	public void failGetAnnotationNoArgument() {
 		Optional<TestAnnotation> optional = ClassUtil.getAnnotation(NotAnnotatedClass.class, TestAnnotation.class);
 		optional.get();
 	}
