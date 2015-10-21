@@ -5,6 +5,7 @@ import java.net.SocketAddress;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sql2o.Sql2o;
 
 import com.google.common.base.MoreObjects;
 
@@ -22,6 +23,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import me.ryleykimmel.brandywine.fs.FileSystem;
 import me.ryleykimmel.brandywine.game.GamePulseHandler;
+import me.ryleykimmel.brandywine.network.game.ChannelRemoteAddressFilter;
 import me.ryleykimmel.brandywine.network.game.GameChannelInitializer;
 import me.ryleykimmel.brandywine.parser.TomlParser;
 import me.ryleykimmel.brandywine.parser.impl.ParserTomlParser;
@@ -84,6 +86,11 @@ final class Server {
 	private String databasePassword = "";
 
 	/**
+	 * This Servers database configuration.
+	 */
+	private Sql2o sql2o;
+
+	/**
 	 * The FileSystem for this Server.
 	 */
 	private FileSystem fileSystem;
@@ -118,6 +125,9 @@ final class Server {
 	public void init() throws Exception {
 		TomlParser config = new ParserTomlParser("data/parsers.toml", context);
 		config.parse();
+
+		// Add the ChannelRemoteAddressFilter global ChannelHandler.
+		context.addChannelHandler(ChannelRemoteAddressFilter.class, new ChannelRemoteAddressFilter(context));
 	}
 
 	/**
@@ -304,6 +314,24 @@ final class Server {
 	 */
 	public void setFileSystem(FileSystem fileSystem) {
 		this.fileSystem = fileSystem;
+	}
+
+	/**
+	 * Gets this Servers database configuration.
+	 * 
+	 * @return This Servers database configuration.
+	 */
+	public Sql2o getSql2o() {
+		return sql2o;
+	}
+
+	/**
+	 * Sets this Servers database configuration.
+	 * 
+	 * @param sql2o The Servers database configuration to set.
+	 */
+	public void setSql2o(Sql2o sql2o) {
+		this.sql2o = sql2o;
 	}
 
 	@Override

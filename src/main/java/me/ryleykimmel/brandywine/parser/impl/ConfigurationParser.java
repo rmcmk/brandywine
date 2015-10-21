@@ -3,6 +3,8 @@ package me.ryleykimmel.brandywine.parser.impl;
 import java.io.IOException;
 import java.io.Reader;
 
+import org.sql2o.Sql2o;
+
 import me.ryleykimmel.brandywine.ServerContext;
 import me.ryleykimmel.brandywine.fs.FileSystem;
 import me.ryleykimmel.brandywine.parser.TomlParser;
@@ -38,6 +40,7 @@ public final class ConfigurationParser extends TomlParser {
 		context.setGamePort(getInteger(data, "game_port"));
 		context.setFileSystem(FileSystem.create(data.getString("fs_directory")));
 		context.setConnectionLimit(getInteger(data, "connection_limit"));
+		context.setSql2o(new Sql2o(context.getDatabaseAddress(), context.getDatabaseUsername(), context.getDatabasePassword()));
 	}
 
 }

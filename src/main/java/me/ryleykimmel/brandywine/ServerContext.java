@@ -4,7 +4,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.sql2o.Sql2o;
+
+import io.netty.channel.ChannelHandler;
 import me.ryleykimmel.brandywine.fs.FileSystem;
+import me.ryleykimmel.brandywine.game.auth.AuthenticationStrategy;
+import me.ryleykimmel.brandywine.game.auth.impl.SQLAuthenticationStrategy;
 import me.ryleykimmel.brandywine.parser.Parser;
 
 /**
@@ -24,6 +29,16 @@ public final class ServerContext {
 	 * A Map of all of the registered Services.
 	 */
 	private final Map<Class<? extends Service>, Service> services = new HashMap<>();
+
+	/**
+	 * A Map of all global ChannelHandlers.
+	 */
+	private final Map<Class<? extends ChannelHandler>, ChannelHandler> globalChannelHandlers = new HashMap<>();
+
+	/**
+	 * The AuthenticationStrategy used by the Server.
+	 */
+	private final AuthenticationStrategy authenticationStrategy = new SQLAuthenticationStrategy(this);
 
 	/**
 	 * The Server this context represents.
@@ -79,6 +94,27 @@ public final class ServerContext {
 	 */
 	public <T extends Parser<?, ?>> void addParser(Class<T> clazz, T parser) {
 		parsers.put(clazz, parser);
+	}
+
+	/**
+	 * Gets a ChannelHandler from its type.
+	 *
+	 * @param clazz The type of the ChannelHandler.
+	 * @return The instance of the ChannelHandler.
+	 */
+	@SuppressWarnings("unchecked")
+	public <T extends ChannelHandler> T getChannelHandler(Class<T> clazz) {
+		return (T) globalChannelHandlers.get(clazz);
+	}
+
+	/**
+	 * Adds the specified ChannelHandler to the map.
+	 *
+	 * @param clazz The type of the ChannelHandler.
+	 * @param parser The ChannelHandler to add.
+	 */
+	public <T extends ChannelHandler> void addChannelHandler(Class<T> clazz, T parser) {
+		globalChannelHandlers.put(clazz, parser);
 	}
 
 	/**
@@ -232,6 +268,33 @@ public final class ServerContext {
 	 */
 	public void setFileSystem(FileSystem fileSystem) {
 		server.setFileSystem(fileSystem);
+	}
+
+	/**
+	 * Gets this Servers database configuration.
+	 * 
+	 * @return This Servers database configuration.
+	 */
+	public Sql2o getSql2o() {
+		return server.getSql2o();
+	}
+
+	/**
+	 * Sets this Servers database configuration.
+	 * 
+	 * @param sql2o The Servers database configuration to set.
+	 */
+	public void setSql2o(Sql2o sql2o) {
+		server.setSql2o(sql2o);
+	}
+
+	/**
+	 * Gets the AuthenticationStrategy used by the Server.
+	 * 
+	 * @return The AuthenticationStrategy used by the Server.
+	 */
+	public AuthenticationStrategy getAuthenticationStrategy() {
+		return authenticationStrategy;
 	}
 
 }

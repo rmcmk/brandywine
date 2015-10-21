@@ -5,14 +5,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.sql2o.Sql2o;
-
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import io.netty.util.internal.StringUtil;
 import me.ryleykimmel.brandywine.ServerContext;
 import me.ryleykimmel.brandywine.Service;
-import me.ryleykimmel.brandywine.game.auth.impl.SQLAuthenticationStrategy;
 
 /**
  * Services AuthenticationRequests every pulse.
@@ -42,19 +39,12 @@ public final class AuthenticationService extends Service {
 	private final ExecutorService executor = Executors.newCachedThreadPool(new ThreadFactoryBuilder().setNameFormat(StringUtil.simpleClassName(this)).build());
 
 	/**
-	 * A jdbc-SQL AuthenticationStrategy.
-	 */
-	private final AuthenticationStrategy sqlStrategy;
-
-	/**
 	 * Constructs a new {@link AuthenticationService} with the specified ServerContext.
 	 *
 	 * @param context The context of the Server.
 	 */
 	public AuthenticationService(ServerContext context) {
 		super(context, PULSE_INTERVAL);
-
-		sqlStrategy = new SQLAuthenticationStrategy(new Sql2o(context.getDatabaseAddress(), context.getDatabaseUsername(), context.getDatabasePassword()));
 	}
 
 	/**
@@ -74,7 +64,7 @@ public final class AuthenticationService extends Service {
 				break;
 			}
 
-			executor.submit(new AuthenticationWorker(context, sqlStrategy, request));
+			executor.submit(new AuthenticationWorker(context, context.getAuthenticationStrategy(), request));
 		}
 	}
 
