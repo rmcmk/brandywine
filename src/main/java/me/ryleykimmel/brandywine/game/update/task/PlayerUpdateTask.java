@@ -99,4 +99,9 @@ public final class PlayerUpdateTask implements UpdateTask {
 		return otherPosition.getLongestDelta(position) > distance || !otherPosition.isWithinDistance(position, distance);
 	}
 
+	@Override
+	public void exceptionCaught(Throwable cause) {
+		player.disconnect();
+	}
+
 }

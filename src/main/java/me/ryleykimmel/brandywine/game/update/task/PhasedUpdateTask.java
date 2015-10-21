@@ -35,6 +35,8 @@ public final class PhasedUpdateTask implements UpdateTask {
 	public void run() {
 		try {
 			task.run();
+		} catch (Exception cause) {
+			task.exceptionCaught(cause);
 		} finally {
 			phaser.arriveAndDeregister();
 		}
