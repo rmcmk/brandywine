@@ -2,6 +2,8 @@ package me.ryleykimmel.brandywine.parser.impl;
 
 import java.io.Reader;
 
+import org.sql2o.Sql2o;
+
 import com.moandjiezana.toml.Toml;
 
 import me.ryleykimmel.brandywine.ServerContext;
@@ -36,6 +38,7 @@ public final class DatabaseParser extends TomlParser {
 		context.setDatabasePort(getInteger(data, "port"));
 		context.setDatabaseUsername(data.getString("username"));
 		context.setDatabasePassword(data.getString("password"));
+		context.setSql2o(new Sql2o(context.getDatabaseAddress(), context.getDatabaseUsername(), context.getDatabasePassword()));
 	}
 
 }
