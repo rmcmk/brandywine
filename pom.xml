@@ -7,7 +7,6 @@
 	<name>Brandywine</name>
 	<description>A plugin-based RuneScape emulator API</description>
 	<build>
-		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
