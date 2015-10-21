@@ -59,7 +59,6 @@ public final class Functions {
 			@Override
 			public int nextInt() {
 				if (hasNext()) {
-					System.out.println((int) chars[current]);
 					return (int) chars[current++];
 				} else {
 					throw new NoSuchElementException();
