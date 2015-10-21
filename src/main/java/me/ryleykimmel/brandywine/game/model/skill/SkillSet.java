@@ -14,7 +14,7 @@ public final class SkillSet {
 	private final Map<Integer, Skill> skills = new HashMap<>();
 	private final Set<SkillListener> listeners = new HashSet<>();
 
-	private int combatLevel = 3;
+	private int combatLevel;
 
 	public void init() {
 		add(Skill.createCombatSkill(Skill.ATTACK, "Attack"));
