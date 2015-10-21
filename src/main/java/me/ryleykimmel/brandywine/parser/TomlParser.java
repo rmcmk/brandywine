@@ -47,4 +47,14 @@ public abstract class TomlParser extends ReaderParser<Toml> {
 		return value.intValue();
 	}
 
+	/**
+	 * A helper method used to get Toml 64-bit integers as 32-bit Java integers.
+	 *
+	 * @param key The Toml key of the integer.
+	 * @return The 32-bit Java integer.
+	 */
+	public final int getInteger(String key) {
+		return getInteger(toml, key);
+	}
+
 }

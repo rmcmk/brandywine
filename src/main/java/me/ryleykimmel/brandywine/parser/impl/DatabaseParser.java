@@ -35,7 +35,7 @@ public final class DatabaseParser extends TomlParser {
 	@Override
 	public void parse(Reader source, Toml data) {
 		context.setDatabaseAddress(data.getString("url"));
-		context.setDatabasePort(getInteger(data, "port"));
+		context.setDatabasePort(getInteger("port"));
 		context.setDatabaseUsername(data.getString("username"));
 		context.setDatabasePassword(data.getString("password"));
 		context.setSql2o(new Sql2o(context.getDatabaseAddress(), context.getDatabaseUsername(), context.getDatabasePassword()));

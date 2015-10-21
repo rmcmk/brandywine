@@ -35,9 +35,9 @@ public final class ConfigurationParser extends TomlParser {
 	@Override
 	public void parse(Reader source, Toml data) throws IOException {
 		context.setName(data.getString("name"));
-		context.setGamePort(getInteger(data, "game_port"));
+		context.setGamePort(getInteger("game_port"));
 		context.setFileSystem(FileSystem.create(data.getString("fs_directory")));
-		context.setConnectionLimit(getInteger(data, "connection_limit"));
+		context.setConnectionLimit(getInteger("connection_limit"));
 	}
 
 }
