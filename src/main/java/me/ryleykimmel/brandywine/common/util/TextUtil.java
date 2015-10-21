@@ -15,32 +15,6 @@ public final class TextUtil {
 			'$', '%', '"', '[', ']' };
 
 	/**
-	 * Capitalizes the string correctly.
-	 *
-	 * @param string The input string.
-	 * @return The string with correct capitalization.
-	 */
-	public static String capitalize(String string) {
-		boolean capitalize = true;
-		char[] chars = string.toCharArray();
-
-		for (int index = 0; index < chars.length; index++) {
-			char character = chars[index];
-
-			if (character == '.' || character == '!' || character == '?') {
-				capitalize = true;
-			} else if (capitalize && !Character.isWhitespace(character)) {
-				chars[index] = Character.toUpperCase(character);
-				capitalize = false;
-			} else {
-				chars[index] = Character.toLowerCase(character);
-			}
-		}
-
-		return new String(chars);
-	}
-
-	/**
 	 * Compresses the input text ({@code in}) and places the result in the {@code out} array.
 	 *
 	 * @param in The input text.

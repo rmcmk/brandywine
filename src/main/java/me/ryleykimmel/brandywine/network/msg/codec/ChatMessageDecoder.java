@@ -1,5 +1,6 @@
 package me.ryleykimmel.brandywine.network.msg.codec;
 
+import me.ryleykimmel.brandywine.common.Strings;
 import me.ryleykimmel.brandywine.common.util.TextUtil;
 import me.ryleykimmel.brandywine.network.game.frame.DataTransformation;
 import me.ryleykimmel.brandywine.network.game.frame.DataType;
@@ -30,7 +31,7 @@ public final class ChatMessageDecoder implements MessageDecoder<ChatMessage> {
 
 		String uncompressed = TextUtil.decompress(originalCompressed, length);
 		uncompressed = TextUtil.filterInvalidCharacters(uncompressed);
-		uncompressed = TextUtil.capitalize(uncompressed);
+		uncompressed = Strings.capitalize(uncompressed);
 
 		byte[] recompressed = new byte[length];
 		TextUtil.compress(uncompressed, recompressed);

@@ -38,6 +38,31 @@ public final class Strings {
 	}
 
 	/**
+	 * Capitalizes the first character in the specified String as well as the first character in subsequent sentences within the specified String.
+	 * 
+	 * @param string The String to capitalize.
+	 * @return The capitalized String.
+	 */
+	public static String capitalize(String string) {
+		Assertions.checkNonEmpty(string, "String may not be null or empty!");
+
+		StringBuilder builder = new StringBuilder(string);
+
+		boolean capitalize = true;
+		for (int index = 0; index < builder.length(); index++) {
+			char character = builder.charAt(index);
+			if (character == '.' || character == '!' || character == '?') {
+				capitalize = true;
+			} else if (capitalize && !Character.isWhitespace(character)) {
+				builder.setCharAt(index, Character.toUpperCase(character));
+				capitalize = false;
+			}
+		}
+
+		return builder.toString();
+	}
+
+	/**
 	 * Substitutes each {@code %s} in {@code template} with an argument. These are matched by position: the first {@code %s} gets {@code args[0]}, etc.
 	 *
 	 * @param string A {@code String} containing 0 or more {@code %s} place holders, may not be {@code null}.
