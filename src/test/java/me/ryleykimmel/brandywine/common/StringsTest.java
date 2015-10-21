@@ -24,7 +24,7 @@ public final class StringsTest {
 		Strings.toFirstUpper("");
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void failToFirstUpperNull() {
 		Strings.toFirstUpper(null);
 	}
