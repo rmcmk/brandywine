@@ -7,6 +7,11 @@ import com.google.common.base.Preconditions;
 
 import me.ryleykimmel.brandywine.common.Buffer;
 
+/**
+ * Represents a Cache within a FileSystem.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ */
 public final class Cache {
 
 	/**
@@ -47,6 +52,13 @@ public final class Cache {
 		this.indexChannel = indexChannel;
 	}
 
+	/**
+	 * Gets the file, represented as a {@link Buffer}, with the specified id.
+	 * 
+	 * @param id The id of the file.
+	 * @return A Buffer representing the files content.
+	 * @throws IOException If some I/O exception occurs.
+	 */
 	public Buffer getFile(int id) throws IOException {
 		Index index = getIndex(id);
 
@@ -81,7 +93,14 @@ public final class Cache {
 		return buffer.flip();
 	}
 
-	public Sector getSector(int block) throws IOException {
+	/**
+	 * Gets the Sector for the specified block.
+	 * 
+	 * @param block The block.
+	 * @return The Sector.
+	 * @throws IOException If some I/O exception occurs.
+	 */
+	private Sector getSector(int block) throws IOException {
 		long position = (long) block * BLOCK_SIZE;
 
 		Buffer buffer = Buffer.allocate(BLOCK_SIZE);
@@ -94,7 +113,14 @@ public final class Cache {
 		return Sector.decode(buffer);
 	}
 
-	public Index getIndex(int id) throws IOException {
+	/**
+	 * Gets the Index for the specified id.
+	 * 
+	 * @param id The id of the Index.
+	 * @return The Index.
+	 * @throws IOException If some I/O exception occurs.
+	 */
+	private Index getIndex(int id) throws IOException {
 		long position = (long) id * Index.BYTES;
 
 		Buffer buffer = Buffer.allocate(Index.BYTES);

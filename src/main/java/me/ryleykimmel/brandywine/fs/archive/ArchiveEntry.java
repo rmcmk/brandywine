@@ -38,7 +38,7 @@ public final class ArchiveEntry {
 	 * @param buffer The buffer containing this entry's data.
 	 */
 	public ArchiveEntry(String name, Buffer buffer) {
-		this(ArchiveUtils.hash(name), buffer);
+		this(ArchiveUtil.hash(name), buffer);
 	}
 
 	@Override

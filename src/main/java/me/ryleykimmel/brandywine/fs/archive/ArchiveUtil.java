@@ -5,7 +5,7 @@ package me.ryleykimmel.brandywine.fs.archive;
  * 
  * @author Major
  */
-public final class ArchiveUtils {
+public final class ArchiveUtil {
 
 	/**
 	 * Hashes the specified string into an integer used to identify an {@link ArchiveEntry}.
@@ -20,7 +20,7 @@ public final class ArchiveUtils {
 	/**
 	 * Sole private constructor to discourage instantiation of this class.
 	 */
-	private ArchiveUtils() {
+	private ArchiveUtil() {
 
 	}
 

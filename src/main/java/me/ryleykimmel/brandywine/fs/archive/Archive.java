@@ -47,7 +47,7 @@ public final class Archive {
 	 * @return The entry, wrapped in an Optional.
 	 */
 	private Optional<ArchiveEntry> getOptionalEntry(String name) {
-		int hash = ArchiveUtils.hash(name);
+		int hash = ArchiveUtil.hash(name);
 		return Optional.ofNullable(entries.get(hash));
 	}
 

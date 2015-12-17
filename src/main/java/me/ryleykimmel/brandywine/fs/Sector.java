@@ -1,5 +1,7 @@
 package me.ryleykimmel.brandywine.fs;
 
+import com.google.common.base.Preconditions;
+
 import me.ryleykimmel.brandywine.common.Buffer;
 
 public final class Sector {
@@ -19,10 +21,13 @@ public final class Sector {
 	}
 
 	public static Sector decode(Buffer buffer) {
+		Preconditions.checkArgument(buffer.remaining() >= BYTES, "Incorrect buffer length: " + buffer.remaining() + ", expected: " + BYTES);
+
 		int id = buffer.getUnsignedShort();
 		int block = buffer.getUnsignedShort();
 		int nextBlock = buffer.getUnsignedTriByte();
 		int index = buffer.getUnsignedByte();
+
 		return new Sector(id, block, nextBlock, index);
 	}
 
