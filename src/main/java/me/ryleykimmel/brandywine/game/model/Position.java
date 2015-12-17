@@ -199,8 +199,8 @@ public final class Position {
 	 * @return {@code true} if so, {@code false} if not.
 	 */
 	public boolean isWithinDistance(Position other) {
-		int deltaX = other.x - x;
-		int deltaY = other.x - y;
+		int deltaX = x - other.x;
+		int deltaY = y - other.y;
 		return deltaX >= -16 && deltaX <= 15 && deltaY >= -16 && deltaY <= 15 && height == other.height;
 	}
 
