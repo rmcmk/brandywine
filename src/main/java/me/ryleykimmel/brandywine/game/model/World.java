@@ -3,8 +3,6 @@ package me.ryleykimmel.brandywine.game.model;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import me.ryleykimmel.brandywine.game.collect.MobRepository;
 import me.ryleykimmel.brandywine.game.model.npc.Npc;
@@ -18,11 +16,6 @@ import me.ryleykimmel.brandywine.game.update.Updater;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class World {
-
-	/**
-	 * The maximum amount of unregisters per pulse.
-	 */
-	private static final int MAXIMUM_UNREGISTERS_PER_PULSE = 50;
 
 	/**
 	 * The maximum amount of Players that may occupy any given World.
@@ -50,11 +43,6 @@ public final class World {
 	private final Map<Long, Player> players = new HashMap<>();
 
 	/**
-	 * A {@link Queue} of old Players which need removed.
-	 */
-	private final Queue<Player> oldPlayers = new ConcurrentLinkedQueue<>();
-
-	/**
 	 * The {@link Updater} for this World.
 	 */
 	private final Updater updater = new ParallelUpdater();
@@ -72,15 +60,6 @@ public final class World {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Informs the World to remove the specified Player, when they are able to be removed.
-	 *
-	 * @param player The Player to remove.
-	 */
-	public void removePlayer(Player player) {
-		oldPlayers.offer(player);
 	}
 
 	/**
@@ -128,18 +107,6 @@ public final class World {
 	 * Pulses the World.
 	 */
 	public void pulse() {
-		for (int count = 0; count < MAXIMUM_UNREGISTERS_PER_PULSE; count++) {
-			Player player = oldPlayers.poll();
-			if (player == null) {
-				break;
-			}
-
-			// TODO: Serialize player, which should in turn call 'finalizePlayerRemoval(Player)'
-			// when serialization is complete.
-			// For now, we will just remove, forcefully.
-			finalizePlayerRemoval(player);
-		}
-
 		updater.update(playerRepository, npcRepository);
 	}
 
@@ -175,8 +142,8 @@ public final class World {
 	 *
 	 * @return All of the registered Npcs within this World.
 	 */
-	public MobRepository<Player> getNpcs() {
-		return playerRepository;
+	public MobRepository<Npc> getNpcs() {
+		return npcRepository;
 	}
 
 }

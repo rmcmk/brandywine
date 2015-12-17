@@ -26,9 +26,19 @@ public final class GameService extends Service {
 	private static final int REGISTERS_PER_PULSE = 50;
 
 	/**
+	 * The maximum amount of unregisters per pulse.
+	 */
+	private static final int UNREGISTERS_PER_PULSE = 50;
+
+	/**
 	 * A {@link Queue} of Players awaiting registration.
 	 */
 	private final Queue<Player> queuedPlayers = new ConcurrentLinkedQueue<>();
+
+	/**
+	 * A {@link Queue} of old Players which need removed.
+	 */
+	private final Queue<Player> oldPlayers = new ConcurrentLinkedQueue<>();
 
 	/**
 	 * The game World.
@@ -63,8 +73,17 @@ public final class GameService extends Service {
 	 * 
 	 * @param player The Player to remove.
 	 */
-	public synchronized void removePlayer(Player player) {
-		world.removePlayer(player);
+	public void removePlayer(Player player) {
+		oldPlayers.add(player);
+	}
+
+	/**
+	 * Finalizes the removal of the specified Player.
+	 * 
+	 * @param player The Player being removed.
+	 */
+	public synchronized void finalizePlayerRemoval(Player player) {
+		world.finalizePlayerRemoval(player);
 	}
 
 	/**
@@ -79,6 +98,18 @@ public final class GameService extends Service {
 
 	@Override
 	public synchronized void execute() {
+		for (int count = 0; count < UNREGISTERS_PER_PULSE; count++) {
+			Player player = oldPlayers.poll();
+			if (player == null) {
+				break;
+			}
+
+			// TODO: Serialize player, which should in turn call 'finalizePlayerRemoval(Player)'
+			// when serialization is complete.
+			// For now, we will just remove, forcefully.
+			finalizePlayerRemoval(player);
+		}
+
 		for (int count = 0; count < REGISTERS_PER_PULSE; count++) {
 			Player player = queuedPlayers.poll();
 			if (player == null) {
