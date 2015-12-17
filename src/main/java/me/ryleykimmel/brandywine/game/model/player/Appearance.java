@@ -15,6 +15,11 @@ import com.google.common.base.Preconditions;
 public final class Appearance {
 
 	/**
+	 * The mask appended to a Feature's style.
+	 */
+	private static final int STYLE_MASK = 0x100;
+
+	/**
 	 * Represents some feature on a Player.
 	 *
 	 * @author Ryley Kimmel <ryley.kimmel@live.com>
@@ -236,7 +241,7 @@ public final class Appearance {
 	 * @return The color of the Feature.
 	 */
 	public int getStyle(int id) {
-		return get(id).getStyle() | 0x100;
+		return get(id).getStyle() | STYLE_MASK;
 	}
 
 	/**
