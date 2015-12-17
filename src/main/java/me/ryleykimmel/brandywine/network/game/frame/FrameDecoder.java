@@ -126,7 +126,6 @@ public final class FrameDecoder extends ByteToMessageDecoder {
 
 		case EMPTY:
 			out.add(new Frame(opcode, type, Unpooled.EMPTY_BUFFER));
-			checkpoint(State.DECODE_OPCODE);
 			break;
 
 		case VARIABLE_BYTE:
@@ -149,6 +148,8 @@ public final class FrameDecoder extends ByteToMessageDecoder {
 	private void decodeLength(ByteBuf buffer, List<Object> out) {
 		int check = type == FrameType.VARIABLE_BYTE ? Byte.BYTES : Short.BYTES;
 		if (!buffer.isReadable(check)) {
+			logger.error("Not enough bytes available to read frame {}'s length, closing session...", opcode);
+			session.close();
 			return;
 		}
 
@@ -168,6 +169,8 @@ public final class FrameDecoder extends ByteToMessageDecoder {
 	 */
 	private void decodePayload(ByteBuf buffer, List<Object> out) {
 		if (!buffer.isReadable(length)) {
+			logger.error("Not enough bytes available to decode frame {}'s payload, closing session...", opcode);
+			session.close();
 			return;
 		}
 
