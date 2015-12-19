@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * A static-utility class containing helper methods for supplying objects.

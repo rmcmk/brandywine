@@ -3,8 +3,6 @@ package me.ryleykimmel.brandywine.common.util;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 
-import me.ryleykimmel.brandywine.game.model.player.Player;
-
 /**
  * A static utility class containing extension or helper methods for {@link Player} names.
  *
