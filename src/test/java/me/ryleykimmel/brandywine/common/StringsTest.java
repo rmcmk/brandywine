@@ -12,11 +12,14 @@ public final class StringsTest {
 		String expected = "Hello world";
 
 		assertEquals(expected, Strings.toFirstUpper(input));
+	}
+	
+	@Test
+	public void testToFirstUpperInternational() {
+		String input = "Ï€Ï€Ï€Ï€Ï€Ï€Ï€Ï€";
+		String expected = "Ï€ï€ï€ï€ï€ï€ï€ï€";
 
-		String internationalInput = "Ï€Ï€Ï€Ï€Ï€Ï€Ï€Ï€";
-		String internationalExpected = "Ï€ï€ï€ï€ï€ï€ï€ï€";
-
-		assertEquals(internationalExpected, Strings.toFirstUpper(internationalInput));
+		assertEquals(expected, Strings.toFirstUpper(input));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

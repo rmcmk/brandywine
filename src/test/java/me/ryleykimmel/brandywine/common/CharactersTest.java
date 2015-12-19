@@ -14,12 +14,15 @@ public final class CharactersTest {
 
 		assertTrue(Characters.isVowel(vowel));
 		assertFalse(Characters.isVowel(not_vowel));
+	}
+	
+	@Test
+	public void testIsVowelUppercase() {
+		char vowel = 'A';
+		char not_vowel = 'B';
 
-		char upper_case_vowel = 'A';
-		char upper_case_not_vowel = 'B';
-
-		assertTrue(Characters.isVowel(upper_case_vowel));
-		assertFalse(Characters.isVowel(upper_case_not_vowel));
+		assertTrue(Characters.isVowel(vowel));
+		assertFalse(Characters.isVowel(not_vowel));
 	}
 
 }
