@@ -1,13 +1,21 @@
 package me.ryleykimmel.brandywine.game.model.player;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import com.google.common.base.MoreObjects;
+
 import me.ryleykimmel.brandywine.game.model.Mob;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.model.World;
+import me.ryleykimmel.brandywine.game.model.inter.WidgetSet;
+import me.ryleykimmel.brandywine.game.model.inter.tab.LogoutTabWidget;
 import me.ryleykimmel.brandywine.game.model.skill.LevelUpSkillListener;
 import me.ryleykimmel.brandywine.game.model.skill.SynchronizationSkillListener;
+import me.ryleykimmel.brandywine.game.update.blocks.AppearancePlayerBlock;
 import me.ryleykimmel.brandywine.network.game.GameSession;
 import me.ryleykimmel.brandywine.network.msg.Message;
-import me.ryleykimmel.brandywine.network.msg.impl.ChatMessage;
 import me.ryleykimmel.brandywine.network.msg.impl.InitializePlayerMessage;
 import me.ryleykimmel.brandywine.network.msg.impl.LoginResponseMessage;
 import me.ryleykimmel.brandywine.network.msg.impl.RebuildRegionMessage;
@@ -20,339 +28,349 @@ import me.ryleykimmel.brandywine.network.msg.impl.ServerChatMessage;
  */
 public final class Player extends Mob {
 
-	/**
-	 * The current amount of appearance tickets.
-	 */
-	private static int appearanceTicketCounter = 0;
+  /**
+   * The current amount of appearance tickets.
+   */
+  private static AtomicInteger appearanceTicketCounter = new AtomicInteger(0);
 
-	/**
-	 * This appearance tickets for this Player.
-	 */
-	private final int[] appearanceTickets = new int[World.MAXIMUM_PLAYERS];
+  /**
+   * This appearance tickets for this Player.
+   */
+  private final int[] appearanceTickets = new int[World.MAXIMUM_PLAYERS];
 
-	/**
-	 * The Appearance of this Player.
-	 */
-	private final Appearance appearance = new Appearance();
+  /**
+   * The Appearance of this Player.
+   */
+  private final Appearance appearance = new Appearance();
 
-	/**
-	 * The GameSession this Player is attached to.
-	 */
-	private final GameSession session;
+  /**
+   * The privileges for this Player.
+   */
+  private final PlayerPrivileges privileges = new PlayerPrivileges();
 
-	/**
-	 * The credentials of this Player.
-	 */
-	private final PlayerCredentials credentials;
+  /**
+   * This Player's WidgetSet.
+   */
+  private final WidgetSet widgets = new WidgetSet(this);
 
-	/**
-	 * The current maximum viewing distance of this player.
-	 */
-	private int viewingDistance = 1;
+  /**
+   * The GameSession this Player is attached to.
+   */
+  private final GameSession session;
 
-	/**
-	 * A flag which indicates there are players that couldn't be added.
-	 */
-	private boolean excessivePlayers;
+  /**
+   * The credentials of this Player.
+   */
+  private final PlayerCredentials credentials;
 
-	/**
-	 * The last known region this Player was in.
-	 */
-	private Position lastKnownRegion;
+  /**
+   * The current maximum viewing distance of this player.
+   */
+  private int viewingDistance = 1;
 
-	/**
-	 * A flag denoting whether or not the map region has changed and needs to be rebuilt.
-	 */
-	private boolean mapRegionChanged;
+  /**
+   * A flag which indicates there are players that couldn't be added.
+   */
+  private boolean excessivePlayers;
 
-	/**
-	 * This Players id within the Servers database.
-	 */
-	private int databaseId;
+  /**
+   * The last known region this Player was in.
+   */
+  private Position lastKnownRegion;
 
-	/**
-	 * This Players appearance ticket.
-	 */
-	private int appearanceTicket = nextAppearanceTicket();
+  /**
+   * A flag denoting whether or not the map region has changed and needs to be rebuilt.
+   */
+  private boolean mapRegionChanged;
 
-	/**
-	 * This Players cached ChatMessage; used to ensure only one ChatMessage is sent per pulse.
-	 */
-	private ChatMessage chatMessage;
+  /**
+   * This Players id within the Servers database.
+   */
+  private int databaseId;
 
-	/**
-	 * Constructs a new {@link Player} with the specified GameSession and PlayerCredentials.
-	 * 
-	 * @param session The GameSession this Player is attached to.
-	 * @param credentials The credentials of this Player.
-	 */
-	public Player(GameSession session, PlayerCredentials credentials) {
-		this.session = session;
-		this.credentials = credentials;
+  /**
+   * This Players appearance ticket.
+   */
+  private int appearanceTicket = nextAppearanceTicket();
 
-		appearance.init();
-		skills.init();
-	}
+  /**
+   * Constructs a new {@link Player} with the specified GameSession and PlayerCredentials.
+   * 
+   * @param session The GameSession this Player is attached to. @param credentials The credentials
+   * of this Player.
+   */
+  public Player(GameSession session, PlayerCredentials credentials) {
+    this.session = session;
+    this.credentials = credentials;
 
-	@Override
-	public void write(Message message) {
-		session.voidWrite(message);
-	}
+    appearance.init();
+    skills.init();
 
-	/**
-	 * Logs this Player into the World.
-	 */
-	public void login() {
-		// TODO: Attribute system?
-		write(new LoginResponseMessage(LoginResponseMessage.STATUS_OK, 0, false));
-		write(new InitializePlayerMessage(false, getIndex()));
+    flagUpdate(AppearancePlayerBlock.create(this));
+  }
 
-		session.seedCiphers(credentials.getSessionKeys());
-		session.attr().set(this);
+  @Override
+  public void write(Message message) {
+    session.voidWrite(message);
+  }
 
-		Position position = DEFAULT_POSITION;
-		setLastKnownRegion(position);
-		teleport(position);
+  /**
+   * Logs this Player into the World.
+   */
+  public void login() {
+    write(
+        new LoginResponseMessage(LoginResponseMessage.STATUS_OK, privileges.getPrimaryId(), false));
+    write(new InitializePlayerMessage(isMember(), getIndex()));
 
-		skills.addListener(new SynchronizationSkillListener(this));
-		skills.addListener(new LevelUpSkillListener(this));
+    session.seedCiphers(credentials.getSessionKeys());
+    session.attr().set(this);
 
-		write(new RebuildRegionMessage(position));
-		write(new ServerChatMessage("Welcome to %s.", session.getContext().getName()));
+    Position position = DEFAULT_POSITION;
+    setLastKnownRegion(position);
+    teleport(position);
 
-		skills.refresh();
-	}
+    skills.addListener(new SynchronizationSkillListener(this));
+    skills.addListener(new LevelUpSkillListener(this));
 
-	/**
-	 * Disconnects this Player from the World.
-	 */
-	public void disconnect() {
-		session.close();
-	}
+    widgets.open(new LogoutTabWidget());
 
-	/**
-	 * Generates the next appearance ticket.
-	 * 
-	 * @return The next available appearance ticket.
-	 */
-	private static int nextAppearanceTicket() {
-		if (++appearanceTicketCounter == 0) {
-			appearanceTicketCounter = 1;
-		}
-		return appearanceTicketCounter;
-	}
+    write(new RebuildRegionMessage(position));
+    write(new ServerChatMessage("Welcome to %s.", session.getContext().getName()));
 
-	/**
-	 * Gets the GameSession this Player is attached to.
-	 * 
-	 * @return The GameSession this Player is attached to.
-	 */
-	public GameSession getSession() {
-		return session;
-	}
+    if (isMember()) {
+      write(new ServerChatMessage("You are a member!"));
+    }
 
-	/**
-	 * Gets the Appearance for this Player.
-	 * 
-	 * @return The Appearance for this Player.
-	 */
-	public Appearance getAppearance() {
-		return appearance;
-	}
+    skills.refresh();
+  }
 
-	/**
-	 * Gets all of this Players appearance tickets.
-	 * 
-	 * @return All of this Players appearance tickets.
-	 */
-	public int[] getAppearanceTickets() {
-		return appearanceTickets;
-	}
+  /**
+   * Disconnects this Player from the World.
+   */
+  public void disconnect() {
+    session.close();
+  }
 
-	/**
-	 * Gets this Players appearance ticket.
-	 * 
-	 * @return This Players appearance ticket.
-	 */
-	public int getAppearanceTicket() {
-		return appearanceTicket;
-	}
+  /**
+   * Generates the next appearance ticket.
+   * 
+   * @return The next available appearance ticket.
+   */
+  private static int nextAppearanceTicket() {
+    if (appearanceTicketCounter.incrementAndGet() == 0) {
+      appearanceTicketCounter.set(1);
+    }
+    return appearanceTicketCounter.get();
+  }
 
-	/**
-	 * Gets the credentials of this Player.
-	 * 
-	 * @return This Players credentials.
-	 */
-	public PlayerCredentials getCredentials() {
-		return credentials;
-	}
+  /**
+   * Gets the GameSession this Player is attached to.
+   * 
+   * @return The GameSession this Player is attached to.
+   */
+  public GameSession getSession() {
+    return session;
+  }
 
-	/**
-	 * Gets whether or not the map region has changed.
-	 * 
-	 * @return {@code true} if the map region has changed and an update is required, otherwise {@code false}.
-	 */
-	public boolean hasMapRegionChanged() {
-		return mapRegionChanged;
-	}
+  /**
+   * Gets the Appearance for this Player.
+   * 
+   * @return The Appearance for this Player.
+   */
+  public Appearance getAppearance() {
+    return appearance;
+  }
 
-	/**
-	 * Gets this Players id within the Servers database.
-	 * 
-	 * @return This Players id within the Servers database.
-	 */
-	public int getDatabaseId() {
-		return databaseId;
-	}
+  /**
+   * Gets this Players privileges.
+   * 
+   * @return This Players privileges.
+   */
+  public PlayerPrivileges getPrivileges() {
+    return privileges;
+  }
 
-	/**
-	 * Gets the last known region for this Player.
-	 * 
-	 * @return The last known region for this Player.
-	 */
-	public Position getLastKnownRegion() {
-		return lastKnownRegion;
-	}
+  /**
+   * Gets all of this Players appearance tickets.
+   * 
+   * @return All of this Players appearance tickets.
+   */
+  public int[] getAppearanceTickets() {
+    return appearanceTickets;
+  }
 
-	/**
-	 * Gets this Players username.
-	 * 
-	 * @return This Players username.
-	 */
-	public String getUsername() {
-		return credentials.getUsername();
-	}
+  /**
+   * Gets this Players appearance ticket.
+   * 
+   * @return This Players appearance ticket.
+   */
+  public int getAppearanceTicket() {
+    return appearanceTicket;
+  }
 
-	/**
-	 * Gets this Players encoded username.
-	 * 
-	 * @return This Players encoded username.
-	 */
-	public long getEncodedUsername() {
-		return credentials.getEncodedUsername();
-	}
+  /**
+   * Gets the credentials of this Player.
+   * 
+   * @return This Players credentials.
+   */
+  public PlayerCredentials getCredentials() {
+    return credentials;
+  }
 
-	/**
-	 * Gets this Players cached ChatMessage, wrapped in an Optional.
-	 * 
-	 * @return This Players cached ChatMessage as an Optional.
-	 */
-	public ChatMessage getChatMessage() {
-		return chatMessage;
-	}
+  /**
+   * Gets whether or not the map region has changed.
+   * 
+   * @return {@code true} if the map region has changed and an update is required, otherwise {@code
+   * false}.
+   */
+  public boolean hasMapRegionChanged() {
+    return mapRegionChanged;
+  }
 
-	/**
-	 * Gets this player's viewing distance.
-	 *
-	 * @return The viewing distance.
-	 */
-	public int getViewingDistance() {
-		return viewingDistance;
-	}
+  /**
+   * Gets this Players id within the Servers database.
+   * 
+   * @return This Players id within the Servers database.
+   */
+  public int getDatabaseId() {
+    return databaseId;
+  }
 
-	/**
-	 * Resets this player's viewing distance.
-	 */
-	public void resetViewingDistance() {
-		viewingDistance = 1;
-	}
+  /**
+   * Gets the last known region for this Player.
+   * 
+   * @return The last known region for this Player.
+   */
+  public Position getLastKnownRegion() {
+    return lastKnownRegion;
+  }
 
-	/**
-	 * Sets the excessive players flag.
-	 */
-	public void flagExcessivePlayers() {
-		excessivePlayers = true;
-	}
+  /**
+   * Gets this Players username.
+   * 
+   * @return This Players username.
+   */
+  public String getUsername() {
+    return credentials.getUsername();
+  }
 
-	/**
-	 * Checks if there are excessive players.
-	 *
-	 * @return {@code true} if so, {@code false} if not.
-	 */
-	public boolean isExcessivePlayersSet() {
-		return excessivePlayers;
-	}
+  /**
+   * Gets this Players encoded username.
+   * 
+   * @return This Players encoded username.
+   */
+  public long getEncodedUsername() {
+    return credentials.getEncodedUsername();
+  }
 
-	/**
-	 * Resets the excessive players flag.
-	 */
-	public void resetExcessivePlayers() {
-		excessivePlayers = false;
-	}
+  /**
+   * Gets this player's viewing distance.
+   *
+   * @return The viewing distance.
+   */
+  public int getViewingDistance() {
+    return viewingDistance;
+  }
 
-	/**
-	 * Increments this player's viewing distance if it is less than the maximum viewing distance.
-	 */
-	public void incrementViewingDistance() {
-		if (viewingDistance < Position.MAX_DISTANCE) {
-			viewingDistance++;
-		}
-	}
+  /**
+   * Resets this player's viewing distance.
+   */
+  public void resetViewingDistance() {
+    viewingDistance = 1;
+  }
 
-	/**
-	 * Decrements this player's viewing distance if it is greater than 1.
-	 */
-	public void decrementViewingDistance() {
-		if (viewingDistance > 1) {
-			viewingDistance--;
-		}
-	}
+  /**
+   * Sets the excessive players flag.
+   */
+  public void flagExcessivePlayers() {
+    excessivePlayers = true;
+  }
 
-	/**
-	 * Sets this Players cached ChatMessage.
-	 * 
-	 * @param chatMessage The ChatMessage to set.
-	 */
-	public void setChatMessage(ChatMessage chatMessage) {
-		this.chatMessage = chatMessage;
-	}
+  /**
+   * Checks if there are excessive players.
+   *
+   * @return {@code true} if so, {@code false} if not.
+   */
+  public boolean isExcessivePlayersSet() {
+    return excessivePlayers;
+  }
 
-	/**
-	 * Sets the last known region for this Player.
-	 * 
-	 * @param lastKnownRegion The last known region to set.
-	 */
-	public void setLastKnownRegion(Position lastKnownRegion) {
-		this.lastKnownRegion = lastKnownRegion;
-		mapRegionChanged = true;
-	}
+  /**
+   * Resets the excessive players flag.
+   */
+  public void resetExcessivePlayers() {
+    excessivePlayers = false;
+  }
 
-	/**
-	 * Sets this Players id within the Servers database.
-	 * 
-	 * @param databaseId The database id to set.
-	 */
-	public void setDatabaseId(int databaseId) {
-		this.databaseId = databaseId;
-	}
+  /**
+   * Increments this player's viewing distance if it is less than the maximum viewing distance.
+   */
+  public void incrementViewingDistance() {
+    if (viewingDistance < Position.MAX_DISTANCE) {
+      viewingDistance++;
+    }
+  }
 
-	/**
-	 * Resets this Players cached ChatMessage.
-	 */
-	public void resetChatMessage() {
-		chatMessage = null;
-	}
+  /**
+   * Decrements this player's viewing distance if it is greater than 1.
+   */
+  public void decrementViewingDistance() {
+    if (viewingDistance > 1) {
+      viewingDistance--;
+    }
+  }
 
-	@Override
-	public void reset() {
-		super.reset();
-		mapRegionChanged = false;
-		resetChatMessage();
-	}
+  /**
+   * Sets the last known region for this Player.
+   * 
+   * @param lastKnownRegion The last known region to set.
+   */
+  public void setLastKnownRegion(Position lastKnownRegion) {
+    this.lastKnownRegion = lastKnownRegion;
+    mapRegionChanged = true;
+  }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof Player) {
-			Player other = (Player) obj;
-			return other.getEncodedUsername() == getEncodedUsername();
-		}
+  /**
+   * Sets this Players id within the Servers database.
+   * 
+   * @param databaseId The database id to set.
+   */
+  public void setDatabaseId(int databaseId) {
+    this.databaseId = databaseId;
+  }
 
-		return false;
-	}
+  /**
+   * Tests whether or not this Player is a member. @return {@code true} iff this Player is a member,
+   * otherwise {@code false}.
+   */
+  private boolean isMember() {
+    return false;
+  }
 
-	@Override
-	public int hashCode() {
-		return Long.hashCode(getEncodedUsername());
-	}
+  @Override
+  public void reset() {
+    super.reset();
+    mapRegionChanged = false;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof Player) {
+      Player other = (Player) obj;
+      return other.getEncodedUsername() == getEncodedUsername();
+    }
+
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return Long.hashCode(getEncodedUsername());
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).add("username", getUsername()).toString();
+  }
 
 }
