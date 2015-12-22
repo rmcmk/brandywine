@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.sql2o.Sql2o;
 
-import io.netty.channel.ChannelHandler;
 import me.ryleykimmel.brandywine.fs.FileSystem;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationStrategy;
 import me.ryleykimmel.brandywine.game.auth.impl.SQLAuthenticationStrategy;
