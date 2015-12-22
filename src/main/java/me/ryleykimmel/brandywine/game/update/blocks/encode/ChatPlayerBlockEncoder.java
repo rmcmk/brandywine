@@ -10,17 +10,17 @@ import me.ryleykimmel.brandywine.network.msg.impl.PlayerUpdateMessage;
 
 public final class ChatPlayerBlockEncoder implements PlayerUpdateBlockEncoder<ChatPlayerBlock> {
 
-	@Override
-	public void encode(ChatPlayerBlock block, PlayerUpdateMessage message, FrameBuilder builder) {
-		ChatMessage chatMessage = block.getChatMessage();
+  @Override
+  public void encode(ChatPlayerBlock block, PlayerUpdateMessage message, FrameBuilder builder) {
+    ChatMessage chatMessage = block.getChatMessage();
 
-		builder.put(DataType.BYTE, chatMessage.getTextEffects());
-		builder.put(DataType.BYTE, chatMessage.getTextColor());
-		builder.put(DataType.BYTE, block.getPrivilegeId());
+    builder.put(DataType.BYTE, chatMessage.getTextEffects());
+    builder.put(DataType.BYTE, chatMessage.getTextColor());
+    builder.put(DataType.BYTE, block.getPrivilegeId());
 
-		byte[] bytes = chatMessage.getCompressedMessage();
-		builder.put(DataType.BYTE, DataTransformation.NEGATE, bytes.length);
-		builder.putBytesReverse(bytes);
-	}
+    byte[] bytes = chatMessage.getCompressedMessage();
+    builder.put(DataType.BYTE, DataTransformation.NEGATE, bytes.length);
+    builder.putBytesReverse(bytes);
+  }
 
 }

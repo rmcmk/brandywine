@@ -17,12 +17,12 @@ import me.ryleykimmel.brandywine.network.msg.impl.RebuildRegionMessage;
 @Encodes(RebuildRegionMessage.class)
 public final class RebuildRegionMessageEncoder implements MessageEncoder<RebuildRegionMessage> {
 
-	@Override
-	public Frame encode(RebuildRegionMessage message, ByteBufAllocator alloc) {
-		FrameBuilder builder = new FrameBuilder(73, alloc);
-		builder.put(DataType.SHORT, DataTransformation.ADD, message.getPosition().getCentralRegionX());
-		builder.put(DataType.SHORT, message.getPosition().getCentralRegionY());
-		return builder.build();
-	}
+  @Override
+  public Frame encode(RebuildRegionMessage message, ByteBufAllocator alloc) {
+    FrameBuilder builder = new FrameBuilder(73, alloc);
+    builder.put(DataType.SHORT, DataTransformation.ADD, message.getPosition().getCentralRegionX());
+    builder.put(DataType.SHORT, message.getPosition().getCentralRegionY());
+    return builder.build();
+  }
 
 }

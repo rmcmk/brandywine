@@ -7,27 +7,27 @@ package me.ryleykimmel.brandywine.game.model;
  */
 public abstract class Entity {
 
-	/**
-	 * The current Position of this Entity.
-	 */
-	protected Position position;
+  /**
+   * The current Position of this Entity.
+   */
+  protected Position position;
 
-	/**
-	 * Sets the Position of this Entity.
-	 *
-	 * @param position The new Position of this Entity.
-	 */
-	public void setPosition(Position position) {
-		this.position = position;
-	}
+  /**
+   * Sets the Position of this Entity.
+   *
+   * @param position The new Position of this Entity.
+   */
+  public void setPosition(Position position) {
+    this.position = position;
+  }
 
-	/**
-	 * Gets this Entity's current Position.
-	 *
-	 * @return This Entity's current Position.
-	 */
-	public final Position getPosition() {
-		return position;
-	}
+  /**
+   * Gets this Entity's current Position.
+   *
+   * @return This Entity's current Position.
+   */
+  public final Position getPosition() {
+    return position;
+  }
 
 }

@@ -14,9 +14,9 @@ import me.ryleykimmel.brandywine.network.msg.impl.ResetDestinationMessage;
 @Encodes(ResetDestinationMessage.class)
 public class ResetDestinationMessageEncoder implements MessageEncoder<ResetDestinationMessage> {
 
-	@Override
-	public Frame encode(ResetDestinationMessage message, ByteBufAllocator alloc) {
-		return new Frame(78);
-	}
+  @Override
+  public Frame encode(ResetDestinationMessage message, ByteBufAllocator alloc) {
+    return new Frame(78);
+  }
 
 }

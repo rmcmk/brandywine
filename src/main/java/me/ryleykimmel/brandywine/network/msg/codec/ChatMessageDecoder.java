@@ -18,25 +18,25 @@ import me.ryleykimmel.brandywine.network.msg.impl.ChatMessage;
 @Decodes(4)
 public final class ChatMessageDecoder implements MessageDecoder<ChatMessage> {
 
-	@Override
-	public ChatMessage decode(Frame frame) {
-		FrameReader reader = new FrameReader(frame);
+  @Override
+  public ChatMessage decode(Frame frame) {
+    FrameReader reader = new FrameReader(frame);
 
-		int effects = (int) reader.getUnsigned(DataType.BYTE, DataTransformation.SUBTRACT);
-		int color = (int) reader.getUnsigned(DataType.BYTE, DataTransformation.SUBTRACT);
-		int length = frame.getLength() - 2;
+    int effects = (int) reader.getUnsigned(DataType.BYTE, DataTransformation.SUBTRACT);
+    int color = (int) reader.getUnsigned(DataType.BYTE, DataTransformation.SUBTRACT);
+    int length = frame.getLength() - 2;
 
-		byte[] originalCompressed = new byte[length];
-		reader.getBytesReverse(DataTransformation.ADD, originalCompressed);
+    byte[] originalCompressed = new byte[length];
+    reader.getBytesReverse(DataTransformation.ADD, originalCompressed);
 
-		String uncompressed = TextUtil.decompress(originalCompressed, length);
-		uncompressed = TextUtil.filterInvalidCharacters(uncompressed);
-		uncompressed = Strings.capitalize(uncompressed);
+    String uncompressed = TextUtil.decompress(originalCompressed, length);
+    uncompressed = TextUtil.filterInvalidCharacters(uncompressed);
+    uncompressed = Strings.capitalize(uncompressed);
 
-		byte[] recompressed = new byte[length];
-		TextUtil.compress(uncompressed, recompressed);
+    byte[] recompressed = new byte[length];
+    TextUtil.compress(uncompressed, recompressed);
 
-		return new ChatMessage(uncompressed, recompressed, color, effects);
-	}
+    return new ChatMessage(uncompressed, recompressed, color, effects);
+  }
 
 }

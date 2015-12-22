@@ -17,21 +17,24 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 
 public final class DescriptorEncoderSet {
 
-	private final Map<Class<? extends Descriptor<? extends Mob, ? extends Message>>, DescriptorEncoder<? extends Message, ? extends Descriptor<? extends Mob, ? extends Message>>> descriptors = new HashMap<>();
+  private final Map<Class<? extends Descriptor<? extends Mob, ? extends Message>>, DescriptorEncoder<? extends Message, ? extends Descriptor<? extends Mob, ? extends Message>>> descriptors =
+      new HashMap<>();
 
-	public DescriptorEncoderSet() {
-		descriptors.put(AddPlayerDescriptor.class, new AddPlayerDescriptorEncoder());
-		descriptors.put(IdlePlayerDescriptor.class, new IdlePlayerDescriptorEncoder());
-		descriptors.put(RemovePlayerDescriptor.class, new RemovePlayerDescriptorEncoder());
-		descriptors.put(RunPlayerDescriptor.class, new RunPlayerDescriptorEncoder());
-		descriptors.put(WalkPlayerDescriptor.class, new WalkPlayerDescriptorEncoder());
-		descriptors.put(TeleportPlayerDescriptor.class, new TeleportPlayerDescriptorEncoder());
-	}
+  public DescriptorEncoderSet() {
+    descriptors.put(AddPlayerDescriptor.class, new AddPlayerDescriptorEncoder());
+    descriptors.put(IdlePlayerDescriptor.class, new IdlePlayerDescriptorEncoder());
+    descriptors.put(RemovePlayerDescriptor.class, new RemovePlayerDescriptorEncoder());
+    descriptors.put(RunPlayerDescriptor.class, new RunPlayerDescriptorEncoder());
+    descriptors.put(WalkPlayerDescriptor.class, new WalkPlayerDescriptorEncoder());
+    descriptors.put(TeleportPlayerDescriptor.class, new TeleportPlayerDescriptorEncoder());
+  }
 
-	@SuppressWarnings("unchecked")
-	public <M extends Message, D extends Descriptor<? extends Mob, M>> void encode(D descriptor, M message, FrameBuilder builder, FrameBuilder blockBuilder) {
-		DescriptorEncoder<M, D> encoder = (DescriptorEncoder<M, D>) descriptors.get(descriptor.getClass());
-		encoder.encode(descriptor, message, builder, blockBuilder);
-	}
+  @SuppressWarnings("unchecked")
+  public <M extends Message, D extends Descriptor<? extends Mob, M>> void encode(D descriptor,
+      M message, FrameBuilder builder, FrameBuilder blockBuilder) {
+    DescriptorEncoder<M, D> encoder =
+        (DescriptorEncoder<M, D>) descriptors.get(descriptor.getClass());
+    encoder.encode(descriptor, message, builder, blockBuilder);
+  }
 
 }

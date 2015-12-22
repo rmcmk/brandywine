@@ -14,15 +14,16 @@ import me.ryleykimmel.brandywine.network.msg.impl.LoginHandshakeResponseMessage;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Encodes(LoginHandshakeResponseMessage.class)
-public final class LoginHandshakeResponseMessageEncoder implements MessageEncoder<LoginHandshakeResponseMessage> {
+public final class LoginHandshakeResponseMessageEncoder
+    implements MessageEncoder<LoginHandshakeResponseMessage> {
 
-	@Override
-	public Frame encode(LoginHandshakeResponseMessage message, ByteBufAllocator alloc) {
-		FrameBuilder builder = new FrameBuilder(alloc);
-		builder.put(DataType.BYTE, message.getStatus());
-		builder.putBytes(message.getDummy());
-		builder.put(DataType.LONG, message.getSessionKey());
-		return builder.build();
-	}
+  @Override
+  public Frame encode(LoginHandshakeResponseMessage message, ByteBufAllocator alloc) {
+    FrameBuilder builder = new FrameBuilder(alloc);
+    builder.put(DataType.BYTE, message.getStatus());
+    builder.putBytes(message.getDummy());
+    builder.put(DataType.LONG, message.getSessionKey());
+    return builder.build();
+  }
 
 }

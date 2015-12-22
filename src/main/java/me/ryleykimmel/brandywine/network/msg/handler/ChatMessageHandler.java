@@ -15,10 +15,10 @@ import me.ryleykimmel.brandywine.network.msg.impl.ChatMessage;
 @Handles(ChatMessage.class)
 public final class ChatMessageHandler implements MessageHandler<ChatMessage> {
 
-	@Override
-	public void handle(GameSession session, ChatMessage message) {
-		Player player = session.attr().get();
-		player.flagUpdate(ChatPlayerBlock.create(player, message));
-	}
+  @Override
+  public void handle(GameSession session, ChatMessage message) {
+    Player player = session.attr().get();
+    player.flagUpdate(ChatPlayerBlock.create(player, message));
+  }
 
 }

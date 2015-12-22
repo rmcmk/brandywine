@@ -16,28 +16,27 @@ import me.ryleykimmel.brandywine.parser.TomlParser;
  */
 public final class ConfigurationParser extends TomlParser {
 
-	/**
-	 * The context of the Server.
-	 */
-	private final ServerContext context;
+  /**
+   * The context of the Server.
+   */
+  private final ServerContext context;
 
-	/**
-	 * Constructs a new {@link ConfigurationParser} with the specified path and ServerContext.
-	 *
-	 * @param path The path to the source.
-	 * @param context The context of the Server.
-	 */
-	public ConfigurationParser(String path, ServerContext context) {
-		super(path);
-		this.context = context;
-	}
+  /**
+   * Constructs a new {@link ConfigurationParser} with the specified path and ServerContext.
+   *
+   * @param path The path to the source. @param context The context of the Server.
+   */
+  public ConfigurationParser(String path, ServerContext context) {
+    super(path);
+    this.context = context;
+  }
 
-	@Override
-	public void parse(Reader source, Toml data) throws IOException {
-		context.setName(data.getString("name"));
-		context.setGamePort(getInteger("game_port"));
-		context.setFileSystem(FileSystem.create(data.getString("fs_directory")));
-		context.setConnectionLimit(getInteger("connection_limit"));
-	}
+  @Override
+  public void parse(Reader source, Toml data) throws IOException {
+    context.setName(data.getString("name"));
+    context.setGamePort(getInteger("game_port"));
+    context.setFileSystem(FileSystem.create(data.getString("fs_directory")));
+    context.setConnectionLimit(getInteger("connection_limit"));
+  }
 
 }

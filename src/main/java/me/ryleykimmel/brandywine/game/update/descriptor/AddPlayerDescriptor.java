@@ -12,25 +12,25 @@ import me.ryleykimmel.brandywine.game.update.Updater;
  */
 public final class AddPlayerDescriptor extends PlayerDescriptor {
 
-	private final int index;
-	private final Position position;
+  private final int index;
+  private final Position position;
 
-	public AddPlayerDescriptor(Player player, Updater updater) {
-		this(player, updater, player.getIndex(), player.getPosition());
-	}
+  public AddPlayerDescriptor(Player player, Updater updater) {
+    this(player, updater, player.getIndex(), player.getPosition());
+  }
 
-	public AddPlayerDescriptor(Player player, Updater updater, int index, Position position) {
-		super(player, updater);
-		this.index = index;
-		this.position = position;
-	}
+  public AddPlayerDescriptor(Player player, Updater updater, int index, Position position) {
+    super(player, updater);
+    this.index = index;
+    this.position = position;
+  }
 
-	public int getIndex() {
-		return index;
-	}
+  public int getIndex() {
+    return index;
+  }
 
-	public Position getPosition() {
-		return position;
-	}
+  public Position getPosition() {
+    return position;
+  }
 
 }

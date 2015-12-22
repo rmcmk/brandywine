@@ -18,14 +18,14 @@ import me.ryleykimmel.brandywine.network.msg.impl.UpdateSkillMessage;
 @Encodes(UpdateSkillMessage.class)
 public final class UpdateSkillMessageEncoder implements MessageEncoder<UpdateSkillMessage> {
 
-	@Override
-	public Frame encode(UpdateSkillMessage message, ByteBufAllocator alloc) {
-		FrameBuilder builder = new FrameBuilder(134, alloc);
-		Skill skill = message.getSkill();
-		builder.put(DataType.BYTE, skill.getId());
-		builder.put(DataType.INT, DataOrder.MIDDLE, (int) skill.getExperience());
-		builder.put(DataType.BYTE, skill.getCurrentLevel());
-		return builder.build();
-	}
+  @Override
+  public Frame encode(UpdateSkillMessage message, ByteBufAllocator alloc) {
+    FrameBuilder builder = new FrameBuilder(134, alloc);
+    Skill skill = message.getSkill();
+    builder.put(DataType.BYTE, skill.getId());
+    builder.put(DataType.INT, DataOrder.MIDDLE, (int) skill.getExperience());
+    builder.put(DataType.BYTE, skill.getCurrentLevel());
+    return builder.build();
+  }
 
 }

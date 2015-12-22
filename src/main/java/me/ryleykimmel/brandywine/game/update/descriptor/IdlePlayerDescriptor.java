@@ -11,8 +11,8 @@ import me.ryleykimmel.brandywine.game.update.Updater;
  */
 public final class IdlePlayerDescriptor extends PlayerDescriptor {
 
-	public IdlePlayerDescriptor(Player player, Updater updater) {
-		super(player, updater);
-	}
+  public IdlePlayerDescriptor(Player player, Updater updater) {
+    super(player, updater);
+  }
 
 }

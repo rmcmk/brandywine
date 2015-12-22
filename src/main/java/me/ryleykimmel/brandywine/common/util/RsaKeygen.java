@@ -28,88 +28,88 @@ import com.google.common.base.Stopwatch;
  */
 public final class RsaKeygen {
 
-	/**
-	 * The logger for this class.
-	 */
-	private static final Logger logger = LoggerFactory.getLogger(RsaKeygen.class);
+  /**
+   * The logger for this class.
+   */
+  private static final Logger logger = LoggerFactory.getLogger(RsaKeygen.class);
 
-	/**
-	 * The RSA algorithm name.
-	 */
-	private static final String ALGORITHM = "RSA";
+  /**
+   * The RSA algorithm name.
+   */
+  private static final String ALGORITHM = "RSA";
 
-	/**
-	 * The modulus' length, specified in the number of bits.
-	 */
-	private static final int BITS = 1024;
+  /**
+   * The modulus' length, specified in the number of bits.
+   */
+  private static final int BITS = 1024;
 
-	/**
-	 * Generates a public and private RSA keypair.
-	 * 
-	 * @throws NoSuchAlgorithmException If the specified algorithm is not available in this environment.
-	 * @throws InvalidKeySpecException If any key cannot be processed.
-	 * @throws IOException If some I/O exception occurs.
-	 */
-	public void generate() throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
-		KeyPairGenerator generator = KeyPairGenerator.getInstance(ALGORITHM);
-		generator.initialize(BITS);
+  /**
+   * Generates a public and private RSA keypair.
+   * 
+   * @throws NoSuchAlgorithmException If the specified algorithm is not available in this
+   * environment. @throws InvalidKeySpecException If any key cannot be processed. @throws
+   * IOException If some I/O exception occurs.
+   */
+  public void generate() throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+    KeyPairGenerator generator = KeyPairGenerator.getInstance(ALGORITHM);
+    generator.initialize(BITS);
 
-		KeyPair pair = generator.generateKeyPair();
-		KeyFactory factory = KeyFactory.getInstance(ALGORITHM);
+    KeyPair pair = generator.generateKeyPair();
+    KeyFactory factory = KeyFactory.getInstance(ALGORITHM);
 
-		RSAPublicKeySpec publicSpec = factory.getKeySpec(pair.getPublic(), RSAPublicKeySpec.class);
-		RSAPrivateKeySpec privateSpec = factory.getKeySpec(pair.getPrivate(), RSAPrivateKeySpec.class);
+    RSAPublicKeySpec publicSpec = factory.getKeySpec(pair.getPublic(), RSAPublicKeySpec.class);
+    RSAPrivateKeySpec privateSpec = factory.getKeySpec(pair.getPrivate(), RSAPrivateKeySpec.class);
 
-		write("rsa_public", publicSpec.getModulus(), publicSpec.getPublicExponent());
-		write("rsa_private", privateSpec.getModulus(), privateSpec.getPrivateExponent());
-	}
+    write("rsa_public", publicSpec.getModulus(), publicSpec.getPublicExponent());
+    write("rsa_private", privateSpec.getModulus(), privateSpec.getPrivateExponent());
+  }
 
-	/**
-	 * Writes a RSA keypair to disk.
-	 * 
-	 * @param root The root directory to write the RSA keypair.
-	 * @param modulus The RSA modulus.
-	 * @param exponent The RSA exponent.
-	 * @throws IOException If some I/O exception occurs.
-	 */
-	private void write(String root, BigInteger modulus, BigInteger exponent) throws IOException {
-		Path path = Paths.get("data", root);
+  /**
+   * Writes a RSA keypair to disk.
+   * 
+   * @param root The root directory to write the RSA keypair. @param modulus The RSA modulus. @param
+   * exponent The RSA exponent. @throws IOException If some I/O exception occurs.
+   */
+  private void write(String root, BigInteger modulus, BigInteger exponent) throws IOException {
+    Path path = Paths.get("data", root);
 
-		// Create the directories if they don't exist.
-		if (Files.notExists(path)) {
-			Files.createDirectories(path);
-		}
+    // Create the directories if they don't exist.
+    if (Files.notExists(path)) {
+      Files.createDirectories(path);
+    }
 
-		try (BufferedWriter writer = Files.newBufferedWriter(path.resolve("rsa.key"), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
-			writer.write("private static final BigInteger RSA_MODULUS = new BigInteger(\"");
-			writer.write(modulus.toString());
-			writer.write("\");");
-			writer.newLine();
+    try (BufferedWriter writer = Files.newBufferedWriter(path.resolve("rsa.key"),
+        StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+      writer.write("private static final BigInteger RSA_MODULUS = new BigInteger(\"");
+      writer.write(modulus.toString());
+      writer.write("\");");
+      writer.newLine();
 
-			writer.write("private static final BigInteger RSA_EXPONENT = new BigInteger(\"");
-			writer.write(exponent.toString());
-			writer.write("\");");
-			writer.newLine();
-		}
-	}
+      writer.write("private static final BigInteger RSA_EXPONENT = new BigInteger(\"");
+      writer.write(exponent.toString());
+      writer.write("\");");
+      writer.newLine();
+    }
+  }
 
-	/**
-	 * The entry point of this application which implements the command line-interface.
-	 *
-	 * @param args The command-line arguments.
-	 */
-	public static void main(String[] args) {
-		RsaKeygen keygen = new RsaKeygen();
+  /**
+   * The entry point of this application which implements the command line-interface.
+   *
+   * @param args The command-line arguments.
+   */
+  public static void main(String[] args) {
+    RsaKeygen keygen = new RsaKeygen();
 
-		Stopwatch stopwatch = Stopwatch.createStarted();
-		try {
-			keygen.generate();
-		} catch (NoSuchAlgorithmException | InvalidKeySpecException | IOException cause) {
-			logger.error("Unable to generate RSA keypair!", cause);
-			System.exit(0);
-		}
+    Stopwatch stopwatch = Stopwatch.createStarted();
+    try {
+      keygen.generate();
+    } catch (NoSuchAlgorithmException | InvalidKeySpecException | IOException cause) {
+      logger.error("Unable to generate RSA keypair!", cause);
+      System.exit(0);
+    }
 
-		logger.info("Took {}ms to generate public and private RSA keypairs.", stopwatch.stop().elapsed(TimeUnit.MILLISECONDS));
-	}
+    logger.info("Took {}ms to generate public and private RSA keypairs.",
+        stopwatch.stop().elapsed(TimeUnit.MILLISECONDS));
+  }
 
 }

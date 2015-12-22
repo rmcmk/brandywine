@@ -11,22 +11,22 @@ import me.ryleykimmel.brandywine.game.update.Updater;
  */
 public final class TeleportPlayerDescriptor extends PlayerDescriptor {
 
-	/**
-	 * A flag denoting whether or not the map region has changed.
-	 */
-	private final boolean mapRegionChanged;
+  /**
+   * A flag denoting whether or not the map region has changed.
+   */
+  private final boolean mapRegionChanged;
 
-	public TeleportPlayerDescriptor(Player player, Updater updater) {
-		this(player, updater, player.hasMapRegionChanged());
-	}
+  public TeleportPlayerDescriptor(Player player, Updater updater) {
+    this(player, updater, player.hasMapRegionChanged());
+  }
 
-	public TeleportPlayerDescriptor(Player player, Updater updater, boolean mapRegionChanged) {
-		super(player, updater);
-		this.mapRegionChanged = mapRegionChanged;
-	}
+  public TeleportPlayerDescriptor(Player player, Updater updater, boolean mapRegionChanged) {
+    super(player, updater);
+    this.mapRegionChanged = mapRegionChanged;
+  }
 
-	public boolean hasMapRegionChanged() {
-		return mapRegionChanged;
-	}
+  public boolean hasMapRegionChanged() {
+    return mapRegionChanged;
+  }
 
 }

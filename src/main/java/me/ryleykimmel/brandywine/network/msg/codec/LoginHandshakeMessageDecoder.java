@@ -15,11 +15,11 @@ import me.ryleykimmel.brandywine.network.msg.impl.LoginHandshakeMessage;
 @Decodes(14)
 public final class LoginHandshakeMessageDecoder implements MessageDecoder<LoginHandshakeMessage> {
 
-	@Override
-	public LoginHandshakeMessage decode(Frame frame) {
-		FrameReader reader = new FrameReader(frame);
-		int nameHash = (int) reader.getUnsigned(DataType.BYTE);
-		return new LoginHandshakeMessage(nameHash);
-	}
+  @Override
+  public LoginHandshakeMessage decode(Frame frame) {
+    FrameReader reader = new FrameReader(frame);
+    int nameHash = (int) reader.getUnsigned(DataType.BYTE);
+    return new LoginHandshakeMessage(nameHash);
+  }
 
 }

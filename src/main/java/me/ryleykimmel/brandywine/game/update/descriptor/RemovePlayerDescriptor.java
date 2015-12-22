@@ -13,14 +13,15 @@ import me.ryleykimmel.brandywine.network.msg.impl.PlayerUpdateMessage;
  */
 public final class RemovePlayerDescriptor extends PlayerDescriptor {
 
-	public RemovePlayerDescriptor(Player player, Updater updater) {
-		super(player, updater);
-	}
+  public RemovePlayerDescriptor(Player player, Updater updater) {
+    super(player, updater);
+  }
 
-	@Override
-	public void encode(PlayerUpdateMessage message, FrameBuilder builder, FrameBuilder blockBuilder) {
-		updater.getDescriptorEncoders().encode(this, message, builder, blockBuilder);
-		// XXX: Maybe remove this method and clear the pending updates when this descriptor is constructed?
-	}
+  @Override
+  public void encode(PlayerUpdateMessage message, FrameBuilder builder, FrameBuilder blockBuilder) {
+    updater.getDescriptorEncoders().encode(this, message, builder, blockBuilder);
+    // XXX: Maybe remove this method and clear the pending updates when this descriptor is
+    // constructed?
+  }
 
 }

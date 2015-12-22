@@ -18,25 +18,25 @@ import me.ryleykimmel.brandywine.network.msg.impl.MovementMessage;
 @Handles(MovementMessage.class)
 public final class MovementMessageHandler implements MessageHandler<MovementMessage> {
 
-	@Override
-	public void handle(GameSession session, MovementMessage message) {
-		Player player = session.attr().get();
+  @Override
+  public void handle(GameSession session, MovementMessage message) {
+    Player player = session.attr().get();
 
-		MovementQueue queue = player.getMovementQueue();
-		Queue<Position> steps = message.getSteps();
+    MovementQueue queue = player.getMovementQueue();
+    Queue<Position> steps = message.getSteps();
 
-		Position step = steps.poll();
-		if (step == null) {
-			return;
-		}
+    Position step = steps.poll();
+    if (step == null) {
+      return;
+    }
 
-		queue.addFirstStep(step);
+    queue.addFirstStep(step);
 
-		while ((step = steps.poll()) != null) {
-			queue.addStep(step);
-		}
+    while ((step = steps.poll()) != null) {
+      queue.addStep(step);
+    }
 
-		queue.setRunning(message.isRunning() || player.isRunning());
-	}
+    queue.setRunning(message.isRunning() || player.isRunning());
+  }
 
 }

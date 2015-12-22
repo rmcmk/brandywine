@@ -11,27 +11,27 @@ import me.ryleykimmel.brandywine.network.msg.impl.ChatMessage;
  */
 public class ChatPlayerBlock extends UpdateBlock {
 
-	public static ChatPlayerBlock create(Player player, ChatMessage message) {
-		return new ChatPlayerBlock(player.getPrivileges().getPrimaryId(), message);
-	}
+  public static ChatPlayerBlock create(Player player, ChatMessage message) {
+    return new ChatPlayerBlock(player.getPrivileges().getPrimaryId(), message);
+  }
 
-	private static final int MASK = 0x80;
+  private static final int MASK = 0x80;
 
-	private final int privilegeId;
-	private final ChatMessage chatMessage;
+  private final int privilegeId;
+  private final ChatMessage chatMessage;
 
-	public ChatPlayerBlock(int privilegeId, ChatMessage chatMessage) {
-		super(MASK);
-		this.privilegeId = privilegeId;
-		this.chatMessage = chatMessage;
-	}
+  public ChatPlayerBlock(int privilegeId, ChatMessage chatMessage) {
+    super(MASK);
+    this.privilegeId = privilegeId;
+    this.chatMessage = chatMessage;
+  }
 
-	public ChatMessage getChatMessage() {
-		return chatMessage;
-	}
+  public ChatMessage getChatMessage() {
+    return chatMessage;
+  }
 
-	public int getPrivilegeId() {
-		return privilegeId;
-	}
+  public int getPrivilegeId() {
+    return privilegeId;
+  }
 
 }

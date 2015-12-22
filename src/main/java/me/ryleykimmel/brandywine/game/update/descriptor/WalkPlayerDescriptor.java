@@ -12,22 +12,22 @@ import me.ryleykimmel.brandywine.game.update.Updater;
  */
 public class WalkPlayerDescriptor extends PlayerDescriptor {
 
-	/**
-	 * The direction of movement.
-	 */
-	private final Direction direction;
+  /**
+   * The direction of movement.
+   */
+  private final Direction direction;
 
-	public WalkPlayerDescriptor(Player player, Updater updater) {
-		this(player, updater, player.getFirstDirection());
-	}
+  public WalkPlayerDescriptor(Player player, Updater updater) {
+    this(player, updater, player.getFirstDirection());
+  }
 
-	public WalkPlayerDescriptor(Player player, Updater updater, Direction direction) {
-		super(player, updater);
-		this.direction = direction;
-	}
+  public WalkPlayerDescriptor(Player player, Updater updater, Direction direction) {
+    super(player, updater);
+    this.direction = direction;
+  }
 
-	public Direction getDirection() {
-		return direction;
-	}
+  public Direction getDirection() {
+    return direction;
+  }
 
 }

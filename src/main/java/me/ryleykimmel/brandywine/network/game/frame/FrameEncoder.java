@@ -12,43 +12,44 @@ import me.ryleykimmel.brandywine.network.game.GameSession;
  */
 public final class FrameEncoder extends MessageToByteEncoder<Frame> {
 
-	/**
-	 * The GameSession to encode Frames for.
-	 */
-	private final GameSession session;
+  /**
+   * The GameSession to encode Frames for.
+   */
+  private final GameSession session;
 
-	/**
-	 * Constructs a new {@link FrameEncoder} with the specified GameSession.
-	 *
-	 * @param session The GameSession to encode Frames for.
-	 */
-	public FrameEncoder(GameSession session) {
-		this.session = session;
-	}
+  /**
+   * Constructs a new {@link FrameEncoder} with the specified GameSession.
+   *
+   * @param session The GameSession to encode Frames for.
+   */
+  public FrameEncoder(GameSession session) {
+    this.session = session;
+  }
 
-	@Override
-	protected void encode(ChannelHandlerContext ctx, Frame frame, ByteBuf out) {
+  @Override
+  protected void encode(ChannelHandlerContext ctx, Frame frame, ByteBuf out) {
 
-		// Only write the opcode and length if the Frame has a valid opcode.
-		if (frame.hasValidOpcode()) {
-			out.writeByte(session.isCipheringFrames() ? session.encipherFrameOpcode(frame.getOpcode()) : frame.getOpcode());
+    // Only write the opcode and length if the Frame has a valid opcode.
+    if (frame.hasValidOpcode()) {
+      out.writeByte(session.isCipheringFrames() ? session.encipherFrameOpcode(frame.getOpcode())
+          : frame.getOpcode());
 
-			switch (frame.getType()) {
-			case VARIABLE_BYTE:
-				out.writeByte(frame.getLength());
-				break;
+      switch (frame.getType()) {
+        case VARIABLE_BYTE:
+          out.writeByte(frame.getLength());
+          break;
 
-			case VARIABLE_SHORT:
-				out.writeShort(frame.getLength());
-				break;
+        case VARIABLE_SHORT:
+          out.writeShort(frame.getLength());
+          break;
 
-			// Only variable byte and short frames need their length written, ignore others.
-			default:
-				break;
-			}
-		}
+        // Only variable byte and short frames need their length written, ignore others.
+        default:
+          break;
+      }
+    }
 
-		out.writeBytes(frame.content());
-	}
+    out.writeBytes(frame.content());
+  }
 
 }

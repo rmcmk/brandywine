@@ -10,27 +10,27 @@ import me.ryleykimmel.brandywine.network.msg.Message;
  */
 public final class UpdateSkillMessage implements Message {
 
-	/**
-	 * The Skill to be updated.
-	 */
-	private final Skill skill;
+  /**
+   * The Skill to be updated.
+   */
+  private final Skill skill;
 
-	/**
-	 * Constructs a new {@link UpdateSkillMessage} with the specified Skill.
-	 * 
-	 * @param skill The Skill to be updated.
-	 */
-	public UpdateSkillMessage(Skill skill) {
-		this.skill = skill;
-	}
+  /**
+   * Constructs a new {@link UpdateSkillMessage} with the specified Skill.
+   * 
+   * @param skill The Skill to be updated.
+   */
+  public UpdateSkillMessage(Skill skill) {
+    this.skill = skill;
+  }
 
-	/**
-	 * Gets the Skill to be updated.
-	 * 
-	 * @return The Skill to be updated.
-	 */
-	public Skill getSkill() {
-		return skill;
-	}
+  /**
+   * Gets the Skill to be updated.
+   * 
+   * @return The Skill to be updated.
+   */
+  public Skill getSkill() {
+    return skill;
+  }
 
 }

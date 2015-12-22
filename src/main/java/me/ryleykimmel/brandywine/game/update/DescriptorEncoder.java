@@ -8,10 +8,11 @@ import me.ryleykimmel.brandywine.network.msg.impl.PlayerUpdateMessage;
 @FunctionalInterface
 public interface DescriptorEncoder<T extends Message, D extends Descriptor<? extends Mob, T>> {
 
-	void encode(D descriptor, T message, FrameBuilder builder, FrameBuilder blockBuilder);
+  void encode(D descriptor, T message, FrameBuilder builder, FrameBuilder blockBuilder);
 
-	@FunctionalInterface
-	public static interface PlayerDescriptorEncoder<D extends Descriptor<? extends Mob, PlayerUpdateMessage>> extends DescriptorEncoder<PlayerUpdateMessage, D> {
-	}
+  @FunctionalInterface
+  public static interface PlayerDescriptorEncoder<D extends Descriptor<? extends Mob, PlayerUpdateMessage>>
+      extends DescriptorEncoder<PlayerUpdateMessage, D> {
+  }
 
 }

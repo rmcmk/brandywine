@@ -11,40 +11,41 @@ import me.ryleykimmel.brandywine.game.update.UpdateBlock;
  */
 public final class AppearancePlayerBlock extends UpdateBlock {
 
-	public static AppearancePlayerBlock create(Player player) {
-		return new AppearancePlayerBlock(player.getAppearance(), player.getSkills().getCombatLevel(), 
-				/* player.getSkills().getTotalLevel() */0, player.getEncodedUsername());
-	}
+  public static AppearancePlayerBlock create(Player player) {
+    return new AppearancePlayerBlock(player.getAppearance(), player.getSkills().getCombatLevel(),
+        /* player.getSkills().getTotalLevel() */0, player.getEncodedUsername());
+  }
 
-	private static final int MASK = 0x10;
+  private static final int MASK = 0x10;
 
-	private final Appearance appearance;
-	private final int combatLevel;
-	private final int totalLevel;
-	private final long encodedUsername;
+  private final Appearance appearance;
+  private final int combatLevel;
+  private final int totalLevel;
+  private final long encodedUsername;
 
-	public AppearancePlayerBlock(Appearance appearance, int combatLevel, int totalLevel, long encodedUsername) {
-		super(MASK);
-		this.appearance = appearance;
-		this.combatLevel = combatLevel;
-		this.totalLevel = totalLevel;
-		this.encodedUsername = encodedUsername;
-	}
-	
-	public Appearance getAppearance() {
-		return appearance;
-	}
+  public AppearancePlayerBlock(Appearance appearance, int combatLevel, int totalLevel,
+      long encodedUsername) {
+    super(MASK);
+    this.appearance = appearance;
+    this.combatLevel = combatLevel;
+    this.totalLevel = totalLevel;
+    this.encodedUsername = encodedUsername;
+  }
 
-	public int getCombatLevel() {
-		return combatLevel;
-	}
+  public Appearance getAppearance() {
+    return appearance;
+  }
 
-	public int getTotalLevel() {
-		return totalLevel;
-	}
+  public int getCombatLevel() {
+    return combatLevel;
+  }
 
-	public long getEncodedUsername() {
-		return encodedUsername;
-	}
+  public int getTotalLevel() {
+    return totalLevel;
+  }
+
+  public long getEncodedUsername() {
+    return encodedUsername;
+  }
 
 }

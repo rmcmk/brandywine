@@ -17,28 +17,28 @@ import me.ryleykimmel.brandywine.network.msg.impl.PlayerUpdateMessage;
 @Encodes(PlayerUpdateMessage.class)
 public final class PlayerUpdateMessageEncoder implements MessageEncoder<PlayerUpdateMessage> {
 
-	@Override
-	public Frame encode(PlayerUpdateMessage message, ByteBufAllocator alloc) {
-		FrameBuilder builder = new FrameBuilder(81, FrameType.VARIABLE_SHORT, alloc);
-		FrameBuilder blockBuilder = new FrameBuilder(alloc);
-		builder.switchToBitAccess();
+  @Override
+  public Frame encode(PlayerUpdateMessage message, ByteBufAllocator alloc) {
+    FrameBuilder builder = new FrameBuilder(81, FrameType.VARIABLE_SHORT, alloc);
+    FrameBuilder blockBuilder = new FrameBuilder(alloc);
+    builder.switchToBitAccess();
 
-		message.getDescriptor().encode(message, builder, blockBuilder);
-		builder.putBits(8, message.getLocalPlayerCount());
+    message.getDescriptor().encode(message, builder, blockBuilder);
+    builder.putBits(8, message.getLocalPlayerCount());
 
-		for (PlayerDescriptor descriptor : message.getDescriptors()) {
-			descriptor.encode(message, builder, blockBuilder);
-		}
+    for (PlayerDescriptor descriptor : message.getDescriptors()) {
+      descriptor.encode(message, builder, blockBuilder);
+    }
 
-		if (blockBuilder.getLength() > 0) {
-			builder.putBits(11, 2047);
-			builder.switchToByteAccess();
-			builder.putBytes(blockBuilder);
-		} else {
-			builder.switchToByteAccess();
-		}
+    if (blockBuilder.getLength() > 0) {
+      builder.putBits(11, 2047);
+      builder.switchToByteAccess();
+      builder.putBytes(blockBuilder);
+    } else {
+      builder.switchToByteAccess();
+    }
 
-		return builder.build();
-	}
+    return builder.build();
+  }
 
 }

@@ -14,11 +14,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface Decodes {
 
-	/**
-	 * The opcodes of the Frames the annotated type decodes.
-	 *
-	 * @return The opcodes of the Frames the annotated type decodes.
-	 */
-	int[] value();
+  /**
+   * The opcodes of the Frames the annotated type decodes.
+   *
+   * @return The opcodes of the Frames the annotated type decodes.
+   */
+  int[] value();
 
 }

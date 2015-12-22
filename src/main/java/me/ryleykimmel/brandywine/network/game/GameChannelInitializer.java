@@ -14,26 +14,27 @@ import me.ryleykimmel.brandywine.network.game.frame.FrameEncoder;
  */
 public final class GameChannelInitializer extends ChannelInitializer<SocketChannel> {
 
-	/**
-	 * The context of the Server.
-	 */
-	private final ServerContext context;
+  /**
+   * The context of the Server.
+   */
+  private final ServerContext context;
 
-	/**
-	 * Constructs a new {@link GameChannelInitializer} with the specified ServerContext.
-	 *
-	 * @param context The context of the Server.
-	 */
-	public GameChannelInitializer(ServerContext context) {
-		this.context = context;
-	}
+  /**
+   * Constructs a new {@link GameChannelInitializer} with the specified ServerContext.
+   *
+   * @param context The context of the Server.
+   */
+  public GameChannelInitializer(ServerContext context) {
+    this.context = context;
+  }
 
-	@Override
-	protected void initChannel(SocketChannel channel) {
-		GameSession session = new GameSession(context, channel);
+  @Override
+  protected void initChannel(SocketChannel channel) {
+    GameSession session = new GameSession(context, channel);
 
-		channel.pipeline().addLast(new FrameEncoder(session), new MessageEncoder(session), new FrameDecoder(session), new MessageDecoder(session), new UniqueIpFilter(),
-				new GameSessionHandler(session));
-	}
+    channel.pipeline().addLast(new FrameEncoder(session), new MessageEncoder(session),
+        new FrameDecoder(session), new MessageDecoder(session), new UniqueIpFilter(),
+        new GameSessionHandler(session));
+  }
 
 }

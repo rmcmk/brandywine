@@ -13,262 +13,259 @@ import me.ryleykimmel.brandywine.game.auth.impl.SQLAuthenticationStrategy;
 import me.ryleykimmel.brandywine.parser.Parser;
 
 /**
- * A {@link ServerContext} is created along with the Server object. The primary difference is that a reference to the current context should be passed around within the server. The
- * Server should not be as it allows access to some methods which core and plugin code should not be able to access.
+ * A {@link ServerContext} is created along with the Server object. The primary difference is that a
+ * reference to the current context should be passed around within the server. The Server should not
+ * be as it allows access to some methods which core and plugin code should not be able to access.
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ServerContext {
 
-	/**
-	 * A Map of all of the registered Parsers.
-	 */
-	private final Map<Class<? extends Parser<?, ?>>, Parser<?, ?>> parsers = new HashMap<>();
+  /**
+   * A Map of all of the registered Parsers.
+   */
+  private final Map<Class<? extends Parser<?, ?>>, Parser<?, ?>> parsers = new HashMap<>();
 
-	/**
-	 * A Map of all of the registered Services.
-	 */
-	private final Map<Class<? extends Service>, Service> services = new HashMap<>();
+  /**
+   * A Map of all of the registered Services.
+   */
+  private final Map<Class<? extends Service>, Service> services = new HashMap<>();
 
-	/**
-	 * The AuthenticationStrategy used by the Server.
-	 */
-	private final AuthenticationStrategy authenticationStrategy = new SQLAuthenticationStrategy(this);
+  /**
+   * The AuthenticationStrategy used by the Server.
+   */
+  private final AuthenticationStrategy authenticationStrategy = new SQLAuthenticationStrategy(this);
 
-	/**
-	 * The Server this context represents.
-	 */
-	private final Server server;
+  /**
+   * The Server this context represents.
+   */
+  private final Server server;
 
-	/**
-	 * Constructs a new {@link ServerContext} with the specified Server.
-	 *
-	 * @param server The Server this context represents.
-	 */
-	public ServerContext(Server server) {
-		this.server = server;
-	}
+  /**
+   * Constructs a new {@link ServerContext} with the specified Server.
+   *
+   * @param server The Server this context represents.
+   */
+  public ServerContext(Server server) {
+    this.server = server;
+  }
 
-	/**
-	 * Gets a Service from its type.
-	 *
-	 * @param clazz The type of the Service.
-	 * @return The instance of the Service.
-	 */
-	@SuppressWarnings("unchecked")
-	public <T extends Service> T getService(Class<T> clazz) {
-		return (T) services.get(clazz);
-	}
+  /**
+   * Gets a Service from its type.
+   *
+   * @param clazz The type of the Service. @return The instance of the Service.
+   */
+  @SuppressWarnings("unchecked")
+  public <T extends Service> T getService(Class<T> clazz) {
+    return (T) services.get(clazz);
+  }
 
-	/**
-	 * Adds the specified Service to the map.
-	 *
-	 * @param clazz The type of the Service.
-	 * @param service The instance of the Service.
-	 */
-	public <T extends Service> void addService(Class<T> clazz, T service) {
-		services.put(clazz, service);
-	}
+  /**
+   * Adds the specified Service to the map.
+   *
+   * @param clazz The type of the Service. @param service The instance of the Service.
+   */
+  public <T extends Service> void addService(Class<T> clazz, T service) {
+    services.put(clazz, service);
+  }
 
-	/**
-	 * Gets a Parser from its type.
-	 *
-	 * @param clazz The type of the Parser.
-	 * @return The instance of the Parser.
-	 */
-	@SuppressWarnings("unchecked")
-	public <T extends Parser<?, ?>> T getParser(Class<T> clazz) {
-		return (T) parsers.get(clazz);
-	}
+  /**
+   * Gets a Parser from its type.
+   *
+   * @param clazz The type of the Parser. @return The instance of the Parser.
+   */
+  @SuppressWarnings("unchecked")
+  public <T extends Parser<?, ?>> T getParser(Class<T> clazz) {
+    return (T) parsers.get(clazz);
+  }
 
-	/**
-	 * Adds the specified Parser to the map.
-	 *
-	 * @param clazz The type of the Parser.
-	 * @param parser The Parser to add.
-	 */
-	public <T extends Parser<?, ?>> void addParser(Class<T> clazz, T parser) {
-		parsers.put(clazz, parser);
-	}
+  /**
+   * Adds the specified Parser to the map.
+   *
+   * @param clazz The type of the Parser. @param parser The Parser to add.
+   */
+  public <T extends Parser<?, ?>> void addParser(Class<T> clazz, T parser) {
+    parsers.put(clazz, parser);
+  }
 
-	/**
-	 * Gets a Collection of all Services.
-	 *
-	 * @return A Collection of all Services.
-	 */
-	public Collection<Service> getServices() {
-		return services.values();
-	}
+  /**
+   * Gets a Collection of all Services.
+   *
+   * @return A Collection of all Services.
+   */
+  public Collection<Service> getServices() {
+    return services.values();
+  }
 
-	/**
-	 * Gets the name of this Server.
-	 *
-	 * @return The name of this Server.
-	 */
-	public String getName() {
-		return server.getName();
-	}
+  /**
+   * Gets the name of this Server.
+   *
+   * @return The name of this Server.
+   */
+  public String getName() {
+    return server.getName();
+  }
 
-	/**
-	 * Sets the name of this Server.
-	 *
-	 * @param name The name to set.
-	 */
-	public void setName(String name) {
-		server.setName(name);
-	}
+  /**
+   * Sets the name of this Server.
+   *
+   * @param name The name to set.
+   */
+  public void setName(String name) {
+    server.setName(name);
+  }
 
-	/**
-	 * Gets the game port this Server will listen on.
-	 *
-	 * @return The game port.
-	 */
-	public int getGamePort() {
-		return server.getGamePort();
-	}
+  /**
+   * Gets the game port this Server will listen on.
+   *
+   * @return The game port.
+   */
+  public int getGamePort() {
+    return server.getGamePort();
+  }
 
-	/**
-	 * Sets the game port this Server will listen on.
-	 *
-	 * @param gamePort The game port to set.
-	 */
-	public void setGamePort(int gamePort) {
-		server.setGamePort(gamePort);
-	}
+  /**
+   * Sets the game port this Server will listen on.
+   *
+   * @param gamePort The game port to set.
+   */
+  public void setGamePort(int gamePort) {
+    server.setGamePort(gamePort);
+  }
 
-	/**
-	 * Gets the maximum amount of connections per host.
-	 * 
-	 * @return The maximum amount of connections per host.
-	 */
-	public int getConnectionLimit() {
-		return server.getConnectionLimit();
-	}
+  /**
+   * Gets the maximum amount of connections per host.
+   * 
+   * @return The maximum amount of connections per host.
+   */
+  public int getConnectionLimit() {
+    return server.getConnectionLimit();
+  }
 
-	/**
-	 * Sets the maximum amount of connections per host.
-	 * 
-	 * @param connectionLimit The maximum amount of connections per host.
-	 */
-	public void setConnectionLimit(int connectionLimit) {
-		server.setConnectionLimit(connectionLimit);
-	}
+  /**
+   * Sets the maximum amount of connections per host.
+   * 
+   * @param connectionLimit The maximum amount of connections per host.
+   */
+  public void setConnectionLimit(int connectionLimit) {
+    server.setConnectionLimit(connectionLimit);
+  }
 
-	/**
-	 * Gets the address for the Servers database.
-	 * 
-	 * @return The address for the Servers database.
-	 */
-	public String getDatabaseAddress() {
-		return server.getDatabaseAddress();
-	}
+  /**
+   * Gets the address for the Servers database.
+   * 
+   * @return The address for the Servers database.
+   */
+  public String getDatabaseAddress() {
+    return server.getDatabaseAddress();
+  }
 
-	/**
-	 * Sets the address for the Servers database.
-	 * 
-	 * @param databaseAddress The address to set.
-	 */
-	public void setDatabaseAddress(String databaseAddress) {
-		server.setDatabaseAddress(databaseAddress);
-	}
+  /**
+   * Sets the address for the Servers database.
+   * 
+   * @param databaseAddress The address to set.
+   */
+  public void setDatabaseAddress(String databaseAddress) {
+    server.setDatabaseAddress(databaseAddress);
+  }
 
-	/**
-	 * Gets the port the Servers database is listening on.
-	 * 
-	 * @return The port the Servers database is listening on.
-	 */
-	public int getDatabasePort() {
-		return server.getDatabasePort();
-	}
+  /**
+   * Gets the port the Servers database is listening on.
+   * 
+   * @return The port the Servers database is listening on.
+   */
+  public int getDatabasePort() {
+    return server.getDatabasePort();
+  }
 
-	/**
-	 * Sets the port the Servers database is listening on.
-	 * 
-	 * @param databasePort The port to set.
-	 */
-	public void setDatabasePort(int databasePort) {
-		server.setDatabasePort(databasePort);
-	}
+  /**
+   * Sets the port the Servers database is listening on.
+   * 
+   * @param databasePort The port to set.
+   */
+  public void setDatabasePort(int databasePort) {
+    server.setDatabasePort(databasePort);
+  }
 
-	/**
-	 * Gets the username of the Servers database.
-	 * 
-	 * @return The username of the Servers database.
-	 */
-	public String getDatabaseUsername() {
-		return server.getDatabaseUsername();
-	}
+  /**
+   * Gets the username of the Servers database.
+   * 
+   * @return The username of the Servers database.
+   */
+  public String getDatabaseUsername() {
+    return server.getDatabaseUsername();
+  }
 
-	/**
-	 * Sets the username of the Servers database.
-	 * 
-	 * @param databaseUsername The username of the Servers database.
-	 */
-	public void setDatabaseUsername(String databaseUsername) {
-		server.setDatabaseUsername(databaseUsername);
-	}
+  /**
+   * Sets the username of the Servers database.
+   * 
+   * @param databaseUsername The username of the Servers database.
+   */
+  public void setDatabaseUsername(String databaseUsername) {
+    server.setDatabaseUsername(databaseUsername);
+  }
 
-	/**
-	 * Gets the password of the Servers database.
-	 * 
-	 * @return The password of the Servers database.
-	 */
-	public String getDatabasePassword() {
-		return server.getDatabasePassword();
-	}
+  /**
+   * Gets the password of the Servers database.
+   * 
+   * @return The password of the Servers database.
+   */
+  public String getDatabasePassword() {
+    return server.getDatabasePassword();
+  }
 
-	/**
-	 * Sets the password of the Servers database.
-	 * 
-	 * @param databasePassword The password of the Servers database.
-	 */
-	public void setDatabasePassword(String databasePassword) {
-		server.setDatabasePassword(databasePassword);
-	}
+  /**
+   * Sets the password of the Servers database.
+   * 
+   * @param databasePassword The password of the Servers database.
+   */
+  public void setDatabasePassword(String databasePassword) {
+    server.setDatabasePassword(databasePassword);
+  }
 
-	/**
-	 * Gets the FileSystem for this Server.
-	 *
-	 * @return The FileSystem for this Server.
-	 */
-	public FileSystem getFileSystem() {
-		return server.getFileSystem();
-	}
+  /**
+   * Gets the FileSystem for this Server.
+   *
+   * @return The FileSystem for this Server.
+   */
+  public FileSystem getFileSystem() {
+    return server.getFileSystem();
+  }
 
-	/**
-	 * Sets the FileSystem for this Server.
-	 *
-	 * @param fileSystem The FileSystem to set.
-	 */
-	public void setFileSystem(FileSystem fileSystem) {
-		server.setFileSystem(fileSystem);
-	}
+  /**
+   * Sets the FileSystem for this Server.
+   *
+   * @param fileSystem The FileSystem to set.
+   */
+  public void setFileSystem(FileSystem fileSystem) {
+    server.setFileSystem(fileSystem);
+  }
 
-	/**
-	 * Gets this Servers database configuration.
-	 * 
-	 * @return This Servers database configuration.
-	 */
-	public Sql2o getSql2o() {
-		return server.getSql2o();
-	}
+  /**
+   * Gets this Servers database configuration.
+   * 
+   * @return This Servers database configuration.
+   */
+  public Sql2o getSql2o() {
+    return server.getSql2o();
+  }
 
-	/**
-	 * Sets this Servers database configuration.
-	 * 
-	 * @param sql2o The Servers database configuration to set.
-	 */
-	public void setSql2o(Sql2o sql2o) {
-		server.setSql2o(sql2o);
-	}
+  /**
+   * Sets this Servers database configuration.
+   * 
+   * @param sql2o The Servers database configuration to set.
+   */
+  public void setSql2o(Sql2o sql2o) {
+    server.setSql2o(sql2o);
+  }
 
-	/**
-	 * Gets the AuthenticationStrategy used by the Server.
-	 * 
-	 * @return The AuthenticationStrategy used by the Server.
-	 */
-	public AuthenticationStrategy getAuthenticationStrategy() {
-		return authenticationStrategy;
-	}
+  /**
+   * Gets the AuthenticationStrategy used by the Server.
+   * 
+   * @return The AuthenticationStrategy used by the Server.
+   */
+  public AuthenticationStrategy getAuthenticationStrategy() {
+    return authenticationStrategy;
+  }
 
 }

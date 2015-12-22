@@ -9,38 +9,38 @@ import me.ryleykimmel.brandywine.game.model.player.Player;
  */
 public final class PostPlayerUpdateTask implements UpdateTask {
 
-	/**
-	 * The Player we are performing post-update logic for.
-	 */
-	private final Player player;
+  /**
+   * The Player we are performing post-update logic for.
+   */
+  private final Player player;
 
-	/**
-	 * Constructs a new {@link PostPlayerUpdateTask} with the specified Player.
-	 * 
-	 * @param player The Player we are performing post-update logic for.
-	 */
-	public PostPlayerUpdateTask(Player player) {
-		this.player = player;
-	}
+  /**
+   * Constructs a new {@link PostPlayerUpdateTask} with the specified Player.
+   * 
+   * @param player The Player we are performing post-update logic for.
+   */
+  public PostPlayerUpdateTask(Player player) {
+    this.player = player;
+  }
 
-	@Override
-	public void run() {
-		player.reset();
+  @Override
+  public void run() {
+    player.reset();
 
-		if (player.isExcessivePlayersSet()) {
-			player.decrementViewingDistance();
-			player.resetExcessivePlayers();
-		} else {
-			player.incrementViewingDistance();
-		}
+    if (player.isExcessivePlayersSet()) {
+      player.decrementViewingDistance();
+      player.resetExcessivePlayers();
+    } else {
+      player.incrementViewingDistance();
+    }
 
-		player.getSession().flush();
-	}
+    player.getSession().flush();
+  }
 
-	@Override
-	public void exceptionCaught(Throwable cause) {
-		cause.printStackTrace();
-		player.disconnect();
-	}
+  @Override
+  public void exceptionCaught(Throwable cause) {
+    cause.printStackTrace();
+    player.disconnect();
+  }
 
 }

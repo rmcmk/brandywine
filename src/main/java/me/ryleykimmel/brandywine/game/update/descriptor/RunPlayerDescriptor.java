@@ -12,32 +12,33 @@ import me.ryleykimmel.brandywine.game.update.Updater;
  */
 public final class RunPlayerDescriptor extends PlayerDescriptor {
 
-	/**
-	 * The first direction of movement.
-	 */
-	private final Direction firstDirection;
+  /**
+   * The first direction of movement.
+   */
+  private final Direction firstDirection;
 
-	/**
-	 * The second direction of movement.
-	 */
-	private final Direction secondDirection;
+  /**
+   * The second direction of movement.
+   */
+  private final Direction secondDirection;
 
-	public RunPlayerDescriptor(Player player, Updater updater) {
-		this(player, updater, player.getFirstDirection(), player.getSecondDirection());
-	}
-	
-	public RunPlayerDescriptor(Player player, Updater updater, Direction firstDirection, Direction secondDirection) {
-		super(player, updater);
-		this.firstDirection = firstDirection;
-		this.secondDirection = secondDirection;
-	}
+  public RunPlayerDescriptor(Player player, Updater updater) {
+    this(player, updater, player.getFirstDirection(), player.getSecondDirection());
+  }
 
-	public Direction getFirstDirection() {
-		return firstDirection;
-	}
+  public RunPlayerDescriptor(Player player, Updater updater, Direction firstDirection,
+      Direction secondDirection) {
+    super(player, updater);
+    this.firstDirection = firstDirection;
+    this.secondDirection = secondDirection;
+  }
 
-	public Direction getSecondDirection() {
-		return secondDirection;
-	}
+  public Direction getFirstDirection() {
+    return firstDirection;
+  }
+
+  public Direction getSecondDirection() {
+    return secondDirection;
+  }
 
 }

@@ -16,14 +16,15 @@ import me.ryleykimmel.brandywine.network.msg.impl.InitializePlayerMessage;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Encodes(InitializePlayerMessage.class)
-public final class InitializePlayerMessageEncoder implements MessageEncoder<InitializePlayerMessage> {
+public final class InitializePlayerMessageEncoder
+    implements MessageEncoder<InitializePlayerMessage> {
 
-	@Override
-	public Frame encode(InitializePlayerMessage message, ByteBufAllocator alloc) {
-		FrameBuilder builder = new FrameBuilder(249, alloc);
-		builder.put(DataType.BYTE, DataTransformation.ADD, message.isMember() ? 1 : 0);
-		builder.put(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD, message.getIndex());
-		return builder.build();
-	}
+  @Override
+  public Frame encode(InitializePlayerMessage message, ByteBufAllocator alloc) {
+    FrameBuilder builder = new FrameBuilder(249, alloc);
+    builder.put(DataType.BYTE, DataTransformation.ADD, message.isMember() ? 1 : 0);
+    builder.put(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD, message.getIndex());
+    return builder.build();
+  }
 
 }

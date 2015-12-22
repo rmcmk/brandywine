@@ -16,11 +16,11 @@ import me.ryleykimmel.brandywine.network.msg.impl.ServerChatMessage;
 @Encodes(ServerChatMessage.class)
 public class ServerChatMessageEncoder implements MessageEncoder<ServerChatMessage> {
 
-	@Override
-	public Frame encode(ServerChatMessage message, ByteBufAllocator alloc) {
-		FrameBuilder builder = new FrameBuilder(253, FrameType.VARIABLE_BYTE, alloc);
-		builder.putString(message.getMessage());
-		return builder.build();
-	}
+  @Override
+  public Frame encode(ServerChatMessage message, ByteBufAllocator alloc) {
+    FrameBuilder builder = new FrameBuilder(253, FrameType.VARIABLE_BYTE, alloc);
+    builder.putString(message.getMessage());
+    return builder.build();
+  }
 
 }

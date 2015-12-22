@@ -14,11 +14,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface Encodes {
 
-	/**
-	 * Represents the Message class the annotated type encodes.
-	 *
-	 * @return The Message the annotated type encodes.
-	 */
-	Class<? extends Message> value();
+  /**
+   * Represents the Message class the annotated type encodes.
+   *
+   * @return The Message the annotated type encodes.
+   */
+  Class<? extends Message> value();
 
 }

@@ -14,11 +14,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface Handles {
 
-	/**
-	 * Represents the Message class the annotated type handles.
-	 *
-	 * @return The Message the annotated type handles.
-	 */
-	Class<? extends Message> value();
+  /**
+   * Represents the Message class the annotated type handles.
+   *
+   * @return The Message the annotated type handles.
+   */
+  Class<? extends Message> value();
 
 }
