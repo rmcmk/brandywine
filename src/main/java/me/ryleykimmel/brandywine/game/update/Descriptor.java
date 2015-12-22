@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import com.google.common.base.Preconditions;
+
 import me.ryleykimmel.brandywine.game.model.Mob;
 import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
 import me.ryleykimmel.brandywine.network.msg.Message;
@@ -20,6 +22,8 @@ public abstract class Descriptor<T extends Mob, M extends Message> {
    * A Map of UpdateBlock types to UpdateBlocks.
    */
   private final Map<Class<? extends UpdateBlock>, UpdateBlock> blocks = new HashMap<>();
+
+  protected int mask = 0;
 
   protected final Updater updater;
   protected final T mob;
@@ -39,6 +43,7 @@ public abstract class Descriptor<T extends Mob, M extends Message> {
    */
   public final void addBlock(UpdateBlock block) {
     blocks.putIfAbsent(block.getClass(), block);
+    mask |= block.getMask();
   }
 
   /**
@@ -47,7 +52,10 @@ public abstract class Descriptor<T extends Mob, M extends Message> {
    * @param type The UpdateBlocks type.
    */
   public final void removeBlock(Class<? extends UpdateBlock> type) {
-    blocks.remove(type);
+    UpdateBlock block = blocks.remove(type);
+    if (block != null) {
+      mask &= ~block.getMask();
+    }
   }
 
   /**
@@ -92,6 +100,7 @@ public abstract class Descriptor<T extends Mob, M extends Message> {
    */
   public final void clear() {
     blocks.clear();
+    mask = 0;
   }
 
   /**

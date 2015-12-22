@@ -32,11 +32,6 @@ public abstract class PlayerDescriptor extends Descriptor<Player, PlayerUpdateMe
       return;
     }
 
-    int mask = 0;
-    for (UpdateBlock block : getBlocks()) {
-      mask |= block.getMask();
-    }
-
     if (mask > 0xFF) {
       mask |= 0x40;
       blockBuilder.put(DataType.SHORT, DataOrder.LITTLE, mask);
