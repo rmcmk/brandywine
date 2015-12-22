@@ -1,7 +1,6 @@
 package me.ryleykimmel.brandywine.common;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Assert;
 
 import org.junit.Test;
 
@@ -12,8 +11,8 @@ public final class CharactersTest {
     char vowel = 'a';
     char not_vowel = 'b';
 
-    assertTrue(Characters.isVowel(vowel));
-    assertFalse(Characters.isVowel(not_vowel));
+    Assert.assertTrue(Characters.isVowel(vowel));
+    Assert.assertFalse(Characters.isVowel(not_vowel));
   }
 
   @Test
@@ -21,8 +20,8 @@ public final class CharactersTest {
     char vowel = 'A';
     char not_vowel = 'B';
 
-    assertTrue(Characters.isVowel(vowel));
-    assertFalse(Characters.isVowel(not_vowel));
+    Assert.assertTrue(Characters.isVowel(vowel));
+    Assert.assertFalse(Characters.isVowel(not_vowel));
   }
 
 }

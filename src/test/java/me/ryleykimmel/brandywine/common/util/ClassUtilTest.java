@@ -1,8 +1,5 @@
 package me.ryleykimmel.brandywine.common.util;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -10,6 +7,7 @@ import java.lang.annotation.Target;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public final class ClassUtilTest {
@@ -18,11 +16,11 @@ public final class ClassUtilTest {
   public void testGetAnnotation() {
     Optional<TestAnnotation> trueOptional =
         ClassUtil.getAnnotation(AnnotatedClass.class, TestAnnotation.class);
-    assertTrue(trueOptional.isPresent());
+    Assert.assertTrue(trueOptional.isPresent());
 
     Optional<TestAnnotation> falseOptional =
         ClassUtil.getAnnotation(NotAnnotatedClass.class, TestAnnotation.class);
-    assertFalse(falseOptional.isPresent());
+    Assert.assertFalse(falseOptional.isPresent());
   }
 
   @Test(expected = NullPointerException.class)
