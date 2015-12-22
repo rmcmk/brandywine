@@ -20,7 +20,6 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import me.ryleykimmel.brandywine.fs.FileSystem;
 import me.ryleykimmel.brandywine.game.GamePulseHandler;
-import me.ryleykimmel.brandywine.network.game.ChannelRemoteAddressFilter;
 import me.ryleykimmel.brandywine.network.game.GameChannelInitializer;
 import me.ryleykimmel.brandywine.parser.TomlParser;
 import me.ryleykimmel.brandywine.parser.impl.ParserTomlParser;
@@ -122,9 +121,6 @@ final class Server {
 	public void init() throws Exception {
 		TomlParser config = new ParserTomlParser("data/parsers.toml", context);
 		config.parse();
-
-		// Add the ChannelRemoteAddressFilter global ChannelHandler.
-		context.addChannelHandler(ChannelRemoteAddressFilter.class, new ChannelRemoteAddressFilter(context));
 	}
 
 	/**

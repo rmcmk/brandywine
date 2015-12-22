@@ -5,8 +5,7 @@ import java.util.Set;
 
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.model.skill.SkillSet;
-import me.ryleykimmel.brandywine.game.update.UpdateFlags;
-import me.ryleykimmel.brandywine.game.update.UpdateFlags.UpdateFlag;
+import me.ryleykimmel.brandywine.game.update.UpdateBlock;
 import me.ryleykimmel.brandywine.network.msg.Message;
 
 /**
@@ -32,14 +31,14 @@ public abstract class Mob extends Entity {
 	protected final SkillSet skills = new SkillSet();
 
 	/**
-	 * This Mobs update flags.
-	 */
-	protected final UpdateFlags updateFlags = new UpdateFlags();
-
-	/**
 	 * A {@link Set} of local Players.
 	 */
 	private final Set<Player> localPlayers = new HashSet<>();
+
+	/**
+	 * A {@link Set} of pending {@link UpdateBlocks}.
+	 */
+	private final Set<UpdateBlock> pendingUpdates = new HashSet<>();
 
 	/**
 	 * The index of this Mob.
@@ -94,20 +93,11 @@ public abstract class Mob extends Entity {
 	}
 
 	/**
-	 * Gets this Mobs update flags.
-	 * 
-	 * @return This Mobs update flags.
-	 */
-	public final UpdateFlags getUpdateFlags() {
-		return updateFlags;
-	}
-
-	/**
 	 * Sets the index of this Mob.
 	 *
 	 * @param index The new index of this Mob.
 	 */
-	public synchronized final void setIndex(int index) {
+	public final void setIndex(int index) {
 		this.index = index;
 	}
 
@@ -196,31 +186,32 @@ public abstract class Mob extends Entity {
 	}
 
 	/**
-	 * Flags the specified UpdateFlag.
-	 * 
-	 * @param flag The UpdateFlag to set.
-	 */
-	public final void flagUpdate(UpdateFlag flag) {
-		updateFlags.flag(flag);
-	}
-
-	/**
-	 * Gets the specified UpdateFlag.
-	 * 
-	 * @param flag The UpdateFlag to get.
-	 * @return {@code true} if the UpdateFlag is set, otherwise {@code false}.
-	 */
-	public final boolean isUpdateFlagged(UpdateFlag flag) {
-		return updateFlags.get(flag);
-	}
-
-	/**
 	 * Resets this Mobs directions, teleporting attribute and UpdateFlags.
 	 */
 	public void reset() {
 		firstDirection = secondDirection = Direction.NONE;
 		teleporting = false;
-		updateFlags.clear();
+		pendingUpdates.clear();
+	}
+
+	/**
+	 * Flags an UpdateBlock.
+	 * 
+	 * @param block The UpdateBlock to flag.
+	 */
+	public final void flagUpdate(UpdateBlock block) {
+		if (!pendingUpdates.contains(block)) {
+			pendingUpdates.add(block);
+		}
+	}
+
+	/**
+	 * Gets the {@link Set} of pending {@link UpdateBlock}s.
+	 * 
+	 * @return The Set of pending UpdateBlocks.
+	 */
+	public final Set<UpdateBlock> getPendingUpdates() {
+		return pendingUpdates;
 	}
 
 	/**

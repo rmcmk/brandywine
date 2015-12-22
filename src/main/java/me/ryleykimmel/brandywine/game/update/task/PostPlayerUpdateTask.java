@@ -39,6 +39,7 @@ public final class PostPlayerUpdateTask implements UpdateTask {
 
 	@Override
 	public void exceptionCaught(Throwable cause) {
+		cause.printStackTrace();
 		player.disconnect();
 	}
 

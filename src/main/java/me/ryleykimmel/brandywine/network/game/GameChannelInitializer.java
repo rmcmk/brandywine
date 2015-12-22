@@ -33,7 +33,7 @@ public final class GameChannelInitializer extends ChannelInitializer<SocketChann
 		GameSession session = new GameSession(context, channel);
 
 		channel.pipeline().addLast(new FrameEncoder(session), new MessageEncoder(session), new FrameDecoder(session), new MessageDecoder(session), new UniqueIpFilter(),
-				new GameSessionHandler(session), context.getChannelHandler(ChannelRemoteAddressFilter.class));
+				new GameSessionHandler(session));
 	}
 
 }

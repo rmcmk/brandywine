@@ -21,7 +21,7 @@ import me.ryleykimmel.brandywine.game.update.task.UpdateTask;
  * @author Graham
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class ParallelUpdater implements Updater {
+public final class ParallelUpdater extends Updater {
 
 	/**
 	 * The Phaser used to control synchronization.
@@ -46,7 +46,7 @@ public final class ParallelUpdater implements Updater {
 
 		phaser.bulkRegister(playerCount);
 		for (Player player : players) {
-			UpdateTask task = new PlayerUpdateTask(player, players);
+			UpdateTask task = new PlayerUpdateTask(this, player, players);
 			executor.submit(new PhasedUpdateTask(phaser, task));
 		}
 		phaser.arriveAndAwaitAdvance();

@@ -1,44 +1,37 @@
 package me.ryleykimmel.brandywine.game.update.blocks;
 
 import me.ryleykimmel.brandywine.game.model.player.Player;
-import me.ryleykimmel.brandywine.game.update.PlayerBlock;
-import me.ryleykimmel.brandywine.network.game.frame.DataTransformation;
-import me.ryleykimmel.brandywine.network.game.frame.DataType;
-import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
+import me.ryleykimmel.brandywine.game.update.UpdateBlock;
 import me.ryleykimmel.brandywine.network.msg.impl.ChatMessage;
-import me.ryleykimmel.brandywine.network.msg.impl.PlayerUpdateMessage;
 
 /**
  * Encodes a Player's chat block.
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public class ChatPlayerBlock extends PlayerBlock {
+public class ChatPlayerBlock extends UpdateBlock {
 
-	/**
-	 * The ChatMessage to encode.
-	 */
-	private final ChatMessage chatMessage;
-
-	/**
-	 * Constructs a new {@link ChatPlayerBlock} with the specified Player.
-	 * 
-	 * @param player The Player we are updating chat for.
-	 */
-	public ChatPlayerBlock(Player player) {
-		super(player, 0x80);
-		chatMessage = player.getChatMessage();
+	public static ChatPlayerBlock create(Player player, ChatMessage message) {
+		return new ChatPlayerBlock(player.getPrivileges().getPrimaryId(), message);
 	}
 
-	@Override
-	public void encode(PlayerUpdateMessage message, FrameBuilder builder) {
-		byte[] bytes = chatMessage.getCompressedMessage();
+	private static final int MASK = 0x80;
 
-		builder.put(DataType.BYTE, chatMessage.getTextEffects());
-		builder.put(DataType.BYTE, chatMessage.getTextColor());
-		builder.put(DataType.BYTE, 0); // TODO: Privileges!
-		builder.put(DataType.BYTE, DataTransformation.NEGATE, bytes.length);
-		builder.putBytesReverse(bytes);
+	private final int privilegeId;
+	private final ChatMessage chatMessage;
+
+	public ChatPlayerBlock(int privilegeId, ChatMessage chatMessage) {
+		super(MASK);
+		this.privilegeId = privilegeId;
+		this.chatMessage = chatMessage;
+	}
+
+	public ChatMessage getChatMessage() {
+		return chatMessage;
+	}
+
+	public int getPrivilegeId() {
+		return privilegeId;
 	}
 
 }

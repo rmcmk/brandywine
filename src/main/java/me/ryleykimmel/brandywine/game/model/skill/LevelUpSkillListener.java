@@ -2,6 +2,7 @@ package me.ryleykimmel.brandywine.game.model.skill;
 
 import me.ryleykimmel.brandywine.common.Strings;
 import me.ryleykimmel.brandywine.game.model.player.Player;
+import me.ryleykimmel.brandywine.game.update.blocks.AppearancePlayerBlock;
 import me.ryleykimmel.brandywine.network.msg.impl.ServerChatMessage;
 
 public final class LevelUpSkillListener implements SkillListener {
@@ -26,6 +27,7 @@ public final class LevelUpSkillListener implements SkillListener {
 			int delta = skills.getCombatLevel() - oldCombatLevel;
 			if (delta > 0) {
 				player.write(new ServerChatMessage("Congratulations, your Combat level is now %s.", skills.getCombatLevel()));
+				player.flagUpdate(AppearancePlayerBlock.create(player));
 			}
 		}
 	}

@@ -3,8 +3,7 @@ package me.ryleykimmel.brandywine.game.update.descriptor;
 import me.ryleykimmel.brandywine.game.model.Direction;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.update.PlayerDescriptor;
-import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
-import me.ryleykimmel.brandywine.network.msg.impl.PlayerUpdateMessage;
+import me.ryleykimmel.brandywine.game.update.Updater;
 
 /**
  * A PlayerDescriptor which encodes running movement of a Player.
@@ -16,32 +15,29 @@ public final class RunPlayerDescriptor extends PlayerDescriptor {
 	/**
 	 * The first direction of movement.
 	 */
-	private final Direction first;
+	private final Direction firstDirection;
 
 	/**
 	 * The second direction of movement.
 	 */
-	private final Direction second;
+	private final Direction secondDirection;
 
-	/**
-	 * Constructs a new {@link RunPlayerDescriptor} with the specified Player and appearance tickets.
-	 * 
-	 * @param player The Player we are updating.
-	 * @param tickets The appearance tickets.
-	 */
-	public RunPlayerDescriptor(Player player, int[] tickets) {
-		super(player, tickets);
-		this.first = player.getFirstDirection();
-		this.second = player.getSecondDirection();
+	public RunPlayerDescriptor(Player player, Updater updater) {
+		this(player, updater, player.getFirstDirection(), player.getSecondDirection());
+	}
+	
+	public RunPlayerDescriptor(Player player, Updater updater, Direction firstDirection, Direction secondDirection) {
+		super(player, updater);
+		this.firstDirection = firstDirection;
+		this.secondDirection = secondDirection;
 	}
 
-	@Override
-	public void encodeDescriptor(PlayerUpdateMessage message, FrameBuilder builder, FrameBuilder blockBuilder) {
-		builder.putBits(1, 1);
-		builder.putBits(2, 2);
-		builder.putBits(3, first.getValue());
-		builder.putBits(3, second.getValue());
-		builder.putBits(1, isBlockUpdatedRequired() ? 1 : 0);
+	public Direction getFirstDirection() {
+		return firstDirection;
+	}
+
+	public Direction getSecondDirection() {
+		return secondDirection;
 	}
 
 }

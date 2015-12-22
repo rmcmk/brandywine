@@ -73,7 +73,7 @@ public final class GameService extends Service {
 	 * 
 	 * @param player The Player to remove.
 	 */
-	public void removePlayer(Player player) {
+	public synchronized void removePlayer(Player player) {
 		oldPlayers.add(player);
 	}
 

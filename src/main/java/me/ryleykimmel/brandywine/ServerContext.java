@@ -31,11 +31,6 @@ public final class ServerContext {
 	private final Map<Class<? extends Service>, Service> services = new HashMap<>();
 
 	/**
-	 * A Map of all global ChannelHandlers.
-	 */
-	private final Map<Class<? extends ChannelHandler>, ChannelHandler> globalChannelHandlers = new HashMap<>();
-
-	/**
 	 * The AuthenticationStrategy used by the Server.
 	 */
 	private final AuthenticationStrategy authenticationStrategy = new SQLAuthenticationStrategy(this);
@@ -94,27 +89,6 @@ public final class ServerContext {
 	 */
 	public <T extends Parser<?, ?>> void addParser(Class<T> clazz, T parser) {
 		parsers.put(clazz, parser);
-	}
-
-	/**
-	 * Gets a ChannelHandler from its type.
-	 *
-	 * @param clazz The type of the ChannelHandler.
-	 * @return The instance of the ChannelHandler.
-	 */
-	@SuppressWarnings("unchecked")
-	public <T extends ChannelHandler> T getChannelHandler(Class<T> clazz) {
-		return (T) globalChannelHandlers.get(clazz);
-	}
-
-	/**
-	 * Adds the specified ChannelHandler to the map.
-	 *
-	 * @param clazz The type of the ChannelHandler.
-	 * @param parser The ChannelHandler to add.
-	 */
-	public <T extends ChannelHandler> void addChannelHandler(Class<T> clazz, T parser) {
-		globalChannelHandlers.put(clazz, parser);
 	}
 
 	/**

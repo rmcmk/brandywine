@@ -3,8 +3,7 @@ package me.ryleykimmel.brandywine.game.update.descriptor;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.update.PlayerDescriptor;
-import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
-import me.ryleykimmel.brandywine.network.msg.impl.PlayerUpdateMessage;
+import me.ryleykimmel.brandywine.game.update.Updater;
 
 /**
  * A PlayerDescriptor which encodes the adding of a Player.
@@ -13,25 +12,25 @@ import me.ryleykimmel.brandywine.network.msg.impl.PlayerUpdateMessage;
  */
 public final class AddPlayerDescriptor extends PlayerDescriptor {
 
-	/**
-	 * Constructs a new {@link AddPlayerDescriptor} with the specified Player and appearance tickets.
-	 * 
-	 * @param player The Player we are updating.
-	 * @param tickets The appearance tickets.
-	 */
-	public AddPlayerDescriptor(Player player, int[] tickets) {
-		super(player, tickets);
+	private final int index;
+	private final Position position;
+
+	public AddPlayerDescriptor(Player player, Updater updater) {
+		this(player, updater, player.getIndex(), player.getPosition());
 	}
 
-	@Override
-	public void encodeDescriptor(PlayerUpdateMessage message, FrameBuilder builder, FrameBuilder blockBuilder) {
-		builder.putBits(11, mob.getIndex());
-		builder.putBits(1, isBlockUpdatedRequired() ? 1 : 0);
-		builder.putBits(1, 1);
+	public AddPlayerDescriptor(Player player, Updater updater, int index, Position position) {
+		super(player, updater);
+		this.index = index;
+		this.position = position;
+	}
 
-		Position position = mob.getPosition();
-		builder.putBits(5, position.getY() - message.getPosition().getY());
-		builder.putBits(5, position.getX() - message.getPosition().getX());
+	public int getIndex() {
+		return index;
+	}
+
+	public Position getPosition() {
+		return position;
 	}
 
 }

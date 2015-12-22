@@ -14,7 +14,7 @@ import me.ryleykimmel.brandywine.game.update.task.UpdateTask;
  * @author Graham
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class SequentialUpdater implements Updater {
+public final class SequentialUpdater extends Updater {
 
 	@Override
 	public void update(MobRepository<Player> players, MobRepository<Npc> npcs) {
@@ -24,7 +24,7 @@ public final class SequentialUpdater implements Updater {
 		}
 
 		for (Player player : players) {
-			UpdateTask task = new PlayerUpdateTask(player, players);
+			UpdateTask task = new PlayerUpdateTask(this, player, players);
 			task.run();
 		}
 

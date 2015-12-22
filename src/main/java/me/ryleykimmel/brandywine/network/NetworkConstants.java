@@ -1,7 +1,5 @@
 package me.ryleykimmel.brandywine.network;
 
-import io.netty.channel.Channel;
-
 /**
  * A class representing common network related constants.
  *

@@ -181,7 +181,7 @@ public final class GameSession {
 	 * @param message The Message to dispatch.
 	 */
 	public void dispatch(Message message) {
-		MessageHandlerParser parser = getContext().getParser(MessageHandlerParser.class);
+		MessageHandlerParser parser = context.getParser(MessageHandlerParser.class);
 		MessageHandler<Message> handler = parser.getHandler(message);
 		handler.handle(this, message);
 	}
