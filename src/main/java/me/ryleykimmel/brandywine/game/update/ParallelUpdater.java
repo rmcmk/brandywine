@@ -4,8 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Phaser;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
-
+import me.ryleykimmel.brandywine.common.util.ThreadFactoryUtil;
 import me.ryleykimmel.brandywine.game.collect.MobRepository;
 import me.ryleykimmel.brandywine.game.model.npc.Npc;
 import me.ryleykimmel.brandywine.game.model.player.Player;
@@ -31,9 +30,8 @@ public final class ParallelUpdater extends Updater {
   /**
    * A fixed ExecutorService thread-pool used for executing UpdateTasks.
    */
-  private final ExecutorService executor =
-      Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
-          new ThreadFactoryBuilder().setNameFormat("updater").build());
+  private final ExecutorService executor = Executors.newFixedThreadPool(
+      Runtime.getRuntime().availableProcessors(), ThreadFactoryUtil.create(this).build());
 
   @Override
   public void update(MobRepository<Player> players, MobRepository<Npc> npcs) {

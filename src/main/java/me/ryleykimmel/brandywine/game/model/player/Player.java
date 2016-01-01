@@ -1,7 +1,5 @@
 package me.ryleykimmel.brandywine.game.model.player;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.google.common.base.MoreObjects;

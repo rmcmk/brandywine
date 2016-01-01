@@ -7,11 +7,9 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
-
-import io.netty.util.internal.StringUtil;
 import me.ryleykimmel.brandywine.ServerContext;
 import me.ryleykimmel.brandywine.Service;
+import me.ryleykimmel.brandywine.common.util.ThreadFactoryUtil;
 
 /**
  * Pulses game functions at a fixed rate.
@@ -33,20 +31,20 @@ public final class GamePulseHandler implements Runnable {
   /**
    * A ScheduledExecutorService for scheduling this task.
    */
-  private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor(
-      new ThreadFactoryBuilder().setNameFormat(StringUtil.simpleClassName(this)).build());
+  private final ScheduledExecutorService executor =
+      Executors.newSingleThreadScheduledExecutor(ThreadFactoryUtil.create(this).build());
 
   /**
    * The context of the Server.
    */
-      private final ServerContext context;
+  private final ServerContext context;
 
   /**
    * Constructs a new {@link GamePulseHandler} with the specified ServerContext.
    *
    * @param context The context of the Server.
    */
-      public GamePulseHandler(ServerContext context) {
+  public GamePulseHandler(ServerContext context) {
     this.context = context;
   }
 

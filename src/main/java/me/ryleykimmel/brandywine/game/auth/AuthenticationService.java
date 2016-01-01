@@ -5,11 +5,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
-
-import io.netty.util.internal.StringUtil;
 import me.ryleykimmel.brandywine.ServerContext;
 import me.ryleykimmel.brandywine.Service;
+import me.ryleykimmel.brandywine.common.util.ThreadFactoryUtil;
 
 /**
  * Services AuthenticationRequests every pulse.
@@ -36,15 +34,15 @@ public final class AuthenticationService extends Service {
   /**
    * An {@link ExecutorService} for executing {@link AuthenticationWorker}s.
    */
-  private final ExecutorService executor = Executors.newCachedThreadPool(
-      new ThreadFactoryBuilder().setNameFormat(StringUtil.simpleClassName(this)).build());
+  private final ExecutorService executor =
+      Executors.newCachedThreadPool(ThreadFactoryUtil.create(this).build());
 
   /**
    * Constructs a new {@link AuthenticationService} with the specified ServerContext.
    *
    * @param context The context of the Server.
    */
-      public AuthenticationService(ServerContext context) {
+  public AuthenticationService(ServerContext context) {
     super(context, PULSE_INTERVAL);
   }
 
