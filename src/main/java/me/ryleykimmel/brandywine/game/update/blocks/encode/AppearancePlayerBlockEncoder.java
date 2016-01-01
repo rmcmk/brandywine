@@ -48,8 +48,11 @@ public final class AppearancePlayerBlockEncoder
     propertiesBuilder.put(DataType.SHORT, appearance.getStyle(Appearance.FEET));
 
     // if full helm OR is female 0 || 0x100 + facial hair appearance
-    int value = appearance.isFemale() ? 0 : appearance.getStyle(Appearance.FACIAL_HAIR);
-    propertiesBuilder.put(appearance.isFemale() ? DataType.BYTE : DataType.SHORT, value);
+    if (appearance.isFemale()) {
+      propertiesBuilder.put(DataType.BYTE, 0);
+    } else {
+      propertiesBuilder.put(DataType.SHORT, appearance.getStyle(Appearance.FACIAL_HAIR));
+    }
 
     propertiesBuilder.put(DataType.BYTE, appearance.getColor(Appearance.HAIR));
     propertiesBuilder.put(DataType.BYTE, appearance.getColor(Appearance.CHEST));
@@ -57,13 +60,13 @@ public final class AppearancePlayerBlockEncoder
     propertiesBuilder.put(DataType.BYTE, appearance.getColor(Appearance.FEET));
     propertiesBuilder.put(DataType.BYTE, appearance.getColor(Appearance.SKIN));
 
-    propertiesBuilder.put(DataType.SHORT, 0x328); // stand
-    propertiesBuilder.put(DataType.SHORT, 0x337); // stand turn
-    propertiesBuilder.put(DataType.SHORT, 0x333); // walk
-    propertiesBuilder.put(DataType.SHORT, 0x334); // turn 180
-    propertiesBuilder.put(DataType.SHORT, 0x335); // turn 90 cw
-    propertiesBuilder.put(DataType.SHORT, 0x336); // turn 90 ccw
-    propertiesBuilder.put(DataType.SHORT, 0x338); // run
+    propertiesBuilder.put(DataType.SHORT, 0x328); // idle anim
+    propertiesBuilder.put(DataType.SHORT, 0x337); // turn anim
+    propertiesBuilder.put(DataType.SHORT, 0x333); // walk anim
+    propertiesBuilder.put(DataType.SHORT, 0x334); // half turn anim
+    propertiesBuilder.put(DataType.SHORT, 0x335); // quarter clockwise turn anim
+    propertiesBuilder.put(DataType.SHORT, 0x336); // quarter anti-clockwise turn anim
+    propertiesBuilder.put(DataType.SHORT, 0x338); // run anim
 
     propertiesBuilder.put(DataType.LONG, block.getEncodedUsername());
     propertiesBuilder.put(DataType.BYTE, block.getCombatLevel());
