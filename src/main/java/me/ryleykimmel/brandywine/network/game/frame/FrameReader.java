@@ -1,14 +1,20 @@
 package me.ryleykimmel.brandywine.network.game.frame;
 
-import com.google.common.base.Preconditions;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.google.common.base.Preconditions;
+import com.google.common.primitives.Bytes;
+
+import me.ryleykimmel.brandywine.common.Assertions;
 import me.ryleykimmel.brandywine.common.util.ByteBufUtil;
 import me.ryleykimmel.brandywine.network.game.frame.FrameBuffer.ReadingFrameBuffer;
 
 /**
  * An implementation of a {@link ReadingFrameBuffer} which reads data from a Frames payload.
  *
- * @author Graham @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author Graham
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class FrameReader extends ReadingFrameBuffer {
 
@@ -62,7 +68,8 @@ public final class FrameReader extends ReadingFrameBuffer {
    * Reads a single signed number of the specified DataType in the {@link DataOrder#BIG big}
    * DataOrder if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access} .
    *
-   * @param type The type of the number to read. @return The read number, signed.
+   * @param type The type of the number to read.
+   * @return The read number, signed.
    */
   public long getSigned(DataType type) {
     return getSigned(type, DataOrder.BIG, DataTransformation.NONE);
@@ -72,8 +79,9 @@ public final class FrameReader extends ReadingFrameBuffer {
    * Reads a single signed number of the specified DataType in the specified DataOrder if and only
    * if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
-   * @param type The type of the number to read. @param order The DataOrder to read the number
-   * in. @return The read number, signed.
+   * @param type The type of the number to read.
+   * @param order The DataOrder to read the number in.
+   * @return The read number, signed.
    */
   public long getSigned(DataType type, DataOrder order) {
     return getSigned(type, order, DataTransformation.NONE);
@@ -84,8 +92,9 @@ public final class FrameReader extends ReadingFrameBuffer {
    * DataOrder and performs the specified DataTransformation on the number if and only if this
    * buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
-   * @param type The type of the number to read. @param transformation The DataTransformation to
-   * perform on the number. @return The read number, signed.
+   * @param type The type of the number to read.
+   * @param transformation The DataTransformation to perform on the number.
+   * @return The read number, signed.
    */
   public long getSigned(DataType type, DataTransformation transformation) {
     return getSigned(type, DataOrder.BIG, transformation);
@@ -93,12 +102,13 @@ public final class FrameReader extends ReadingFrameBuffer {
 
   /**
    * Reads a single signed number of the specified DataType in the specified DataOrder and performs
-   * the specified DataTransformation on the number if and only if this buffer is in {@link
-   * AccessMode#BYTE_ACCESS byte access}.
+   * the specified DataTransformation on the number if and only if this buffer is in
+   * {@link AccessMode#BYTE_ACCESS byte access}.
    *
-   * @param type The type of the number to read. @param order The DataOrder to read the number
-   * in. @param transformation The DataTransformation to perform on the number. @return The read
-   * number, signed.
+   * @param type The type of the number to read.
+   * @param order The DataOrder to read the number in.
+   * @param transformation The DataTransformation to perform on the number.
+   * @return The read number, signed.
    */
   public long getSigned(DataType type, DataOrder order, DataTransformation transformation) {
     long longValue = get(type, order, transformation);
@@ -115,7 +125,8 @@ public final class FrameReader extends ReadingFrameBuffer {
    * Reads a single unsigned number of the specified DataType in the {@link DataOrder#BIG big}
    * DataOrder if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
-   * @param type The type of the number to read. @return The read number, unsigned.
+   * @param type The type of the number to read.
+   * @return The read number, unsigned.
    */
   public long getUnsigned(DataType type) {
     return getUnsigned(type, DataOrder.BIG, DataTransformation.NONE);
@@ -125,8 +136,9 @@ public final class FrameReader extends ReadingFrameBuffer {
    * Reads a single unsigned number of the specified DataType in the specified DataOrder if and only
    * if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
-   * @param type The type of the number to read. @param order The DataOrder to read the number
-   * in. @return The read number, unsigned.
+   * @param type The type of the number to read.
+   * @param order The DataOrder to read the number in.
+   * @return The read number, unsigned.
    */
   public long getUnsigned(DataType type, DataOrder order) {
     return getUnsigned(type, order, DataTransformation.NONE);
@@ -137,8 +149,9 @@ public final class FrameReader extends ReadingFrameBuffer {
    * DataOrder and performs the specified DataTransformation on the number if and only if this
    * buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
-   * @param type The type of the number to read. @param transformation The DataTransformation to
-   * perform on the number. @return The read number, unsigned.
+   * @param type The type of the number to read.
+   * @param transformation The DataTransformation to perform on the number.
+   * @return The read number, unsigned.
    */
   public long getUnsigned(DataType type, DataTransformation transformation) {
     return getUnsigned(type, DataOrder.BIG, transformation);
@@ -146,27 +159,28 @@ public final class FrameReader extends ReadingFrameBuffer {
 
   /**
    * Reads a single unsigned number of the specified DataType in the specified DataOrder and
-   * performs the specified DataTransformation on the number if and only if this buffer is in {@link
-   * AccessMode#BYTE_ACCESS byte access}.
+   * performs the specified DataTransformation on the number if and only if this buffer is in
+   * {@link AccessMode#BYTE_ACCESS byte access}.
    *
-   * @param type The type of the number to read. @param order The DataOrder to read the number
-   * in. @param transformation The DataTransformation to perform on the number. @return The read
-   * number, unsigned.
+   * @param type The type of the number to read.
+   * @param order The DataOrder to read the number in.
+   * @param transformation The DataTransformation to perform on the number.
+   * @return The read number, unsigned.
    */
   public long getUnsigned(DataType type, DataOrder order, DataTransformation transformation) {
-    Preconditions.checkArgument(type != DataType.LONG,
-        "due to java restrictions, longs must be read as signed types");
+    Preconditions.checkArgument(type != DataType.LONG, "Longs must be read as signed types.");
     return get(type, order, transformation) & 0xFFFFFFFFFFFFFFFFL;
   }
 
   /**
    * Reads a single number of the specified DataType in the specified DataOrder and performs the
-   * specified DataTransformation on the number if and only if this buffer is in {@link
-   * AccessMode#BYTE_ACCESS byte access}.
+   * specified DataTransformation on the number if and only if this buffer is in
+   * {@link AccessMode#BYTE_ACCESS byte access}.
    *
-   * @param type The type of the number to read. @param order The DataOrder to read the number
-   * in. @param transformation The DataTransformation to perform on the number. @return The read
-   * number.
+   * @param type The type of the number to read.
+   * @param order The DataOrder to read the number in.
+   * @param transformation The DataTransformation to perform on the number.
+   * @return The read number.
    */
   private long get(DataType type, DataOrder order, DataTransformation transformation) {
     checkByteAccess();
@@ -257,14 +271,14 @@ public final class FrameReader extends ReadingFrameBuffer {
   }
 
   /**
-   * Reads the specified amount of bits if and only if this buffer is in {@link
-   * AccessMode#BIT_ACCESS bit access}.
+   * Reads the specified amount of bits if and only if this buffer is in
+   * {@link AccessMode#BIT_ACCESS bit access}.
    *
-   * @param amount The amount of bits to read. @return The value of the bits.
+   * @param amount The amount of bits to read.
+   * @return The value of the bits.
    */
   public int getBits(int amount) {
-    Preconditions.checkArgument(amount >= 0 && amount <= 32,
-        "Number of bits must be between 1 and 32 inclusive.");
+    Assertions.checkWithin(1, 32, amount, "Number of bits must be between 1 and 32 inclusive.");
     checkBitAccess();
 
     int bytePos = bitIndex >> 3;
@@ -287,61 +301,65 @@ public final class FrameReader extends ReadingFrameBuffer {
   }
 
   /**
-   * Reads into the specified byte array if and only if this buffer is in {@link
-   * AccessMode#BYTE_ACCESS byte access}.
+   * Reads {@code length} bytes into a byte array if and only if this buffer is in
+   * {@link AccessMode#BYTE_ACCESS byte access}.
    *
-   * @param bytes The byte array to read into.
+   * @param length The amount of bytes to read.
+   * @return The byte array.
    */
-  public void getBytes(byte[] bytes) {
-    checkByteAccess();
-    buffer.readBytes(bytes);
+  public byte[] getBytes(int length) {
+    return getBytes(DataTransformation.NONE, length);
   }
 
   /**
-   * Reads into the specified byte array and applies the specified data transformation if and only
-   * if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
+   * Reads {@code length} bytes into a byte array if and only if this buffer is in
+   * {@link AccessMode#BYTE_ACCESS byte access}.
    *
-   * @param transformation The DataTransformation to perform on the bytes. @param bytes The byte
-   * array to read into.
+   * @param transformation The DataTransformation to perform on the bytes.
+   * @param length The amount of bytes to read.
+   * @return The byte array.
    */
-  public void getBytes(DataTransformation transformation, byte[] bytes) {
-    if (transformation == DataTransformation.NONE) {
-      getBytes(bytes);
-    } else {
-      for (int i = 0; i < bytes.length; i++) {
-        bytes[i] = (byte) getSigned(DataType.BYTE, transformation);
-      }
+  public byte[] getBytes(DataTransformation transformation, int length) {
+    Assertions.checkNonNegative(length, "Length: [" + length + "] may not be negative!");
+
+    List<Byte> bytes = new ArrayList<>();
+
+    for (int i = 0; i < length && buffer.isReadable(); i++) {
+      bytes.add((byte) getSigned(DataType.BYTE, transformation));
     }
+
+    return Bytes.toArray(bytes);
   }
 
   /**
-   * Reads into the specified byte array, in reverse, if and only if this buffer is in {@link
-   * AccessMode#BYTE_ACCESS byte access}.
+   * Reads {@code length} bytes into a byte array, in reverse, if and only if this buffer is in
+   * {@link AccessMode#BYTE_ACCESS byte access}.
    *
-   * @param bytes The byte array to read into.
+   * @param length The amount of bytes to read.
+   * @return The byte array.
    */
-  public void getBytesReverse(byte[] bytes) {
-    checkByteAccess();
-    for (int i = bytes.length - 1; i >= 0; i--) {
-      bytes[i] = buffer.readByte();
-    }
+  public byte[] getBytesReverse(int length) {
+    return getBytesReverse(DataTransformation.NONE, length);
   }
 
   /**
-   * Reads into the specified byte array, in reverse, and applies the specified data transformation
-   * if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
-   *
-   * @param transformation The DataTransformation to perform on the bytes. @param bytes The byte
-   * array to read into.
+   * Reads {@code length} bytes into a byte array, in reverse, if and only if this buffer is in
+   * {@link AccessMode#BYTE_ACCESS byte access}.
+   * 
+   * @param transformation The DataTransformation to perform on the bytes.
+   * @param length The amount of bytes to read.
+   * @return The byte array.
    */
-  public void getBytesReverse(DataTransformation transformation, byte[] bytes) {
-    if (transformation == DataTransformation.NONE) {
-      getBytesReverse(bytes);
-    } else {
-      for (int i = bytes.length - 1; i >= 0; i--) {
-        bytes[i] = (byte) getSigned(DataType.BYTE, transformation);
-      }
+  public byte[] getBytesReverse(DataTransformation transformation, int length) {
+    Assertions.checkNonNegative(length, "Length: [" + length + "] may not be negative!");
+
+    List<Byte> bytes = new ArrayList<>();
+
+    for (int i = length - 1; i >= 0 && buffer.isReadable(); i--) {
+      bytes.add((byte) getSigned(DataType.BYTE, transformation));
     }
+
+    return Bytes.toArray(bytes);
   }
 
 }

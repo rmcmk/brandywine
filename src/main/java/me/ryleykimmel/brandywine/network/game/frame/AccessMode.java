@@ -3,7 +3,8 @@ package me.ryleykimmel.brandywine.network.game.frame;
 /**
  * Represents the access mode for frame buffers.
  *
- * @author Graham @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author Graham
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public enum AccessMode {
 

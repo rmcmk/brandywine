@@ -26,8 +26,8 @@ public final class AuthenticationRequest {
    * Constructs a new {@link AuthenticationRequest} with the specified GameSession and
    * PlayerCredentials.
    *
-   * @param session The GameSession who is making the request. @param credentials The
-   * PlayerCredentials that are requesting authentication.
+   * @param session The GameSession who is making the request.
+   * @param credentials The PlayerCredentials that are requesting authentication.
    */
   public AuthenticationRequest(GameSession session, PlayerCredentials credentials) {
     this.session = session;

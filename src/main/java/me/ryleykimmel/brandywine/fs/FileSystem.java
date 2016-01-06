@@ -7,6 +7,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.zip.CRC32;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.base.Preconditions;
 
 import me.ryleykimmel.brandywine.common.Buffer;
@@ -19,6 +22,11 @@ import me.ryleykimmel.brandywine.fs.archive.Archive;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class FileSystem {
+
+  /**
+   * The Logger for this class.
+   */
+  private static final Logger logger = LoggerFactory.getLogger(FileSystem.class);
 
   /**
    * The configuration Cache index.
@@ -128,9 +136,10 @@ public final class FileSystem {
   /**
    * Constructs a new {@link FileSystem} with the specified Caches, Archives and Archive hashes.
    *
-   * @param caches All of the Caches within this FileSystem. @param archives All of the Archives
-   * within this FileSystem. @param archiveChecksums All of the Archive hashes. @param
-   * archiveChecksumTable A table of the Archive checksums.
+   * @param caches All of the Caches within this FileSystem.
+   * @param archives All of the Archives within this FileSystem.
+   * @param archiveChecksums All of the Archive hashes.
+   * @param archiveChecksumTable A table of the Archive checksums.
    */
   private FileSystem(Cache[] caches, Archive[] archives, int[] archiveChecksums,
       Buffer archiveChecksumTable) {
@@ -143,8 +152,10 @@ public final class FileSystem {
   /**
    * Constructs and initializes a {@link FileSystem} from the specified {@code directory}.
    *
-   * @param directory The directory of the FileSystem. @return The created FileSystem, never {@code
-   * null}. @throws IOException If some I/O exception occurs.
+   * @param directory The directory of the FileSystem.
+   * @return The created FileSystem, never {@code
+   * null}.
+   * @throws IOException If some I/O exception occurs.
    */
   public static FileSystem create(String directory) throws IOException {
     Path root = Paths.get(directory);
@@ -164,6 +175,7 @@ public final class FileSystem {
 
       // indices are in order, if one does not exist there are no more indices.
       if (Files.notExists(path)) {
+        logger.info("Found {} caches in the file system.", index);
         break;
       }
 
@@ -185,6 +197,8 @@ public final class FileSystem {
       archives[index] = Archive.decode(buffer);
     }
 
+    logger.info("Decoded {} archives from the configuration cache.", archives.length);
+
     FileSystem fileSystem =
         new FileSystem(caches, archives, archiveChecksums, archiveChecksumTable);
 
@@ -194,8 +208,9 @@ public final class FileSystem {
   /**
    * Builds the Archive hash table from the specified Cache.
    *
-   * @param cache The Cache to build the Archive hash table from. @return The Archive hash
-   * table. @throws IOException If some I/O exception occurs.
+   * @param cache The Cache to build the Archive hash table from.
+   * @return The Archive hash table.
+   * @throws IOException If some I/O exception occurs.
    */
   private static Buffer buildArchiveHashTable(Cache cache) throws IOException {
     int[] crcs = new int[MAXIMUM_ARCHIVES];
@@ -222,11 +237,13 @@ public final class FileSystem {
   }
 
   /**
-   * Gets a {@link Archive} for the specified {@code id}. <p> This method fails fast if the id is
-   * not valid or if the returned Archive is {@code null} </p>
+   * Gets a {@link Archive} for the specified {@code id}.
+   * <p>
+   * This method fails fast if the id is not valid or if the returned Archive is {@code null}
+   * </p>
    *
-   * @param id The id of the Archive to fetch. @return The Archive for the specified id, never
-   * {@code null}.
+   * @param id The id of the Archive to fetch.
+   * @return The Archive for the specified id, never {@code null}.
    */
   public Archive getArchive(int id) {
     Preconditions.checkElementIndex(id, archives.length);
@@ -236,10 +253,13 @@ public final class FileSystem {
   }
 
   /**
-   * Gets a {@link Cache} for the specified {@code id}. <p> This method fails fast if the id is not
-   * valid or if the returned Cache is {@code null} </p>
+   * Gets a {@link Cache} for the specified {@code id}.
+   * <p>
+   * This method fails fast if the id is not valid or if the returned Cache is {@code null}
+   * </p>
    *
-   * @param id The id of the Cache to fetch. @return The Cache for the specified id, never {@code
+   * @param id The id of the Cache to fetch.
+   * @return The Cache for the specified id, never {@code
    * null}.
    */
   public Cache getCache(int id) {
@@ -250,11 +270,13 @@ public final class FileSystem {
   }
 
   /**
-   * Gets the specified Index as a {@link ByteBuffer} from some {@link Cache} as specified by the
+   * Gets the specified Index as a {@link Buffer} from some {@link Cache} as specified by the
    * {@code index}
    *
-   * @param index The index of the Cache. @param id The id of the File. @return A ByteBuffer
-   * representation of the Index. @throws IOException If some I/O exception occurs.
+   * @param index The index of the Cache.
+   * @param id The id of the File.
+   * @return A Buffer representation of the Index.
+   * @throws IOException If some I/O exception occurs.
    */
   public Buffer getFile(int index, int id) throws IOException {
     return getCache(index).getFile(id);

@@ -25,9 +25,7 @@ public final class ChatMessageDecoder implements MessageDecoder<ChatMessage> {
     int effects = (int) reader.getUnsigned(DataType.BYTE, DataTransformation.SUBTRACT);
     int color = (int) reader.getUnsigned(DataType.BYTE, DataTransformation.SUBTRACT);
     int length = frame.getLength() - 2;
-
-    byte[] originalCompressed = new byte[length];
-    reader.getBytesReverse(DataTransformation.ADD, originalCompressed);
+    byte[] originalCompressed = reader.getBytesReverse(DataTransformation.ADD, length);
 
     String uncompressed = TextUtil.decompress(originalCompressed, length);
     uncompressed = TextUtil.filterInvalidCharacters(uncompressed);

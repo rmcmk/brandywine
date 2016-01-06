@@ -6,7 +6,8 @@ import java.util.concurrent.Phaser;
  * An UpdateTask which wraps around another UpdateTask and notifies the specified Phaser when the
  * task has completed.
  * 
- * @author Graham @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author Graham
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class PhasedUpdateTask implements UpdateTask {
 
@@ -23,8 +24,8 @@ public final class PhasedUpdateTask implements UpdateTask {
   /**
    * Constructs a new {@link PhasedUpdateTask} with the specified Phaser and UpdateTask.
    * 
-   * @param phaser The Phaser to notify when the task has completed. @param task The UpdateTask to
-   * perform.
+   * @param phaser The Phaser to notify when the task has completed.
+   * @param task The UpdateTask to perform.
    */
   public PhasedUpdateTask(Phaser phaser, UpdateTask task) {
     this.phaser = phaser;

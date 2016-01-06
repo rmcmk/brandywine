@@ -29,7 +29,8 @@ public final class Index {
   /**
    * Creates the index.
    * 
-   * @param size The size of the file. @param block The first block of the file.
+   * @param size The size of the file.
+   * @param block The first block of the file.
    */
   public Index(int size, int block) {
     this.size = size;
@@ -39,8 +40,9 @@ public final class Index {
   /**
    * Decodes the {@link Buffer} into an Index.
    * 
-   * @param buffer The buffer. @return The index. @throws IllegalArgumentException If the buffer
-   * length is invalid.
+   * @param buffer The buffer.
+   * @return The index.
+   * @throws IllegalArgumentException If the buffer length is invalid.
    */
   public static Index decode(Buffer buffer) {
     Preconditions.checkArgument(buffer.remaining() == BYTES,

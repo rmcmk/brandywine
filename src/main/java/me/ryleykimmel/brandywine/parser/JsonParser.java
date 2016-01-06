@@ -8,7 +8,8 @@ import com.google.gson.Gson;
 /**
  * Represents a Json {@link ReaderParser}.
  *
- * @author Ryley Kimmel <ryley.kimmel@live.com> @param <T> The parsed Json data.
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @param <T> The parsed Json data.
  */
 public abstract class JsonParser<T> extends ReaderParser<T> {
 
@@ -25,7 +26,8 @@ public abstract class JsonParser<T> extends ReaderParser<T> {
   /**
    * Constructs a new {@link JsonParser} with the specified path and data type.
    *
-   * @param path The path to the source. @param type The type of the parsed Json data.
+   * @param path The path to the source.
+   * @param type The type of the parsed Json data.
    */
   public JsonParser(String path, Class<T> type) {
     super(path);

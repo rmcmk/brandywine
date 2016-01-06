@@ -21,8 +21,8 @@ public final class IsaacRandomPair {
   /**
    * Constructs a new {@link IsaacRandomPair} with the specified encoding and decoding random.
    *
-   * @param encodingRandom The IsaacRandom number generator used for encoding. @param decodingRandom
-   * The IsaacRandom number generator used for decoding.
+   * @param encodingRandom The IsaacRandom number generator used for encoding.
+   * @param decodingRandom The IsaacRandom number generator used for decoding.
    */
   public IsaacRandomPair(IsaacRandom encodingRandom, IsaacRandom decodingRandom) {
     this.encodingRandom = encodingRandom;

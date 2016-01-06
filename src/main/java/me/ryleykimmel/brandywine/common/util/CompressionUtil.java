@@ -22,8 +22,9 @@ public final class CompressionUtil {
   /**
    * Uncompresses the GZIP {@code byte} array.
    *
-   * @param bytes The compressed bytes. @return The uncompressed bytes. @throws IOException If some
-   * I/O exception occurs.
+   * @param bytes The compressed bytes.
+   * @return The uncompressed bytes.
+   * @throws IOException If some I/O exception occurs.
    */
   public static byte[] gunzip(byte[] bytes) throws IOException {
     return toByteArray(new GZIPInputStream(new ByteArrayInputStream(bytes)));
@@ -32,8 +33,9 @@ public final class CompressionUtil {
   /**
    * Uncompresses the GZIP Buffer.
    *
-   * @param buffer The compressed Buffer. @return The uncompressed bytes, as a Buffer. @throws
-   * IOException If some I/O exception occurs.
+   * @param buffer The compressed Buffer.
+   * @return The uncompressed bytes, as a Buffer.
+   * @throws IOException If some I/O exception occurs.
    */
   public static Buffer gunzip(Buffer buffer) throws IOException {
     return Buffer.wrap(gunzip(buffer.getBytes()));
@@ -42,8 +44,9 @@ public final class CompressionUtil {
   /**
    * Uncompresses a BZIP2 {@code byte} array without the header.
    *
-   * @param bytes The compressed bytes. @return The uncompressed bytes. @throws IOException If some
-   * I/O exception occurs.
+   * @param bytes The compressed bytes.
+   * @return The uncompressed bytes.
+   * @throws IOException If some I/O exception occurs.
    */
   public static byte[] bunzip2(byte[] bytes) throws IOException {
     byte[] bzip2 = new byte[bytes.length + 4];
@@ -59,19 +62,23 @@ public final class CompressionUtil {
   /**
    * Uncompresses a BZIP2 Buffer without the header.
    *
-   * @param buffer The compressed Buffer. @return The uncompressed bytes, as a Buffer. @throws
-   * IOException If some I/O exception occurs.
+   * @param buffer The compressed Buffer.
+   * @return The uncompressed bytes, as a Buffer.
+   * @throws IOException If some I/O exception occurs.
    */
   public static Buffer bunzip2(Buffer buffer) throws IOException {
     return Buffer.wrap(bunzip2(buffer.getBytes()));
   }
 
   /**
-   * Copies all {@code byte}s from the specified InputStream into a {@code byte} array. <p> This
-   * method closes the InputStream. </p>
+   * Copies all {@code byte}s from the specified InputStream into a {@code byte} array.
+   * <p>
+   * This method closes the InputStream.
+   * </p>
    *
-   * @param in The InputStream to read from. @return A {@code byte} array containing all of the data
-   * from the specified InputStream. @throws IOException If some I/O exception occurs.
+   * @param is The InputStream to read from.
+   * @return A {@code byte} array containing all of the data from the specified InputStream.
+   * @throws IOException If some I/O exception occurs.
    */
   private static byte[] toByteArray(InputStream is) throws IOException {
     try {

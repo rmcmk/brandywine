@@ -32,8 +32,10 @@ public final class ChatMessage implements Message {
   /**
    * Creates a new chat message.
    *
-   * @param message The message. @param compressedMessage The compressed message. @param color The
-   * text color. @param effects The text effects.
+   * @param message The message.
+   * @param compressedMessage The compressed message.
+   * @param color The text color.
+   * @param effects The text effects.
    */
   public ChatMessage(String message, byte[] compressedMessage, int color, int effects) {
     this.message = message;

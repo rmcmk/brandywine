@@ -6,13 +6,15 @@ import com.google.common.base.Preconditions;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import me.ryleykimmel.brandywine.common.Assertions;
 import me.ryleykimmel.brandywine.common.util.ByteBufUtil;
 import me.ryleykimmel.brandywine.network.game.frame.FrameBuffer.WritingFrameBuffer;
 
 /**
  * An implementation of a WritingFrameBuffer which builds Frames from its contents.
  *
- * @author Graham @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author Graham
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class FrameBuilder extends WritingFrameBuffer implements Builder<Frame> {
 
@@ -44,8 +46,8 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
    * Constructs a new {@link FrameBuilder} with the specified opcode, {@link FrameType#FIXED fixed
    * FrameType} and ByteBufAllocator.
    *
-   * @param opcode The opcode of the Frame. @param alloc The ByteBufAllocator for allocating
-   * ByteBufs.
+   * @param opcode The opcode of the Frame.
+   * @param alloc The ByteBufAllocator for allocating ByteBufs.
    */
   public FrameBuilder(int opcode, ByteBufAllocator alloc) {
     this(opcode, FrameType.FIXED, alloc);
@@ -55,8 +57,9 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
    * Constructs a new {@link FrameBuilder} with the specified opcode, FrameType and
    * ByteBufAllocator.
    *
-   * @param opcode The opcode of the Frame. @param type The type of the Frame. @param alloc The
-   * ByteBufAllocator for allocating ByteBufs.
+   * @param opcode The opcode of the Frame.
+   * @param type The type of the Frame.
+   * @param alloc The ByteBufAllocator for allocating ByteBufs.
    */
   public FrameBuilder(int opcode, FrameType type, ByteBufAllocator alloc) {
     super(alloc.buffer());
@@ -86,9 +89,10 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
    * specified DataTransformation if and only if this buffer is in {@link AccessMode#BYTE_ACCESS
    * byte access}.
    *
-   * @param type The type of the number to write. @param order The DataOrder to write the number
-   * in. @param transformation The DataTransformation to perform on the number. @param value The
-   * value of the number.
+   * @param type The type of the number to write.
+   * @param order The DataOrder to write the number in.
+   * @param transformation The DataTransformation to perform on the number.
+   * @param value The value of the number.
    */
   public void put(DataType type, DataOrder order, DataTransformation transformation, Number value) {
     checkByteAccess();
@@ -178,11 +182,12 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
 
   /**
    * Writes a single number of the specified DataType in the {@link DataOrder#BIG big data order}
-   * and performs the specified DataTransformation if and only if this buffer is in {@link
-   * AccessMode#BYTE_ACCESS byte access}.
+   * and performs the specified DataTransformation if and only if this buffer is in
+   * {@link AccessMode#BYTE_ACCESS byte access}.
    *
-   * @param type The type of the number to write. @param transformation The DataTransformation to
-   * perform on the number. @param value The value of the number.
+   * @param type The type of the number to write.
+   * @param transformation The DataTransformation to perform on the number.
+   * @param value The value of the number.
    */
   public void put(DataType type, DataTransformation transformation, Number value) {
     put(type, DataOrder.BIG, transformation, value);
@@ -192,7 +197,8 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
    * Writes a single number of the specified DataType in the {@link DataOrder#BIG big data order} if
    * and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
-   * @param type The type of the number to write. @param value The value of the number.
+   * @param type The type of the number to write.
+   * @param value The value of the number.
    */
   public void put(DataType type, Number value) {
     put(type, DataTransformation.NONE, value);
@@ -202,8 +208,9 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
    * Writes a single number of the specified DataType in the specified DataOrder if and only if this
    * buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
-   * @param type The type of the number to write. @param order The DataOrder to write the number
-   * in. @param value The value of the number.
+   * @param type The type of the number to write.
+   * @param order The DataOrder to write the number in.
+   * @param value The value of the number.
    */
   public void put(DataType type, DataOrder order, Number value) {
     put(type, order, DataTransformation.NONE, value);
@@ -213,11 +220,11 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
    * Writes the specified amount of bits with the specified value, if and only if this buffer is in
    * {@link AccessMode#BIT_ACCESS bit access}.
    *
-   * @param amount The number of bits to write. @param value The value.
+   * @param amount The number of bits to write.
+   * @param value The value.
    */
   public void putBits(int amount, int value) {
-    Preconditions.checkArgument(amount > 0 && amount <= 32,
-        "Number of bits must be between 1 and 31 inclusive");
+    Assertions.checkWithin(1, 32, amount, "Number of bits must be between 1 and 32 inclusive.");
     checkBitAccess();
 
     int bytePos = bitIndex >> 3;
@@ -261,8 +268,8 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
   }
 
   /**
-   * Writes the bytes from the specified ByteBuf if and only if this buffer is in {@link
-   * AccessMode#BYTE_ACCESS byte access}.
+   * Writes the bytes from the specified ByteBuf if and only if this buffer is in
+   * {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param buf The ByteBuf to write from.
    */
@@ -286,8 +293,8 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
    * Writes the specified bytes and performs the specified DataTransformation if and only if this
    * buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
-   * @param transformation The DataTransformation to perform on the number. @param bytes The bytes
-   * to write.
+   * @param transformation The DataTransformation to perform on the number.
+   * @param bytes The bytes to write.
    */
   public void putBytes(DataTransformation transformation, byte[] bytes) {
     if (transformation == DataTransformation.NONE) {
@@ -300,8 +307,8 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
   }
 
   /**
-   * Writes the specified bytes, in reverse, if and only if this buffer is in {@link
-   * AccessMode#BYTE_ACCESS byte access}.
+   * Writes the specified bytes, in reverse, if and only if this buffer is in
+   * {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param bytes The bytes to write.
    */
@@ -328,8 +335,8 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
    * Writes the specified bytes, in reverse and performs the specified DataTransformation if and
    * only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
-   * @param transformation The DataTransformation to perform on the bytes. @param bytes The bytes to
-   * write.
+   * @param transformation The DataTransformation to perform on the bytes.
+   * @param bytes The bytes to write.
    */
   public void putBytesReverse(DataTransformation transformation, byte[] bytes) {
     if (transformation == DataTransformation.NONE) {

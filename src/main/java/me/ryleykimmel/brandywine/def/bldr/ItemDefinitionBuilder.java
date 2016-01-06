@@ -12,7 +12,8 @@ import me.ryleykimmel.brandywine.def.impl.ItemDefinition;
 /**
  * A {@link DefinitionBuilder} for {@link ItemDefinition item definitions}.
  *
- * @author John Major @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author John Major
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ItemDefinitionBuilder extends DefinitionBuilder<ItemDefinition> {
 

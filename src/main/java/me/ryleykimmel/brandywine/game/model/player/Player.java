@@ -94,8 +94,8 @@ public final class Player extends Mob {
   /**
    * Constructs a new {@link Player} with the specified GameSession and PlayerCredentials.
    * 
-   * @param session The GameSession this Player is attached to. @param credentials The credentials
-   * of this Player.
+   * @param session The GameSession this Player is attached to.
+   * @param credentials The credentials of this Player.
    */
   public Player(GameSession session, PlayerCredentials credentials) {
     this.session = session;
@@ -338,8 +338,9 @@ public final class Player extends Mob {
   }
 
   /**
-   * Tests whether or not this Player is a member. @return {@code true} iff this Player is a member,
-   * otherwise {@code false}.
+   * Tests whether or not this Player is a member.
+   * 
+   * @return {@code true} iff this Player is a member, otherwise {@code false}.
    */
   private boolean isMember() {
     return false;

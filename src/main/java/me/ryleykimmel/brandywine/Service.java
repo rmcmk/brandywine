@@ -52,8 +52,9 @@ public abstract class Service {
   /**
    * Constructs a new {@link Service} with the specified ServerContext and interval.
    *
-   * @param context The context of the Server. @param interval The interval, in milliseconds
-   * representing how often this Service will be executed.
+   * @param context The context of the Server.
+   * @param interval The interval, in milliseconds representing how often this Service will be
+   * executed.
    */
   public Service(ServerContext context, long interval) {
     this.context = context;
@@ -67,8 +68,8 @@ public abstract class Service {
    * Pulses this Service, counting down the {@code currentDelay} until it reaches <tt>0</tt> then
    * executes this Service.
    *
-   * @throws Throwable If some exception occurs. @return How long this Service took to pulse this
-   * iteration, in milliseconds.
+   * @throws Throwable If some exception occurs.
+   * @return How long this Service took to pulse this iteration, in milliseconds.
    */
   public final long pulse() throws Throwable {
     try {

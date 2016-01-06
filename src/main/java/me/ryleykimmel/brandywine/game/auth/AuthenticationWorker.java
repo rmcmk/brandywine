@@ -31,27 +31,28 @@ public final class AuthenticationWorker implements Runnable {
   /**
    * The context of the Server.
    */
-      private final ServerContext context;
+  private final ServerContext context;
 
   /**
    * The AuthenticationStrategy to use when authenticating requests.
    */
-      private final AuthenticationStrategy strategy;
+  private final AuthenticationStrategy strategy;
 
   /**
    * The request to authenticate.
    */
-      private final AuthenticationRequest request;
+  private final AuthenticationRequest request;
 
   /**
    * Constructs a new {@link AuthenticationWorker} with the specified AuthenticationStrategy and
    * AuthenticationRequest.
    *
-   * @param context The context of the Server. @param strategy The AuthenticationStrategy to use
-   * when authenticating requests. @param request The request to authenticate.
+   * @param context The context of the Server.
+   * @param strategy The AuthenticationStrategy to use when authenticating requests.
+   * @param request The request to authenticate.
    */
-      public AuthenticationWorker(ServerContext context, AuthenticationStrategy strategy,
-          AuthenticationRequest request) {
+  public AuthenticationWorker(ServerContext context, AuthenticationStrategy strategy,
+      AuthenticationRequest request) {
     this.context = context;
     this.strategy = strategy;
     this.request = request;
@@ -60,7 +61,8 @@ public final class AuthenticationWorker implements Runnable {
   /**
    * Constructs a new {@link AuthenticationWorker} with the specified AuthenticationRequest.
    *
-   * @param context The context of the Server. @param request The request to authenticate.
+   * @param context The context of the Server.
+   * @param request The request to authenticate.
    */
   public AuthenticationWorker(ServerContext context, AuthenticationRequest request) {
     this(context, DEFAULT_STRATEGY, request);
@@ -100,7 +102,8 @@ public final class AuthenticationWorker implements Runnable {
   /**
    * Closes the specified GameSession after sending the specified response code.
    * 
-   * @param session The GameSession to close. @param response The response to send.
+   * @param session The GameSession to close.
+   * @param response The response to send.
    */
   private void closeWithResponse(GameSession session, int response) {
     session.writeAndFlush(new LoginResponseMessage(response))

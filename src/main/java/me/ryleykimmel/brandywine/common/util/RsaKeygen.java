@@ -47,8 +47,9 @@ public final class RsaKeygen {
    * Generates a public and private RSA keypair.
    * 
    * @throws NoSuchAlgorithmException If the specified algorithm is not available in this
-   * environment. @throws InvalidKeySpecException If any key cannot be processed. @throws
-   * IOException If some I/O exception occurs.
+   * environment.
+   * @throws InvalidKeySpecException If any key cannot be processed.
+   * @throws IOException If some I/O exception occurs.
    */
   public void generate() throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
     KeyPairGenerator generator = KeyPairGenerator.getInstance(ALGORITHM);
@@ -67,8 +68,10 @@ public final class RsaKeygen {
   /**
    * Writes a RSA keypair to disk.
    * 
-   * @param root The root directory to write the RSA keypair. @param modulus The RSA modulus. @param
-   * exponent The RSA exponent. @throws IOException If some I/O exception occurs.
+   * @param root The root directory to write the RSA keypair.
+   * @param modulus The RSA modulus.
+   * @param exponent The RSA exponent.
+   * @throws IOException If some I/O exception occurs.
    */
   private void write(String root, BigInteger modulus, BigInteger exponent) throws IOException {
     Path path = Paths.get("data", root);

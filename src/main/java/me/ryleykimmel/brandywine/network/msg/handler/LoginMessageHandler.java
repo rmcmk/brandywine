@@ -71,7 +71,8 @@ public final class LoginMessageHandler implements MessageHandler<LoginMessage> {
   /**
    * Closes the specified GameSession after sending the specified response code.
    * 
-   * @param session The GameSession to close. @param response The response to send.
+   * @param session The GameSession to close.
+   * @param response The response to send.
    */
   private void closeWithResponse(GameSession session, int response) {
     session.writeAndFlush(new LoginResponseMessage(response))

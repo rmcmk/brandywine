@@ -43,7 +43,8 @@ public enum Gender {
   /**
    * Gets the Gender based on the specified value.
    * 
-   * @param value The value of the Gender to get. @return The Gender for the specified value.
+   * @param value The value of the Gender to get.
+   * @return The Gender for the specified value.
    */
   public static Gender forValue(int value) {
     switch (value) {

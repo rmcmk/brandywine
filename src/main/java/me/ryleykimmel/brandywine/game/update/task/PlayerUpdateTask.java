@@ -28,7 +28,14 @@ import me.ryleykimmel.brandywine.network.msg.impl.PlayerUpdateMessage;
  */
 public final class PlayerUpdateTask implements UpdateTask {
 
+  /**
+   * The maximum amount of players within the viewport.
+   */
   private static final int MAXIMUM_LOCAL_PLAYERS = 255;
+
+  /**
+   * The maximum amount of added players per pulse.
+   */
   private static final int MAXIMUM_ADDITIONS_PER_PULSE = 20;
 
   /**
@@ -41,13 +48,17 @@ public final class PlayerUpdateTask implements UpdateTask {
    */
   private final MobRepository<Player> players;
 
+  /**
+   * The Updater.
+   */
   private final Updater updater;
 
   /**
    * Constructs a new {@link PlayerUpdateTask} with the specified Player and surrounding players.
    * 
-   * @param updater @param player The Player we are updating. @param players The surronding Players
-   * we are updating.
+   * @param updater
+   * @param player The Player we are updating.
+   * @param players The surronding Players we are updating.
    */
   public PlayerUpdateTask(Updater updater, Player player, MobRepository<Player> players) {
     this.player = player;
@@ -55,6 +66,14 @@ public final class PlayerUpdateTask implements UpdateTask {
     this.updater = updater;
   }
 
+  /**
+   * Creates a PlayerDescriptor based upon the specified Player's current state (walking, running,
+   * teleporting, etc).
+   * 
+   * @param player The Player to create the descriptor for.
+   * @return The new PlayerDescriptor.
+   * @throws IllegalStateException If the PlayerDescriptor was unable to be created.
+   */
   private PlayerDescriptor createStateDescriptor(Player player) {
     if (player.isTeleporting()) {
       return new TeleportPlayerDescriptor(player, updater);
@@ -101,7 +120,11 @@ public final class PlayerUpdateTask implements UpdateTask {
         it.remove();
         descriptors.add(new RemovePlayerDescriptor(other, updater));
       } else {
-        descriptors.add(checkCachedAppearance(tickets, other, createStateDescriptor(other)));
+        PlayerDescriptor otherDescriptor = createStateDescriptor(other);
+        if (checkCachedAppearance(tickets, other)) {
+          otherDescriptor.addBlock(AppearancePlayerBlock.create(other));
+        }
+        descriptors.add(otherDescriptor);
       }
     }
 
@@ -126,24 +149,34 @@ public final class PlayerUpdateTask implements UpdateTask {
         descriptors));
   }
 
-  private PlayerDescriptor checkCachedAppearance(int[] tickets, Player player,
-      PlayerDescriptor descriptor) {
+  /**
+   * Tests whether or not the specified Player has a cached appearance within the specified
+   * appearance ticket array.
+   * 
+   * @param tickets The appearance tickets.
+   * @param player The Player.
+   * @return {@code true} if the specified Player has a cached appearance otherwise {@code false}.
+   */
+  private boolean checkCachedAppearance(int[] tickets, Player player) {
     if (player.isActive()) {
       int index = player.getIndex() - 1;
       int ticket = player.getAppearanceTicket();
       if (tickets[index] != ticket) {
         tickets[index] = ticket;
-        descriptor.addBlock(AppearancePlayerBlock.create(player));
+        return true;
       }
     }
-    return descriptor;
+
+    return false;
   }
 
   /**
    * Returns whether or not the specified {@link Player} should be removed.
    *
-   * @param position The {@link Position} of the Player being updated. @param other The Player being
-   * tested. @return {@code true} iff the specified Player should be removed.
+   * @param position The {@link Position} of the Player being updated.
+   * @param distance The viewing distance.
+   * @param other The Player being tested.
+   * @return {@code true} iff the specified Player should be removed.
    */
   private boolean removeable(Position position, int distance, Player other) {
     if (other.isTeleporting() || !other.isActive()) {

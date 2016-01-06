@@ -3,17 +3,21 @@ package me.ryleykimmel.brandywine.common.util;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 
+import me.ryleykimmel.brandywine.game.model.player.Player;
+
 /**
  * A static utility class containing extension or helper methods for {@link Player} names.
  *
- * @author Ryley Kimmel <ryley.kimmel@live.com> @author Graham
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author Graham
  */
 public final class NameUtil {
 
   /**
    * Decodes the base 37 value into a String.
    *
-   * @param value The String, expressed in base 37 as a {@code long}. @return The decoded String.
+   * @param value The String, expressed in base 37 as a {@code long}.
+   * @return The decoded String.
    */
   public static String decodeBase37(long value) {
     char[] chars = new char[12];
@@ -42,8 +46,8 @@ public final class NameUtil {
   /**
    * Encodes the specified String into base 37, storing the result in a {@code long}.
    *
-   * @param string The String to encode. @return The long containing the String, expressed in base
-   * 37.
+   * @param string The String to encode.
+   * @return The long containing the String, expressed in base 37.
    */
   public static long encodeBase37(String string) {
     Preconditions.checkArgument(!Strings.isNullOrEmpty(string) || string.length() < 13,

@@ -18,7 +18,8 @@ public final class ServerChatMessage implements Message {
   /**
    * Constructs a new {@link ServerChatMessage} with the specified message.
    *
-   * @param message The chat message. @param args The arguments referenced from the formatter.
+   * @param message The chat message.
+   * @param args The arguments referenced from the formatter.
    */
   public ServerChatMessage(String message, Object... args) {
     this.message = Strings.format(message, args);

@@ -62,13 +62,16 @@ public final class LoginMessage implements Message {
   /**
    * Constructs a new {@link LoginMessage}.
    *
-   * @param dummy The constant dummy value. @param clientVersion The version of the connecting
-   * client. @param detail The detail level of the connecting client. @param archiveChecksums The
-   * archive checksums of the connecting client. @param blockLength The block length of the
-   * connecting client. @param blockOperationCode The block operation code of the connecting
-   * client. @param sessionKeys The session keys of the connecting client. @param userId The user id
-   * of the connecting client. @param username The username of the connecting client. @param
-   * password The password of the connecting client.
+   * @param dummy The constant dummy value.
+   * @param clientVersion The version of the connecting client.
+   * @param detail The detail level of the connecting client.
+   * @param archiveChecksums The archive checksums of the connecting client.
+   * @param blockLength The block length of the connecting client.
+   * @param blockOperationCode The block operation code of the connecting client.
+   * @param sessionKeys The session keys of the connecting client.
+   * @param userId The user id of the connecting client.
+   * @param username The username of the connecting client.
+   * @param password The password of the connecting client.
    */
   public LoginMessage(int dummy, int clientVersion, int detail, int[] archiveChecksums,
       int blockLength, int blockOperationCode, int[] sessionKeys, int userId, String username,

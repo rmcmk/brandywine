@@ -1,7 +1,6 @@
 package me.ryleykimmel.brandywine.common;
 
 import org.junit.Assert;
-
 import org.junit.Test;
 
 public final class CharactersTest {

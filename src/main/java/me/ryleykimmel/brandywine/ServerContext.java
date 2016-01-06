@@ -52,7 +52,8 @@ public final class ServerContext {
   /**
    * Gets a Service from its type.
    *
-   * @param clazz The type of the Service. @return The instance of the Service.
+   * @param clazz The type of the Service.
+   * @return The instance of the Service.
    */
   @SuppressWarnings("unchecked")
   public <T extends Service> T getService(Class<T> clazz) {
@@ -62,7 +63,8 @@ public final class ServerContext {
   /**
    * Adds the specified Service to the map.
    *
-   * @param clazz The type of the Service. @param service The instance of the Service.
+   * @param clazz The type of the Service.
+   * @param service The instance of the Service.
    */
   public <T extends Service> void addService(Class<T> clazz, T service) {
     services.put(clazz, service);
@@ -71,7 +73,8 @@ public final class ServerContext {
   /**
    * Gets a Parser from its type.
    *
-   * @param clazz The type of the Parser. @return The instance of the Parser.
+   * @param clazz The type of the Parser.
+   * @return The instance of the Parser.
    */
   @SuppressWarnings("unchecked")
   public <T extends Parser<?, ?>> T getParser(Class<T> clazz) {
@@ -81,7 +84,8 @@ public final class ServerContext {
   /**
    * Adds the specified Parser to the map.
    *
-   * @param clazz The type of the Parser. @param parser The Parser to add.
+   * @param clazz The type of the Parser.
+   * @param parser The Parser to add.
    */
   public <T extends Parser<?, ?>> void addParser(Class<T> clazz, T parser) {
     parsers.put(clazz, parser);

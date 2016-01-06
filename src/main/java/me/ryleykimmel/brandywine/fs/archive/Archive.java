@@ -16,7 +16,9 @@ import me.ryleykimmel.brandywine.common.util.CompressionUtil;
  * An archive in the RuneScape cache. An archive is a set of files which can be completely
  * compressed, or each individual file can be compressed.
  * 
- * @author Graham @author Major @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author Graham
+ * @author Major
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Archive {
 
@@ -42,7 +44,8 @@ public final class Archive {
   /**
    * Gets the {@link ArchiveEntry} with the specified name, wrapped in an Optional.
    * 
-   * @param name The name of the entry. @return The entry, wrapped in an Optional.
+   * @param name The name of the entry.
+   * @return The entry, wrapped in an Optional.
    */
   private Optional<ArchiveEntry> getOptionalEntry(String name) {
     int hash = ArchiveUtil.hash(name);
@@ -52,7 +55,8 @@ public final class Archive {
   /**
    * Gets the {@link ArchiveEntry} with the specified name.
    * 
-   * @param name The name of the entry. @return The entry.
+   * @param name The name of the entry.
+   * @return The entry.
    */
   public ArchiveEntry getEntry(String name) {
     return getOptionalEntry(name)
@@ -62,8 +66,9 @@ public final class Archive {
   /**
    * Decodes the {@link Archive} in the specified {@link Buffer}.
    * 
-   * @param buffer The buffer. @return The archive. @throws IOException If there is an error
-   * decompressing the data.
+   * @param buffer The buffer.
+   * @return The archive.
+   * @throws IOException If there is an error decompressing the data.
    */
   public static Archive decode(Buffer buffer) throws IOException {
     if (buffer.isEmpty()) {

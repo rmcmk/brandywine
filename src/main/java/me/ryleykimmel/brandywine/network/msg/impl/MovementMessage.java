@@ -26,8 +26,8 @@ public final class MovementMessage implements Message {
    * Constructs a new {@link MovementMessage} with the specified Queue of Positions and the running
    * flag.
    *
-   * @param steps A {@link Queue} of Positions the client is attempting to move to. @param running
-   * Whether or not we should run.
+   * @param steps A {@link Queue} of Positions the client is attempting to move to.
+   * @param running Whether or not we should run.
    */
   public MovementMessage(Queue<Position> steps, boolean running) {
     this.steps = steps;

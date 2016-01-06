@@ -16,9 +16,10 @@ public interface AuthenticationStrategy {
   /**
    * Attempts to authenticate the specified Player.
    *
-   * @param player The Player to authenticate. @return The response indicating the state of the
-   * authentication. @throws IOException If some I/O error occurs. @throws SQLException If some
-   * database access error occurs.
+   * @param player The Player to authenticate.
+   * @return The response indicating the state of the authentication.
+   * @throws IOException If some I/O error occurs.
+   * @throws SQLException If some database access error occurs.
    */
   AuthenticationResponse authenticate(Player player) throws IOException, SQLException;
 

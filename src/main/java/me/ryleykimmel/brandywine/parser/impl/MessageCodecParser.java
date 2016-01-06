@@ -99,27 +99,27 @@ public final class MessageCodecParser extends TomlParser {
   /**
    * Represents the default MessageEncoder, used when a MessageEncoder mapping is not found.
    */
-      private static final MessageEncoder<Message> DEFAULT_MESSAGE_ENCODER =
-          new DefaultMessageEncoder();
+  private static final MessageEncoder<Message> DEFAULT_MESSAGE_ENCODER =
+      new DefaultMessageEncoder();
 
   /**
    * A {@link Map} of Message types to MessageEncoders.
    */
-          private final Map<Class<? extends Message>, MessageEncoder<? extends Message>> encoders =
-              new HashMap<>(MAXIMUM_MESSAGES);
+  private final Map<Class<? extends Message>, MessageEncoder<? extends Message>> encoders =
+      new HashMap<>(MAXIMUM_MESSAGES);
 
   /**
    * A {@link Map} of Frame opcodes to MessageDecoders.
    */
-              private final Map<Integer, MessageDecoder<? extends Message>> decoders =
-                  new HashMap<>(MAXIMUM_MESSAGES);
+  private final Map<Integer, MessageDecoder<? extends Message>> decoders =
+      new HashMap<>(MAXIMUM_MESSAGES);
 
   /**
    * Constructs a new {@link MessageCodecParser} with the specified path.
    *
    * @param path The path to the source.
    */
-                  public MessageCodecParser(String path) {
+  public MessageCodecParser(String path) {
     super(path);
   }
 
@@ -138,7 +138,7 @@ public final class MessageCodecParser extends TomlParser {
   /**
    * Appends the specified MessageDecoder to its respective map.
    *
-   * @param encoder The MessageDecoder to append.
+   * @param decoder The MessageDecoder to append.
    */
   private <T extends Message> void append(MessageDecoder<T> decoder) {
     Optional<Decodes> optional = ClassUtil.getAnnotation(decoder, Decodes.class);
@@ -150,8 +150,9 @@ public final class MessageCodecParser extends TomlParser {
   /**
    * Encodes the specified Message into a Frame.
    *
-   * @param message The Message to encode. @param alloc The ByteBufAllocator used for allocating new
-   * ByteBufs. @return The encoded Frame, wrapped in an Optional.
+   * @param message The Message to encode.
+   * @param alloc The ByteBufAllocator used for allocating new ByteBufs.
+   * @return The encoded Frame, wrapped in an Optional.
    */
   @SuppressWarnings("unchecked")
   public <T extends Message> Frame encode(T message, ByteBufAllocator alloc) {
@@ -163,7 +164,8 @@ public final class MessageCodecParser extends TomlParser {
   /**
    * Decodes the specified Frame into a Message.
    *
-   * @param frame The Frame to decode. @return The decoded Message, wrapped in an Optional.
+   * @param frame The Frame to decode.
+   * @return The decoded Message, wrapped in an Optional.
    */
   @SuppressWarnings("unchecked")
   public <T extends Message> T decode(Frame frame) {

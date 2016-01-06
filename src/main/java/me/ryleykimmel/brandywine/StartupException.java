@@ -23,8 +23,8 @@ public final class StartupException extends RuntimeException {
   /**
    * Constructs a new {@link StartupException} with the specified detail message and cause.
    *
-   * @param message The detail message, may be {@code null}. @param cause The Exception, may not be
-   * {@code null}.
+   * @param message The detail message, may be {@code null}.
+   * @param cause The Exception, may not be {@code null}.
    */
   public StartupException(String message, Exception cause) {
     super(message, Preconditions.checkNotNull(cause));

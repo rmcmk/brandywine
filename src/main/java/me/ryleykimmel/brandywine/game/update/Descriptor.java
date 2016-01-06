@@ -13,6 +13,8 @@ import me.ryleykimmel.brandywine.network.msg.Message;
  * Represents a Descriptor which encodes UpdateBlocks and other Descriptors.
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @param <T> The Mob who owns this Descriptor.
+ * @param <M> The Message this Descriptor is encoding.
  */
 public abstract class Descriptor<T extends Mob, M extends Message> {
 
@@ -21,11 +23,27 @@ public abstract class Descriptor<T extends Mob, M extends Message> {
    */
   private final Map<Class<? extends UpdateBlock>, UpdateBlock> blocks = new HashMap<>();
 
+  /**
+   * The update mask for this Descriptor.
+   */
   protected int mask = 0;
 
+  /**
+   * The Updater.
+   */
   protected final Updater updater;
+
+  /**
+   * The Mob who owns this Descriptor.
+   */
   protected final T mob;
 
+  /**
+   * Constructs a new {@link Descriptor} with the specified Mob and Updater.
+   * 
+   * @param mob The Mob who owns this Descriptor.
+   * @param updater The Updater.
+   */
   public Descriptor(T mob, Updater updater) {
     this.mob = mob;
     this.updater = updater;
@@ -68,8 +86,8 @@ public abstract class Descriptor<T extends Mob, M extends Message> {
   /**
    * Tests whether or not this Descriptor has the specified UpdateBlock.
    *
-   * @param type The UpdateBlocks type. @return {@code true} if and only if this Descriptor contains
-   * the specified UpdateBlock.
+   * @param type The UpdateBlocks type.
+   * @return {@code true} if and only if this Descriptor contains the specified UpdateBlock.
    */
   public final boolean hasBlock(Class<? extends UpdateBlock> type) {
     return blocks.containsKey(type);
@@ -78,7 +96,8 @@ public abstract class Descriptor<T extends Mob, M extends Message> {
   /**
    * Gets the specified UpdateBlock, wrapped in an Optional.
    *
-   * @param type The UpdateBlocks type. @return The UpdateBlock wrapped in an Optional.
+   * @param type The UpdateBlocks type.
+   * @return The UpdateBlock wrapped in an Optional.
    */
   public final Optional<UpdateBlock> getBlock(Class<? extends UpdateBlock> type) {
     return Optional.ofNullable(blocks.get(type));
@@ -104,8 +123,9 @@ public abstract class Descriptor<T extends Mob, M extends Message> {
   /**
    * Encodes an UpdateBlock.
    * 
-   * @param message The Players update message. @param blockBuilder The UpdateBlocks
-   * FrameBuilder. @param type The UpdateBlocks type.
+   * @param message The Players update message.
+   * @param blockBuilder The UpdateBlocks FrameBuilder.
+   * @param type The UpdateBlocks type.
    */
   public final void encodeBlock(M message, FrameBuilder blockBuilder,
       Class<? extends UpdateBlock> type) {
@@ -113,6 +133,13 @@ public abstract class Descriptor<T extends Mob, M extends Message> {
         .ifPresent(block -> updater.getUpdateBlockEncoders().encode(block, message, blockBuilder));
   }
 
+  /**
+   * Encodes this Descriptor for the specified Message.
+   * 
+   * @param message The Message this Descriptor is encoding.
+   * @param builder The FrameBuilder.
+   * @param blockBuilder The UpdateBlock FrameBuilder.
+   */
   public abstract void encode(M message, FrameBuilder builder, FrameBuilder blockBuilder);
 
 }

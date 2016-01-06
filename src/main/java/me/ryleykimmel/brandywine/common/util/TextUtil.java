@@ -19,10 +19,11 @@ public final class TextUtil {
   /**
    * Compresses the input text ({@code in}) and places the result in the {@code out} array.
    *
-   * @param in The input text. @param out The output array. @return The number of bytes written to
-   * the output array.
+   * @param in The input text.
+   * @param out The output array.
+   * @return The number of bytes written to the output array.
    */
-      public static int compress(String in, byte[] out) {
+  public static int compress(String in, byte[] out) {
     if (in.length() > 80) {
       in = in.substring(0, 80);
     }
@@ -65,7 +66,8 @@ public final class TextUtil {
   /**
    * Filters invalid characters from the specified string.
    *
-   * @param str The input string. @return The filtered string.
+   * @param str The input string.
+   * @return The filtered string.
    */
   public static String filterInvalidCharacters(String str) {
     char[] chars = str.toLowerCase().toCharArray();
@@ -87,8 +89,9 @@ public final class TextUtil {
    * Uncompresses the compressed data ({@code in}) with the length ({@code len}) and returns the
    * uncompressed {@link String}.
    *
-   * @param in The compressed input data. @param len The length. @return The uncompressed {@link
-   * String}.
+   * @param in The compressed input data.
+   * @param len The length.
+   * @return The uncompressed {@link String}.
    */
   public static String decompress(byte[] in, int len) {
     byte[] out = new byte[4096];

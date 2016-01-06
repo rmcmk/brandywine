@@ -45,20 +45,20 @@ public final class MessageHandlerParser extends TomlParser {
   /**
    * The maximum amount of MessageHandlers.
    */
-      private static final int MAXIMUM_HANDLERS = 256;
+  private static final int MAXIMUM_HANDLERS = 256;
 
   /**
    * A {@link Map} of Message types to MessageHandlers.
    */
-      private final Map<Class<? extends Message>, MessageHandler<Message>> handlers =
-          new HashMap<>(MAXIMUM_HANDLERS);
+  private final Map<Class<? extends Message>, MessageHandler<Message>> handlers =
+      new HashMap<>(MAXIMUM_HANDLERS);
 
   /**
    * Constructs a new {@link MessageCodecParser} with the specified path.
    *
    * @param path The path to the source.
    */
-          public MessageHandlerParser(String path) {
+  public MessageHandlerParser(String path) {
     super(path);
   }
 
@@ -77,7 +77,8 @@ public final class MessageHandlerParser extends TomlParser {
   /**
    * Gets some MessageHandler for the specified Message.
    *
-   * @param message The Message. @return The MessageHandler for the Message, never {@code null}.
+   * @param message The Message.
+   * @return The MessageHandler for the Message, never {@code null}.
    */
   public MessageHandler<Message> getHandler(Message message) {
     return handlers.getOrDefault(message.getClass(), DEFAULT_MESSAGE_HANDLER);

@@ -123,8 +123,9 @@ public final class LoginResponseMessage implements Message {
    * Constructs a new {@link LoginResponseMessage} with the specified status, privilege level and
    * flagged indication.
    *
-   * @param status The status of the response. @param privilege The privilege level of the
-   * connecting client. @param flagged Whether or not the connecting client is flagged.
+   * @param status The status of the response.
+   * @param privilege The privilege level of the connecting client.
+   * @param flagged Whether or not the connecting client is flagged.
    */
   public LoginResponseMessage(int status, int privilege, boolean flagged) {
     this.status = status;

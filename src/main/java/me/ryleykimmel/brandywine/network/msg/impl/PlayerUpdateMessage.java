@@ -41,9 +41,11 @@ public final class PlayerUpdateMessage implements Message {
   /**
    * Constructs a new {@link PlayerUpdateMessage}.
    * 
-   * @param lastKnownRegion The last known region. @param position The current position. @param
-   * localPlayerCount The local player count. @param descriptor This Players descriptor. @param
-   * descriptors The surrounding Players descriptors.
+   * @param lastKnownRegion The last known region.
+   * @param position The current position.
+   * @param localPlayerCount The local player count.
+   * @param descriptor This Players descriptor.
+   * @param descriptors The surrounding Players descriptors.
    */
   public PlayerUpdateMessage(Position lastKnownRegion, Position position, int localPlayerCount,
       PlayerDescriptor descriptor, List<PlayerDescriptor> descriptors) {

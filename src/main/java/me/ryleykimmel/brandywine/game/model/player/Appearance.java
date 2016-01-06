@@ -39,7 +39,8 @@ public final class Appearance {
     /**
      * Constructs a new {@link Feature} with the specified style and color.
      * 
-     * @param style The style of this feature. @param color The color of this feature.
+     * @param style The style of this feature.
+     * @param color The color of this feature.
      */
     private Feature(int style, int color) {
       this.style = style;
@@ -204,7 +205,8 @@ public final class Appearance {
   /**
    * Sets the color of the specified Feature.
    *
-   * @param id The Features id. @param color The new color of the Feature.
+   * @param id The Features id.
+   * @param color The new color of the Feature.
    */
   public void setColor(int id, int color) {
     Feature feature = get(id);
@@ -214,7 +216,8 @@ public final class Appearance {
   /**
    * Sets the style of the specified Feature.
    *
-   * @param id The Features id. @param style The new style of the Feature.
+   * @param id The Features id.
+   * @param style The new style of the Feature.
    */
   public void setStyle(int id, int style) {
     Feature feature = get(id);
@@ -224,7 +227,8 @@ public final class Appearance {
   /**
    * Gets the color for the specified Feature.
    *
-   * @param id The Features id. @return The color of the Feature.
+   * @param id The Features id.
+   * @return The color of the Feature.
    */
   public int getColor(int id) {
     return get(id).getColor();
@@ -233,7 +237,8 @@ public final class Appearance {
   /**
    * Gets the style of the specified Feature.
    *
-   * @param id The Features id. @return The color of the Feature.
+   * @param id The Features id.
+   * @return The color of the Feature.
    */
   public int getStyle(int id) {
     return get(id).getStyle() | STYLE_MASK;
@@ -242,7 +247,8 @@ public final class Appearance {
   /**
    * Gets a Feature for the specified id.
    * 
-   * @param id The id of the Feature. @return The Feature for the specified id.
+   * @param id The id of the Feature.
+   * @return The Feature for the specified id.
    */
   private Feature get(int id) {
     Preconditions.checkElementIndex(id, features.size());

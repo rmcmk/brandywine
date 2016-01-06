@@ -9,7 +9,8 @@ import me.ryleykimmel.brandywine.game.update.descriptor.encode.DescriptorEncoder
 /**
  * The {@link Updater} manages the update sequence which keeps clients synchronized with World.
  * 
- * @author Graham @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author Graham
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class Updater {
 
@@ -26,15 +27,25 @@ public abstract class Updater {
   /**
    * Updates the state of the clients with the state of the server.
    *
-   * @param players The {@link MobRepository} containing the {@link Player}s. @param npcs The {@link
-   * MobRepository} containing the {@link Npc}s.
+   * @param players The {@link MobRepository} containing the {@link Player}s.
+   * @param npcs The {@link MobRepository} containing the {@link Npc}s.
    */
   public abstract void update(MobRepository<Player> players, MobRepository<Npc> npcs);
 
+  /**
+   * Gets the UpdateBlockEncoder set.
+   * 
+   * @return The UpdateBlockEncoder set.
+   */
   public final UpdateBlockEncoderSet getUpdateBlockEncoders() {
     return updateBlockEncoders;
   }
 
+  /**
+   * Gets the DescriptorEncoder set.
+   * 
+   * @return The DescriptorEncoder set.
+   */
   public final DescriptorEncoderSet getDescriptorEncoders() {
     return descriptorEncoders;
   }

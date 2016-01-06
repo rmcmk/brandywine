@@ -61,8 +61,8 @@ public final class GameSession {
   /**
    * Constructs a new {@link GameSession} with the specified ServerContext and SocketChannel.
    *
-   * @param context The context of the Server. @param channel The SocketChannel this Session is
-   * listening on.
+   * @param context The context of the Server.
+   * @param channel The SocketChannel this Session is listening on.
    */
   public GameSession(ServerContext context, SocketChannel channel) {
     this.context = context;
@@ -87,7 +87,8 @@ public final class GameSession {
   /**
    * Deciphers the specified Frame opcode.
    *
-   * @param opcode The opcode to decipher. @return The deciphered opcode.
+   * @param opcode The opcode to decipher.
+   * @return The deciphered opcode.
    */
   public int decipherFrameOpcode(int opcode) {
     Preconditions.checkNotNull(randomPair,
@@ -100,7 +101,8 @@ public final class GameSession {
   /**
    * Enciphers the specified Frame opcode.
    *
-   * @param opcode The opcode to encipher. @return The enciphered opcode.
+   * @param opcode The opcode to encipher.
+   * @return The enciphered opcode.
    */
   public int encipherFrameOpcode(int opcode) {
     Preconditions.checkNotNull(randomPair,
@@ -111,9 +113,11 @@ public final class GameSession {
   }
 
   /**
-   * Returns {@code true} if this GameSession is currently ciphering Frames. <p> If this GameSession
-   * is ciphering Frames they have passed the stage of login and the IsaacRandom ciphers were
-   * seeded. </p>
+   * Returns {@code true} if this GameSession is currently ciphering Frames.
+   * <p>
+   * If this GameSession is ciphering Frames they have passed the stage of login and the IsaacRandom
+   * ciphers were seeded.
+   * </p>
    *
    * @return {@code true} if and only if this GameSession is currently ciphering Frames otherwise
    * {@code false}.
@@ -132,10 +136,13 @@ public final class GameSession {
   }
 
   /**
-   * Writes the specified Message to the SocketChannel, without flushing. <p> Ensure to flush the
-   * Channel once you are ready to flush all pending written data. </p>
+   * Writes the specified Message to the SocketChannel, without flushing.
+   * <p>
+   * Ensure to flush the Channel once you are ready to flush all pending written data.
+   * </p>
    *
-   * @param message The Message to write. @return The ChannelFuture instance.
+   * @param message The Message to write.
+   * @return The ChannelFuture instance.
    */
   public ChannelFuture write(Message message) {
     return channel.write(message);
@@ -144,15 +151,18 @@ public final class GameSession {
   /**
    * Writes and flushes the specified Message to the SocketChannel.
    *
-   * @param message The Message to write. @return The ChannelFuture instance.
+   * @param message The Message to write.
+   * @return The ChannelFuture instance.
    */
   public ChannelFuture writeAndFlush(Message message) {
     return channel.writeAndFlush(message);
   }
 
   /**
-   * Writes the specified Message to the SocketChannel, without flushing. <p> Ensure to flush the
-   * Channel once you are ready to flush all pending written data. </p>
+   * Writes the specified Message to the SocketChannel, without flushing.
+   * <p>
+   * Ensure to flush the Channel once you are ready to flush all pending written data.
+   * </p>
    *
    * @param message The Message to write.
    */

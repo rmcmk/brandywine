@@ -16,9 +16,9 @@ public final class ClassUtil {
   /**
    * Returns the specified {@link Annotation} for the potentially annotated object if it exists.
    *
-   * @param object The Object to test contains the specified Annotation. @param annotation The
-   * Annotation to check the specified Class for. @return The Annotation if and only if it exists
-   * otherwise {@link Optional#empty()}.
+   * @param object The Object to test contains the specified Annotation.
+   * @param annotation The Annotation to check the specified Class for.
+   * @return The Annotation if and only if it exists otherwise {@link Optional#empty()}.
    */
   public static <T extends Annotation, V> Optional<T> getAnnotation(V object, Class<T> annotation) {
     Preconditions.checkNotNull(object);
@@ -30,9 +30,9 @@ public final class ClassUtil {
    * Returns the specified {@link Annotation} for the potentially annotated {@link Class} if it
    * exists.
    *
-   * @param clazz The Class to test contains the specified Annotation. @param annotation The
-   * Annotation to check the specified Class for. @return The Annotation if and only if it exists
-   * otherwise {@link Optional#empty()}.
+   * @param clazz The Class to test contains the specified Annotation.
+   * @param annotation The Annotation to check the specified Class for.
+   * @return The Annotation if and only if it exists otherwise {@link Optional#empty()}.
    */
   public static <T extends Annotation> Optional<T> getAnnotation(Class<?> clazz,
       Class<T> annotation) {

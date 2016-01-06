@@ -15,7 +15,8 @@ public final class Buffer {
   /**
    * Allocates a new buffer.
    * 
-   * @param bytes The capacity of the buffer. @return The buffer.
+   * @param bytes The capacity of the buffer.
+   * @return The buffer.
    */
   public static Buffer allocate(int bytes) {
     Assertions.checkNonNegative(bytes, "Buffer capacity cannot be negative.");
@@ -25,7 +26,8 @@ public final class Buffer {
   /**
    * Wraps the specified byte array in a new buffer.
    * 
-   * @param bytes The byte array to wrap. @return The buffer.
+   * @param bytes The byte array to wrap.
+   * @return The buffer.
    */
   public static Buffer wrap(byte[] bytes) {
     return new Buffer(bytes);
@@ -34,7 +36,8 @@ public final class Buffer {
   /**
    * Wraps the specified {@link ByteBuffer} in a new buffer.
    * 
-   * @param buffer The byte buffer. @return The buffer.
+   * @param buffer The byte buffer.
+   * @return The buffer.
    */
   public static Buffer wrap(ByteBuffer buffer) {
     return new Buffer(buffer);
@@ -57,7 +60,7 @@ public final class Buffer {
   /**
    * Creates The buffer.
    * 
-   * @param buffer The backing {@link ByteBuffer}.
+   * @param buffer The backing {@link ByteBuffer} .
    */
   private Buffer(ByteBuffer buffer) {
     this.buffer = buffer;
@@ -84,7 +87,7 @@ public final class Buffer {
   /**
    * Returns a shallow copy of this buffer as a read-only buffer.
    * 
-   * @return The read-only buffer.
+   * @return The read- only buffer.
    */
   public Buffer asReadOnlyBuffer() {
     return new Buffer(buffer.asReadOnlyBuffer());
@@ -141,11 +144,12 @@ public final class Buffer {
   }
 
   /**
-   * Fills <strong>this</strong> Buffer with data from the specified Buffer. This method fills this
-   * Buffer until it is full (i.e. {@code buffer.remaining = 0}) and so the source Buffer must have
+   * Fills <strong>this </strong> Buffer with data from the specified Buffer. This method fills this
+   * Buffer until it is full (i.e. {@code buffer.remaining = 0} ) and so the source Buffer must have
    * more bytes remaining than this Buffer. This method flips this Buffer after filling.
    * 
-   * @param source The source Buffer. @return This Buffer, for chaining.
+   * @param source The source Buffer.
+   * @return This Buffer, for chaining.
    */
   public Buffer fill(Buffer source) {
     int remaining = remaining(), sourcePosition = source.position();
@@ -169,10 +173,11 @@ public final class Buffer {
   }
 
   /**
-   * Places bytes from <strong>this</strong> buffer into the specified buffer, writing until the
-   * specified buffer is filled (i.e. {@code buffer.remaining() == 0}).
+   * Places bytes from <strong>this </strong> buffer into the specified buffer, writing until the
+   * specified buffer is filled (i.e. {@code buffer.remaining() == 0} ).
    *
-   * @param buffer The byte buffer. @return This buffer, for chaining.
+   * @param buffer The byte buffer.
+   * @return This buffer, for chaining.
    */
   public Buffer get(Buffer buffer) {
     this.buffer.get(buffer.array(), buffer.position(), buffer.remaining());
@@ -182,7 +187,8 @@ public final class Buffer {
   /**
    * Gets {@code bytes.length} bytes and places them in the specified byte array.
    * 
-   * @param bytes The byte array. @return This buffer, for chaining.
+   * @param bytes The byte array.
+   * @return This buffer, for chaining.
    */
   public Buffer get(byte[] bytes) {
     buffer.get(bytes);
@@ -193,8 +199,10 @@ public final class Buffer {
    * Gets {@code length} bytes and places them in the specified byte array, starting from {@code
    * offset}.
    *
-   * @param bytes The byte array. @param offset The byte array offset. @param length The amount of
-   * bytes to place. @return This buffer, for chaining.
+   * @param bytes The byte array.
+   * @param offset The byte array offset.
+   * @param length The amount of bytes to place.
+   * @return This buffer, for chaining.
    */
   public Buffer get(byte[] bytes, int offset, int length) {
     buffer.get(bytes, offset, length);
@@ -204,7 +212,8 @@ public final class Buffer {
   /**
    * Gets the value at the specified index.
    * 
-   * @param index The index. @return The value.
+   * @param index The index.
+   * @return The value.
    */
   public byte get(int index) {
     return buffer.get(index);
@@ -251,7 +260,8 @@ public final class Buffer {
   /**
    * Reads an int from the specified index.
    * 
-   * @param index The index. @return The value.
+   * @param index The index.
+   * @return The value.
    */
   public int getInt(int index) {
     return buffer.getInt(index);
@@ -325,7 +335,7 @@ public final class Buffer {
   /**
    * Gets a tri-byte from this buffer.
    * 
-   * @return The tri-byte.
+   * @return The tri- byte.
    */
   public int getUnsignedTriByte() {
     return getUnsignedByte() << 16 | getUnsignedByte() << 8 | getUnsignedByte();
@@ -375,7 +385,8 @@ public final class Buffer {
   /**
    * Sets the limit of this buffer.
    *
-   * @param limit The new limit. @return This buffer, for chaining.
+   * @param limit The new limit.
+   * @return This buffer, for chaining.
    */
   public Buffer limit(int limit) {
     buffer.limit(limit);
@@ -404,7 +415,8 @@ public final class Buffer {
   /**
    * Sets the current position of this buffer.
    * 
-   * @param position The new position. @return This buffer, for chaining.
+   * @param position The new position.
+   * @return This buffer, for chaining.
    */
   public Buffer position(int position) {
     buffer.position(position);
@@ -414,7 +426,8 @@ public final class Buffer {
   /**
    * Places the contents of the specified buffer into this buffer.
    * 
-   * @param buffer The buffer. @return This buffer, for chaining.
+   * @param buffer The buffer.
+   * @return This buffer, for chaining.
    */
   public Buffer put(Buffer buffer) {
     this.buffer.put(buffer.buffer);
@@ -424,7 +437,8 @@ public final class Buffer {
   /**
    * Places the contents of the specified byte array into this buffer.
    * 
-   * @param bytes The byte array. @return This buffer, for chaining.
+   * @param bytes The byte array.
+   * @return This buffer, for chaining.
    */
   public Buffer put(byte[] bytes) {
     buffer.put(bytes);
@@ -435,8 +449,10 @@ public final class Buffer {
    * Places the contents of the specified byte array into this buffer, starting from {@code offset}
    * and reading {@code length} bytes.
    * 
-   * @param bytes The byte array. @param offset The offset. @param length The amount of bytes to
-   * place. @return This buffer, for chaining.
+   * @param bytes The byte array.
+   * @param offset The offset.
+   * @param length The amount of bytes to place.
+   * @return This buffer, for chaining.
    */
   public Buffer put(byte[] bytes, int offset, int length) {
     buffer.put(bytes, offset, length);
@@ -444,9 +460,10 @@ public final class Buffer {
   }
 
   /**
-   * Puts a {@link ByteBuffer} into this buffer (see {@link ByteBuffer#put(ByteBuffer)}).
+   * Puts a {@link ByteBuffer} into this buffer (see {@link ByteBuffer#put(ByteBuffer)} ).
    * 
-   * @param buffer The byte buffer. @return This buffer, for chaining.
+   * @param buffer The byte buffer.
+   * @return This buffer, for chaining.
    */
   public Buffer put(ByteBuffer buffer) {
     buffer.put(buffer);
@@ -456,7 +473,8 @@ public final class Buffer {
   /**
    * Puts a byte into the buffer.
    * 
-   * @param value The value. @return This buffer, for chaining.
+   * @param value The value.
+   * @return This buffer, for chaining.
    */
   public Buffer put(int value) {
     buffer.put((byte) value);
@@ -466,7 +484,8 @@ public final class Buffer {
   /**
    * Puts an int into this buffer.
    * 
-   * @param value The int. @return This buffer, for chaining.
+   * @param value The int.
+   * @return This buffer, for chaining.
    */
   public Buffer putInt(int value) {
     buffer.putInt(value);
@@ -476,7 +495,8 @@ public final class Buffer {
   /**
    * Puts a long into this buffer.
    * 
-   * @param value The long. @return This buffer, for chaining.
+   * @param value The long.
+   * @return This buffer, for chaining.
    */
   public Buffer putLong(long value) {
     buffer.putLong(value);
@@ -486,7 +506,8 @@ public final class Buffer {
   /**
    * Puts a short into this buffer.
    * 
-   * @param value The short. @return This buffer, for chaining.
+   * @param value The short.
+   * @return This buffer, for chaining.
    */
   public Buffer putShort(int value) {
     buffer.putShort((short) value);
@@ -496,7 +517,8 @@ public final class Buffer {
   /**
    * Puts a tri-byte into this buffer.
    * 
-   * @param value The tri-byte. @return This buffer, for chaining.
+   * @param value The tri- byte.
+   * @return This buffer, for chaining.
    */
   public Buffer putTriByte(int value) {
     buffer.put((byte) (value >> 16));
@@ -506,7 +528,7 @@ public final class Buffer {
   }
 
   /**
-   * Gets the amount of bytes remaining in this buffer (i.e. {@link #limit} - {@link #position}).
+   * Gets the amount of bytes remaining in this buffer (i.e. {@link #limit} - {@link #position} ).
    * 
    * @return The amount of bytes remaining.
    */
@@ -527,7 +549,8 @@ public final class Buffer {
   /**
    * Skips the specified amount of bytes.
    * 
-   * @param bytes The amount of bytes to skip. @return This buffer, for chaining.
+   * @param bytes The amount of bytes to skip.
+   * @return This buffer, for chaining.
    */
   public Buffer skip(int bytes) {
     buffer.position(buffer.position() + bytes);

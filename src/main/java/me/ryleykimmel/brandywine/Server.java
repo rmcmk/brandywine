@@ -11,10 +11,13 @@ import com.google.common.base.MoreObjects;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.ServerChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -137,11 +140,11 @@ final class Server {
   }
 
   /**
-   * Sets up a new {@link ServerChannel} from the specified host, port and {@link
-   * ChannelInitializer}
+   * Sets up a new {@link ServerChannel} from the specified host, port and
+   * {@link ChannelInitializer}
    *
-   * @param port The port to bind the ServerChannel to. @param initializer A specialized {@link
-   * ChannelHandler} used to serve {@link Channel} requests.
+   * @param port The port to bind the ServerChannel to.
+   * @param initializer A specialized {@link ChannelHandler} used to serve {@link Channel} requests.
    */
   public void setup(int port, ChannelInitializer<SocketChannel> initializer) {
     ServerBootstrap bootstrap = new ServerBootstrap();

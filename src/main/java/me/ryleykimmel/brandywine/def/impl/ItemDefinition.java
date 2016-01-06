@@ -9,7 +9,8 @@ import me.ryleykimmel.brandywine.def.Definition;
 /**
  * Represents the Definition of an Item object.
  *
- * @author John Major @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author Major
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ItemDefinition extends Definition {
 
@@ -71,13 +72,18 @@ public final class ItemDefinition extends Definition {
   /**
    * Constructs a new {@link ItemDefinition}.
    *
-   * @param description The description of the Item. @param groundMenuActions The ground menu
-   * actions of the Item. @param groundScales The ground scales of the Item. @param id The id of the
-   * Item. @param inventoryMenuActions The inventory menu actions of the Item. @param members The
-   * members state of the Item. @param name The name of the Item. @param noteInfoId The noted info
-   * id of the Item. @param noteTemplateId The note template id of the Item. @param stackable The
-   * stackable state of the Item. @param team The team id of the Item. @param value The value of of
-   * the Item.
+   * @param description The description of the Item.
+   * @param groundMenuActions The ground menu actions of the Item.
+   * @param groundScales The ground scales of the Item.
+   * @param id The id of the Item.
+   * @param inventoryMenuActions The inventory menu actions of the Item.
+   * @param members The members state of the Item.
+   * @param name The name of the Item.
+   * @param noteInfoId The noted info id of the Item.
+   * @param noteTemplateId The note template id of the Item.
+   * @param stackable The stackable state of the Item.
+   * @param team The team id of the Item.
+   * @param value The value of of the Item.
    */
   public ItemDefinition(String description, List<String> groundMenuActions,
       List<Integer> groundScales, int id, List<String> inventoryMenuActions, boolean members,

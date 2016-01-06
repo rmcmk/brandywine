@@ -8,7 +8,8 @@ import com.google.common.base.MoreObjects;
 /**
  * A chain of {@link EventListener}s.
  *
- * @author Major @param <E> The type of {@link Event} the listeners in this chain listen for.
+ * @author Major
+ * @param <E> The type of {@link Event} the listeners in this chain listen for.
  */
 public final class EventListenerChain<E extends Event> {
 
@@ -43,8 +44,8 @@ public final class EventListenerChain<E extends Event> {
   /**
    * Notifies each {@link EventListener} in this chain that an {@link Event} has occurred.
    *
-   * @param event The event. @return {@code true} if the Event should continue on with its outcome,
-   * {@code false} if not.
+   * @param event The event.
+   * @return {@code true} if the Event should continue on with its outcome, {@code false} if not.
    */
   public boolean notify(E event) {
     for (EventListener<E> listener : listeners) {

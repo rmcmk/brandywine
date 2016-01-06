@@ -103,8 +103,8 @@ public final class FrameDecoder extends ByteToMessageDecoder {
   /**
    * Decodes the opcode of some Frame.
    * 
-   * @param buffer The Buffer to decode from. @param out The List which decoded Frames are to be
-   * added.
+   * @param buffer The Buffer to decode from.
+   * @param out The List which decoded Frames are to be added.
    */
   private void decodeOpcode(ByteBuf buffer, List<Object> out) {
     if (!buffer.isReadable()) {
@@ -122,10 +122,8 @@ public final class FrameDecoder extends ByteToMessageDecoder {
     switch (type) {
       case INVALID:
         logger.warn(
-            "The Frame {} is invalid (is it mapped within frames.toml?) and cannot be decoded.",
+            "The Frame {} is invalid (is it mapped within frames.toml?) and cannot be decoded, closing session...",
             opcode);
-        logger.warn("Further Frames cannot be decoded properly for {}, closing session...",
-            session);
         session.close();
         break;
 
@@ -147,8 +145,8 @@ public final class FrameDecoder extends ByteToMessageDecoder {
   /**
    * Decodes the length of some Frame.
    * 
-   * @param buffer The Buffer to decode from. @param out The List which decoded Frames are to be
-   * added.
+   * @param buffer The Buffer to decode from.
+   * @param out The List which decoded Frames are to be added.
    */
   private void decodeLength(ByteBuf buffer, List<Object> out) {
     int check = type == FrameType.VARIABLE_BYTE ? Byte.BYTES : Short.BYTES;
@@ -170,8 +168,8 @@ public final class FrameDecoder extends ByteToMessageDecoder {
   /**
    * Decodes the payload of some Frame.
    * 
-   * @param buffer The Buffer to decode from. @param out The List which decoded Frames are to be
-   * added.
+   * @param buffer The Buffer to decode from.
+   * @param out The List which decoded Frames are to be added.
    */
   private void decodePayload(ByteBuf buffer, List<Object> out) {
     if (!buffer.isReadable(length)) {

@@ -51,8 +51,8 @@ public final class World {
   /**
    * Attempts to add the specified Player to the World.
    *
-   * @param player The Player to add. @return {@code true} if and only if the specified Player was
-   * added otherwise {@code false}.
+   * @param player The Player to add.
+   * @return {@code true} if and only if the specified Player was added otherwise {@code false}.
    */
   public boolean addPlayer(Player player) {
     if (playerRepository.add(player)) {
@@ -76,8 +76,8 @@ public final class World {
   /**
    * Checks whether or not the specified Player is online.
    *
-   * @param player The Player to check. @return {@code true} if and only if the Player is online
-   * otherwise {@code false}.
+   * @param player The Player to check.
+   * @return {@code true} if and only if the Player is online otherwise {@code false}.
    */
   public boolean isOnline(Player player) {
     return isOnline(player.getEncodedUsername());
@@ -86,8 +86,8 @@ public final class World {
   /**
    * Checks whether or not the specified encoded username is online.
    *
-   * @param username The username to check. @return {@code true} if and only if the username is
-   * online otherwise {@code false}.
+   * @param username The username to check.
+   * @return {@code true} if and only if the username is online otherwise {@code false}.
    */
   public boolean isOnline(long username) {
     return get(username).isPresent();
@@ -96,7 +96,8 @@ public final class World {
   /**
    * Attempts to get a Player, wrapped in an Optional, for the specified encoded username.
    *
-   * @param username The encoded username of the Player. @return The Player, wrapped in an Optional.
+   * @param username The encoded username of the Player.
+   * @return The Player, wrapped in an Optional.
    */
   public Optional<Player> get(long username) {
     Player player = players.get(username);

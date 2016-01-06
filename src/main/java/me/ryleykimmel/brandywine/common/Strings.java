@@ -10,7 +10,8 @@ public final class Strings {
   /**
    * Lower-cases the specified {@code String} and capitalizes the first character.
    *
-   * @param string The String, may not be {@code null}. @return The formatted String.
+   * @param string The String, may not be {@code null}.
+   * @return The formatted String.
    */
   public static String toFirstUpper(String string) {
     Assertions.checkNonEmpty(string, "String may not be null or empty!");
@@ -24,7 +25,8 @@ public final class Strings {
   /**
    * Returns the indefinite article for the specified {@code String}.
    *
-   * @param string The String to find the indefinite article for. @return The indefinite article.
+   * @param string The String to find the indefinite article for.
+   * @return The indefinite article.
    */
   public static String getIndefiniteArticle(String string) {
     Assertions.checkNonEmpty(string, "String may not be null or empty!");
@@ -39,7 +41,8 @@ public final class Strings {
    * Capitalizes the first character in the specified String as well as the first character in
    * subsequent sentences within the specified String.
    * 
-   * @param string The String to capitalize. @return The capitalized String.
+   * @param string The String to capitalize.
+   * @return The capitalized String.
    */
   public static String capitalize(String string) {
     Assertions.checkNonEmpty(string, "String may not be null or empty!");
@@ -65,8 +68,9 @@ public final class Strings {
    * position: the first {@code %s} gets {@code args[0]}, etc.
    *
    * @param string A {@code String} containing 0 or more {@code %s} place holders, may not be {@code
-   * null}. @param args The arguments to be substituted into the message template. @return The
-   * formatted String.
+   * null}.
+   * @param args The arguments to be substituted into the message template.
+   * @return The formatted String.
    */
   public static String format(String string, Object... args) {
     Assertions.checkNonEmpty(string, "String may not be null or empty!");

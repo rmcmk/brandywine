@@ -7,7 +7,8 @@ import java.nio.file.Paths;
 /**
  * Represents a Parser with the source of a {@link Reader}.
  *
- * @author Ryley Kimmel <ryley.kimmel@live.com> @param <T> The parsed data.
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @param <T> The parsed data.
  */
 public abstract class ReaderParser<T> implements Parser<T, Reader> {
 

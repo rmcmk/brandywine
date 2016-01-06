@@ -41,29 +41,30 @@ abstract class FrameBuffer {
   /**
    * The backing ByteBuf.
    */
-      protected final ByteBuf buffer;
+  protected final ByteBuf buffer;
 
   /**
    * The type of this FrameBuffer.
    */
-      protected final Type type;
+  protected final Type type;
 
   /**
    * The current AccessMode this FrameBuffer is in, default is {@link AccessMode#BYTE_ACCESS}.
    */
-      protected AccessMode mode = AccessMode.BYTE_ACCESS;
+  protected AccessMode mode = AccessMode.BYTE_ACCESS;
 
   /**
    * The current bit index of this FrameBuffer.
    */
-      protected int bitIndex;
+  protected int bitIndex;
 
   /**
    * Constructs a new {@link FrameBuffer} with the specified ByteBuf backing and Type.
    *
-   * @param buffer The backing ByteBuf. @param type The type of this FrameBuffer.
+   * @param buffer The backing ByteBuf.
+   * @param type The type of this FrameBuffer.
    */
-      private FrameBuffer(ByteBuf buffer, Type type) {
+  private FrameBuffer(ByteBuf buffer, Type type) {
     this.buffer = buffer;
     this.type = type;
   }

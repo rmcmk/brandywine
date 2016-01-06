@@ -24,7 +24,8 @@ public final class ConfigurationParser extends TomlParser {
   /**
    * Constructs a new {@link ConfigurationParser} with the specified path and ServerContext.
    *
-   * @param path The path to the source. @param context The context of the Server.
+   * @param path The path to the source.
+   * @param context The context of the Server.
    */
   public ConfigurationParser(String path, ServerContext context) {
     super(path);

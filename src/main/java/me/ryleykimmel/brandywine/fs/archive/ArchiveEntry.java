@@ -5,7 +5,8 @@ import me.ryleykimmel.brandywine.common.Buffer;
 /**
  * A single entry in an {@link Archive}. This class is immutable.
  * 
- * @author Graham @author Major
+ * @author Graham
+ * @author Major
  */
 public final class ArchiveEntry {
 
@@ -22,7 +23,8 @@ public final class ArchiveEntry {
   /**
    * Creates the archive entry.
    * 
-   * @param identifier The identifier. @param buffer The buffer containing this entry's data.
+   * @param identifier The identifier.
+   * @param buffer The buffer containing this entry's data.
    */
   public ArchiveEntry(int identifier, Buffer buffer) {
     this.identifier = identifier;
@@ -32,7 +34,8 @@ public final class ArchiveEntry {
   /**
    * Creates the archive entry.
    *
-   * @param name The name of the archive. @param buffer The buffer containing this entry's data.
+   * @param name The name of the archive.
+   * @param buffer The buffer containing this entry's data.
    */
   public ArchiveEntry(String name, Buffer buffer) {
     this(ArchiveUtil.hash(name), buffer);

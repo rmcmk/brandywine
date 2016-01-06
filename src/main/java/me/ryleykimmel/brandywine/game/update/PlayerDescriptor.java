@@ -19,13 +19,9 @@ public abstract class PlayerDescriptor extends Descriptor<Player, PlayerUpdateMe
     super(player, updater);
   }
 
-  /**
-   * Encodes this Descriptor and UpdateBlocks.
-   * 
-   * @param message The Players update message. @param builder The Descriptors FrameBuilder. @param
-   * blockBuilder The UpdateBlocks FrameBuilder.
-   */
-  public void encode(PlayerUpdateMessage message, FrameBuilder builder, FrameBuilder blockBuilder) {
+  @Override
+  public final void encode(PlayerUpdateMessage message, FrameBuilder builder,
+      FrameBuilder blockBuilder) {
     updater.getDescriptorEncoders().encode(this, message, builder, blockBuilder);
 
     if (!isBlockUpdatedRequired()) {

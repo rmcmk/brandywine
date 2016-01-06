@@ -6,7 +6,8 @@ import com.google.common.base.Preconditions;
 /**
  * Represents a position in the World.
  *
- * @author Graham @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author Graham
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Position {
 
@@ -38,7 +39,8 @@ public final class Position {
   /**
    * Constructs a new {@link Position} with the specified x and y coordinates.
    *
-   * @param x The x coordinate. @param y The y coordinate.
+   * @param x The x coordinate.
+   * @param y The y coordinate.
    */
   public Position(int x, int y) {
     this(x, y, 0);
@@ -47,7 +49,9 @@ public final class Position {
   /**
    * Constructs a new {@link Position} with the specified x, y and height coordinates.
    *
-   * @param x The x coordinate. @param y The y coordinate. @param height The height.
+   * @param x The x coordinate.
+   * @param y The y coordinate.
+   * @param height The height.
    */
   public Position(int x, int y, int height) {
     Preconditions.checkElementIndex(height, HEIGHT_LEVELS,
@@ -115,7 +119,8 @@ public final class Position {
   /**
    * Gets the local x coordinate inside the region of the {@code base} position.
    *
-   * @param base The base position. @return The local x coordinate.
+   * @param base The base position.
+   * @return The local x coordinate.
    */
   public int getLocalX(Position base) {
     return x - base.getTopLeftRegionX() * 8;
@@ -133,7 +138,8 @@ public final class Position {
   /**
    * Gets the local y coordinate inside the region of the {@code base} position.
    *
-   * @param base The base position. @return The local y coordinate.
+   * @param base The base position.
+   * @return The local y coordinate.
    */
   public int getLocalY(Position base) {
     return y - base.getTopLeftRegionY() * 8;
@@ -179,7 +185,8 @@ public final class Position {
    * Gets the distance between this position and another position. Only x and y are considered (i.e.
    * 2 dimensions).
    *
-   * @param other The other position. @return The distance.
+   * @param other The other position.
+   * @return The distance.
    */
   public int getDistance(Position other) {
     int deltaX = x - other.x;
@@ -190,7 +197,8 @@ public final class Position {
   /**
    * Checks if this position is within distance of the other.
    *
-   * @param other The other position. @return {@code true} if so, {@code false} if not.
+   * @param other The other position.
+   * @return {@code true} if so, {@code false} if not.
    */
   public boolean isWithinDistance(Position other) {
     int deltaX = x - other.x;
@@ -201,8 +209,9 @@ public final class Position {
   /**
    * Checks if the position is within distance of another.
    *
-   * @param other The other position. @param distance The distance. @return {@code true} if so,
-   * {@code false} if not.
+   * @param other The other position.
+   * @param distance The distance.
+   * @return {@code true} if so, {@code false} if not.
    */
   public boolean isWithinDistance(Position other, int distance) {
     int deltaX = Math.abs(x - other.x);
@@ -213,7 +222,8 @@ public final class Position {
   /**
    * Gets the longest horizontal or vertical delta between the two positions.
    *
-   * @param other The other position. @return The longest horizontal or vertical delta.
+   * @param other The other position.
+   * @return The longest horizontal or vertical delta.
    */
   public int getLongestDelta(Position other) {
     int deltaX = Math.abs(x - other.x);

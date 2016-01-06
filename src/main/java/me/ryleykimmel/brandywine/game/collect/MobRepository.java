@@ -14,7 +14,8 @@ import me.ryleykimmel.brandywine.game.model.Mob;
  * A {@link MobRepository} is a repository of {@link Mob}s that are currently active in the game
  * World.
  *
- * @author Graham @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author Graham
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  *
  * @param <T> The type of Mob.
  */
@@ -130,8 +131,9 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
   /**
    * Adds a Mob to the repository.
    *
-   * @param mob The Mob to add. @return {@code true} if the Mob was added, {@code false} if the size
-   * has reached the capacity of this repository.
+   * @param mob The Mob to add.
+   * @return {@code true} if the Mob was added, {@code false} if the size has reached the capacity
+   * of this repository.
    */
   public boolean add(T mob) {
     if (size == capacity()) {
@@ -166,7 +168,8 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
   /**
    * Gets the Mob at the given index.
    *
-   * @param index The index of the Mob. @return The Mob instance.
+   * @param index The index of the Mob.
+   * @return The Mob instance.
    */
   public T get(int index) {
     int actual = index - 1;
@@ -186,8 +189,8 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
   /**
    * Removes a Mob from the repository.
    *
-   * @param mob The Mob to remove. @return {@code true} if the Mob was removed, {@code false} if
-   * not.
+   * @param mob The Mob to remove.
+   * @return {@code true} if the Mob was removed, {@code false} if not.
    */
   public boolean remove(T mob) {
     return mob != null && remove(mob.getIndex());
@@ -196,8 +199,8 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
   /**
    * Removes a Mob from the repository by the specified index.
    *
-   * @param index The index of the Mob to remove. @return {@code true} if the Mob at the specified
-   * index was removed otherwise {@code false}.
+   * @param index The index of the Mob to remove.
+   * @return {@code true} if the Mob at the specified index was removed otherwise {@code false}.
    */
   public boolean remove(int index) {
     Mob mob = get(index);

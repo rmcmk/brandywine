@@ -23,7 +23,8 @@ public final class InitializePlayerMessage implements Message {
    * Constructs a new {@link InitializePlayerMessage} with the specified membership status and
    * internal index.
    * 
-   * @param member The membership status. @param index The internal index.
+   * @param member The membership status.
+   * @param index The internal index.
    */
   public InitializePlayerMessage(boolean member, int index) {
     this.member = member;

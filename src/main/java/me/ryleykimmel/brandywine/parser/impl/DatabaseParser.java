@@ -24,7 +24,8 @@ public final class DatabaseParser extends TomlParser {
   /**
    * Constructs a new {@link DatabaseParser} with the specified path and ServerContext.
    *
-   * @param path The path to the source. @param context The context of the Server.
+   * @param path The path to the source.
+   * @param context The context of the Server.
    */
   public DatabaseParser(String path, ServerContext context) {
     super(path);

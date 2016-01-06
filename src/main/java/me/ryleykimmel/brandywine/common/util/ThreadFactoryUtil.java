@@ -1,5 +1,7 @@
 package me.ryleykimmel.brandywine.common.util;
 
+import java.util.concurrent.ThreadFactory;
+
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import io.netty.util.internal.StringUtil;

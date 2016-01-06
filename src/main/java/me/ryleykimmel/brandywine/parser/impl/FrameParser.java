@@ -69,7 +69,9 @@ public final class FrameParser extends TomlParser {
   /**
    * Populates the specified Frame map for the specified key.
    * 
-   * @param The data to parse from. @param map The Map to populate. @param key The key of the map.
+   * @param data The data to parse from.
+   * @param map The Map to populate.
+   * @param key The key of the map.
    */
   private void populate(Toml data, Map<Integer, Integer> map, String key) {
     for (Toml toml : data.getTables(key)) {
@@ -82,8 +84,9 @@ public final class FrameParser extends TomlParser {
   /**
    * Gets the length of the specified Frame for its opcode.
    * 
-   * @param ciphered Whether or not the Frames are ciphered. @param opcode The opcode of the
-   * Frame. @return The length of the Frame or <tt>-3</tt> if it does not exist.
+   * @param ciphered Whether or not the Frames are ciphered.
+   * @param opcode The opcode of the Frame.
+   * @return The length of the Frame or <tt>-3</tt> if it does not exist.
    */
   public int getLength(boolean ciphered, int opcode) {
     Map<Integer, Integer> map = ciphered ? cipheredFrames : uncipheredFrames;
@@ -93,8 +96,9 @@ public final class FrameParser extends TomlParser {
   /**
    * Gets the type of a Frame for the specified opcode.
    *
-   * @param ciphered Whether or not the Frames are ciphered. @param opcode The opcode of the
-   * Frame. @return The type of the Frame.
+   * @param ciphered Whether or not the Frames are ciphered.
+   * @param opcode The opcode of the Frame.
+   * @return The type of the Frame.
    */
   public FrameType getType(boolean ciphered, int opcode) {
     int length = getLength(ciphered, opcode);

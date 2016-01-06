@@ -38,8 +38,9 @@ public final class Frame extends DefaultByteBufHolder {
   /**
    * Constructs a new {@link Frame} with the specified opcode, FrameType and payload.
    *
-   * @param opcode The opcode or identifier of this Frame. @param type The type of this
-   * Frame. @param payload The payload of this Frame.
+   * @param opcode The opcode or identifier of this Frame.
+   * @param type The type of this Frame.
+   * @param payload The payload of this Frame.
    */
   public Frame(int opcode, FrameType type, ByteBuf payload) {
     super(payload);

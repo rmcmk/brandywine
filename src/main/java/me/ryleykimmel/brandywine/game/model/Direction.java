@@ -55,8 +55,9 @@ public enum Direction {
   /**
    * Gets the Direction between the two {@link Position positions}.
    *
-   * @param current The difference between two X coordinates. @param next The difference between two
-   * Y coordinates. @return The Direction between the two Positions.
+   * @param current The difference between two X coordinates.
+   * @param next The difference between two Y coordinates.
+   * @return The Direction between the two Positions.
    */
   public static Direction between(Position current, Position next) {
     int deltaX = next.getX() - current.getX();

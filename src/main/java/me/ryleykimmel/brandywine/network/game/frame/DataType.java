@@ -3,7 +3,8 @@ package me.ryleykimmel.brandywine.network.game.frame;
 /**
  * Represents primitive data types, used to indicate to a frame buffer what value to read or write.
  *
- * @author Graham @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author Graham
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public enum DataType {
 

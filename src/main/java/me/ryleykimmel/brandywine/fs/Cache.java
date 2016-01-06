@@ -42,8 +42,9 @@ public final class Cache {
   /**
    * Constructs a new {@link Cache} with the specified index id, data channel and index channel.
    * 
-   * @param indexId The index this Cache is within. @param dataChannel The data channel. @param
-   * indexChannel The index channel.
+   * @param indexId The index this Cache is within.
+   * @param dataChannel The data channel.
+   * @param indexChannel The index channel.
    */
   public Cache(int indexId, SeekableByteChannel dataChannel, SeekableByteChannel indexChannel) {
     this.indexId = ++indexId;
@@ -54,8 +55,9 @@ public final class Cache {
   /**
    * Gets the file, represented as a {@link Buffer}, with the specified id.
    * 
-   * @param id The id of the file. @return A Buffer representing the files content. @throws
-   * IOException If some I/O exception occurs.
+   * @param id The id of the file.
+   * @return A Buffer representing the files content.
+   * @throws IOException If some I/O exception occurs.
    */
   public Buffer getFile(int id) throws IOException {
     Index index = getIndex(id);
@@ -88,13 +90,15 @@ public final class Cache {
       }
     }
 
-    return buffer.flip();
+    return buffer.flip().copy();
   }
 
   /**
    * Gets the Sector for the specified block.
    * 
-   * @param block The block. @return The Sector. @throws IOException If some I/O exception occurs.
+   * @param block The block.
+   * @return The Sector.
+   * @throws IOException If some I/O exception occurs.
    */
   private Sector getSector(int block) throws IOException {
     long position = (long) block * BLOCK_SIZE;
@@ -112,8 +116,9 @@ public final class Cache {
   /**
    * Gets the Index for the specified id.
    * 
-   * @param id The id of the Index. @return The Index. @throws IOException If some I/O exception
-   * occurs.
+   * @param id The id of the Index.
+   * @return The Index.
+   * @throws IOException If some I/O exception occurs.
    */
   private Index getIndex(int id) throws IOException {
     long position = (long) id * Index.BYTES;

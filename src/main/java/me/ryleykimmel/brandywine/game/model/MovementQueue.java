@@ -9,7 +9,9 @@ import me.ryleykimmel.brandywine.network.msg.impl.ResetDestinationMessage;
 /**
  * A queue of {@link Direction}s which a {@link Mob} will follow.
  *
- * @author Graham @author Major @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author Graham
+ * @author Major
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class MovementQueue {
 
@@ -54,9 +56,8 @@ public final class MovementQueue {
     /*
      * We need to connect 'current' and 'next' whilst accounting for the fact that the client and
      * server might be out of sync (i.e. what the client thinks is 'current' is different to what
-     * the server thinks is 'current').
-     *
-     * First try to connect them via points from the previous queue.
+     * the server thinks is 'current'). First try to connect them via points from the previous
+     * queue.
      */
     Queue<Position> backtrack = new ArrayDeque<>();
 
@@ -99,7 +100,8 @@ public final class MovementQueue {
   /**
    * Adds the {@code next} step to this MovementQueue.
    *
-   * @param current The current {@link Position}. @param next The next Position.
+   * @param current The current {@link Position}.
+   * @param next The next Position.
    */
   private void addStep(Position current, Position next) {
     int nextX = next.getX(), nextY = next.getY();

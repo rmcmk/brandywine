@@ -42,8 +42,10 @@ public final class PlayerCredentials {
    * Constructs a new {@link PlayerCredentials} with the specified user id, username, password and
    * session keys.
    * 
-   * @param userId The user id. @param username The username. @param password The password. @param
-   * sessionKeys The session keys.
+   * @param userId The user id.
+   * @param username The username.
+   * @param password The password.
+   * @param sessionKeys The session keys.
    */
   public PlayerCredentials(int userId, String username, String password, int[] sessionKeys) {
     this.userId = userId;

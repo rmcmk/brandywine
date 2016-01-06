@@ -57,8 +57,8 @@ public final class GameService extends Service {
   /**
    * Attempts to queue the specified Player for registration, if possible.
    *
-   * @param player The Player to queue. @return {@code true} if and only if the Player can be
-   * registered otherwise {@code false}.
+   * @param player The Player to queue.
+   * @return {@code true} if and only if the Player can be registered otherwise {@code false}.
    */
   public synchronized boolean queuePlayer(Player player) {
     if (queuedPlayers.size() + world.getPlayerCount() > World.MAXIMUM_PLAYERS) {
@@ -89,8 +89,8 @@ public final class GameService extends Service {
   /**
    * Tests whether or not the specified Player is online or is queued to become online.
    * 
-   * @param player The Player to test. @return {@code true} if the Player is online or is awaiting
-   * login otherwise {@code false}.
+   * @param player The Player to test.
+   * @return {@code true} if the Player is online or is awaiting login otherwise {@code false}.
    */
   public synchronized boolean isPlayerOnline(Player player) {
     return world.isOnline(player.getEncodedUsername()) || queuedPlayers.contains(player);

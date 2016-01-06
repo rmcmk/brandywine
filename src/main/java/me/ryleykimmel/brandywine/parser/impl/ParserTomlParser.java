@@ -26,7 +26,8 @@ public final class ParserTomlParser extends TomlParser {
   /**
    * Constructs a new {@link ParserTomlParser} with the specified path and ServerContext.
    *
-   * @param path The path to the source. @param context The context of the Server.
+   * @param path The path to the source.
+   * @param context The context of the Server.
    */
   public ParserTomlParser(String path, ServerContext context) {
     super(path);
@@ -36,12 +37,14 @@ public final class ParserTomlParser extends TomlParser {
   /**
    * Finds and creates Parser instances from the specified Class.
    *
-   * @param clazz The Class to find the Parser instance within. @param path The path to the Parsers
-   * source file. @return The created Parser instance. @throws NoSuchMethodException If there was no
-   * constructor found for the specified parameters. @throws InvocationTargetException If the
-   * Parsers constructor throws an exception. @throws IllegalAccessException If the Parsers
-   * constructor object is enforcing Java language access control and the underlying constructor is
-   * inaccessible. @throws InstantiationException If the Parser is an abstract class.
+   * @param clazz The Class to find the Parser instance within.
+   * @param path The path to the Parsers source file.
+   * @return The created Parser instance.
+   * @throws NoSuchMethodException If there was no constructor found for the specified parameters.
+   * @throws InvocationTargetException If the Parsers constructor throws an exception.
+   * @throws IllegalAccessException If the Parsers constructor object is enforcing Java language
+   * access control and the underlying constructor is inaccessible.
+   * @throws InstantiationException If the Parser is an abstract class.
    */
   private Parser<?, ?> find(Class<Parser<?, ?>> clazz, String path) throws InstantiationException,
       IllegalAccessException, InvocationTargetException, NoSuchMethodException {

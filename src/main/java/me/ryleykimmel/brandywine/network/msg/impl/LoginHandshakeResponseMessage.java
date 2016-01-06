@@ -28,8 +28,9 @@ public final class LoginHandshakeResponseMessage implements Message {
    * Constructs a new {@link LoginHandshakeResponseMessage} with the specified status, dummy and
    * session key.
    *
-   * @param status The status of the response. @param dummy The dummy bytes. @param sessionKey The
-   * session key.
+   * @param status The status of the response.
+   * @param dummy The dummy bytes.
+   * @param sessionKey The session key.
    */
   public LoginHandshakeResponseMessage(int status, byte[] dummy, long sessionKey) {
     this.status = status;

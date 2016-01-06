@@ -38,8 +38,9 @@ public abstract class TomlParser extends ReaderParser<Toml> {
   /**
    * A helper method used to get Toml 64-bit integers as 32-bit Java integers.
    *
-   * @param toml The Toml instance to get the integer from. @param key The Toml key of the
-   * integer. @return The 32-bit Java integer.
+   * @param toml The Toml instance to get the integer from.
+   * @param key The Toml key of the integer.
+   * @return The 32-bit Java integer.
    */
   public final int getInteger(Toml toml, String key) {
     Long value = Preconditions.checkNotNull(toml.getLong(key));
@@ -49,7 +50,8 @@ public abstract class TomlParser extends ReaderParser<Toml> {
   /**
    * A helper method used to get Toml 64-bit integers as 32-bit Java integers.
    *
-   * @param key The Toml key of the integer. @return The 32-bit Java integer.
+   * @param key The Toml key of the integer.
+   * @return The 32-bit Java integer.
    */
   public final int getInteger(String key) {
     return getInteger(toml, key);

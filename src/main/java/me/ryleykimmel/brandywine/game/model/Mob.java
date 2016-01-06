@@ -140,8 +140,8 @@ public abstract class Mob extends Entity {
   /**
    * Sets the directions for this Mob.
    *
-   * @param firstDirection This Mobs first direction. @param secondDirection This mobs second
-   * direction.
+   * @param firstDirection This Mobs first direction.
+   * @param secondDirection This mobs second direction.
    */
   public final void setDirections(Direction firstDirection, Direction secondDirection) {
     this.firstDirection = firstDirection;
