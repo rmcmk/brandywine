@@ -73,8 +73,8 @@ public final class GameService extends Service {
    * 
    * @param player The Player to remove.
    */
-  public synchronized void removePlayer(Player player) {
-    oldPlayers.add(player);
+  public void removePlayer(Player player) {
+      oldPlayers.add(player);
   }
 
   /**
@@ -93,7 +93,7 @@ public final class GameService extends Service {
    * @return {@code true} if the Player is online or is awaiting login otherwise {@code false}.
    */
   public synchronized boolean isPlayerOnline(Player player) {
-    return world.isOnline(player.getEncodedUsername()) || queuedPlayers.contains(player);
+    return world.isOnline(player) || queuedPlayers.contains(player);
   }
 
   @Override
@@ -117,6 +117,7 @@ public final class GameService extends Service {
       }
 
       // Forward to IO service -- everything is verified and ready to go!
+
       if (!world.addPlayer(player)) {
         player.disconnect();
         continue;

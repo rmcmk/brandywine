@@ -188,10 +188,4 @@ public final class PlayerUpdateTask implements UpdateTask {
         || !otherPosition.isWithinDistance(position, distance);
   }
 
-  @Override
-  public void exceptionCaught(Throwable cause) {
-    cause.printStackTrace();
-    player.disconnect();
-  }
-
 }

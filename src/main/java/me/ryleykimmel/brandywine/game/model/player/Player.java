@@ -7,8 +7,6 @@ import com.google.common.base.MoreObjects;
 import me.ryleykimmel.brandywine.game.model.Mob;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.model.World;
-import me.ryleykimmel.brandywine.game.model.inter.WidgetSet;
-import me.ryleykimmel.brandywine.game.model.inter.tab.LogoutTabWidget;
 import me.ryleykimmel.brandywine.game.model.skill.LevelUpSkillListener;
 import me.ryleykimmel.brandywine.game.model.skill.SynchronizationSkillListener;
 import me.ryleykimmel.brandywine.game.update.blocks.AppearancePlayerBlock;
@@ -45,11 +43,6 @@ public final class Player extends Mob {
    * The privileges for this Player.
    */
   private final PlayerPrivileges privileges = new PlayerPrivileges();
-
-  /**
-   * This Player's WidgetSet.
-   */
-  private final WidgetSet widgets = new WidgetSet(this);
 
   /**
    * The GameSession this Player is attached to.
@@ -129,8 +122,6 @@ public final class Player extends Mob {
 
     skills.addListener(new SynchronizationSkillListener(this));
     skills.addListener(new LevelUpSkillListener(this));
-
-    widgets.open(new LogoutTabWidget());
 
     write(new RebuildRegionMessage(position));
     write(new ServerChatMessage("Welcome to %s.", session.getContext().getName()));

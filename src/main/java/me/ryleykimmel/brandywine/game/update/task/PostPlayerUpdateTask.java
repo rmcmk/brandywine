@@ -37,10 +37,4 @@ public final class PostPlayerUpdateTask implements UpdateTask {
     player.getSession().flush();
   }
 
-  @Override
-  public void exceptionCaught(Throwable cause) {
-    cause.printStackTrace();
-    player.disconnect();
-  }
-
 }

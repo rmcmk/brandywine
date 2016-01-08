@@ -3,6 +3,7 @@ package me.ryleykimmel.brandywine.network.game;
 import java.net.InetSocketAddress;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.Random;
 
 import com.google.common.base.MoreObjects;
@@ -13,6 +14,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
 import me.ryleykimmel.brandywine.ServerContext;
+import me.ryleykimmel.brandywine.game.GameService;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.network.isaac.IsaacRandom;
 import me.ryleykimmel.brandywine.network.isaac.IsaacRandomPair;
@@ -57,6 +59,11 @@ public final class GameSession {
    * The IsaacRandom cipher pair, used for ciphering Frame opcodes.
    */
   private IsaacRandomPair randomPair;
+
+  /**
+   * Whether or not this GameSession has been closed.
+   */
+  private boolean closed;
 
   /**
    * Constructs a new {@link GameSession} with the specified ServerContext and SocketChannel.
@@ -201,7 +208,21 @@ public final class GameSession {
    * Closes this GameSession.
    */
   public void close() {
+    if (closed) {
+      return;
+    }
+
     channel.close();
+    closed = true;
+  }
+
+  /**
+   * Destroys this GameSession.
+   */
+  public void destroy() {
+    GameService service = context.getService(GameService.class);
+    Optional<Player> player = Optional.ofNullable(attr().getAndRemove());
+    player.ifPresent(service::removePlayer);
   }
 
   /**

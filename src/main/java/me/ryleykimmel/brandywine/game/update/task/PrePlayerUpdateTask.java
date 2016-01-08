@@ -56,10 +56,4 @@ public final class PrePlayerUpdateTask implements UpdateTask {
     return deltaX < 16 || deltaX >= 88 || deltaY < 16 || deltaY >= 88;
   }
 
-  @Override
-  public void exceptionCaught(Throwable cause) {
-    cause.printStackTrace();
-    player.disconnect();
-  }
-
 }

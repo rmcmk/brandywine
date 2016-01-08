@@ -26,7 +26,7 @@ public final class LoginHandshakeMessageHandler implements MessageHandler<LoginH
 
   @Override
   public void handle(GameSession session, LoginHandshakeMessage message) {
-    session.voidWrite(new LoginHandshakeResponseMessage(STATUS_EXCHANGE_DATA, EXPECTED_DUMMY,
+    session.voidWriteAndFlush(new LoginHandshakeResponseMessage(STATUS_EXCHANGE_DATA, EXPECTED_DUMMY,
         session.getSessionKey()));
   }
 

@@ -17,6 +17,11 @@ import me.ryleykimmel.brandywine.common.util.ThreadFactoryUtil;
 public final class AuthenticationService extends Service {
 
   /**
+   * Represents the default {@link AuthenticationStrategy}.
+   */
+  public static final AuthenticationStrategy DEFAULT_STRATEGY = p -> AuthenticationResponse.SUCCESS;
+
+  /**
    * How often the requests are serviced, in milliseconds.
    */
   private static final long PULSE_INTERVAL = 100L;
@@ -63,8 +68,7 @@ public final class AuthenticationService extends Service {
         break;
       }
 
-      executor
-          .submit(new AuthenticationWorker(context, context.getAuthenticationStrategy(), request));
+      executor.submit(new AuthenticationWorker(context, request));
     }
   }
 

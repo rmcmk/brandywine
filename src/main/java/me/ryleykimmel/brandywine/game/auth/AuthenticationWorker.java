@@ -23,20 +23,9 @@ public final class AuthenticationWorker implements Runnable {
   private static final Logger logger = LoggerFactory.getLogger(AuthenticationWorker.class);
 
   /**
-   * Represents the default {@link AuthenticationStrategy}.
-   */
-  private static final AuthenticationStrategy DEFAULT_STRATEGY =
-      p -> AuthenticationResponse.SUCCESS;
-
-  /**
    * The context of the Server.
    */
   private final ServerContext context;
-
-  /**
-   * The AuthenticationStrategy to use when authenticating requests.
-   */
-  private final AuthenticationStrategy strategy;
 
   /**
    * The request to authenticate.
@@ -44,28 +33,14 @@ public final class AuthenticationWorker implements Runnable {
   private final AuthenticationRequest request;
 
   /**
-   * Constructs a new {@link AuthenticationWorker} with the specified AuthenticationStrategy and
-   * AuthenticationRequest.
-   *
-   * @param context The context of the Server.
-   * @param strategy The AuthenticationStrategy to use when authenticating requests.
-   * @param request The request to authenticate.
-   */
-  public AuthenticationWorker(ServerContext context, AuthenticationStrategy strategy,
-      AuthenticationRequest request) {
-    this.context = context;
-    this.strategy = strategy;
-    this.request = request;
-  }
-
-  /**
-   * Constructs a new {@link AuthenticationWorker} with the specified AuthenticationRequest.
+   * Constructs a new {@link AuthenticationWorker} with the specified and AuthenticationRequest.
    *
    * @param context The context of the Server.
    * @param request The request to authenticate.
    */
   public AuthenticationWorker(ServerContext context, AuthenticationRequest request) {
-    this(context, DEFAULT_STRATEGY, request);
+    this.context = context;
+    this.request = request;
   }
 
   @Override
@@ -76,7 +51,7 @@ public final class AuthenticationWorker implements Runnable {
     Player player = new Player(session, request.getCredentials());
 
     try {
-      AuthenticationResponse response = strategy.authenticate(player);
+      AuthenticationResponse response = context.getAuthenticationStrategy().authenticate(player);
 
       if (response.getStatus() != LoginResponseMessage.STATUS_OK) {
         closeWithResponse(session, response.getStatus());

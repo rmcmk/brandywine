@@ -25,6 +25,16 @@ public final class ThreadFactoryUtil {
   }
 
   /**
+   * Creates a {@link ThreadFactoryBuilder} for the specified name.
+   *
+   * @param name The name format of the thread factory.
+   * @return The new ThreadFactoryBuilder, never {@code null}.
+   */
+  public static ThreadFactoryBuilder create(String name) {
+    return new ThreadFactoryBuilder().setNameFormat(name.concat("-%d"));
+  }
+
+  /**
    * Sole private constructor to discourage instantiation of this class.
    */
   private ThreadFactoryUtil() {}

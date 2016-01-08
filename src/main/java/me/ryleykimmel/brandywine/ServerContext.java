@@ -7,8 +7,8 @@ import java.util.Map;
 import org.sql2o.Sql2o;
 
 import me.ryleykimmel.brandywine.fs.FileSystem;
+import me.ryleykimmel.brandywine.game.auth.AuthenticationService;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationStrategy;
-import me.ryleykimmel.brandywine.game.auth.impl.SQLAuthenticationStrategy;
 import me.ryleykimmel.brandywine.parser.Parser;
 
 /**
@@ -33,7 +33,7 @@ public final class ServerContext {
   /**
    * The AuthenticationStrategy used by the Server.
    */
-  private final AuthenticationStrategy authenticationStrategy = new SQLAuthenticationStrategy(this);
+  private final AuthenticationStrategy authenticationStrategy = AuthenticationService.DEFAULT_STRATEGY;
 
   /**
    * The Server this context represents.
