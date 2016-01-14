@@ -17,6 +17,7 @@
 		"me.ryleykimmel.brandywine.network.msg.codec.ResetDestinationMessageEncoder",
 		"me.ryleykimmel.brandywine.network.msg.codec.InitializePlayerMessageEncoder",
 		"me.ryleykimmel.brandywine.network.msg.codec.UpdateSkillMessageEncoder",
+		"me.ryleykimmel.brandywine.network.msg.codec.OpenTabWidgetMessageEncoder",
 	]
 
 	handlers = [
