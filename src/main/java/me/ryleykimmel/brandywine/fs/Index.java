@@ -5,21 +5,22 @@ import com.google.common.base.Preconditions;
 import me.ryleykimmel.brandywine.common.Buffer;
 
 /**
- * An {@link Index} points to a file in the {@code main_file_cache.dat} file.
+ * An {@link Index} points to a Sector in the FileSystem.
  * 
  * @author Graham
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Index {
 
   /**
-   * The amount of bytes required to store an index.
+   * The amount of bytes required to decode an Index.
    */
   public static final int BYTES = Byte.BYTES * 6;
 
   /**
-   * The first block of the file.
+   * The first Sector in this Index.
    */
-  private final int block;
+  private final int sector;
 
   /**
    * The size of the file.
@@ -30,37 +31,36 @@ public final class Index {
    * Creates the index.
    * 
    * @param size The size of the file.
-   * @param block The first block of the file.
+   * @param sector The first Sector in this Index.
    */
-  public Index(int size, int block) {
+  public Index(int size, int sector) {
     this.size = size;
-    this.block = block;
+    this.sector = sector;
   }
 
   /**
-   * Decodes the {@link Buffer} into an Index.
+   * Decodes the specified {@link Buffer} into an Index.
    * 
-   * @param buffer The buffer.
-   * @return The index.
-   * @throws IllegalArgumentException If the buffer length is invalid.
+   * @param buffer The Buffer to decode the Index from.
+   * @return The new Index, never {@code null}.
    */
   public static Index decode(Buffer buffer) {
     Preconditions.checkArgument(buffer.remaining() == BYTES,
         "Incorrect buffer length: " + buffer.remaining() + ", expected: " + BYTES);
 
     int size = buffer.getUnsignedTriByte();
-    int block = buffer.getUnsignedTriByte();
+    int sector = buffer.getUnsignedTriByte();
 
-    return new Index(size, block);
+    return new Index(size, sector);
   }
 
   /**
-   * Gets the first block of the file.
+   * Gets the first Sector in this Index.
    * 
-   * @return The first block of the file.
+   * @return The first Sector in this Index.
    */
-  public int getBlock() {
-    return block;
+  public int getSector() {
+    return sector;
   }
 
   /**

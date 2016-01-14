@@ -63,7 +63,7 @@ public final class Cache {
     Index index = getIndex(id);
 
     int read = 0;
-    int size = index.getSize(), next = index.getBlock();
+    int size = index.getSize(), next = index.getSector();
 
     Buffer buffer = Buffer.allocate(size);
 
@@ -71,18 +71,18 @@ public final class Cache {
       Sector sector = getSector(next);
       Preconditions.checkArgument(block == sector.getBlock());
 
-      int bytes = Math.min(CHUNK_SIZE, size - read);
-
+      int unread = Math.min(CHUNK_SIZE, size - read);
       long position = (long) next * BLOCK_SIZE + Sector.BYTES;
-      Buffer chunk = Buffer.allocate(bytes);
+
+      Buffer chunk = Buffer.allocate(unread);
       synchronized (dataChannel) {
         dataChannel.position(position);
         dataChannel.read(chunk.getByteBuffer());
       }
       buffer.put(chunk.flip());
 
-      read += bytes;
-      next = sector.getNextBlock();
+      read += unread;
+      next = sector.getNext();
 
       if (size > read) {
         Preconditions.checkArgument(sector.getIndex() == indexId);
