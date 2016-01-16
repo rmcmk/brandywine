@@ -4,11 +4,12 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import org.mindrot.jbcrypt.BCrypt;
 import org.sql2o.Connection;
 import org.sql2o.Query;
 import org.sql2o.Sql2oException;
 import org.sql2o.data.Row;
+
+import com.lambdaworks.crypto.SCryptUtil;
 
 import me.ryleykimmel.brandywine.ServerContext;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationResponse;
@@ -104,7 +105,7 @@ public final class SQLAuthenticationStrategy implements AuthenticationStrategy {
         int id = result.getInteger("id");
         String remotePassword = result.getString("password");
 
-        if (!BCrypt.checkpw(password, remotePassword)) {
+        if (!SCryptUtil.check(password, remotePassword)) {
           Query insert = connection.createQuery(
               "INSERT INTO failed_logins (count, timestamp, remote_addr) VALUES (:count, :timestamp, :remote_addr) ON DUPLICATE KEY UPDATE count = VALUES(count), timestamp = VALUES(timestamp), remote_addr = VALUES(remote_addr)");
           insert.addParameter("count", count + 1);

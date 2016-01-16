@@ -75,9 +75,9 @@
 			<version>1.5.4</version>
 		</dependency>
 		<dependency>
-			<groupId>de.svenkubiak</groupId>
-			<artifactId>jBCrypt</artifactId>
-			<version>0.4</version>
+			<groupId>com.lambdaworks</groupId>
+			<artifactId>scrypt</artifactId>
+			<version>1.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.nimbusds</groupId>
