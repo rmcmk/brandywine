@@ -85,6 +85,10 @@ public final class FrameDecoder extends ByteToMessageDecoder {
 
   @Override
   protected void decode(ChannelHandlerContext ctx, ByteBuf buffer, List<Object> out) {
+    if (session.isClosed()) {
+      return;
+    }
+
     switch (state) {
       case DECODE_OPCODE:
         decodeOpcode(buffer, out);

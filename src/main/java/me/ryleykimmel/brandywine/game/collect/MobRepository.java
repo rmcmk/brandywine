@@ -1,13 +1,16 @@
 package me.ryleykimmel.brandywine.game.collect;
 
 import java.lang.reflect.Array;
-import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.stream.IntStream;
 
-import me.ryleykimmel.brandywine.common.Suppliers;
+import com.google.common.base.MoreObjects;
+
 import me.ryleykimmel.brandywine.game.model.Mob;
 
 /**
@@ -95,9 +98,14 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
   }
 
   /**
+   * The Comparator used to sort available indices.
+   */
+  private static final Comparator<Integer> INDEX_COMPARATOR = Integer::compare;
+
+  /**
    * A {@link Queue} of available indices.
    */
-  private final Queue<Integer> indices;
+  private final Queue<Integer> indices = new PriorityQueue<>(INDEX_COMPARATOR);
 
   /**
    * The array of Mobs in this repository.
@@ -124,8 +132,7 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
     this.capacity = capacity;
 
     mobs = (T[]) Array.newInstance(Mob.class, capacity);
-    indices =
-        IntStream.range(0, capacity).boxed().collect(Suppliers.collection(new ArrayDeque<>()));
+    IntStream.rangeClosed(0, capacity).boxed().forEachOrdered(indices::offer);
   }
 
   /**
@@ -230,6 +237,12 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
    */
   public int size() {
     return size;
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).add("mobs", Arrays.toString(mobs)).add("size", size)
+        .add("capacity", capacity).toString();
   }
 
 }

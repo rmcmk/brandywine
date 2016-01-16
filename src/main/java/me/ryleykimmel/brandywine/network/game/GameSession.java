@@ -217,6 +217,16 @@ public final class GameSession {
   }
 
   /**
+   * Tests whether or not this GameSession has been closed or is no longer active.
+   * 
+   * @return {@code true} if this GameSession is closed or is no longer active, otherwise
+   * {@code false}.
+   */
+  public boolean isClosed() {
+    return closed || !channel.isActive();
+  }
+
+  /**
    * Destroys this GameSession.
    */
   public void destroy() {
