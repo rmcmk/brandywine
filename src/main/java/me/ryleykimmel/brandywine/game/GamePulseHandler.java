@@ -65,7 +65,7 @@ public final class GamePulseHandler implements Runnable {
           logger.warn("{} is being overloaded by {}% total {}ms", service.toString(),
               Math.abs(diff), elapsed);
         }
-      } catch (Throwable cause) {
+      } catch (Exception cause) {
         logger.error("Erorr occured while executing service.", cause);
       }
     }

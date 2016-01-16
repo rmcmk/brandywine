@@ -68,10 +68,9 @@ public abstract class Service {
    * Pulses this Service, counting down the {@code currentDelay} until it reaches <tt>0</tt> then
    * executes this Service.
    *
-   * @throws Throwable If some exception occurs.
    * @return How long this Service took to pulse this iteration, in milliseconds.
    */
-  public final long pulse() throws Throwable {
+  public final long pulse() {
     try {
       stopwatch.start();
 
@@ -102,9 +101,7 @@ public abstract class Service {
 
   /**
    * Executes logic for this Service.
-   *
-   * @throws Throwable If some exception occurs.
    */
-  public abstract void execute() throws Throwable;
+  public abstract void execute();
 
 }

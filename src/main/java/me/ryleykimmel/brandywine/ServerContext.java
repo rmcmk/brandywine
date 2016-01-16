@@ -33,7 +33,8 @@ public final class ServerContext {
   /**
    * The AuthenticationStrategy used by the Server.
    */
-  private final AuthenticationStrategy authenticationStrategy = AuthenticationService.DEFAULT_STRATEGY;
+  private final AuthenticationStrategy authenticationStrategy =
+      AuthenticationService.DEFAULT_STRATEGY;
 
   /**
    * The Server this context represents.
