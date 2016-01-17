@@ -1,10 +1,6 @@
 package me.ryleykimmel.brandywine.network.game.frame;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import com.google.common.base.Preconditions;
-import com.google.common.primitives.Bytes;
 
 import me.ryleykimmel.brandywine.common.Assertions;
 import me.ryleykimmel.brandywine.common.util.ByteBufUtil;
