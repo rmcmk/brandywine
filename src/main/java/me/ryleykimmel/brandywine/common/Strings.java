@@ -1,5 +1,10 @@
 package me.ryleykimmel.brandywine.common;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.common.collect.Iterables;
+
 /**
  * A static-utility class containing extension and helper methods for {@link String strings}.
  *
@@ -90,6 +95,48 @@ public final class Strings {
     }
 
     return builder.append(string.substring(templateStart)).toString();
+  }
+
+  /**
+   * Splits the specified {@code String} into segments delimited by {@code delim}.
+   * 
+   * <pre>
+   * <code>
+   * String string = "\"I am a String\" Hey hey hey";
+   * Arrays.toString(explode(string, '"'));
+   *          -> [I am a String, Hey, hey, hey]
+   * </code>
+   * </pre>
+   * 
+   * @param string The {@code String} to explode.
+   * @param delim The delimiter.
+   * @return The exploded segments of the {@code String}.
+   */
+  public static String[] split(String string, char delim) {
+    List<String> arguments = new ArrayList<>();
+    StringBuilder builder = new StringBuilder();
+    boolean quoted = false, escaped = false;
+
+    for (int i = 0, len = string.length(); i < len; i++) {
+      char c = string.charAt(i);
+      if (c == ' ' && !quoted) {
+        arguments.add(builder.toString());
+        builder.setLength(0); // reset builder
+      } else if (c == delim && !escaped) {
+        quoted = !quoted;
+      } else if (c == '\\') {
+        escaped = true;
+      } else {
+        escaped = false;
+        builder.append(c);
+      }
+    }
+
+    if (builder.length() > 0) {
+      arguments.add(builder.toString());
+    }
+
+    return Iterables.toArray(arguments, String.class);
   }
 
   /**

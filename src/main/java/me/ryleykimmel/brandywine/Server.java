@@ -150,6 +150,8 @@ final class Server {
 
     bootstrap.group(parentGroup, childGroup);
     bootstrap.channel(NioServerSocketChannel.class);
+    bootstrap.childOption(ChannelOption.TCP_NODELAY, true);
+    bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
     bootstrap.childHandler(initializer);
     bootstrap.childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
     bootstrap.bind(address).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);

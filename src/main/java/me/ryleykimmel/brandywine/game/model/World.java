@@ -5,6 +5,12 @@ import java.util.Map;
 import java.util.Optional;
 
 import me.ryleykimmel.brandywine.game.collect.MobRepository;
+import me.ryleykimmel.brandywine.game.command.CommandEvent;
+import me.ryleykimmel.brandywine.game.command.CommandEventListener;
+import me.ryleykimmel.brandywine.game.event.Event;
+import me.ryleykimmel.brandywine.game.event.EventListener;
+import me.ryleykimmel.brandywine.game.event.EventListenerChain;
+import me.ryleykimmel.brandywine.game.event.EventListenerChainSet;
 import me.ryleykimmel.brandywine.game.model.npc.Npc;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.update.ParallelUpdater;
@@ -47,6 +53,18 @@ public final class World {
    * The {@link Updater} for this World.
    */
   private final Updater updater = new ParallelUpdater();
+
+  /**
+   * The EventListenerChainSet for this World.
+   */
+  private final EventListenerChainSet events = new EventListenerChainSet();
+
+  /**
+   * Constructs a new {@link World}.
+   */
+  public World() {
+    putListener(CommandEvent.class, new CommandEventListener());
+  }
 
   /**
    * Attempts to add the specified Player to the World.
@@ -102,6 +120,26 @@ public final class World {
   public Optional<Player> get(long username) {
     Player player = players.get(username);
     return Optional.ofNullable(player);
+  }
+
+  /**
+   * Places the {@link EventListenerChain} into this set.
+   *
+   * @param clazz The {@link Class} to associate the EventListenerChain with.
+   * @param listener The EventListenerChain.
+   */
+  public <E extends Event> void putListener(Class<E> clazz, EventListener<E> listener) {
+    events.putListener(clazz, listener);
+  }
+
+  /**
+   * Notifies the appropriate {@link EventListenerChain} that an {@link Event} has occurred.
+   *
+   * @param event The Event.
+   * @return {@code true} if the Event should continue on with its outcome, {@code false} if not.
+   */
+  public <E extends Event> boolean notify(E event) {
+    return events.notify(event);
   }
 
   /**

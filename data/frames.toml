@@ -69,6 +69,11 @@
 	    name = "Command movement"
 		opcode = 98
 		length = -1
+		
+	[[ciphered]]
+		name = "Command"
+		opcode = 103
+		length = -1
 
 	[[ciphered]]
 		name = "Anti-cheat"

@@ -6,6 +6,7 @@
 		"me.ryleykimmel.brandywine.network.msg.codec.MovementMessageDecoder",
 		"me.ryleykimmel.brandywine.network.msg.codec.ChatMessageDecoder",
 		"me.ryleykimmel.brandywine.network.msg.codec.DummyMessageDecoder",
+		"me.ryleykimmel.brandywine.network.msg.codec.CommandMessageDecoder",
 	]
 
 	encoders = [
@@ -25,4 +26,5 @@
 	    "me.ryleykimmel.brandywine.network.msg.handler.LoginMessageHandler",
 	    "me.ryleykimmel.brandywine.network.msg.handler.MovementMessageHandler",
 		"me.ryleykimmel.brandywine.network.msg.handler.ChatMessageHandler",
+		"me.ryleykimmel.brandywine.network.msg.handler.CommandMessageHandler",
 	]
