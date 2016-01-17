@@ -1,6 +1,6 @@
 package me.ryleykimmel.brandywine.network.game.frame;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
@@ -322,13 +322,13 @@ public final class FrameReader extends ReadingFrameBuffer {
   public byte[] getBytes(DataTransformation transformation, int length) {
     Assertions.checkNonNegative(length, "Length: [" + length + "] may not be negative!");
 
-    List<Byte> bytes = new ArrayList<>();
+    byte[] bytes = new byte[length];
 
     for (int i = 0; i < length && buffer.isReadable(); i++) {
-      bytes.add((byte) getSigned(DataType.BYTE, transformation));
+      bytes[i] = (byte) getSigned(DataType.BYTE, transformation);
     }
 
-    return Bytes.toArray(bytes);
+    return bytes;
   }
 
   /**
@@ -353,13 +353,13 @@ public final class FrameReader extends ReadingFrameBuffer {
   public byte[] getBytesReverse(DataTransformation transformation, int length) {
     Assertions.checkNonNegative(length, "Length: [" + length + "] may not be negative!");
 
-    List<Byte> bytes = new ArrayList<>();
+    byte[] bytes = new byte[length];
 
     for (int i = length - 1; i >= 0 && buffer.isReadable(); i--) {
-      bytes.add((byte) getSigned(DataType.BYTE, transformation));
+      bytes[i] = (byte) getSigned(DataType.BYTE, transformation);
     }
 
-    return Bytes.toArray(bytes);
+    return bytes;
   }
 
 }
