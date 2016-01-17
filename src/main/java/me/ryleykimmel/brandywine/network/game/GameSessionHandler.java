@@ -35,7 +35,6 @@ public final class GameSessionHandler extends SimpleChannelInboundHandler<Messag
 
   @Override
   public void channelInactive(ChannelHandlerContext ctx) {
-    System.out.println("Session destroyed " + session.attr().get());
     session.destroy();
   }
 
