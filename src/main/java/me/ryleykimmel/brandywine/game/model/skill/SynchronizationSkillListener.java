@@ -3,10 +3,24 @@ package me.ryleykimmel.brandywine.game.model.skill;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.network.msg.impl.UpdateSkillMessage;
 
+/**
+ * An implementation of a {@link SkillListener} which keeps the server and client state of Skills
+ * synchronized.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ */
 public final class SynchronizationSkillListener implements SkillListener {
 
+  /**
+   * The Player.
+   */
   private final Player player;
 
+  /**
+   * Constructs a new {@link SynchronizationSkillListener} with the specified Player.
+   * 
+   * @param player The Player.
+   */
   public SynchronizationSkillListener(Player player) {
     this.player = player;
   }

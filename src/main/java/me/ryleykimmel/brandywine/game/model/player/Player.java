@@ -4,6 +4,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.google.common.base.MoreObjects;
 
+import me.ryleykimmel.brandywine.game.model.EntityType;
 import me.ryleykimmel.brandywine.game.model.Mob;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.model.World;
@@ -27,7 +28,7 @@ public final class Player extends Mob {
   /**
    * The current amount of appearance tickets.
    */
-  private static AtomicInteger appearanceTicketCounter = new AtomicInteger(0);
+  private static final AtomicInteger appearanceTicketCounter = new AtomicInteger(0);
 
   /**
    * This appearance tickets for this Player.
@@ -89,8 +90,10 @@ public final class Player extends Mob {
    * 
    * @param session The GameSession this Player is attached to.
    * @param credentials The credentials of this Player.
+   * @param world The World this Player is in.
    */
-  public Player(GameSession session, PlayerCredentials credentials) {
+  public Player(GameSession session, PlayerCredentials credentials, World world) {
+    super(world, EntityType.PLAYER);
     this.session = session;
     this.credentials = credentials;
 
@@ -116,12 +119,8 @@ public final class Player extends Mob {
     session.seedCiphers(credentials.getSessionKeys());
     session.attr().set(this);
 
-    Position position = DEFAULT_POSITION;
     setLastKnownRegion(position);
     teleport(position);
-
-    skills.addListener(new SynchronizationSkillListener(this));
-    skills.addListener(new LevelUpSkillListener(this));
 
     write(new RebuildRegionMessage(position));
     write(new ServerChatMessage("Welcome to %s.", session.getContext().getName()));
@@ -129,6 +128,9 @@ public final class Player extends Mob {
     if (isMember()) {
       write(new ServerChatMessage("You are a member!"));
     }
+
+    skills.addListener(new SynchronizationSkillListener(this));
+    skills.addListener(new LevelUpSkillListener(this));
 
     skills.refresh();
   }

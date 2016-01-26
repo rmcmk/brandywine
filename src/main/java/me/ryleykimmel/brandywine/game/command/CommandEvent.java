@@ -1,6 +1,6 @@
 package me.ryleykimmel.brandywine.game.command;
 
-import me.ryleykimmel.brandywine.game.event.PlayerEvent;
+import me.ryleykimmel.brandywine.game.event.impl.MobEvent;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 
 /**
@@ -8,7 +8,7 @@ import me.ryleykimmel.brandywine.game.model.player.Player;
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class CommandEvent extends PlayerEvent {
+public final class CommandEvent extends MobEvent<Player> {
 
   /**
    * The name of the command.

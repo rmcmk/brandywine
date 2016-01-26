@@ -121,7 +121,7 @@ public final class PlayerUpdateTask implements UpdateTask {
         descriptors.add(new RemovePlayerDescriptor(other, updater));
       } else {
         PlayerDescriptor otherDescriptor = createStateDescriptor(other);
-        if (checkCachedAppearance(tickets, other)) {
+        if (!hasCachedAppearance(tickets, other)) {
           otherDescriptor.addBlock(AppearancePlayerBlock.create(other));
         }
         descriptors.add(otherDescriptor);
@@ -157,17 +157,16 @@ public final class PlayerUpdateTask implements UpdateTask {
    * @param player The Player.
    * @return {@code true} if the specified Player has a cached appearance otherwise {@code false}.
    */
-  private boolean checkCachedAppearance(int[] tickets, Player player) {
-    if (player.isActive()) {
-      int index = player.getIndex() - 1;
-      int ticket = player.getAppearanceTicket();
-      if (tickets[index] != ticket) {
-        tickets[index] = ticket;
-        return true;
-      }
+  private boolean hasCachedAppearance(int[] tickets, Player player) {
+    int index = player.getIndex() - 1;
+    int ticket = player.getAppearanceTicket();
+
+    if (tickets[index] != ticket) {
+      tickets[index] = ticket;
+      return false;
     }
 
-    return false;
+    return true;
   }
 
   /**

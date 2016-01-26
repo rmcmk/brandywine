@@ -134,8 +134,6 @@ public final class Assertions {
   /**
    * Sole private constructor to discourage instantiation of this class.
    */
-  private Assertions() {
-
-  }
+  private Assertions() {}
 
 }

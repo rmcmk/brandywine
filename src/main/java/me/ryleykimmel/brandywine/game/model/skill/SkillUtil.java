@@ -2,8 +2,17 @@ package me.ryleykimmel.brandywine.game.model.skill;
 
 import com.google.common.base.Preconditions;
 
+/**
+ * Contains utility/helper methods for Skills.
+ * 
+ * @author Major
+ * @author Ryley Kimmel
+ */
 public final class SkillUtil {
 
+  /**
+   * A mapping of level -> experience.
+   */
   private static final double[] EXPERIENCE_TABLE = {0, 83, 174, 276, 388, 512, 650, 801, 969, 1154,
       1358, 1584, 1833, 2107, 2411, 2746, 3115, 3523, 3973, 4470, 5018, 5624, 6291, 7028, 7842,
       8740, 9730, 10824, 12031, 13363, 14833, 16456, 18247, 20224, 22406, 24815, 27473, 30408,
@@ -14,11 +23,22 @@ public final class SkillUtil {
       2951373, 3258594, 3597792, 3972294, 4385776, 4842295, 5346332, 5902831, 6517253, 7195629,
       7944614, 8771558, 9684577, 10692629, 11805606, 13034431};
 
+  /**
+   * Gets the experience of the specified level.
+   * 
+   * @param level The level.
+   * @return The experience of the specified level.
+   */
   public static double experienceOf(int level) {
-    int actual = Preconditions.checkElementIndex(level - 1, EXPERIENCE_TABLE.length);
-    return EXPERIENCE_TABLE[actual];
+    return EXPERIENCE_TABLE[checkLevel(level)];
   }
 
+  /**
+   * Gets the level for the specified experience.
+   * 
+   * @param experience The experience.
+   * @return The level for the specified experience.
+   */
   public static int levelOf(double experience) {
     int index = Skill.MAXIMUM_LEVEL - 1;
 
@@ -29,6 +49,14 @@ public final class SkillUtil {
     }
   }
 
+  /**
+   * Utilizes a basic binary search algorithm to find the level for the specified experience.
+   * 
+   * @param experience The experience.
+   * @param min The minimum level.
+   * @param max The maximum level.
+   * @return The level for the specified experience.
+   */
   private static int binarySearch(double experience, int min, int max) {
     int mid = (min + max) / 2;
     double value = EXPERIENCE_TABLE[mid];
@@ -42,8 +70,35 @@ public final class SkillUtil {
     }
   }
 
-  private SkillUtil() {
-
+  /**
+   * Checks whether or not the specified level is valid.
+   * 
+   * @param level The level to test.
+   * @return The level if it was valid, otherwise an {@link IllegalArgumentException} is thrown.
+   */
+  public static int checkLevel(int level) {
+    Preconditions.checkArgument(level >= 0 && level <= Skill.MAXIMUM_LEVEL,
+        "Level: " + level + " may not be negative or greater than " + Skill.MAXIMUM_LEVEL);
+    return level;
   }
+
+  /**
+   * Checks whether or not the specified experience is valid.
+   * 
+   * @param experience The experience to test.
+   * @return The experience if it was valid, otherwise an {@link IllegalArgumentException} is
+   * thrown.
+   */
+  public static double checkExperience(double experience) {
+    Preconditions.checkArgument(experience >= 0 && experience <= Skill.MAXIMUM_EXPERIENCE,
+        "Experience: " + experience + " may not be negative or greater than "
+            + Skill.MAXIMUM_EXPERIENCE);
+    return experience;
+  }
+
+  /**
+   * Sole private constructor to discourage instantiation of this class.
+   */
+  private SkillUtil() {}
 
 }

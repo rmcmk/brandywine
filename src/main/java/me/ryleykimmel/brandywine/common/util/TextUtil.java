@@ -118,8 +118,6 @@ public final class TextUtil {
   /**
    * Sole private constructor to discourage instantiation of this class.
    */
-  private TextUtil() {
-
-  }
+  private TextUtil() {}
 
 }

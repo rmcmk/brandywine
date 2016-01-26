@@ -48,7 +48,7 @@ public final class AuthenticationWorker implements Runnable {
     GameSession session = request.getSession();
     GameService service = context.getService(GameService.class);
 
-    Player player = new Player(session, request.getCredentials());
+    Player player = new Player(session, request.getCredentials(), service.getWorld());
 
     try {
       AuthenticationResponse response = context.getAuthenticationStrategy().authenticate(player);

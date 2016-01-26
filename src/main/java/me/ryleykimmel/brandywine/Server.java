@@ -12,7 +12,7 @@ import com.google.common.base.MoreObjects;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -154,7 +154,13 @@ final class Server {
     bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
     bootstrap.childHandler(initializer);
     bootstrap.childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
-    bootstrap.bind(address).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+
+    try {
+      ChannelFuture future = bootstrap.bind(address).sync();
+      future.channel().closeFuture().await();
+    } catch (InterruptedException cause) {
+      throw new StartupException(cause);
+    }
   }
 
   /**

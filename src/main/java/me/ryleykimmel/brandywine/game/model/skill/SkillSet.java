@@ -9,12 +9,21 @@ import java.util.function.Consumer;
 import com.google.common.base.Preconditions;
 import com.google.common.primitives.Ints;
 
+import me.ryleykimmel.brandywine.game.model.Mob;
+
 public final class SkillSet {
 
   private final Map<Integer, Skill> skills = new HashMap<>();
   private final Set<SkillListener> listeners = new HashSet<>();
 
+  private final Mob mob;
+
+  public SkillSet(Mob mob) {
+    this.mob = mob;
+  }
+
   private int combatLevel;
+  private int totalLevel;
 
   public void init() {
     add(Skill.createCombatSkill(Skill.ATTACK, "Attack"));
@@ -28,27 +37,15 @@ public final class SkillSet {
 
   private void add(Skill skill) {
     skills.put(skill.getId(), skill);
+    totalLevel += skill.getLevel();
   }
 
   public void execute(Consumer<? super Skill> action) {
     skills.values().forEach(action);
   }
 
-  public void addListener(SkillListener listener) {
-    listeners.add(listener);
-  }
-
-  public void removeListener(SkillListener listener) {
-    listeners.remove(listener);
-  }
-
-  public void clearListeners() {
-    listeners.clear();
-  }
-
   public Skill get(int id) {
-    Preconditions.checkElementIndex(id, skills.size(), "Skill for id: " + id + " does not exist.");
-    return skills.get(id);
+    return Preconditions.checkNotNull(skills.get(id), "Skill for id: " + id + " does not exist.");
   }
 
   public String getName(int id) {
@@ -69,13 +66,25 @@ public final class SkillSet {
 
   public void setExperience(int id, double experience) {
     Skill skill = get(id);
+    int level = skill.getLevel();
+
     skill.setExperience(experience);
+
+    int delta = skill.getLevel() - level;
+    totalLevel += delta;
+
     refresh(skill);
   }
 
   public void setLevel(int id, int level) {
     Skill skill = get(id);
+    int oldLevel = skill.getLevel();
+
     skill.setLevel(level);
+
+    int delta = skill.getLevel() - oldLevel;
+    totalLevel += delta;
+
     refresh(skill);
   }
 
@@ -97,6 +106,18 @@ public final class SkillSet {
     execute(skill -> setCurrentLevel(skill.getId(), skill.getLevel()));
   }
 
+  public void addListener(SkillListener listener) {
+    listeners.add(listener);
+  }
+
+  public void removeListener(SkillListener listener) {
+    listeners.remove(listener);
+  }
+
+  public void clearListeners() {
+    listeners.clear();
+  }
+
   public void refresh(int id) {
     refresh(get(id));
   }
@@ -107,6 +128,18 @@ public final class SkillSet {
 
   public void refresh() {
     notifySkillsUpdated();
+  }
+
+  private void notifyLevelledUp(Skill skill) {
+    listeners.forEach(listener -> listener.leveledUp(this, skill));
+  }
+
+  private void notifySkillUpdated(Skill skill) {
+    listeners.forEach(listener -> listener.skillUpdated(this, skill));
+  }
+
+  private void notifySkillsUpdated() {
+    listeners.forEach(listener -> listener.skillsUpdated(this));
   }
 
   public void addExpeirence(int id, double experience) {
@@ -124,19 +157,7 @@ public final class SkillSet {
     }
   }
 
-  private void notifyLevelledUp(Skill skill) {
-    listeners.forEach(listener -> listener.levelledUp(this, skill));
-  }
-
-  private void notifySkillUpdated(Skill skill) {
-    listeners.forEach(listener -> listener.skillUpdated(this, skill));
-  }
-
-  private void notifySkillsUpdated() {
-    listeners.forEach(listener -> listener.skillsUpdated(this));
-  }
-
-  public void calculateCombatLevel() {
+  public int calculateCombatLevel() {
     int attack = get(Skill.ATTACK).getLevel();
     int defence = get(Skill.DEFENCE).getLevel();
     int strength = get(Skill.STRENGTH).getLevel();
@@ -149,15 +170,19 @@ public final class SkillSet {
     float base = Ints.max(strength + attack, magic, ranged) * 1.3F;
     float combatLevel = (base + defence + hitpoints + prayer) / 4;
 
-    this.combatLevel = (int) combatLevel;
+    return (int) combatLevel;
   }
 
   public int getTotalLevel() {
-    return skills.values().stream().mapToInt(Skill::getLevel).sum();
+    return totalLevel;
   }
 
   public int getCombatLevel() {
     return combatLevel;
+  }
+
+  public void setCombatLevel(int combatLevel) {
+    this.combatLevel = combatLevel;
   }
 
 }

@@ -14,7 +14,7 @@ public final class CommandEventListener implements EventListener<CommandEvent> {
 
   @Override
   public void handle(CommandEvent event) {
-    Player player = event.getPlayer();
+    Player player = event.getMob();
     CommandArguments args = event.getArguments();
 
     switch (event.getName()) {

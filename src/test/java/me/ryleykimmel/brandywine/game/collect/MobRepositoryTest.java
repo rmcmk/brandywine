@@ -11,7 +11,13 @@ import me.ryleykimmel.brandywine.game.model.Mob;
 
 public final class MobRepositoryTest {
 
+  // TODO: Utilize mockito or some other testing aid to prevent code like this.
   private static final class MobStub extends Mob {
+
+    public MobStub() {
+      super(null, null);
+    }
+
   }
 
   private MobRepository<MobStub> repo;

@@ -16,11 +16,6 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 public abstract class Mob extends Entity {
 
   /**
-   * Represents the default Position a Mob should spawn at.
-   */
-  protected static final Position DEFAULT_POSITION = new Position(3200, 3200, 0);
-
-  /**
    * This Mobs movement queue.
    */
   protected final MovementQueue movementQueue = new MovementQueue(this);
@@ -28,7 +23,7 @@ public abstract class Mob extends Entity {
   /**
    * This Mobs skill set.
    */
-  protected final SkillSet skills = new SkillSet();
+  protected final SkillSet skills = new SkillSet(this);
 
   /**
    * A {@link Set} of local Players.
@@ -64,6 +59,16 @@ public abstract class Mob extends Entity {
    * Whether or not this mob is currently teleporting.
    */
   private boolean teleporting;
+
+  /**
+   * Constructs a new {@link Mob} with the specified World.
+   * 
+   * @param world The World this Mob is in.
+   * @param type The type of this Entity.
+   */
+  public Mob(World world, EntityType type) {
+    super(world, type);
+  }
 
   /**
    * Gets the index of this Mob.

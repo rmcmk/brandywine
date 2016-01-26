@@ -5,16 +5,29 @@ import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.update.blocks.AppearancePlayerBlock;
 import me.ryleykimmel.brandywine.network.msg.impl.ServerChatMessage;
 
+/**
+ * An implementation of a {@link SkillListener} that listens for leveled up Skill events.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ */
 public final class LevelUpSkillListener implements SkillListener {
 
+  /**
+   * The Player.
+   */
   private final Player player;
 
+  /**
+   * Constructs a new {@link LevelUpSkillListener} with the specified Player.
+   * 
+   * @param player The Player.
+   */
   public LevelUpSkillListener(Player player) {
     this.player = player;
   }
 
   @Override
-  public void levelledUp(SkillSet skills, Skill skill) {
+  public void leveledUp(SkillSet skills, Skill skill) {
     // TODO: 'Click here to continue' level up widget
 
     player
