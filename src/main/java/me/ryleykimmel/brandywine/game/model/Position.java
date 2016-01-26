@@ -3,6 +3,9 @@ package me.ryleykimmel.brandywine.game.model;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 
+import me.ryleykimmel.brandywine.game.area.Region;
+import me.ryleykimmel.brandywine.game.area.RegionCoordinates;
+
 /**
  * Represents a position in the World.
  *
@@ -231,6 +234,15 @@ public final class Position {
     return Math.max(deltaX, deltaY);
   }
 
+  /**
+   * Returns the {@link RegionCoordinates} of the {@link Region} this position is inside.
+   *
+   * @return The region coordinates.
+   */
+  public RegionCoordinates getRegionCoordinates() {
+    return RegionCoordinates.fromPosition(this);
+  }
+
   @Override
   public int hashCode() {
     return height << 30 | (y & 0x7FFF) << 15 | x & 0x7FFF;
@@ -251,5 +263,6 @@ public final class Position {
     return MoreObjects.toStringHelper(this).add("x", x).add("y", y).add("height", height)
         .toString();
   }
+
 
 }

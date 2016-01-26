@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import me.ryleykimmel.brandywine.game.area.RegionRepository;
 import me.ryleykimmel.brandywine.game.collect.MobRepository;
 import me.ryleykimmel.brandywine.game.command.CommandEvent;
 import me.ryleykimmel.brandywine.game.command.CommandEventListener;
@@ -53,6 +54,11 @@ public final class World {
    * The {@link Updater} for this World.
    */
   private final Updater updater = new ParallelUpdater();
+
+  /**
+   * The {@link RegionRepository} for this World.
+   */
+  private final RegionRepository regionRepository = RegionRepository.immutable();
 
   /**
    * The EventListenerChainSet for this World.
@@ -183,6 +189,15 @@ public final class World {
    */
   public MobRepository<Npc> getNpcs() {
     return npcRepository;
+  }
+
+  /**
+   * Gets this World's RegionRepository.
+   * 
+   * @return The RegionRepository for this World.
+   */
+  public RegionRepository getRegionRepository() {
+    return regionRepository;
   }
 
 }

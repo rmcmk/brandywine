@@ -28,11 +28,12 @@ public final class FrameEncoder extends MessageToByteEncoder<Frame> {
 
   @Override
   protected void encode(ChannelHandlerContext ctx, Frame frame, ByteBuf out) {
+    if (session.isClosed()) {
+      return;
+    }
 
-    // Only write the opcode and length if the Frame has a valid opcode.
-    if (frame.hasValidOpcode()) {
-      out.writeByte(session.isCipheringFrames() ? session.encipherFrameOpcode(frame.getOpcode())
-          : frame.getOpcode());
+    if (session.isCipheringFrames()) {
+      out.writeByte(session.encipherFrameOpcode(frame.getOpcode()));
 
       switch (frame.getType()) {
         case VARIABLE_BYTE:
