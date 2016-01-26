@@ -1,4 +1,4 @@
-# Brandywine
+# Brandywine - ![Build status](https://travis-ci.org/ryleykimmel/brandywine.svg?branch=master)
 
 Brandywine aims to provide a simple, elegant, robust and easy to use framework utilizing the latest and greatest Java features, here is how we will keep you covered...
 * Embracing Java's type system in the fullest, restricting unwanted behaviors at _compile time_
