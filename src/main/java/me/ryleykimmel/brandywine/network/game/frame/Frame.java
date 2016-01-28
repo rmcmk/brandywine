@@ -16,6 +16,11 @@ import io.netty.buffer.Unpooled;
 public final class Frame extends DefaultByteBufHolder {
 
   /**
+   * The maximum opcode a Frame may have.
+   */
+  private static final int MAXIMUM_OPCODE = 255;
+
+  /**
    * The opcode or identifier of this Frame.
    */
   private final int opcode;
@@ -78,6 +83,15 @@ public final class Frame extends DefaultByteBufHolder {
    */
   public FrameType getType() {
     return type;
+  }
+
+  /**
+   * Returns whether or not this Frame has a valid opcode.
+   *
+   * @return {@code true} iff this Frame has a valid opcode, otherwise {@code false}.
+   */
+  public boolean hasValidOpcode() {
+    return opcode >= 0 && opcode <= MAXIMUM_OPCODE;
   }
 
   @Override

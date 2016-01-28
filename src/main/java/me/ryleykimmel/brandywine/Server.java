@@ -154,13 +154,7 @@ final class Server {
     bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
     bootstrap.childHandler(initializer);
     bootstrap.childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
-
-    try {
-      ChannelFuture future = bootstrap.bind(address).sync();
-      future.channel().closeFuture().await();
-    } catch (InterruptedException cause) {
-      throw new StartupException(cause);
-    }
+    bootstrap.bind(address);
   }
 
   /**

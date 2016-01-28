@@ -32,7 +32,7 @@ public final class FrameEncoder extends MessageToByteEncoder<Frame> {
       return;
     }
 
-    if (session.isCipheringFrames()) {
+    if (frame.hasValidOpcode()) {
       out.writeByte(session.encipherFrameOpcode(frame.getOpcode()));
 
       switch (frame.getType()) {
