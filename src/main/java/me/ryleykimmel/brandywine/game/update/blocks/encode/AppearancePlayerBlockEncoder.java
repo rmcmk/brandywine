@@ -1,19 +1,17 @@
 package me.ryleykimmel.brandywine.game.update.blocks.encode;
 
 import me.ryleykimmel.brandywine.game.model.player.Appearance;
-import me.ryleykimmel.brandywine.game.update.UpdateBlockEncoder.PlayerUpdateBlockEncoder;
+import me.ryleykimmel.brandywine.game.update.UpdateBlockEncoder;
 import me.ryleykimmel.brandywine.game.update.blocks.AppearancePlayerBlock;
 import me.ryleykimmel.brandywine.network.game.frame.DataTransformation;
 import me.ryleykimmel.brandywine.network.game.frame.DataType;
 import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
-import me.ryleykimmel.brandywine.network.msg.impl.PlayerUpdateMessage;
 
 public final class AppearancePlayerBlockEncoder
-    implements PlayerUpdateBlockEncoder<AppearancePlayerBlock> {
+    implements UpdateBlockEncoder<AppearancePlayerBlock> {
 
   @Override
-  public void encode(AppearancePlayerBlock block, PlayerUpdateMessage message,
-      FrameBuilder builder) {
+  public void encode(AppearancePlayerBlock block, FrameBuilder builder) {
     FrameBuilder propertiesBuilder = new FrameBuilder(builder.alloc());
 
     Appearance appearance = block.getAppearance();

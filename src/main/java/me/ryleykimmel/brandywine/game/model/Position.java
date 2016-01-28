@@ -102,6 +102,26 @@ public final class Position {
   }
 
   /**
+   * Gets the delta x coordinate between this Position and the specified Position.
+   * 
+   * @param other The other Position.
+   * @return The delta x coordinate.
+   */
+  public int getDeltaX(Position other) {
+    return x - other.getX();
+  }
+
+  /**
+   * Gets the delta y coordinate between this Position and the specified Position.
+   * 
+   * @param other The other Position.
+   * @return The delta y coordinate.
+   */
+  public int getDeltaY(Position other) {
+    return y - other.getY();
+  }
+
+  /**
    * Gets the height level.
    *
    * @return The height level.

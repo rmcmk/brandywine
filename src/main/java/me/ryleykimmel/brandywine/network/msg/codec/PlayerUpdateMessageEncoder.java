@@ -23,11 +23,12 @@ public final class PlayerUpdateMessageEncoder implements MessageEncoder<PlayerUp
     FrameBuilder blockBuilder = new FrameBuilder(alloc);
     builder.switchToBitAccess();
 
-    message.getDescriptor().encode(message, builder, blockBuilder);
+    System.out.println("msg: " + message.getPosition() + ", " + message.getLastKnownRegion());
+    message.getDescriptor().encode(builder, blockBuilder);
     builder.putBits(8, message.getLocalPlayerCount());
 
     for (PlayerDescriptor descriptor : message.getDescriptors()) {
-      descriptor.encode(message, builder, blockBuilder);
+      descriptor.encode(builder, blockBuilder);
     }
 
     if (blockBuilder.getLength() > 0) {

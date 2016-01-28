@@ -12,7 +12,7 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 
 public final class UpdateBlockEncoderSet {
 
-  private final Map<Class<? extends UpdateBlock>, UpdateBlockEncoder<? extends Message, ? extends UpdateBlock>> blocks =
+  private final Map<Class<? extends UpdateBlock>, UpdateBlockEncoder<? extends UpdateBlock>> blocks =
       new HashMap<>();
 
   public UpdateBlockEncoderSet() {
@@ -21,10 +21,10 @@ public final class UpdateBlockEncoderSet {
   }
 
   @SuppressWarnings("unchecked")
-  public <M extends Message, B extends UpdateBlock> void encode(B block, M message,
+  public <B extends UpdateBlock> void encode(B block,
       FrameBuilder builder) {
-    UpdateBlockEncoder<M, B> encoder = (UpdateBlockEncoder<M, B>) blocks.get(block.getClass());
-    encoder.encode(block, message, builder);
+    UpdateBlockEncoder<B> encoder = (UpdateBlockEncoder<B>) blocks.get(block.getClass());
+    encoder.encode(block, builder);
   }
 
 }

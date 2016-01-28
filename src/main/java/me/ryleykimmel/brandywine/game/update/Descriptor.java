@@ -14,9 +14,8 @@ import me.ryleykimmel.brandywine.network.msg.Message;
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @param <T> The Mob who owns this Descriptor.
- * @param <M> The Message this Descriptor is encoding.
  */
-public abstract class Descriptor<T extends Mob, M extends Message> {
+public abstract class Descriptor<T extends Mob> {
 
   /**
    * A Map of UpdateBlock types to UpdateBlocks.
@@ -123,23 +122,21 @@ public abstract class Descriptor<T extends Mob, M extends Message> {
   /**
    * Encodes an UpdateBlock.
    * 
-   * @param message The Players update message.
    * @param blockBuilder The UpdateBlocks FrameBuilder.
    * @param type The UpdateBlocks type.
    */
-  public final void encodeBlock(M message, FrameBuilder blockBuilder,
+  public final void encodeBlock(FrameBuilder blockBuilder,
       Class<? extends UpdateBlock> type) {
     getBlock(type)
-        .ifPresent(block -> updater.getUpdateBlockEncoders().encode(block, message, blockBuilder));
+        .ifPresent(block -> updater.getUpdateBlockEncoders().encode(block, blockBuilder));
   }
 
   /**
    * Encodes this Descriptor for the specified Message.
    * 
-   * @param message The Message this Descriptor is encoding.
    * @param builder The FrameBuilder.
    * @param blockBuilder The UpdateBlock FrameBuilder.
    */
-  public abstract void encode(M message, FrameBuilder builder, FrameBuilder blockBuilder);
+  public abstract void encode(FrameBuilder builder, FrameBuilder blockBuilder);
 
 }

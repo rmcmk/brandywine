@@ -6,13 +6,8 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 import me.ryleykimmel.brandywine.network.msg.impl.PlayerUpdateMessage;
 
 @FunctionalInterface
-public interface DescriptorEncoder<T extends Message, D extends Descriptor<? extends Mob, T>> {
+public interface DescriptorEncoder<D extends Descriptor<? extends Mob>> {
 
-  void encode(D descriptor, T message, FrameBuilder builder, FrameBuilder blockBuilder);
-
-  @FunctionalInterface
-  public static interface PlayerDescriptorEncoder<D extends Descriptor<? extends Mob, PlayerUpdateMessage>>
-      extends DescriptorEncoder<PlayerUpdateMessage, D> {
-  }
+  void encode(D descriptor, FrameBuilder builder, FrameBuilder blockBuilder);
 
 }
