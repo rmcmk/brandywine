@@ -13,16 +13,16 @@ import me.ryleykimmel.brandywine.network.msg.impl.PlayerUpdateMessage;
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public abstract class PlayerDescriptor extends Descriptor<Player, PlayerUpdateMessage> {
+public abstract class PlayerDescriptor extends Descriptor<Player> {
 
   public PlayerDescriptor(Player player, Updater updater) {
     super(player, updater);
   }
 
   @Override
-  public final void encode(PlayerUpdateMessage message, FrameBuilder builder,
+  public final void encode(FrameBuilder builder,
       FrameBuilder blockBuilder) {
-    updater.getDescriptorEncoders().encode(this, message, builder, blockBuilder);
+    updater.getDescriptorEncoders().encode(this, builder, blockBuilder);
 
     if (!isBlockUpdatedRequired()) {
       return;
@@ -35,8 +35,8 @@ public abstract class PlayerDescriptor extends Descriptor<Player, PlayerUpdateMe
       blockBuilder.put(DataType.BYTE, mask);
     }
 
-    encodeBlock(message, blockBuilder, AppearancePlayerBlock.class);
-    encodeBlock(message, blockBuilder, ChatPlayerBlock.class);
+    encodeBlock(blockBuilder, AppearancePlayerBlock.class);
+    encodeBlock(blockBuilder, ChatPlayerBlock.class);
   }
 
 }

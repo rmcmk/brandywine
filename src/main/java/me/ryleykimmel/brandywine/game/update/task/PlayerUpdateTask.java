@@ -74,9 +74,10 @@ public final class PlayerUpdateTask implements UpdateTask {
    * @return The new PlayerDescriptor.
    * @throws IllegalStateException If the PlayerDescriptor was unable to be created.
    */
-  private PlayerDescriptor createStateDescriptor(Player player) {
+  private PlayerDescriptor createStateDescriptor(Player player, Position position,
+      Position lastKnownRegion) {
     if (player.isTeleporting()) {
-      return new TeleportPlayerDescriptor(player, updater);
+      return new TeleportPlayerDescriptor(player, position, lastKnownRegion, updater);
     }
 
     if (player.getFirstDirection() == Direction.NONE
@@ -104,7 +105,8 @@ public final class PlayerUpdateTask implements UpdateTask {
     int viewingDistance = player.getViewingDistance();
     int[] tickets = player.getAppearanceTickets();
 
-    PlayerDescriptor descriptor = createStateDescriptor(player);
+    PlayerDescriptor descriptor = createStateDescriptor(player, position, lastKnownRegion);
+    System.out.println("pulse: " + position + ", " + lastKnownRegion);
 
     // Remove chat player block from our self descriptor -- we don't want to update chat for
     // ourselves twice!
@@ -120,7 +122,7 @@ public final class PlayerUpdateTask implements UpdateTask {
         it.remove();
         descriptors.add(new RemovePlayerDescriptor(other, updater));
       } else {
-        PlayerDescriptor otherDescriptor = createStateDescriptor(other);
+        PlayerDescriptor otherDescriptor = createStateDescriptor(other, position, lastKnownRegion);
         if (!hasCachedAppearance(tickets, other)) {
           otherDescriptor.addBlock(AppearancePlayerBlock.create(other));
         }
@@ -140,7 +142,7 @@ public final class PlayerUpdateTask implements UpdateTask {
       if (!player.equals(other) && position.isWithinDistance(other.getPosition(), viewingDistance)
           && !localPlayers.contains(other)) {
         localPlayers.add(other);
-        descriptors.add(new AddPlayerDescriptor(other, updater));
+        descriptors.add(new AddPlayerDescriptor(other, other.getPosition(), updater));
         added++;
       }
     }

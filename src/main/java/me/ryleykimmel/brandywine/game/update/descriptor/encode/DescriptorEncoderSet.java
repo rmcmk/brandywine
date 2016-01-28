@@ -17,7 +17,7 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 
 public final class DescriptorEncoderSet {
 
-  private final Map<Class<? extends Descriptor<? extends Mob, ? extends Message>>, DescriptorEncoder<? extends Message, ? extends Descriptor<? extends Mob, ? extends Message>>> descriptors =
+  private final Map<Class<? extends Descriptor<? extends Mob>>, DescriptorEncoder<? extends Descriptor<? extends Mob>>> descriptors =
       new HashMap<>();
 
   public DescriptorEncoderSet() {
@@ -30,11 +30,10 @@ public final class DescriptorEncoderSet {
   }
 
   @SuppressWarnings("unchecked")
-  public <M extends Message, D extends Descriptor<? extends Mob, M>> void encode(D descriptor,
-      M message, FrameBuilder builder, FrameBuilder blockBuilder) {
-    DescriptorEncoder<M, D> encoder =
-        (DescriptorEncoder<M, D>) descriptors.get(descriptor.getClass());
-    encoder.encode(descriptor, message, builder, blockBuilder);
+  public <D extends Descriptor<? extends Mob>> void encode(D descriptor, FrameBuilder builder,
+      FrameBuilder blockBuilder) {
+    DescriptorEncoder<D> encoder = (DescriptorEncoder<D>) descriptors.get(descriptor.getClass());
+    encoder.encode(descriptor, builder, blockBuilder);
   }
 
 }
