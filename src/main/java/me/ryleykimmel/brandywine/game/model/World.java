@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import me.ryleykimmel.brandywine.game.area.Region;
+import me.ryleykimmel.brandywine.game.area.RegionCoordinates;
 import me.ryleykimmel.brandywine.game.area.RegionRepository;
 import me.ryleykimmel.brandywine.game.collect.MobRepository;
 import me.ryleykimmel.brandywine.game.command.CommandEvent;
@@ -58,7 +60,7 @@ public final class World {
   /**
    * The {@link RegionRepository} for this World.
    */
-  private final RegionRepository regionRepository = RegionRepository.immutable();
+  private final RegionRepository regionRepository = new RegionRepository();
 
   /**
    * The EventListenerChainSet for this World.
@@ -153,6 +155,16 @@ public final class World {
    */
   public void pulse() {
     updater.update(playerRepository, npcRepository);
+  }
+
+  /**
+   * Gets the Region for the specified Position in this World.
+   * 
+   * @param position The Position of the Region.
+   * @return The Region.
+   */
+  public Region getRegion(Position position) {
+    return regionRepository.get(RegionCoordinates.fromPosition(position));
   }
 
   /**

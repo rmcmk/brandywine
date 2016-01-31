@@ -20,8 +20,6 @@ public final class ArchiveUtil {
   /**
    * Sole private constructor to discourage instantiation of this class.
    */
-  private ArchiveUtil() {
-
-  }
+  private ArchiveUtil() {}
 
 }

@@ -18,44 +18,9 @@ import me.ryleykimmel.brandywine.game.model.Position;
 public final class RegionRepository {
 
   /**
-   * Returns an immutable RegionRepository, where {@link Region}s cannot be added or removed.
-   * <p>
-   * Note that, internally, regions are added lazily (i.e. only when necessary). As such,
-   * repositories are (again, internally) not actually immutable, so do not rely on such behaviour.
-   *
-   * @return The RegionRepository.
-   */
-  public static RegionRepository immutable() {
-    return new RegionRepository(false);
-  }
-
-  /**
-   * Returns a mutable RegionRepository, where {@link Region}s may be removed.
-   *
-   * @return The RegionRepository.
-   */
-  public static RegionRepository mutable() {
-    return new RegionRepository(true);
-  }
-
-  /**
-   * Whether or not regions can be removed from this repository.
-   */
-  private final boolean permitRemoval;
-
-  /**
    * The map of RegionCoordinates that correspond to the appropriate Regions.
    */
   private final Map<RegionCoordinates, Region> regions = new HashMap<>();
-
-  /**
-   * Creates a new RegionRepository.
-   *
-   * @param permitRemoval If removal (of {@link Region}s) from this repository should be permitted.
-   */
-  private RegionRepository(boolean permitRemoval) {
-    this.permitRemoval = permitRemoval;
-  }
 
   /**
    * Adds a {@link Region} to the repository.
@@ -68,7 +33,7 @@ public final class RegionRepository {
    */
   private void add(Region region) {
     Preconditions.checkNotNull(region, "Region cannot be null.");
-    if (regions.containsKey(region.getCoordinates()) && !permitRemoval) {
+    if (regions.containsKey(region.getCoordinates())) {
       throw new UnsupportedOperationException(
           "Cannot add a Region with the same coordinates as an existing Region.");
     }
@@ -136,23 +101,6 @@ public final class RegionRepository {
    */
   public List<Region> getRegions() {
     return ImmutableList.copyOf(regions.values());
-  }
-
-  /**
-   * Removes a {@link Region} from the repository, if permitted. This method removes the entry that
-   * has a key identical to the {@link RegionCoordinates} of the specified Region.
-   *
-   * @param region The Region to remove.
-   * @return {@code true} if the specified Region existed and was removed, {@code false} if not.
-   * @throws UnsupportedOperationException If this method is called on a repository that does not
-   * permit removal.
-   */
-  public boolean remove(Region region) {
-    if (!permitRemoval) {
-      throw new UnsupportedOperationException("Cannot remove regions from this repository.");
-    }
-
-    return regions.remove(region.getCoordinates()) != null;
   }
 
 }
