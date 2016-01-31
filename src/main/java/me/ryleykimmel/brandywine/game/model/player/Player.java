@@ -143,6 +143,14 @@ public final class Player extends Mob {
   }
 
   /**
+   * Updates the Appearance for this Player.
+   */
+  public void updateAppearance() {
+    appearanceTicket = nextAppearanceTicket();
+    flagUpdate(AppearancePlayerBlock.create(this));
+  }
+
+  /**
    * Generates the next appearance ticket.
    * 
    * @return The next available appearance ticket.
