@@ -42,7 +42,7 @@ public final class LevelUpSkillListener implements SkillListener {
       if (delta > 0) {
         player.write(new ServerChatMessage("Congratulations, your Combat level is now %s.",
             skills.getCombatLevel()));
-        player.flagUpdate(AppearancePlayerBlock.create(player));
+        player.updateAppearance();
       }
     }
   }

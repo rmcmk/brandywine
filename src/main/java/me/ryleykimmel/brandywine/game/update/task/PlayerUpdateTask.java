@@ -106,7 +106,6 @@ public final class PlayerUpdateTask implements UpdateTask {
     int[] tickets = player.getAppearanceTickets();
 
     PlayerDescriptor descriptor = createStateDescriptor(player, position, lastKnownRegion);
-    System.out.println("pulse: " + position + ", " + lastKnownRegion);
 
     // Remove chat player block from our self descriptor -- we don't want to update chat for
     // ourselves twice!
@@ -142,7 +141,7 @@ public final class PlayerUpdateTask implements UpdateTask {
       if (!player.equals(other) && position.isWithinDistance(other.getPosition(), viewingDistance)
           && !localPlayers.contains(other)) {
         localPlayers.add(other);
-        descriptors.add(new AddPlayerDescriptor(other, other.getPosition(), updater));
+        descriptors.add(new AddPlayerDescriptor(other, position, updater));
         added++;
       }
     }
