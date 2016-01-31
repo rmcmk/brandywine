@@ -87,7 +87,7 @@ public final class MovementQueue {
 
     /*
      * If current equals next, addFirstStep doesn't end up adding anything points queue. This makes
-     * peekLast() return null. If it does, the correct behaviour is to fill it in with
+     * peekLast() return null. If it does, the correct behavior is to fill it in with
      * mob.getPosition().
      */
     if (current == null) {
