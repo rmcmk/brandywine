@@ -1,0 +1,3 @@
+rootProject.name = 'brandywine'
+
+include ':common', ':fs', ':game'

@@ -26,3 +26,7 @@
 	[[parser]]
 		path = "data/services.toml"
 		name = "me.ryleykimmel.brandywine.parser.impl.ServiceParser"
+
+	[[parser]]
+		path = "data/update-codecs.toml"
+		name = "me.ryleykimmel.brandywine.parser.impl.UpdateCodecParser"

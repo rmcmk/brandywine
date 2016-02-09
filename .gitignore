@@ -1,12 +1,8 @@
-.settings/
-.classpath
-.project
+*.settings/
+*.classpath
+*.project
 
-main_file_cache.dat
-main_file_cache.idx[0-9]
+*bin/
 
-*.class
-*.jar
-hs_err_pid*
-/bin/
-/target/
+*.gradle/
+*build/
