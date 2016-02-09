@@ -1,0 +1,33 @@
+[[codecs]]
+
+	[[block]]
+		type = "me.ryleykimmel.brandywine.game.update.blocks.AppearancePlayerBlock"
+		encoder = "me.ryleykimmel.brandywine.game.update.blocks.encode.AppearancePlayerBlockEncoder"
+
+	[[block]]
+		type = "me.ryleykimmel.brandywine.game.update.blocks.ChatPlayerBlock"
+		encoder = "me.ryleykimmel.brandywine.game.update.blocks.encode.ChatPlayerBlockEncoder"
+
+	[[descriptor]]
+		type = "me.ryleykimmel.brandywine.game.update.descriptor.AddPlayerDescriptor"
+		encoder = "me.ryleykimmel.brandywine.game.update.descriptor.encode.AddPlayerDescriptorEncoder"
+
+	[[descriptor]]
+		type = "me.ryleykimmel.brandywine.game.update.descriptor.IdlePlayerDescriptor"
+		encoder = "me.ryleykimmel.brandywine.game.update.descriptor.encode.IdlePlayerDescriptorEncoder"
+
+	[[descriptor]]
+		type = "me.ryleykimmel.brandywine.game.update.descriptor.RemovePlayerDescriptor"
+		encoder = "me.ryleykimmel.brandywine.game.update.descriptor.encode.RemovePlayerDescriptorEncoder"
+
+	[[descriptor]]
+		type = "me.ryleykimmel.brandywine.game.update.descriptor.RunPlayerDescriptor"
+		encoder = "me.ryleykimmel.brandywine.game.update.descriptor.encode.RunPlayerDescriptorEncoder"
+
+	[[descriptor]]
+		type = "me.ryleykimmel.brandywine.game.update.descriptor.TeleportPlayerDescriptor"
+		encoder = "me.ryleykimmel.brandywine.game.update.descriptor.encode.TeleportPlayerDescriptorEncoder"
+
+	[[descriptor]]
+		type = "me.ryleykimmel.brandywine.game.update.descriptor.WalkPlayerDescriptor"
+		encoder = "me.ryleykimmel.brandywine.game.update.descriptor.encode.WalkPlayerDescriptorEncoder"
