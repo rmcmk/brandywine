@@ -2,7 +2,6 @@ package me.ryleykimmel.brandywine.game.collect;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
@@ -99,14 +98,9 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
   }
 
   /**
-   * The Comparator used to sort available indices.
-   */
-  private static final Comparator<Integer> INDEX_COMPARATOR = Integer::compare;
-
-  /**
    * A {@link Queue} of available indices.
    */
-  private final Queue<Integer> indices = new PriorityQueue<>(INDEX_COMPARATOR);
+  private final Queue<Integer> indices = new PriorityQueue<>();
 
   /**
    * The array of Mobs in this repository.
