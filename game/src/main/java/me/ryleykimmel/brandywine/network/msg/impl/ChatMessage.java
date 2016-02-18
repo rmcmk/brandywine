@@ -4,8 +4,6 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 
 /**
  * A {@link Message} sent by the client to send a public chat message to other players.
- *
- * @author Graham
  */
 public final class ChatMessage implements Message {
 

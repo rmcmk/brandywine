@@ -8,9 +8,6 @@ import me.ryleykimmel.brandywine.game.area.RegionCoordinates;
 
 /**
  * Represents a position in the World.
- *
- * @author Graham
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Position {
 

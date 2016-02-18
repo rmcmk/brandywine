@@ -8,8 +8,6 @@ import java.lang.annotation.Target;
 
 /**
  * Indicates that the annotated type decodes Messages, as specified by {@link Decodes#value()}.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

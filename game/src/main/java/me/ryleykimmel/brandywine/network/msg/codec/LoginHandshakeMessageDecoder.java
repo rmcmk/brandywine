@@ -9,8 +9,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.LoginHandshakeMessage;
 
 /**
  * Decodes the {@link LoginHandshakeMessage}
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Decodes(14)
 public final class LoginHandshakeMessageDecoder implements MessageDecoder<LoginHandshakeMessage> {

@@ -2,8 +2,6 @@ package me.ryleykimmel.brandywine.game.area;
 
 /**
  * A type of update that an Entity in a {@link Region} may have.
- *
- * @author Major
  */
 public enum EntityUpdateType {
 

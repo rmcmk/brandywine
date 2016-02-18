@@ -19,8 +19,6 @@ import me.ryleykimmel.brandywine.game.model.player.PlayerCredentials;
 
 /**
  * An {@link AuthenticationStrategy} which utilizes jdbc-SQL to validate requests.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class SQLAuthenticationStrategy implements AuthenticationStrategy {
 

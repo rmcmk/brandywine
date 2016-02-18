@@ -5,8 +5,6 @@ import me.ryleykimmel.brandywine.game.update.PlayerDescriptor;
 
 /**
  * A PlayerDescriptor which encodes the removal of a Player.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class RemovePlayerDescriptor extends PlayerDescriptor {
 

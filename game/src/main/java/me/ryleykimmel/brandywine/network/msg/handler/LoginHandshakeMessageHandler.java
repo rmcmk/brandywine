@@ -8,8 +8,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.LoginHandshakeResponseMessage;
 
 /**
  * Handles the {@link LoginHandshakeMessage}.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Handles(LoginHandshakeMessage.class)
 public final class LoginHandshakeMessageHandler implements MessageHandler<LoginHandshakeMessage> {

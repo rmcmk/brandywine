@@ -13,8 +13,6 @@ import me.ryleykimmel.brandywine.parser.TomlParser;
 
 /**
  * Parses {@link Parser parsers} with a specific format from a {@link TomlParser}.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ParserTomlParser extends TomlParser {
 

@@ -9,8 +9,6 @@ import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
 
 /**
  * Describes a segment of the Player updating prodecure.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class PlayerDescriptor extends Descriptor<Player> {
 

@@ -12,8 +12,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.MovementMessage;
 
 /**
  * Handles the {@link MovementMessage}.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Handles(MovementMessage.class)
 public final class MovementMessageHandler implements MessageHandler<MovementMessage> {

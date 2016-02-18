@@ -7,8 +7,6 @@ import com.google.common.base.Preconditions;
 /**
  * A wrapper for {@link ByteBuffer} that adds methods to read unsigned data types and specific
  * string types. All methods read and places values in big-endian format unless otherwise stated.
- * 
- * @author Major
  */
 public final class Buffer {
 

@@ -10,9 +10,6 @@ import me.ryleykimmel.brandywine.game.update.task.UpdateTask;
 
 /**
  * An implementation of a {@link Updater} which runs on a single thread.
- * 
- * @author Graham
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class SequentialUpdater extends Updater {
 

@@ -26,8 +26,6 @@ import me.ryleykimmel.brandywine.parser.impl.ParserTomlParser;
 
 /**
  * The core class of the Server.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 final class Server {
 

@@ -12,9 +12,6 @@ import me.ryleykimmel.brandywine.network.game.frame.FrameBuffer.WritingFrameBuff
 
 /**
  * An implementation of a WritingFrameBuffer which builds Frames from its contents.
- *
- * @author Graham
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class FrameBuilder extends WritingFrameBuffer implements Builder<Frame> {
 

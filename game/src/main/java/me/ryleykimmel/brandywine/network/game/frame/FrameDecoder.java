@@ -15,15 +15,11 @@ import me.ryleykimmel.brandywine.parser.impl.FrameParser;
 /**
  * Decodes Frames in a stream-like fashion from one {@link ByteBuf} to another, while maintaining a
  * state.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class FrameDecoder extends ByteToMessageDecoder {
 
   /**
    * Represents the states of this FrameDecoder.
-   *
-   * @author Ryley Kimmel <ryley.kimmel@live.com>
    */
   private enum State {
 

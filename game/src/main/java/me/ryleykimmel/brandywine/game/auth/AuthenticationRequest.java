@@ -7,8 +7,6 @@ import me.ryleykimmel.brandywine.network.game.GameSession;
 
 /**
  * Represents an authentication request.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class AuthenticationRequest {
 

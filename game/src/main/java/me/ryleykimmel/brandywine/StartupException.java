@@ -4,8 +4,6 @@ import com.google.common.base.Preconditions;
 
 /**
  * Indicates that some error occurred whilst launching the server.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class StartupException extends RuntimeException {
   /** use serialVersionUID from JDK 1.1 for interoperability */

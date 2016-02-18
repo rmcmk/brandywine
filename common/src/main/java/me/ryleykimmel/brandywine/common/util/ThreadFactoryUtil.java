@@ -9,8 +9,6 @@ import io.netty.util.internal.StringUtil;
 /**
  * A static-utility class containing helper/utility methods for {@link ThreadFactory thread
  * factories}.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ThreadFactoryUtil {
 

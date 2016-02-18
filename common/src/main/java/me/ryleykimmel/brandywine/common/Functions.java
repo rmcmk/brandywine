@@ -12,8 +12,6 @@ import java.util.stream.StreamSupport;
 
 /**
  * A static utility class containing common/helpful utility functions.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Functions {
 

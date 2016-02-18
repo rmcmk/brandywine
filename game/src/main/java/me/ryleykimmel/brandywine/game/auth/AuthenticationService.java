@@ -11,8 +11,6 @@ import me.ryleykimmel.brandywine.common.util.ThreadFactoryUtil;
 
 /**
  * Services AuthenticationRequests every pulse.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class AuthenticationService extends Service {
 

@@ -2,8 +2,6 @@ package me.ryleykimmel.brandywine.fs.archive;
 
 /**
  * Contains archive-related utility methods.
- * 
- * @author Major
  */
 public final class ArchiveUtil {
 

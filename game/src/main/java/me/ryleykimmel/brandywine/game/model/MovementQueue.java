@@ -8,10 +8,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.ResetDestinationMessage;
 
 /**
  * A queue of {@link Direction}s which a {@link Mob} will follow.
- *
- * @author Graham
- * @author Major
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class MovementQueue {
 

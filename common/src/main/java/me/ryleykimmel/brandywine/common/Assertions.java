@@ -6,9 +6,7 @@ import java.util.stream.Stream;
 import com.google.common.base.Preconditions;
 
 /**
- * Contains utility methods similar to (and utilising) Guava's {@link Preconditions}.
- * 
- * @author Major
+ * Contains utility methods similar to (and utilizing) Guava's {@link Preconditions}.
  */
 public final class Assertions {
 

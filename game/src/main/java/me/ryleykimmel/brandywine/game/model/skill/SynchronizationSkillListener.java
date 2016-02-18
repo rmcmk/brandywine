@@ -6,8 +6,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.UpdateSkillMessage;
 /**
  * An implementation of a {@link SkillListener} which keeps the server and client state of Skills
  * synchronized.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class SynchronizationSkillListener implements SkillListener {
 

@@ -17,17 +17,12 @@ import me.ryleykimmel.brandywine.game.model.Mob;
  * A {@link MobRepository} is a repository of {@link Mob}s that are currently active in the game
  * World.
  *
- * @author Graham
- * @author Ryley Kimmel <ryley.kimmel@live.com>
- *
  * @param <T> The type of Mob.
  */
 public final class MobRepository<T extends Mob> implements Iterable<T> {
 
   /**
    * An Iterator for some MobRepository.
-   * 
-   * @author Ryley Kimmel <ryley.kimmel@live.com>
    *
    * @param <T> The Type of Mob.
    */

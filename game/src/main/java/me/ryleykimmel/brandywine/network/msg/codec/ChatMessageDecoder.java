@@ -12,8 +12,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.ChatMessage;
 
 /**
  * Decodes the {@link ChatMessage}.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Decodes(4)
 public final class ChatMessageDecoder implements MessageDecoder<ChatMessage> {

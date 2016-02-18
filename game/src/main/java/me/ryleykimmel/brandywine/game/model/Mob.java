@@ -11,8 +11,6 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 
 /**
  * Represents a mobile Entity within the game World.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class Mob extends Entity {
 

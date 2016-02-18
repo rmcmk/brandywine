@@ -6,8 +6,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.ChatMessage;
 
 /**
  * Encodes a Player's chat block.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public class ChatPlayerBlock extends UpdateBlock {
 

@@ -2,8 +2,6 @@ package me.ryleykimmel.brandywine.game.update;
 
 /**
  * Represents an update block.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class UpdateBlock {
 

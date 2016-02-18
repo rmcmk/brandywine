@@ -8,8 +8,6 @@ import me.ryleykimmel.brandywine.network.game.frame.FrameEncoder;
 
 /**
  * Initializes a {@link SocketChannel} for the GameService.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class GameChannelInitializer extends ChannelInitializer<SocketChannel> {
 

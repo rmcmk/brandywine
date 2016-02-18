@@ -2,8 +2,6 @@ package me.ryleykimmel.brandywine.network.game.frame;
 
 /**
  * Represents a type of Frame.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public enum FrameType {
 

@@ -4,9 +4,6 @@ import com.google.common.base.Preconditions;
 
 /**
  * Contains utility/helper methods for Skills.
- * 
- * @author Major
- * @author Ryley Kimmel
  */
 public final class SkillUtil {
 

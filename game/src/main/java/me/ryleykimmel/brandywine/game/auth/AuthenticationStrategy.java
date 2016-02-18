@@ -7,8 +7,6 @@ import me.ryleykimmel.brandywine.game.model.player.Player;
 
 /**
  * The strategy to use when authenticating requests.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @FunctionalInterface
 public interface AuthenticationStrategy {

@@ -11,8 +11,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.OpenTabWidgetMessage;
 
 /**
  * Encodes the {@link OpenTabWidgetMessage}.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Encodes(OpenTabWidgetMessage.class)
 public final class OpenTabWidgetMessageEncoder implements MessageEncoder<OpenTabWidgetMessage> {

@@ -4,10 +4,6 @@ package me.ryleykimmel.brandywine.network.game.frame;
  * Represents a mathematical data transformation performed on a piece of data to change its value.
  * The reverse of the transformation must then be performed on the received data, to obtain the
  * original value.
- *
- * @author Graham
- * @author Major
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public enum DataTransformation {
 

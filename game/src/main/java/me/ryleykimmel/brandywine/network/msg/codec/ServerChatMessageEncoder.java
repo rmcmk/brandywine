@@ -10,8 +10,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.ServerChatMessage;
 
 /**
  * Encodes the {@link ServerChatMessage}.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Encodes(ServerChatMessage.class)
 public class ServerChatMessageEncoder implements MessageEncoder<ServerChatMessage> {

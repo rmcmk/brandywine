@@ -8,8 +8,6 @@ import com.google.common.base.Preconditions;
 /**
  * A static-utility class containing extension or helper methods for {@link Class classes} or
  * generic objects.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ClassUtil {
 

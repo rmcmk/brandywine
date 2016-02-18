@@ -5,7 +5,6 @@ import org.apache.commons.lang3.builder.Builder;
 /**
  * An abstract implementation of a {@link Builder} which builds some {@link Definition}.
  *
- * @author Ryley Kimmel
  * @param <T> The type of Definition this builder will compute or construct.
  */
 public abstract class DefinitionBuilder<T extends Definition> implements Builder<T> {

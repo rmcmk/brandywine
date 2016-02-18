@@ -6,8 +6,6 @@ import me.ryleykimmel.brandywine.game.area.RegionRepository;
 
 /**
  * Represents an Entity within the game World.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class Entity {
 

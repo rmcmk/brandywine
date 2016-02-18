@@ -4,8 +4,6 @@ import io.netty.channel.Channel;
 
 /**
  * A class representing common network related constants.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class NetworkConstants {
 

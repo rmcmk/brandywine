@@ -6,8 +6,6 @@ import me.ryleykimmel.brandywine.common.Buffer;
 
 /**
  * Represents a Sector within the FileSystem.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Sector {
 

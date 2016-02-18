@@ -10,8 +10,6 @@ import io.netty.buffer.Unpooled;
 
 /**
  * Represents a Frame.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Frame extends DefaultByteBufHolder {
 

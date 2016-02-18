@@ -11,7 +11,6 @@ import me.ryleykimmel.brandywine.parser.impl.UpdateCodecParser;
 /**
  * Represents a Descriptor which encodes UpdateBlocks and other Descriptors.
  * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @param <T> The Mob who owns this Descriptor.
  */
 public abstract class Descriptor<T extends Mob> {

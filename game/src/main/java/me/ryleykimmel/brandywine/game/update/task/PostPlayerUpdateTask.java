@@ -4,8 +4,6 @@ import me.ryleykimmel.brandywine.game.model.player.Player;
 
 /**
  * An UpdateTask which performs post-update logic, after updating has occurred.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class PostPlayerUpdateTask implements UpdateTask {
 

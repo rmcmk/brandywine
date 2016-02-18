@@ -6,15 +6,11 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * A wrapper for an I/O (reader-writer) {@link ByteBuf} for writing and reading Frames.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 abstract class FrameBuffer {
 
   /**
    * Represents the type of this FrameBuffer.
-   *
-   * @author Ryley Kimmel <ryley.kimmel@live.com>
    */
   private enum Type {
 
@@ -140,8 +136,6 @@ abstract class FrameBuffer {
 
   /**
    * An adapter implementation of an input or reading FrameBuffer.
-   *
-   * @author Ryley Kimmel <ryley.kimmel@live.com>
    */
   public static abstract class ReadingFrameBuffer extends FrameBuffer {
 
@@ -158,8 +152,6 @@ abstract class FrameBuffer {
 
   /**
    * An adapter implementation of an output or writing FrameBuffer.
-   *
-   * @author Ryley Kimmel <ryley.kimmel@live.com>
    */
   public static abstract class WritingFrameBuffer extends FrameBuffer {
 

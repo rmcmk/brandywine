@@ -11,8 +11,6 @@ import me.ryleykimmel.brandywine.parser.TomlParser;
 
 /**
  * Parses Frame definitions.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class FrameParser extends TomlParser {
 

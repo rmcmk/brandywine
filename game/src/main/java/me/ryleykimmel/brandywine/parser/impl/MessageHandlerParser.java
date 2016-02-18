@@ -19,15 +19,11 @@ import me.ryleykimmel.brandywine.parser.TomlParser;
 
 /**
  * Parses MessageHandlers.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class MessageHandlerParser extends TomlParser {
 
   /**
    * A default implementation of a GameMessageHandler.
-   *
-   * @author Ryley Kimmel <ryley.kimmel@live.com>
    */
   private static final class DefaultMessageHandler implements MessageHandler<Message> {
 

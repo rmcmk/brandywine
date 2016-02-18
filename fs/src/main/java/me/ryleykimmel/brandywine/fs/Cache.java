@@ -9,8 +9,6 @@ import me.ryleykimmel.brandywine.common.Buffer;
 
 /**
  * Represents a Cache within a FileSystem.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Cache {
 

@@ -2,8 +2,6 @@ package me.ryleykimmel.brandywine.game.model.player;
 
 /**
  * Represents the Gender of a Player.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public enum Gender {
 

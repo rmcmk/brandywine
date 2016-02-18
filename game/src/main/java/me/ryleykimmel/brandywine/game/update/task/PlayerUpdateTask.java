@@ -26,8 +26,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.PlayerUpdateMessage;
 
 /**
  * An UpdateTask which updates your Player and surrounding Players.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class PlayerUpdateTask implements UpdateTask {
 

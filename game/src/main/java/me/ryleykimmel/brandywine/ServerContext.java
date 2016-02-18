@@ -15,8 +15,6 @@ import me.ryleykimmel.brandywine.parser.Parser;
  * A {@link ServerContext} is created along with the Server object. The primary difference is that a
  * reference to the current context should be passed around within the server. The Server should not
  * be as it allows access to some methods which core and plugin code should not be able to access.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ServerContext {
 

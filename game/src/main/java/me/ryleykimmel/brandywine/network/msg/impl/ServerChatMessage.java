@@ -5,8 +5,6 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 
 /**
  * A {@link Message} which sends the specified chat message.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ServerChatMessage implements Message {
 

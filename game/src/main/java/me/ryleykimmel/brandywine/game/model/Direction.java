@@ -2,8 +2,6 @@ package me.ryleykimmel.brandywine.game.model;
 
 /**
  * Represents a single Direction.
- *
- * @author Graham
  */
 public enum Direction {
 

@@ -8,7 +8,6 @@ import com.google.common.base.MoreObjects;
 /**
  * A chain of {@link EventListener}s.
  *
- * @author Major
  * @param <E> The type of {@link Event} the listeners in this chain listen for.
  */
 public final class EventListenerChain<E extends Event> {

@@ -4,9 +4,6 @@ import me.ryleykimmel.brandywine.common.Buffer;
 
 /**
  * A single entry in an {@link Archive}. This class is immutable.
- * 
- * @author Graham
- * @author Major
  */
 public final class ArchiveEntry {
 

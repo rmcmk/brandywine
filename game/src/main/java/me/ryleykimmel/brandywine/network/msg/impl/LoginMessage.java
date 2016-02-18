@@ -4,8 +4,6 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 
 /**
  * A {@link Message} which requests login to the server.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class LoginMessage implements Message {
 

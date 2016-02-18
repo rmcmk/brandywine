@@ -21,8 +21,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.ServerChatMessage;
 
 /**
  * Represents a Player character.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Player extends Mob {
 

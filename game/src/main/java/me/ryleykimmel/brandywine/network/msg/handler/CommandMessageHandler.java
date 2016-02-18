@@ -14,8 +14,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.CommandMessage;
 
 /**
  * Handles the {@link CommandMessage}.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Handles(CommandMessage.class)
 public final class CommandMessageHandler implements MessageHandler<CommandMessage> {

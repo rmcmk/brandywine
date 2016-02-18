@@ -7,8 +7,6 @@ import me.ryleykimmel.brandywine.network.game.GameSession;
 
 /**
  * Encodes Frames in a stream-like fashion from a message to {@link ByteBuf}.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class FrameEncoder extends MessageToByteEncoder<Frame> {
 

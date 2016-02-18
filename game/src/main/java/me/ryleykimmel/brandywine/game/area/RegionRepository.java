@@ -12,8 +12,6 @@ import me.ryleykimmel.brandywine.game.model.Position;
 /**
  * A repository of {@link Region}s, backed by a {@link HashMap} of {@link RegionCoordinates} that
  * correspond to their appropriate regions.
- *
- * @author Major
  */
 public final class RegionRepository {
 

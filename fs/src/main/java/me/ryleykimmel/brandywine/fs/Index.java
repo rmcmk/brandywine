@@ -6,9 +6,6 @@ import me.ryleykimmel.brandywine.common.Buffer;
 
 /**
  * An {@link Index} points to a Sector in the FileSystem.
- * 
- * @author Graham
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Index {
 

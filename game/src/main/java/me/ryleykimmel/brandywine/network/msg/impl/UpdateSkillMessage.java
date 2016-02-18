@@ -5,8 +5,6 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 
 /**
  * A {@link Message} which updates the specified Skill.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class UpdateSkillMessage implements Message {
 

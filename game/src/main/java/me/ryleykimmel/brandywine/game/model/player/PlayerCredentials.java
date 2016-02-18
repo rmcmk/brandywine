@@ -8,8 +8,6 @@ import me.ryleykimmel.brandywine.common.util.NameUtil;
 
 /**
  * Represents the credentials of a Player.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class PlayerCredentials {
 

@@ -6,8 +6,6 @@ import me.ryleykimmel.brandywine.game.update.PlayerDescriptor;
 
 /**
  * A PlayerDescriptor which encodes the adding of a Player.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class AddPlayerDescriptor extends PlayerDescriptor {
 

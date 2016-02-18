@@ -8,8 +8,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.CommandMessage;
 
 /**
  * Decodes the {@link CommandMessage}.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Decodes(103)
 public final class CommandMessageDecoder implements MessageDecoder<CommandMessage> {

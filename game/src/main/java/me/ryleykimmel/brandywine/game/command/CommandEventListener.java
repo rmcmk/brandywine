@@ -7,8 +7,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.ServerChatMessage;
 
 /**
  * Listens for CommandEvent's.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class CommandEventListener implements EventListener<CommandEvent> {
 
@@ -32,7 +30,8 @@ public final class CommandEventListener implements EventListener<CommandEvent> {
         try {
           int x = args.getNextInteger();
           int y = args.getNextInteger();
-          int height = args.hasRemaining(1) ? args.getNextInteger() : player.getPosition().getHeight();
+          int height =
+              args.hasRemaining(1) ? args.getNextInteger() : player.getPosition().getHeight();
 
           player.teleport(new Position(x, y, height));
         } catch (NumberFormatException cause) {

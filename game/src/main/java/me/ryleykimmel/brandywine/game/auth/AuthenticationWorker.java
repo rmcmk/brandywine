@@ -12,8 +12,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.LoginResponseMessage;
 
 /**
  * A {@link Runnable} worker which manages {@link AuthenticationRequest}s.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class AuthenticationWorker implements Runnable {
 

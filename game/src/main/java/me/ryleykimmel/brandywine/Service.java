@@ -9,8 +9,6 @@ import me.ryleykimmel.brandywine.game.GamePulseHandler;
 
 /**
  * Represents a Service that is executed every {@code n} milliseconds.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class Service {
 

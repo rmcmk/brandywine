@@ -2,10 +2,6 @@ package me.ryleykimmel.brandywine.network.game.frame;
 
 /**
  * Represents the endianness, used within frame buffers when reading or writing bytes.
- *
- * @author Graham
- * @author Major
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public enum DataOrder {
 

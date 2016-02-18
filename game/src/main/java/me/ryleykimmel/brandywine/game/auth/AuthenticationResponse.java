@@ -4,8 +4,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.LoginResponseMessage;
 
 /**
  * Represents the response to an AuthenticationRequest.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public enum AuthenticationResponse {
 

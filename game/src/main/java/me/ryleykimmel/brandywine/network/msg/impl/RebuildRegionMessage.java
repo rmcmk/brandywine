@@ -5,8 +5,6 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 
 /**
  * A {@link Message} which rebuilds the region for the specified Position.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class RebuildRegionMessage implements Message {
 

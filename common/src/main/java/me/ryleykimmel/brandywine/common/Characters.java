@@ -6,8 +6,6 @@ import com.google.common.primitives.Chars;
 
 /**
  * A static-utility class containing extension and helper methods for {@code char}s
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Characters {
 

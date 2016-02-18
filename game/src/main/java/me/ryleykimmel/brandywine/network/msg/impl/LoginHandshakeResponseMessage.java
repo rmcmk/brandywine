@@ -4,8 +4,6 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 
 /**
  * A {@link Message} which responds to a {@link LoginHandshakeMessage}.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class LoginHandshakeResponseMessage implements Message {
 

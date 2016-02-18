@@ -15,10 +15,6 @@ import me.ryleykimmel.brandywine.common.util.CompressionUtil;
 /**
  * An archive in the RuneScape cache. An archive is a set of files which can be completely
  * compressed, or each individual file can be compressed.
- * 
- * @author Graham
- * @author Major
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Archive {
 

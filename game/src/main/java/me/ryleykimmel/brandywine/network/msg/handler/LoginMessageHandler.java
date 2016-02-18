@@ -12,8 +12,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.LoginResponseMessage;
 
 /**
  * Handles the {@link LoginMessage}.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Handles(LoginMessage.class)
 public final class LoginMessageHandler implements MessageHandler<LoginMessage> {

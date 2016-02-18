@@ -8,8 +8,6 @@ import java.lang.annotation.Target;
 
 /**
  * Indicates that the annotated type handles Messages as specified by {@link Handles#value()}.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

@@ -7,8 +7,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.RebuildRegionMessage;
 
 /**
  * An UpdateTask which performs pre-update logic, before updating has occurred.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class PrePlayerUpdateTask implements UpdateTask {
 

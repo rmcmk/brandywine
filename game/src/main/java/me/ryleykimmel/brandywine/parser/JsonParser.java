@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 /**
  * Represents a Json {@link ReaderParser}.
  *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @param <T> The parsed Json data.
  */
 public abstract class JsonParser<T> extends ReaderParser<T> {

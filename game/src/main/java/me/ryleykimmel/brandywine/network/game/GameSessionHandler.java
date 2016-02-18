@@ -9,8 +9,6 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 
 /**
  * A specialized {@link SimpleChannelInboundHandler} which only receives {@link Message messages}.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class GameSessionHandler extends SimpleChannelInboundHandler<Message> {
 

@@ -23,8 +23,6 @@ import com.google.common.base.Stopwatch;
 
 /**
  * A utility class which generates RSA public and private keypairs.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class RsaKeygen {
 

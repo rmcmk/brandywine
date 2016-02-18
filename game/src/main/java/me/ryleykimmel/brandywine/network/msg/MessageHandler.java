@@ -5,7 +5,6 @@ import me.ryleykimmel.brandywine.network.game.GameSession;
 /**
  * Handles received Messages while serving some {@link GameSession}.
  *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @param <T> The Message type.
  */
 public interface MessageHandler<T extends Message> {

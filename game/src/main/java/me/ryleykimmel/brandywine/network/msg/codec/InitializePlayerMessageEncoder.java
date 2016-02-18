@@ -12,8 +12,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.InitializePlayerMessage;
 
 /**
  * Encodes the InitializePlayerMessage.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Encodes(InitializePlayerMessage.class)
 public final class InitializePlayerMessageEncoder

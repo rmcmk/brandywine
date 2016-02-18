@@ -6,8 +6,6 @@ import me.ryleykimmel.brandywine.game.update.UpdateBlock;
 
 /**
  * Encodes the appearance player UpdateBlock.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class AppearancePlayerBlock extends UpdateBlock {
 

@@ -2,8 +2,6 @@ package me.ryleykimmel.brandywine.game.model.skill;
 
 /**
  * Represents a train(able)-skill.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Skill {
 

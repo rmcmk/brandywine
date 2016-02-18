@@ -5,8 +5,6 @@ import java.util.Map;
 
 /**
  * A set of {@link EventListenerChain}s.
- *
- * @author Major
  */
 public final class EventListenerChainSet {
 

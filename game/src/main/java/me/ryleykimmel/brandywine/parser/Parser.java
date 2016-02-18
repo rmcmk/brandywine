@@ -3,7 +3,6 @@ package me.ryleykimmel.brandywine.parser;
 /**
  * Represents some Parser, parsing data from the specified source.
  *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @param <T> The data that was parsed.
  * @param <V> The source of the data.
  */

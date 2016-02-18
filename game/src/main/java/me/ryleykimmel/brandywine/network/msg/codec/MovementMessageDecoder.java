@@ -15,8 +15,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.MovementMessage;
 
 /**
  * Decodes the {@link MovementMessage}.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Decodes({98, 164, 248})
 public final class MovementMessageDecoder implements MessageDecoder<MovementMessage> {

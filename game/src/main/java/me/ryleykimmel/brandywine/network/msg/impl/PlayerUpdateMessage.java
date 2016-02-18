@@ -8,8 +8,6 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 
 /**
  * A {@link Message} which updates Players.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class PlayerUpdateMessage implements Message {
 

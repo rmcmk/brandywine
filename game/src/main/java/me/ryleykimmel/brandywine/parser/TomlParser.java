@@ -8,8 +8,6 @@ import com.moandjiezana.toml.Toml;
 
 /**
  * Represents a Toml {@link ReaderParser}.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class TomlParser extends ReaderParser<Toml> {
 

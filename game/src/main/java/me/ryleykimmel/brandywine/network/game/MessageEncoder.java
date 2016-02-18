@@ -12,8 +12,6 @@ import me.ryleykimmel.brandywine.parser.impl.MessageCodecParser;
 
 /**
  * Encodes Messages into Frames.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class MessageEncoder extends MessageToMessageEncoder<Message> {
 

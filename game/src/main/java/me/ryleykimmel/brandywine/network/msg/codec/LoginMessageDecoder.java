@@ -14,8 +14,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.LoginMessage;
 
 /**
  * Decodes the {@link LoginMessage}
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Decodes({16, 18})
 public final class LoginMessageDecoder implements MessageDecoder<LoginMessage> {

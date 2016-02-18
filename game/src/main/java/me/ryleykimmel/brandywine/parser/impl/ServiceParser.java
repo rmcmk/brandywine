@@ -11,8 +11,6 @@ import me.ryleykimmel.brandywine.parser.TomlParser;
 
 /**
  * Parses all of the Services.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ServiceParser extends TomlParser {
 

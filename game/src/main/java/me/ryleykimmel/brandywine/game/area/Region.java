@@ -20,15 +20,11 @@ import me.ryleykimmel.brandywine.game.model.Position;
 
 /**
  * An 8x8 area of the map.
- *
- * @author Major
  */
 public final class Region {
 
   /**
    * A {@link RegionListener} for {@link UpdateOperation}s.
-   *
-   * @author Major
    */
   private static final class UpdateRegionListener implements RegionListener {
 

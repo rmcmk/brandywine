@@ -2,8 +2,6 @@ package me.ryleykimmel.brandywine.game.model.skill;
 
 /**
  * A listener for {@link Skill} events.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public interface SkillListener {
 

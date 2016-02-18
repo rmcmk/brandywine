@@ -8,9 +8,6 @@ import me.ryleykimmel.brandywine.network.game.frame.FrameBuffer.ReadingFrameBuff
 
 /**
  * An implementation of a {@link ReadingFrameBuffer} which reads data from a Frames payload.
- *
- * @author Graham
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class FrameReader extends ReadingFrameBuffer {
 

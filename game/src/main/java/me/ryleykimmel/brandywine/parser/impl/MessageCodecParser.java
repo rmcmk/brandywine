@@ -28,23 +28,17 @@ import me.ryleykimmel.brandywine.parser.TomlParser;
 
 /**
  * Parses MessageEncoders MessageDecoders.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class MessageCodecParser extends TomlParser {
 
   /**
    * A default implementation of a Message.
-   *
-   * @author Ryley Kimmel <ryley.kimmel@live.com>
    */
   private static final class DefaultMessage implements Message {
   }
 
   /**
    * A default implementation of a MessageDecoder.
-   *
-   * @author Ryley Kimmel <ryley.kimmel@live.com>
    */
   private static final class DefaultMessageDecoder implements MessageDecoder<Message> {
 
@@ -63,8 +57,6 @@ public final class MessageCodecParser extends TomlParser {
 
   /**
    * A default implementation of a MessageEncoder.
-   *
-   * @author Ryley Kimmel <ryley.kimmel@live.com>
    */
   private static final class DefaultMessageEncoder implements MessageEncoder<Message> {
 

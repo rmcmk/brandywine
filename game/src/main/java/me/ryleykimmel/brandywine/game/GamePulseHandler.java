@@ -13,8 +13,6 @@ import me.ryleykimmel.brandywine.common.util.ThreadFactoryUtil;
 
 /**
  * Pulses game functions at a fixed rate.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class GamePulseHandler implements Runnable {
 

@@ -10,8 +10,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.LoginHandshakeResponseMessage;
 
 /**
  * Encodes the {@link LoginHandshakeResponseMessage}.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Encodes(LoginHandshakeResponseMessage.class)
 public final class LoginHandshakeResponseMessageEncoder

@@ -9,8 +9,6 @@ import com.google.common.base.Preconditions;
 
 /**
  * Represents the appearance of a Player.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Appearance {
 
@@ -21,8 +19,6 @@ public final class Appearance {
 
   /**
    * Represents some feature on a Player.
-   *
-   * @author Ryley Kimmel <ryley.kimmel@live.com>
    */
   private static final class Feature {
 

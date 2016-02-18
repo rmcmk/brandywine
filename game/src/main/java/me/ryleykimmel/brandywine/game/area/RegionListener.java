@@ -5,8 +5,6 @@ import me.ryleykimmel.brandywine.game.model.Entity;
 /**
  * A class that should be implemented by listeners that execute actions when an entity is added,
  * moved, or removed from a region.
- *
- * @author Major
  */
 @FunctionalInterface
 public interface RegionListener {

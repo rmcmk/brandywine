@@ -11,8 +11,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.RebuildRegionMessage;
 
 /**
  * Encodes the {@link RebuildRegionMessage}.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Encodes(RebuildRegionMessage.class)
 public final class RebuildRegionMessageEncoder implements MessageEncoder<RebuildRegionMessage> {

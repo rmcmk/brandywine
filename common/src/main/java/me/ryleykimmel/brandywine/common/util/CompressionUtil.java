@@ -14,8 +14,6 @@ import me.ryleykimmel.brandywine.common.Buffer;
 /**
  * A static-utility class containing containing extension or helper methods to compress and
  * decompress data.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class CompressionUtil {
 

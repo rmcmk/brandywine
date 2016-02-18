@@ -6,8 +6,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.ServerChatMessage;
 
 /**
  * An implementation of a {@link SkillListener} that listens for leveled up Skill events.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class LevelUpSkillListener implements SkillListener {
 

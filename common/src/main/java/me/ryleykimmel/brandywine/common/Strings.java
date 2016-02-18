@@ -7,8 +7,6 @@ import com.google.common.collect.Iterables;
 
 /**
  * A static-utility class containing extension and helper methods for {@link String strings}.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Strings {
 

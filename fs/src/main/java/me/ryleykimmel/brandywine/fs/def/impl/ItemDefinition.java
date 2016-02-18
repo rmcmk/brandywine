@@ -8,9 +8,6 @@ import me.ryleykimmel.brandywine.fs.def.Definition;
 
 /**
  * Represents the Definition of an Item object.
- *
- * @author Major
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ItemDefinition extends Definition {
 

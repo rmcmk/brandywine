@@ -5,9 +5,6 @@ import com.google.common.base.Strings;
 
 /**
  * A static utility class containing extension or helper methods for Player names.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
- * @author Graham
  */
 public final class NameUtil {
 

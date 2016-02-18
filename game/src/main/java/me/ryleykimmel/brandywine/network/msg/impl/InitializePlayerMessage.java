@@ -4,8 +4,6 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 
 /**
  * A {@link Message} which sends initialization flags.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class InitializePlayerMessage implements Message {
 

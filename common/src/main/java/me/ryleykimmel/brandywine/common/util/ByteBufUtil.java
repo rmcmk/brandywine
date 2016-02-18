@@ -7,8 +7,6 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * A static-utility class containing extension or helper methods for {@link ByteBuf}s.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ByteBufUtil {
 

@@ -9,8 +9,6 @@ import me.ryleykimmel.brandywine.common.Assertions;
 
 /**
  * Represents the arguments of a Command.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class CommandArguments {
 

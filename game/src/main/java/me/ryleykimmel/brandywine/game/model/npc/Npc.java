@@ -7,8 +7,6 @@ import me.ryleykimmel.brandywine.game.model.World;
 
 /**
  * Represents a non-playable character.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public class Npc extends Mob {
 

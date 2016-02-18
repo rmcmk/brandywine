@@ -5,8 +5,6 @@ import me.ryleykimmel.brandywine.game.model.player.Player;
 
 /**
  * A PlayerEvent which is listened for when a {@link Player} inputs a command.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class CommandEvent extends MobEvent<Player> {
 

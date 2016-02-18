@@ -21,8 +21,6 @@ import me.ryleykimmel.brandywine.game.update.Updater;
 /**
  * A representation of the in-game World, containing repositories of {@link Mob mobs} and other
  * things only relevant to the World.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class World {
 

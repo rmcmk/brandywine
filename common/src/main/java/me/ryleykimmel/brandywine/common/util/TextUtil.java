@@ -2,8 +2,6 @@ package me.ryleykimmel.brandywine.common.util;
 
 /**
  * A static utility class containing text-related extension or helper methods.
- *
- * @author Graham
  */
 public final class TextUtil {
 

@@ -6,8 +6,6 @@ import me.ryleykimmel.brandywine.game.update.PlayerDescriptor;
 
 /**
  * A PlayerDescriptor which encodes running movement of a Player.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class RunPlayerDescriptor extends PlayerDescriptor {
 

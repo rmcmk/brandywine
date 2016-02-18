@@ -2,8 +2,6 @@ package me.ryleykimmel.brandywine.fs.def;
 
 /**
  * Represents a Definition.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class Definition {
 

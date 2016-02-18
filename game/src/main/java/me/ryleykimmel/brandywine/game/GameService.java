@@ -10,8 +10,6 @@ import me.ryleykimmel.brandywine.game.model.player.Player;
 
 /**
  * Services the game every pulse.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class GameService extends Service {
 

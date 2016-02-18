@@ -11,8 +11,6 @@ import me.ryleykimmel.brandywine.parser.TomlParser;
 
 /**
  * Parses a configuration for this Server.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ConfigurationParser extends TomlParser {
 

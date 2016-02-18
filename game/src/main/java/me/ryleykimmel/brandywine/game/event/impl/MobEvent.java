@@ -6,7 +6,6 @@ import me.ryleykimmel.brandywine.game.model.Mob;
 /**
  * Represents an Event which a Mob invoked.
  * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @param <T> The type of the Mob who invoked this Event.
  */
 public abstract class MobEvent<T extends Mob> extends Event {

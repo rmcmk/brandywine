@@ -12,8 +12,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.UpdateSkillMessage;
 
 /**
  * Encodes the {@link UpdateSkillMessage}.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Encodes(UpdateSkillMessage.class)
 public final class UpdateSkillMessageEncoder implements MessageEncoder<UpdateSkillMessage> {

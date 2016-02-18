@@ -20,8 +20,6 @@ import me.ryleykimmel.brandywine.fs.archive.Archive;
 /**
  * A file system which consists of data and index files, index files point to blocks in the data
  * file, which contains the actual data.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class FileSystem {
 

@@ -4,8 +4,6 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 
 /**
  * A {@link Message} sent to the client to open a tab widget.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class OpenTabWidgetMessage implements Message {
 

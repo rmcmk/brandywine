@@ -7,7 +7,6 @@ import me.ryleykimmel.brandywine.network.game.frame.FrameReader;
 /**
  * A decoder which decodes some {@link Frame} into some Message.
  *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @param <T> The Message type.
  */
 public interface MessageDecoder<T extends Message> {

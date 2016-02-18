@@ -6,9 +6,6 @@ import me.ryleykimmel.brandywine.game.model.player.Player;
 
 /**
  * The {@link Updater} manages the update sequence which keeps clients synchronized with World.
- * 
- * @author Graham
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class Updater {
 

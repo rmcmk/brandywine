@@ -25,8 +25,6 @@ import me.ryleykimmel.brandywine.parser.impl.MessageHandlerParser;
 /**
  * A Session which is attached to some {@link SocketChannel}, every connected SocketChannel has
  * their own Session in order to perform Session specific functions, such as writing, flushing, etc.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class GameSession {
 

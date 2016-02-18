@@ -17,8 +17,6 @@ import me.ryleykimmel.brandywine.parser.TomlParser;
 
 /**
  * A TomlParser which parses codecs for an {@link Updater}.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class UpdateCodecParser extends TomlParser {
 

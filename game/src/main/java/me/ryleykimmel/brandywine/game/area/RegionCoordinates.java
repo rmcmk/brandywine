@@ -7,9 +7,6 @@ import me.ryleykimmel.brandywine.game.model.Position;
 /**
  * An immutable class representing the coordinates of a region, where the coordinates ({@code x, y})
  * are the top-left of the region.
- *
- * @author Graham
- * @author Major
  */
 public final class RegionCoordinates {
 

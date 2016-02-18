@@ -8,8 +8,6 @@ import java.util.stream.Stream;
 
 /**
  * A static-utility class containing helper methods for supplying objects.
- *
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Suppliers {
 

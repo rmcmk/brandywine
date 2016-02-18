@@ -9,8 +9,6 @@ import me.ryleykimmel.brandywine.network.msg.impl.ChatMessage;
 
 /**
  * Handles the {@link ChatMessage}.
- * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Handles(ChatMessage.class)
 public final class ChatMessageHandler implements MessageHandler<ChatMessage> {
