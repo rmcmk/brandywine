@@ -195,6 +195,9 @@ public final class Appearance {
         features.put(FEET, new Feature(79));
         features.put(SKIN, new Feature(0));
         break;
+
+      default:
+        throw new UnsupportedOperationException("Gender: " + gender + " is not supported.");
     }
   }
 
@@ -247,8 +250,7 @@ public final class Appearance {
    * @return The Feature for the specified id.
    */
   private Feature get(int id) {
-    Preconditions.checkElementIndex(id, features.size());
-    return features.get(id);
+    return Preconditions.checkNotNull(features.get(id), "Feature for id: " + id + " does not exist.");
   }
 
   /**

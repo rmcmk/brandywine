@@ -54,12 +54,10 @@ public final class Position {
    * @param height The height.
    */
   public Position(int x, int y, int height) {
-    Preconditions.checkElementIndex(height, HEIGHT_LEVELS,
-        "Height must be [0, 3), received " + height + ".");
-
     this.x = x;
     this.y = y;
-    this.height = height;
+    this.height = Preconditions.checkElementIndex(height, HEIGHT_LEVELS,
+        "Height must be [0, 3), received " + height + ".");;
   }
 
   /**
@@ -209,8 +207,8 @@ public final class Position {
    * @return The distance.
    */
   public int getDistance(Position other) {
-    int deltaX = x - other.x;
-    int deltaY = y - other.y;
+    int deltaX = getDeltaX(other);
+    int deltaY = getDeltaY(other);
     return (int) Math.ceil(Math.sqrt(deltaX * deltaX + deltaY * deltaY));
   }
 
@@ -221,8 +219,8 @@ public final class Position {
    * @return {@code true} if so, {@code false} if not.
    */
   public boolean isWithinDistance(Position other) {
-    int deltaX = x - other.x;
-    int deltaY = y - other.y;
+    int deltaX = getDeltaX(other);
+    int deltaY = getDeltaY(other);
     return deltaX >= -16 && deltaX <= 15 && deltaY >= -16 && deltaY <= 15 && height == other.height;
   }
 
@@ -234,8 +232,8 @@ public final class Position {
    * @return {@code true} if so, {@code false} if not.
    */
   public boolean isWithinDistance(Position other, int distance) {
-    int deltaX = Math.abs(x - other.x);
-    int deltaY = Math.abs(y - other.y);
+    int deltaX = Math.abs(getDeltaX(other));
+    int deltaY = Math.abs(getDeltaY(other));
     return deltaX <= distance && deltaY <= distance && height == other.height;
   }
 
@@ -246,8 +244,8 @@ public final class Position {
    * @return The longest horizontal or vertical delta.
    */
   public int getLongestDelta(Position other) {
-    int deltaX = Math.abs(x - other.x);
-    int deltaY = Math.abs(y - other.y);
+    int deltaX = Math.abs(getDeltaX(other));
+    int deltaY = Math.abs(getDeltaY(other));
     return Math.max(deltaX, deltaY);
   }
 

@@ -41,7 +41,7 @@ public abstract class TomlParser extends ReaderParser<Toml> {
    * @return The 32-bit Java integer.
    */
   public final int getInteger(Toml toml, String key) {
-    Long value = Preconditions.checkNotNull(toml.getLong(key));
+    Long value = Preconditions.checkNotNull(toml.getLong(key), "No value found for: " + key);
     return value.intValue();
   }
 

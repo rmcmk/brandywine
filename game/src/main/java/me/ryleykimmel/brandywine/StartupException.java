@@ -25,7 +25,7 @@ public final class StartupException extends RuntimeException {
    * @param cause The Exception, may not be {@code null}.
    */
   public StartupException(String message, Exception cause) {
-    super(message, Preconditions.checkNotNull(cause));
+    super(message, Preconditions.checkNotNull(cause, "Cause may not be null."));
   }
 
   /**

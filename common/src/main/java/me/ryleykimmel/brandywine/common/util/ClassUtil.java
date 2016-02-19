@@ -3,8 +3,6 @@ package me.ryleykimmel.brandywine.common.util;
 import java.lang.annotation.Annotation;
 import java.util.Optional;
 
-import com.google.common.base.Preconditions;
-
 /**
  * A static-utility class containing extension or helper methods for {@link Class classes} or
  * generic objects.
@@ -19,8 +17,6 @@ public final class ClassUtil {
    * @return The Annotation if and only if it exists otherwise {@link Optional#empty()}.
    */
   public static <T extends Annotation, V> Optional<T> getAnnotation(V object, Class<T> annotation) {
-    Preconditions.checkNotNull(object);
-
     return getAnnotation(object.getClass(), annotation);
   }
 
@@ -34,8 +30,6 @@ public final class ClassUtil {
    */
   public static <T extends Annotation> Optional<T> getAnnotation(Class<?> clazz,
       Class<T> annotation) {
-    Preconditions.checkNotNull(clazz);
-
     return Optional.ofNullable(clazz.getAnnotation(annotation));
   }
 

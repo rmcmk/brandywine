@@ -22,7 +22,6 @@ public final class ByteBufUtil {
    */
   public static final char DEFAULT_STRING_TERMINATOR = '\0';
 
-
   /**
    * Writes the specified null-terminated String to the specified ByteBuf.
    *
