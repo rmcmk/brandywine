@@ -7,9 +7,8 @@ import java.util.Map;
 import org.sql2o.Sql2o;
 
 import me.ryleykimmel.brandywine.fs.FileSystem;
-import me.ryleykimmel.brandywine.game.auth.AuthenticationService;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationStrategy;
-import me.ryleykimmel.brandywine.parser.Parser;
+import me.ryleykimmel.brandywine.network.game.frame.FrameMetadataSet;
 
 /**
  * A {@link ServerContext} is created along with the Server object. The primary difference is that a
@@ -19,20 +18,9 @@ import me.ryleykimmel.brandywine.parser.Parser;
 public final class ServerContext {
 
   /**
-   * A Map of all of the registered Parsers.
-   */
-  private final Map<Class<? extends Parser<?, ?>>, Parser<?, ?>> parsers = new HashMap<>();
-
-  /**
    * A Map of all of the registered Services.
    */
   private final Map<Class<? extends Service>, Service> services = new HashMap<>();
-
-  /**
-   * The AuthenticationStrategy used by the Server.
-   */
-  private final AuthenticationStrategy authenticationStrategy =
-      AuthenticationService.DEFAULT_STRATEGY;
 
   /**
    * The Server this context represents.
@@ -65,29 +53,8 @@ public final class ServerContext {
    * @param clazz The type of the Service.
    * @param service The instance of the Service.
    */
-  public <T extends Service> void addService(Class<T> clazz, T service) {
+  public void addService(Class<? extends Service> clazz, Service service) {
     services.put(clazz, service);
-  }
-
-  /**
-   * Gets a Parser from its type.
-   *
-   * @param clazz The type of the Parser.
-   * @return The instance of the Parser.
-   */
-  @SuppressWarnings("unchecked")
-  public <T extends Parser<?, ?>> T getParser(Class<T> clazz) {
-    return (T) parsers.get(clazz);
-  }
-
-  /**
-   * Adds the specified Parser to the map.
-   *
-   * @param clazz The type of the Parser.
-   * @param parser The Parser to add.
-   */
-  public <T extends Parser<?, ?>> void addParser(Class<T> clazz, T parser) {
-    parsers.put(clazz, parser);
   }
 
   /**
@@ -100,21 +67,21 @@ public final class ServerContext {
   }
 
   /**
+   * Gets the FrameMetadataSet for this Server.
+   * 
+   * @return The FrameMetadataSet for this Server.
+   */
+  public FrameMetadataSet getFrameMetadataSet() {
+    return server.getFrameMetadataSet();
+  }
+
+  /**
    * Gets the name of this Server.
    *
    * @return The name of this Server.
    */
   public String getName() {
     return server.getName();
-  }
-
-  /**
-   * Sets the name of this Server.
-   *
-   * @param name The name to set.
-   */
-  public void setName(String name) {
-    server.setName(name);
   }
 
   /**
@@ -127,30 +94,12 @@ public final class ServerContext {
   }
 
   /**
-   * Sets the game port this Server will listen on.
-   *
-   * @param gamePort The game port to set.
-   */
-  public void setGamePort(int gamePort) {
-    server.setGamePort(gamePort);
-  }
-
-  /**
    * Gets the maximum amount of connections per host.
    * 
    * @return The maximum amount of connections per host.
    */
   public int getConnectionLimit() {
     return server.getConnectionLimit();
-  }
-
-  /**
-   * Sets the maximum amount of connections per host.
-   * 
-   * @param connectionLimit The maximum amount of connections per host.
-   */
-  public void setConnectionLimit(int connectionLimit) {
-    server.setConnectionLimit(connectionLimit);
   }
 
   /**
@@ -163,30 +112,12 @@ public final class ServerContext {
   }
 
   /**
-   * Sets the address for the Servers database.
-   * 
-   * @param databaseAddress The address to set.
-   */
-  public void setDatabaseAddress(String databaseAddress) {
-    server.setDatabaseAddress(databaseAddress);
-  }
-
-  /**
    * Gets the port the Servers database is listening on.
    * 
    * @return The port the Servers database is listening on.
    */
   public int getDatabasePort() {
     return server.getDatabasePort();
-  }
-
-  /**
-   * Sets the port the Servers database is listening on.
-   * 
-   * @param databasePort The port to set.
-   */
-  public void setDatabasePort(int databasePort) {
-    server.setDatabasePort(databasePort);
   }
 
   /**
@@ -199,30 +130,12 @@ public final class ServerContext {
   }
 
   /**
-   * Sets the username of the Servers database.
-   * 
-   * @param databaseUsername The username of the Servers database.
-   */
-  public void setDatabaseUsername(String databaseUsername) {
-    server.setDatabaseUsername(databaseUsername);
-  }
-
-  /**
    * Gets the password of the Servers database.
    * 
    * @return The password of the Servers database.
    */
   public String getDatabasePassword() {
     return server.getDatabasePassword();
-  }
-
-  /**
-   * Sets the password of the Servers database.
-   * 
-   * @param databasePassword The password of the Servers database.
-   */
-  public void setDatabasePassword(String databasePassword) {
-    server.setDatabasePassword(databasePassword);
   }
 
   /**
@@ -235,15 +148,6 @@ public final class ServerContext {
   }
 
   /**
-   * Sets the FileSystem for this Server.
-   *
-   * @param fileSystem The FileSystem to set.
-   */
-  public void setFileSystem(FileSystem fileSystem) {
-    server.setFileSystem(fileSystem);
-  }
-
-  /**
    * Gets this Servers database configuration.
    * 
    * @return This Servers database configuration.
@@ -253,21 +157,12 @@ public final class ServerContext {
   }
 
   /**
-   * Sets this Servers database configuration.
-   * 
-   * @param sql2o The Servers database configuration to set.
-   */
-  public void setSql2o(Sql2o sql2o) {
-    server.setSql2o(sql2o);
-  }
-
-  /**
    * Gets the AuthenticationStrategy used by the Server.
    * 
    * @return The AuthenticationStrategy used by the Server.
    */
   public AuthenticationStrategy getAuthenticationStrategy() {
-    return authenticationStrategy;
+    return server.getAuthenticationStrategy();
   }
 
 }

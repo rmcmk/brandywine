@@ -3,11 +3,13 @@ package me.ryleykimmel.brandywine.network.game.frame;
 import com.google.common.base.Preconditions;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.util.ReferenceCounted;
+import me.ryleykimmel.brandywine.common.Assertions;
 
 /**
  * A wrapper for an I/O (reader-writer) {@link ByteBuf} for writing and reading Frames.
  */
-abstract class FrameBuffer {
+abstract class FrameBuffer implements ReferenceCounted {
 
   /**
    * Represents the type of this FrameBuffer.
@@ -112,8 +114,36 @@ abstract class FrameBuffer {
    *
    * @return The backing ByteBuf for this FrameBuffer.
    */
-  public final ByteBuf getBuffer() {
-    return buffer.copy();
+  public ByteBuf getBuffer() {
+    Assertions.checkPositive(buffer.refCnt(), "Illegal reference count: " + buffer.refCnt());
+    return buffer; // XXX: copy?
+  }
+
+  @Override
+  public int refCnt() {
+    return buffer.refCnt();
+  }
+
+  @Override
+  public FrameBuffer retain() {
+    buffer.retain();
+    return this;
+  }
+
+  @Override
+  public FrameBuffer retain(int increment) {
+    buffer.retain(increment);
+    return this;
+  }
+
+  @Override
+  public boolean release() {
+    return buffer.release();
+  }
+
+  @Override
+  public boolean release(int decrement) {
+    return buffer.release(decrement);
   }
 
   /**

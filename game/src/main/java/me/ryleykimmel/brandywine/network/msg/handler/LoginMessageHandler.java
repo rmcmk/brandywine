@@ -5,16 +5,14 @@ import me.ryleykimmel.brandywine.game.auth.AuthenticationRequest;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationService;
 import me.ryleykimmel.brandywine.game.model.player.PlayerCredentials;
 import me.ryleykimmel.brandywine.network.game.GameSession;
-import me.ryleykimmel.brandywine.network.msg.Handles;
-import me.ryleykimmel.brandywine.network.msg.MessageHandler;
+import me.ryleykimmel.brandywine.network.msg.GameMessageHandler;
 import me.ryleykimmel.brandywine.network.msg.impl.LoginMessage;
 import me.ryleykimmel.brandywine.network.msg.impl.LoginResponseMessage;
 
 /**
  * Handles the {@link LoginMessage}.
  */
-@Handles(LoginMessage.class)
-public final class LoginMessageHandler implements MessageHandler<LoginMessage> {
+public final class LoginMessageHandler implements GameMessageHandler<LoginMessage> {
 
   /**
    * The expected version of the client.

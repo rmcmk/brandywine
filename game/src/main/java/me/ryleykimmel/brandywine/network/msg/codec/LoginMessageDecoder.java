@@ -8,15 +8,15 @@ import me.ryleykimmel.brandywine.common.util.ByteBufUtil;
 import me.ryleykimmel.brandywine.fs.FileSystem;
 import me.ryleykimmel.brandywine.network.game.GameSession;
 import me.ryleykimmel.brandywine.network.game.frame.FrameReader;
-import me.ryleykimmel.brandywine.network.msg.Decodes;
 import me.ryleykimmel.brandywine.network.msg.MessageDecoder;
 import me.ryleykimmel.brandywine.network.msg.impl.LoginMessage;
 
 /**
  * Decodes the {@link LoginMessage}
  */
-@Decodes({16, 18})
 public final class LoginMessageDecoder implements MessageDecoder<LoginMessage> {
+
+  // TODO: Move all RSA stuff out of here and into the rsa_private directory
 
   /**
    * A flag denoting whether or not RSA encryption is enabled.
@@ -61,18 +61,22 @@ public final class LoginMessageDecoder implements MessageDecoder<LoginMessage> {
       cipheredBuffer.writeBytes(buffer);
     }
 
-    int blockOperationCode = cipheredBuffer.readUnsignedByte();
+    try {
+      int blockOperationCode = cipheredBuffer.readUnsignedByte();
 
-    int[] sessionKeys = new int[4]; // TODO: Rid of magic number?
-    Arrays.setAll(sessionKeys, index -> cipheredBuffer.readInt());
+      int[] sessionKeys = new int[4]; // TODO: Rid of magic number?
+      Arrays.setAll(sessionKeys, index -> cipheredBuffer.readInt());
 
-    int userId = cipheredBuffer.readInt();
+      int userId = cipheredBuffer.readInt();
 
-    String username = ByteBufUtil.readJString(cipheredBuffer);
-    String password = ByteBufUtil.readJString(cipheredBuffer);
+      String username = ByteBufUtil.readJString(cipheredBuffer);
+      String password = ByteBufUtil.readJString(cipheredBuffer);
 
-    return new LoginMessage(magic, clientVersion, detail, archiveChecksums, blockLength,
-        blockOperationCode, sessionKeys, userId, username, password);
+      return new LoginMessage(magic, clientVersion, detail, archiveChecksums, blockLength,
+          blockOperationCode, sessionKeys, userId, username, password);
+    } finally {
+      cipheredBuffer.release();
+    }
   }
 
 }

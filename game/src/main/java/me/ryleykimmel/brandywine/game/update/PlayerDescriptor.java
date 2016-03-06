@@ -8,7 +8,7 @@ import me.ryleykimmel.brandywine.network.game.frame.DataType;
 import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
 
 /**
- * Describes a segment of the Player updating prodecure.
+ * Describes a segment of the Player updating procedure.
  */
 public abstract class PlayerDescriptor extends Descriptor<Player> {
 
@@ -18,7 +18,7 @@ public abstract class PlayerDescriptor extends Descriptor<Player> {
 
   @Override
   public final void encode(FrameBuilder builder, FrameBuilder blockBuilder) {
-    parser.encode(this, builder, blockBuilder);
+    encodeState(builder, blockBuilder);
 
     if (!isBlockUpdatedRequired()) {
       return;

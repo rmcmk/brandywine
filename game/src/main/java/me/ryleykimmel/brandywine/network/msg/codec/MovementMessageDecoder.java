@@ -9,14 +9,12 @@ import me.ryleykimmel.brandywine.network.game.frame.DataOrder;
 import me.ryleykimmel.brandywine.network.game.frame.DataTransformation;
 import me.ryleykimmel.brandywine.network.game.frame.DataType;
 import me.ryleykimmel.brandywine.network.game.frame.FrameReader;
-import me.ryleykimmel.brandywine.network.msg.Decodes;
 import me.ryleykimmel.brandywine.network.msg.MessageDecoder;
 import me.ryleykimmel.brandywine.network.msg.impl.MovementMessage;
 
 /**
  * Decodes the {@link MovementMessage}.
  */
-@Decodes({98, 164, 248})
 public final class MovementMessageDecoder implements MessageDecoder<MovementMessage> {
 
   @Override

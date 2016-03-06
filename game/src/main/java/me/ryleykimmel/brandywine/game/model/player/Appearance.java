@@ -250,7 +250,8 @@ public final class Appearance {
    * @return The Feature for the specified id.
    */
   private Feature get(int id) {
-    return Preconditions.checkNotNull(features.get(id), "Feature for id: " + id + " does not exist.");
+    return Preconditions.checkNotNull(features.get(id),
+        "Feature for id: " + id + " does not exist.");
   }
 
   /**

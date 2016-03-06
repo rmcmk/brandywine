@@ -6,14 +6,12 @@ import me.ryleykimmel.brandywine.network.game.GameSession;
 import me.ryleykimmel.brandywine.network.game.frame.DataTransformation;
 import me.ryleykimmel.brandywine.network.game.frame.DataType;
 import me.ryleykimmel.brandywine.network.game.frame.FrameReader;
-import me.ryleykimmel.brandywine.network.msg.Decodes;
 import me.ryleykimmel.brandywine.network.msg.MessageDecoder;
 import me.ryleykimmel.brandywine.network.msg.impl.ChatMessage;
 
 /**
  * Decodes the {@link ChatMessage}.
  */
-@Decodes(4)
 public final class ChatMessageDecoder implements MessageDecoder<ChatMessage> {
 
   @Override

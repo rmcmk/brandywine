@@ -2,12 +2,16 @@ package me.ryleykimmel.brandywine;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sql2o.Sql2o;
 
 import com.google.common.base.MoreObjects;
+import com.moandjiezana.toml.Toml;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -18,11 +22,14 @@ import io.netty.channel.ServerChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import me.ryleykimmel.brandywine.common.util.ClassUtil;
+import me.ryleykimmel.brandywine.common.util.TomlUtil;
 import me.ryleykimmel.brandywine.fs.FileSystem;
 import me.ryleykimmel.brandywine.game.GamePulseHandler;
+import me.ryleykimmel.brandywine.game.auth.AuthenticationService;
+import me.ryleykimmel.brandywine.game.auth.AuthenticationStrategy;
 import me.ryleykimmel.brandywine.network.game.GameChannelInitializer;
-import me.ryleykimmel.brandywine.parser.TomlParser;
-import me.ryleykimmel.brandywine.parser.impl.ParserTomlParser;
+import me.ryleykimmel.brandywine.network.game.frame.FrameMetadataSet;
 
 /**
  * The core class of the Server.
@@ -38,6 +45,11 @@ final class Server {
    * The context of this Server.
    */
   private final ServerContext context = new ServerContext(this);
+
+  /**
+   * The FrameMetadataSet for this Server.
+   */
+  private final FrameMetadataSet frameMetadataSet = new FrameMetadataSet();
 
   /**
    * The name of this Server.
@@ -75,6 +87,11 @@ final class Server {
   private String databasePassword = "";
 
   /**
+   * The AuthenticationStrategy used to authenticate upstream login requests.
+   */
+  private AuthenticationStrategy authenticationStrategy = AuthenticationService.DEFAULT_STRATEGY;
+
+  /**
    * This Servers database configuration.
    */
   private Sql2o sql2o;
@@ -101,19 +118,79 @@ final class Server {
       Server server = new Server();
       server.init();
       server.start();
-    } catch (Exception reason) {
-      throw new StartupException("Error initializing server!", reason);
+    } catch (Exception cause) {
+      throw new StartupException("Error initializing server!", cause);
     }
   }
 
   /**
    * Initializes this Server.
-   *
-   * @throws Exception If some Exception occurs during initialization.
+   * 
+   * @throws Exception If some exception occurs.
    */
   public void init() throws Exception {
-    TomlParser config = new ParserTomlParser("data/parsers.toml", context);
-    config.parse();
+    initConfig();
+    initServices();
+  }
+
+  /**
+   * Initializes Server configurations
+   * 
+   * @throws Exception If some exception occurs.
+   */
+  private void initConfig() throws Exception {
+    Path data = Paths.get("data");
+    Toml toml = TomlUtil.read(data.resolve("config.toml"));
+
+    name = toml.getString("name");
+    gamePort = toml.getLong("game_port").intValue();
+    fileSystem = FileSystem.create(toml.getString("fs_directory"));
+    connectionLimit = toml.getLong("connection_limit").intValue();
+
+    String path = toml.getString("authentication_strategy");
+
+    if (path.equals("default")) {
+      this.authenticationStrategy = AuthenticationService.DEFAULT_STRATEGY;
+    } else {
+      Class<?> clazz = Class.forName(path);
+
+      if (!ClassUtil.hasInterface(clazz, AuthenticationStrategy.class)) {
+        throw new StartupException(path + " is not an instance of AuthenticationStrategy.");
+      }
+
+      AuthenticationStrategy authenticationStrategy =
+          (AuthenticationStrategy) clazz.getConstructor(ServerContext.class).newInstance(context);
+      this.authenticationStrategy = authenticationStrategy;
+    }
+
+    toml = TomlUtil.read(data.resolve("database.toml"));
+
+    databaseAddress = toml.getString("url");
+    databasePort = toml.getLong("port").intValue();
+    databaseUsername = toml.getString("username");
+    databasePassword = toml.getString("password");
+    sql2o = new Sql2o(databaseAddress, databaseUsername, databasePassword);
+  }
+
+  /**
+   * Initializes {@link Service}s.
+   * 
+   * @throws Exception If some exception occurs.
+   */
+  private void initServices() throws Exception {
+    Path data = Paths.get("data");
+    Toml toml = TomlUtil.read(data.resolve("services.toml"));
+
+    List<String> paths = toml.getList("services");
+    for (String path : paths) {
+      Class<?> clazz = Class.forName(path);
+      if (!clazz.getSuperclass().equals(Service.class)) {
+        throw new StartupException(path + " is not an instance of Service.");
+      }
+
+      Service service = (Service) clazz.getConstructor(ServerContext.class).newInstance(context);
+      context.addService(service.getClass(), service);
+    }
   }
 
   /**
@@ -153,12 +230,12 @@ final class Server {
   }
 
   /**
-   * Gets the context of this Server.
-   *
-   * @return The context of this Server.
+   * Gets the FrameMetadataSet for this Server.
+   * 
+   * @return The FrameMetadataSet for this Server.
    */
-  public ServerContext getContext() {
-    return context;
+  public FrameMetadataSet getFrameMetadataSet() {
+    return frameMetadataSet;
   }
 
   /**
@@ -171,30 +248,12 @@ final class Server {
   }
 
   /**
-   * Sets the name of this Server.
-   *
-   * @param name The name to set.
-   */
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  /**
    * Gets the game port this Server will listen on.
    *
    * @return The game port.
    */
   public int getGamePort() {
     return gamePort;
-  }
-
-  /**
-   * Sets the game port this Server will listen on.
-   *
-   * @param gamePort The game port to set.
-   */
-  public void setGamePort(int gamePort) {
-    this.gamePort = gamePort;
   }
 
   /**
@@ -207,30 +266,12 @@ final class Server {
   }
 
   /**
-   * Sets the maximum amount of connections per host.
-   * 
-   * @param connectionLimit The maximum amount of connections per host.
-   */
-  public void setConnectionLimit(int connectionLimit) {
-    this.connectionLimit = connectionLimit;
-  }
-
-  /**
    * Gets the address for the Servers database.
    * 
    * @return The address for the Servers database.
    */
   public String getDatabaseAddress() {
     return databaseAddress;
-  }
-
-  /**
-   * Sets the address for the Servers database.
-   * 
-   * @param databaseAddress The address to set.
-   */
-  public void setDatabaseAddress(String databaseAddress) {
-    this.databaseAddress = databaseAddress;
   }
 
   /**
@@ -243,30 +284,12 @@ final class Server {
   }
 
   /**
-   * Sets the port the Servers database is listening on.
-   * 
-   * @param databasePort The port to set.
-   */
-  public void setDatabasePort(int databasePort) {
-    this.databasePort = databasePort;
-  }
-
-  /**
    * Gets the username of the Servers database.
    * 
    * @return The username of the Servers database.
    */
   public String getDatabaseUsername() {
     return databaseUsername;
-  }
-
-  /**
-   * Sets the username of the Servers database.
-   * 
-   * @param databaseUsername The username of the Servers database.
-   */
-  public void setDatabaseUsername(String databaseUsername) {
-    this.databaseUsername = databaseUsername;
   }
 
   /**
@@ -279,12 +302,12 @@ final class Server {
   }
 
   /**
-   * Sets the password of the Servers database.
+   * Gets the AuthenticationStrategy used by the Server.
    * 
-   * @param databasePassword The password of the Servers database.
+   * @return The AuthenticationStrategy used by the Server.
    */
-  public void setDatabasePassword(String databasePassword) {
-    this.databasePassword = databasePassword;
+  public AuthenticationStrategy getAuthenticationStrategy() {
+    return authenticationStrategy;
   }
 
   /**
@@ -297,30 +320,12 @@ final class Server {
   }
 
   /**
-   * Sets the FileSystem for this Server.
-   *
-   * @param fileSystem The FileSystem to set.
-   */
-  public void setFileSystem(FileSystem fileSystem) {
-    this.fileSystem = fileSystem;
-  }
-
-  /**
    * Gets this Servers database configuration.
    * 
    * @return This Servers database configuration.
    */
   public Sql2o getSql2o() {
     return sql2o;
-  }
-
-  /**
-   * Sets this Servers database configuration.
-   * 
-   * @param sql2o The Servers database configuration to set.
-   */
-  public void setSql2o(Sql2o sql2o) {
-    this.sql2o = sql2o;
   }
 
   @Override

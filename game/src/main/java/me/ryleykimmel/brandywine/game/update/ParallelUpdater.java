@@ -18,7 +18,7 @@ import me.ryleykimmel.brandywine.game.update.task.UpdateTask;
  * An implementation of a {@link Updater} which runs in a thread-pool. A {@link Phaser} is used to
  * ensure that updating is complete before moving on.
  */
-public final class ParallelUpdater extends Updater {
+public final class ParallelUpdater implements Updater {
 
   /**
    * The Phaser used to control synchronization.

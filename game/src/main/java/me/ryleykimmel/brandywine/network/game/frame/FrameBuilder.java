@@ -18,57 +18,42 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
   /**
    * The opcode of the Frame.
    */
-  private final int opcode;
-
-  /**
-   * The type of the Frame.
-   */
-  private final FrameType type;
+  private final FrameMetadata metadata;
 
   /**
    * The ByteBufAllocator, used to allocate ByteBufs.
    */
-  private final ByteBufAllocator alloc;
+  private final ByteBufAllocator allocator;
 
   /**
-   * Constructs a new headless {@link FrameBuilder} with the specified ByteBufAllocator.
-   * 
-   * @param alloc The ByteBufAllocator for allocating ByteBufs.
+   * Constructs a new {@link FrameBuilder} with the specified FrameMetadata and ByteBufAllocator.
+   *
+   * @param metadata The metadata for the Frame.
+   * @param allocator The ByteBufAllocator for allocating ByteBufs.
    */
-  public FrameBuilder(ByteBufAllocator alloc) {
-    this(-1, alloc);
+  public FrameBuilder(FrameMetadata metadata, ByteBufAllocator allocator) {
+    super(allocator.buffer());
+    this.metadata = metadata;
+    this.allocator = allocator;
   }
 
   /**
-   * Constructs a new {@link FrameBuilder} with the specified opcode, {@link FrameType#FIXED fixed
-   * FrameType} and ByteBufAllocator.
+   * Constructs a new <strong>raw</strong> {@link FrameBuilder} with the specified ByteBufAllocator.
+   * <p>
+   * Raw FrameBuilders cannot be built as they represent no Frame and have no FrameMetadata.
+   * </p>
    *
-   * @param opcode The opcode of the Frame.
-   * @param alloc The ByteBufAllocator for allocating ByteBufs.
+   * @param allocator The ByteBufAllocator for allocating ByteBufs.
    */
-  public FrameBuilder(int opcode, ByteBufAllocator alloc) {
-    this(opcode, FrameType.FIXED, alloc);
-  }
-
-  /**
-   * Constructs a new {@link FrameBuilder} with the specified opcode, FrameType and
-   * ByteBufAllocator.
-   *
-   * @param opcode The opcode of the Frame.
-   * @param type The type of the Frame.
-   * @param alloc The ByteBufAllocator for allocating ByteBufs.
-   */
-  public FrameBuilder(int opcode, FrameType type, ByteBufAllocator alloc) {
-    super(alloc.buffer());
-    this.opcode = opcode;
-    this.type = type;
-    this.alloc = alloc;
+  public FrameBuilder(ByteBufAllocator allocator) {
+    this(null, allocator);
   }
 
   @Override
   public Frame build() {
+    Preconditions.checkNotNull(metadata, "Raw frame builders cannot be built.");
     checkByteAccess();
-    return new Frame(opcode, type, buffer);
+    return new Frame(metadata, buffer);
   }
 
   /**
@@ -376,8 +361,8 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
    * 
    * @return This FrameBuilders ByteBufAllocator.
    */
-  public ByteBufAllocator alloc() {
-    return alloc;
+  public ByteBufAllocator allocator() {
+    return allocator;
   }
 
 }

@@ -9,11 +9,10 @@ import me.ryleykimmel.brandywine.game.model.EntityType;
 import me.ryleykimmel.brandywine.game.model.Mob;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.model.World;
-import me.ryleykimmel.brandywine.game.model.skill.LevelUpSkillListener;
-import me.ryleykimmel.brandywine.game.model.skill.SynchronizationSkillListener;
 import me.ryleykimmel.brandywine.game.update.blocks.AppearancePlayerBlock;
 import me.ryleykimmel.brandywine.network.game.GameSession;
 import me.ryleykimmel.brandywine.network.msg.Message;
+import me.ryleykimmel.brandywine.network.msg.PlayerMessageDispatcher;
 import me.ryleykimmel.brandywine.network.msg.impl.InitializePlayerMessage;
 import me.ryleykimmel.brandywine.network.msg.impl.LoginResponseMessage;
 import me.ryleykimmel.brandywine.network.msg.impl.RebuildRegionMessage;
@@ -118,6 +117,7 @@ public final class Player extends Mob {
     write(new InitializePlayerMessage(isMember(), getIndex()));
 
     session.seedCiphers(credentials.getSessionKeys());
+    session.setMessageDispatcher(new PlayerMessageDispatcher(this));
     session.attr().set(this);
 
     setLastKnownRegion(position);
@@ -130,10 +130,10 @@ public final class Player extends Mob {
       write(new ServerChatMessage("You are a member!"));
     }
 
-    skills.addListener(new SynchronizationSkillListener(this));
-    skills.addListener(new LevelUpSkillListener(this));
-
-    skills.refresh();
+    // skills.addListener(new SynchronizationSkillListener(this));
+    // skills.addListener(new LevelUpSkillListener(this));
+    //
+    // skills.refresh();
   }
 
   /**

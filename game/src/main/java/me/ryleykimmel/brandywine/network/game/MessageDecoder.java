@@ -5,7 +5,6 @@ import java.util.List;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import me.ryleykimmel.brandywine.network.game.frame.Frame;
-import me.ryleykimmel.brandywine.parser.impl.MessageCodecParser;
 
 /**
  * Decodes Frames into Messages.
@@ -28,8 +27,7 @@ public final class MessageDecoder extends MessageToMessageDecoder<Frame> {
 
   @Override
   protected void decode(ChannelHandlerContext ctx, Frame frame, List<Object> out) {
-    MessageCodecParser parser = session.getContext().getParser(MessageCodecParser.class);
-    out.add(parser.decode(session, frame));
+    out.add(session.getContext().getFrameMetadataSet().decode(session, frame));
   }
 
 }

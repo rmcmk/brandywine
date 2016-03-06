@@ -1,7 +1,7 @@
 package me.ryleykimmel.brandywine.network.msg;
 
-import io.netty.buffer.ByteBufAllocator;
 import me.ryleykimmel.brandywine.network.game.frame.Frame;
+import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
 
 /**
  * An encoder which encodes some Message into a {@link Frame}.
@@ -14,9 +14,8 @@ public interface MessageEncoder<T extends Message> {
    * Encodes the specified Message into a Frame.
    *
    * @param message The Message to encode.
-   * @param alloc The ByteBufAllocator used for allocating new ByteBufs.
-   * @return The encoded Frame.
+   * @param builder The FrameBuilder used to build the Frame from the specified Message.
    */
-  Frame encode(T message, ByteBufAllocator alloc);
+  void encode(T message, FrameBuilder builder);
 
 }

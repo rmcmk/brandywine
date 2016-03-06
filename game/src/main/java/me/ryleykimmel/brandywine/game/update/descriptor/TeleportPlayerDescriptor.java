@@ -3,6 +3,7 @@ package me.ryleykimmel.brandywine.game.update.descriptor;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.update.PlayerDescriptor;
+import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
 
 /**
  * A PlayerDescriptor which encodes the teleportation of a Player.
@@ -40,6 +41,20 @@ public final class TeleportPlayerDescriptor extends PlayerDescriptor {
 
   public Position getLastKnownRegion() {
     return lastKnownRegion;
+  }
+
+  @Override
+  public void encodeState(FrameBuilder builder, FrameBuilder blockBuilder) {
+    builder.putBits(1, 1);
+    builder.putBits(2, 3);
+
+    builder.putBits(2, position.getHeight());
+
+    builder.putBits(1, mapRegionChanged ? 0 : 1);
+    builder.putBits(1, isBlockUpdatedRequired() ? 1 : 0);
+
+    builder.putBits(7, position.getLocalY(lastKnownRegion));
+    builder.putBits(7, position.getLocalX(lastKnownRegion));
   }
 
 }

@@ -158,7 +158,7 @@ public final class PlayerUpdateTask implements UpdateTask {
    * 
    * @param tickets The appearance tickets.
    * @param player The Player.
-   * @return {@code true} if the specified Player has a cached appearance otherwise {@code false}.
+   * @return {@code true} if the specified Player has a cached appearance.
    */
   private boolean hasCachedAppearance(int[] tickets, Player player) {
     int index = player.getIndex() - 1;

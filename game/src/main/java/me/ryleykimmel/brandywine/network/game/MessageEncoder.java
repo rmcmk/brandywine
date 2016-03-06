@@ -8,7 +8,6 @@ import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
 import me.ryleykimmel.brandywine.network.msg.Message;
-import me.ryleykimmel.brandywine.parser.impl.MessageCodecParser;
 
 /**
  * Encodes Messages into Frames.
@@ -36,8 +35,7 @@ public final class MessageEncoder extends MessageToMessageEncoder<Message> {
 
   @Override
   protected void encode(ChannelHandlerContext ctx, Message message, List<Object> out) {
-    MessageCodecParser parser = session.getContext().getParser(MessageCodecParser.class);
-    out.add(parser.encode(message, allocator));
+    out.add(session.getContext().getFrameMetadataSet().encode(message, allocator));
   }
 
 }

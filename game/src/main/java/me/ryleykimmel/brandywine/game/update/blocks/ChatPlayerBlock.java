@@ -2,6 +2,9 @@ package me.ryleykimmel.brandywine.game.update.blocks;
 
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.update.UpdateBlock;
+import me.ryleykimmel.brandywine.network.game.frame.DataTransformation;
+import me.ryleykimmel.brandywine.network.game.frame.DataType;
+import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
 import me.ryleykimmel.brandywine.network.msg.impl.ChatMessage;
 
 /**
@@ -30,6 +33,17 @@ public class ChatPlayerBlock extends UpdateBlock {
 
   public int getPrivilegeId() {
     return privilegeId;
+  }
+
+  @Override
+  public void encode(FrameBuilder builder) {
+    builder.put(DataType.BYTE, chatMessage.getTextEffects());
+    builder.put(DataType.BYTE, chatMessage.getTextColor());
+    builder.put(DataType.BYTE, privilegeId);
+
+    byte[] bytes = chatMessage.getCompressedMessage();
+    builder.put(DataType.BYTE, DataTransformation.NEGATE, bytes.length);
+    builder.putBytesReverse(bytes);
   }
 
 }

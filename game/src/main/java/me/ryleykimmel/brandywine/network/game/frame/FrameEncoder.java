@@ -30,21 +30,27 @@ public final class FrameEncoder extends MessageToByteEncoder<Frame> {
       return;
     }
 
-    if (frame.hasValidOpcode()) {
+    FrameMetadata metadata = frame.getMetadata();
+
+    if (metadata.isCiphered() && !metadata.isHeadless()) {
       out.writeByte(session.encipherFrameOpcode(frame.getOpcode()));
 
-      switch (frame.getType()) {
-        case VARIABLE_BYTE:
-          out.writeByte(frame.getLength());
-          break;
+      if (metadata.hasVariableLength()) {
+        int length = metadata.getLength(), actual = frame.getLength();
 
-        case VARIABLE_SHORT:
-          out.writeShort(frame.getLength());
-          break;
+        switch (length) {
+          case FrameMetadata.VARIABLE_BYTE_LENGTH:
+            out.writeByte(actual);
+            break;
 
-        // Only variable byte and short frames need their length written, ignore others.
-        default:
-          break;
+          case FrameMetadata.VARIABLE_SHORT_LENGTH:
+            out.writeShort(actual);
+            break;
+
+          default:
+            throw new UnsupportedOperationException(
+                length + " is not a supported variable length.");
+        }
       }
     }
 

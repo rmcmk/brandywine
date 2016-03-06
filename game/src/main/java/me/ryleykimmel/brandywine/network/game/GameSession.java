@@ -18,9 +18,10 @@ import me.ryleykimmel.brandywine.game.GameService;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.network.isaac.IsaacRandom;
 import me.ryleykimmel.brandywine.network.isaac.IsaacRandomPair;
+import me.ryleykimmel.brandywine.network.msg.GameMessageDispatcher;
 import me.ryleykimmel.brandywine.network.msg.Message;
+import me.ryleykimmel.brandywine.network.msg.MessageDispatcher;
 import me.ryleykimmel.brandywine.network.msg.MessageHandler;
-import me.ryleykimmel.brandywine.parser.impl.MessageHandlerParser;
 
 /**
  * A Session which is attached to some {@link SocketChannel}, every connected SocketChannel has
@@ -59,6 +60,12 @@ public final class GameSession {
   private IsaacRandomPair randomPair;
 
   /**
+   * The MessageDispatcher for this GameSession.
+   */
+  @SuppressWarnings("rawtypes")
+  private MessageDispatcher dispatcher = new GameMessageDispatcher(this);
+
+  /**
    * Whether or not this GameSession has been closed.
    */
   private boolean closed;
@@ -80,6 +87,9 @@ public final class GameSession {
    * @param sessionKeys The Session keys we build the seed from.
    */
   public void seedCiphers(int[] sessionKeys) {
+    Preconditions.checkState(randomPair == null,
+        "The ciphers have already been seeded for this GameSession.");
+
     int[] copy = sessionKeys.clone();
 
     IsaacRandom decodingRandom = new IsaacRandom(copy);
@@ -115,6 +125,15 @@ public final class GameSession {
 
     IsaacRandom random = randomPair.getEncodingRandom();
     return opcode + random.nextInt() & 0xFF;
+  }
+
+  /**
+   * Sets this GameSessions MessageDispatcher.
+   * 
+   * @param dispatcher The MessageDispatcher for this GameSession.
+   */
+  public void setMessageDispatcher(@SuppressWarnings("rawtypes") MessageDispatcher dispatcher) {
+    this.dispatcher = dispatcher;
   }
 
   /**
@@ -189,10 +208,12 @@ public final class GameSession {
    * 
    * @param message The Message to dispatch.
    */
+  @SuppressWarnings("unchecked")
   public void dispatch(Message message) {
-    MessageHandlerParser parser = context.getParser(MessageHandlerParser.class);
-    MessageHandler<Message> handler = parser.getHandler(message);
-    handler.handle(this, message);
+    MessageHandler<Message> handler = context.getFrameMetadataSet().getHandler(message);
+    if (handler != null) {
+      dispatcher.dispatch(handler, message);
+    }
   }
 
   /**

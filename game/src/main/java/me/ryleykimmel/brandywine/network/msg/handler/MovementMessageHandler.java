@@ -5,21 +5,16 @@ import java.util.Queue;
 import me.ryleykimmel.brandywine.game.model.MovementQueue;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.model.player.Player;
-import me.ryleykimmel.brandywine.network.game.GameSession;
-import me.ryleykimmel.brandywine.network.msg.Handles;
-import me.ryleykimmel.brandywine.network.msg.MessageHandler;
+import me.ryleykimmel.brandywine.network.msg.PlayerMessageHandler;
 import me.ryleykimmel.brandywine.network.msg.impl.MovementMessage;
 
 /**
  * Handles the {@link MovementMessage}.
  */
-@Handles(MovementMessage.class)
-public final class MovementMessageHandler implements MessageHandler<MovementMessage> {
+public final class MovementMessageHandler implements PlayerMessageHandler<MovementMessage> {
 
   @Override
-  public void handle(GameSession session, MovementMessage message) {
-    Player player = session.attr().get();
-
+  public void handle(Player player, MovementMessage message) {
     MovementQueue queue = player.getMovementQueue();
     Queue<Position> steps = message.getSteps();
 

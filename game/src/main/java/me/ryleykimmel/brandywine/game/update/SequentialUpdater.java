@@ -11,7 +11,7 @@ import me.ryleykimmel.brandywine.game.update.task.UpdateTask;
 /**
  * An implementation of a {@link Updater} which runs on a single thread.
  */
-public final class SequentialUpdater extends Updater {
+public final class SequentialUpdater implements Updater {
 
   @Override
   public void update(MobRepository<Player> players, MobRepository<Npc> npcs) {

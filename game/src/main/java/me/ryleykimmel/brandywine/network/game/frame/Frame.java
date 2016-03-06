@@ -1,9 +1,5 @@
 package me.ryleykimmel.brandywine.network.game.frame;
 
-import java.util.Objects;
-
-import com.google.common.base.MoreObjects;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.DefaultByteBufHolder;
 import io.netty.buffer.Unpooled;
@@ -14,46 +10,43 @@ import io.netty.buffer.Unpooled;
 public final class Frame extends DefaultByteBufHolder {
 
   /**
-   * The maximum opcode a Frame may have.
+   * The metadata for this Frame.
    */
-  private static final int MAXIMUM_OPCODE = 255;
+  private final FrameMetadata metadata;
 
   /**
-   * The opcode or identifier of this Frame.
-   */
-  private final int opcode;
-
-  /**
-   * The type of this Frame.
-   */
-  private final FrameType type;
-
-  /**
-   * The length of this Frame.
+   * The length (readable bytes) of this Frame.
    */
   private final int length;
 
   /**
-   * Constructs a new {@link Frame} with the specified opcode, FrameType and payload.
+   * Constructs a new {@link Frame} with the FrameMetadata and payload.
    *
-   * @param opcode The opcode or identifier of this Frame.
-   * @param type The type of this Frame.
+   * @param metadata The metadata for this Frame.
    * @param payload The payload of this Frame.
    */
-  public Frame(int opcode, FrameType type, ByteBuf payload) {
+  public Frame(FrameMetadata metadata, ByteBuf payload) {
     super(payload);
-    this.opcode = opcode;
-    this.type = type;
+    this.metadata = metadata;
     this.length = payload.readableBytes();
   }
 
   /**
-   * Constructs a new fixed, empty Frame for the specified opcode.
+   * Constructs a new Frame with an empty payload.
    * 
-   * @param opcode The opcode or identifier of this Frame.
+   * @param metadata The metadata for this Frame.
    */
-  public Frame(int opcode) {
-    this(opcode, FrameType.EMPTY, Unpooled.EMPTY_BUFFER);
+  public Frame(FrameMetadata metadata) {
+    this(metadata, Unpooled.EMPTY_BUFFER);
+  }
+
+  /**
+   * Gets the metadata for this Frame.
+   * 
+   * @return The metadata for this Frame.
+   */
+  public FrameMetadata getMetadata() {
+    return metadata;
   }
 
   /**
@@ -62,7 +55,7 @@ public final class Frame extends DefaultByteBufHolder {
    * @return The opcode or identifier of this Frame.
    */
   public int getOpcode() {
-    return opcode;
+    return metadata.getOpcode();
   }
 
   /**
@@ -72,44 +65,6 @@ public final class Frame extends DefaultByteBufHolder {
    */
   public int getLength() {
     return length;
-  }
-
-  /**
-   * Gets the type of this Frame.
-   *
-   * @return The type of this Frame.
-   */
-  public FrameType getType() {
-    return type;
-  }
-
-  /**
-   * Returns whether or not this Frame has a valid opcode.
-   *
-   * @return {@code true} iff this Frame has a valid opcode, otherwise {@code false}.
-   */
-  public boolean hasValidOpcode() {
-    return opcode >= 0 && opcode <= MAXIMUM_OPCODE;
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(opcode, type);
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (obj instanceof Frame) {
-      Frame other = (Frame) obj;
-      return opcode == other.opcode && type == other.type;
-    }
-
-    return false;
-  }
-
-  @Override
-  public String toString() {
-    return MoreObjects.toStringHelper(this).add("opcode", opcode).add("type", type).toString();
   }
 
 }

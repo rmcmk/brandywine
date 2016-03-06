@@ -1,16 +1,15 @@
 package me.ryleykimmel.brandywine.network.msg.handler;
 
 import me.ryleykimmel.brandywine.network.game.GameSession;
-import me.ryleykimmel.brandywine.network.msg.Handles;
-import me.ryleykimmel.brandywine.network.msg.MessageHandler;
+import me.ryleykimmel.brandywine.network.msg.GameMessageHandler;
 import me.ryleykimmel.brandywine.network.msg.impl.LoginHandshakeMessage;
 import me.ryleykimmel.brandywine.network.msg.impl.LoginHandshakeResponseMessage;
 
 /**
  * Handles the {@link LoginHandshakeMessage}.
  */
-@Handles(LoginHandshakeMessage.class)
-public final class LoginHandshakeMessageHandler implements MessageHandler<LoginHandshakeMessage> {
+public final class LoginHandshakeMessageHandler
+    implements GameMessageHandler<LoginHandshakeMessage> {
 
   /**
    * The status which indicates that the server is ready to exchange data with the client.

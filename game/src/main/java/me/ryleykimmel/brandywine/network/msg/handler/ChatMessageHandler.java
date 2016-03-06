@@ -2,20 +2,16 @@ package me.ryleykimmel.brandywine.network.msg.handler;
 
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.update.blocks.ChatPlayerBlock;
-import me.ryleykimmel.brandywine.network.game.GameSession;
-import me.ryleykimmel.brandywine.network.msg.Handles;
-import me.ryleykimmel.brandywine.network.msg.MessageHandler;
+import me.ryleykimmel.brandywine.network.msg.PlayerMessageHandler;
 import me.ryleykimmel.brandywine.network.msg.impl.ChatMessage;
 
 /**
  * Handles the {@link ChatMessage}.
  */
-@Handles(ChatMessage.class)
-public final class ChatMessageHandler implements MessageHandler<ChatMessage> {
+public final class ChatMessageHandler implements PlayerMessageHandler<ChatMessage> {
 
   @Override
-  public void handle(GameSession session, ChatMessage message) {
-    Player player = session.attr().get();
+  public void handle(Player player, ChatMessage message) {
     player.flagUpdate(ChatPlayerBlock.create(player, message));
   }
 

@@ -1,24 +1,17 @@
 package me.ryleykimmel.brandywine.network.msg.codec;
 
-import io.netty.buffer.ByteBufAllocator;
-import me.ryleykimmel.brandywine.network.game.frame.Frame;
 import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
-import me.ryleykimmel.brandywine.network.game.frame.FrameType;
-import me.ryleykimmel.brandywine.network.msg.Encodes;
 import me.ryleykimmel.brandywine.network.msg.MessageEncoder;
 import me.ryleykimmel.brandywine.network.msg.impl.ServerChatMessage;
 
 /**
  * Encodes the {@link ServerChatMessage}.
  */
-@Encodes(ServerChatMessage.class)
-public class ServerChatMessageEncoder implements MessageEncoder<ServerChatMessage> {
+public final class ServerChatMessageEncoder implements MessageEncoder<ServerChatMessage> {
 
   @Override
-  public Frame encode(ServerChatMessage message, ByteBufAllocator alloc) {
-    FrameBuilder builder = new FrameBuilder(253, FrameType.VARIABLE_BYTE, alloc);
+  public void encode(ServerChatMessage message, FrameBuilder builder) {
     builder.putString(message.getMessage());
-    return builder.build();
   }
 
 }

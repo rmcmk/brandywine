@@ -1,5 +1,7 @@
 package me.ryleykimmel.brandywine.game.update;
 
+import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
+
 /**
  * Represents an update block.
  */
@@ -27,5 +29,12 @@ public abstract class UpdateBlock {
   public final int getMask() {
     return mask;
   }
+
+  /**
+   * Encodes this UpdateBlock.
+   * 
+   * @param builder The FrameBuilder used to encode this UpdateBlock.
+   */
+  public abstract void encode(FrameBuilder builder);
 
 }
