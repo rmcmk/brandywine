@@ -3,6 +3,7 @@ package me.ryleykimmel.brandywine.common;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import com.google.common.base.Strings;
 import com.google.common.base.Preconditions;
 
 /**
@@ -52,7 +53,7 @@ public final class Assertions {
    * empty}.
    */
   public static void checkNonEmpty(String string, String message) {
-    Preconditions.checkArgument(string != null && !string.isEmpty(), message);
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(string), message);
   }
 
   /**
