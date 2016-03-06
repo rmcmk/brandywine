@@ -2,6 +2,9 @@ package me.ryleykimmel.brandywine.common.util;
 
 import java.lang.annotation.Annotation;
 import java.util.Optional;
+import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
 
 /**
  * A static-utility class containing extension or helper methods for {@link Class classes} or
@@ -31,6 +34,19 @@ public final class ClassUtil {
   public static <T extends Annotation> Optional<T> getAnnotation(Class<?> clazz,
       Class<T> annotation) {
     return Optional.ofNullable(clazz.getAnnotation(annotation));
+  }
+
+  /**
+   * Tests whether or not the specified {@code clazz} implements the specified {@code superClass}.
+   * 
+   * @param clazz The Class to test, may not be {@code null}.
+   * @param superClass The interface Class, may not be {@code null}.
+   * @return {@code true} if the {@code clazz} implements the {@code superClass}, otherwise
+   * {@code false}.
+   */
+  public static boolean hasInterface(Class<?> clazz, Class<?> superClass) {
+    Set<Class<?>> interfaces = ImmutableSet.copyOf(clazz.getInterfaces());
+    return interfaces.contains(superClass);
   }
 
   /**
