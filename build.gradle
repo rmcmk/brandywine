@@ -4,6 +4,7 @@ task wrapper(type: Wrapper) {
 
 subprojects {
 	apply plugin: 'java'
+	apply plugin: 'eclipse'
 
 	repositories {
 	    mavenCentral()
@@ -21,8 +22,6 @@ subprojects {
 		compile 'com.moandjiezana.toml:toml4j:0.5.1'
 		compile 'org.sql2o:sql2o:1.5.4'
 		compile 'com.lambdaworks:scrypt:1.4.0'
-		compile 'com.google.dagger:dagger:2.0.2'
-		compile 'com.google.dagger:dagger-compiler:2.0.2'
 		compile 'javax.inject:javax.inject:1'
 
 		testCompile 'junit:junit:4.12'
