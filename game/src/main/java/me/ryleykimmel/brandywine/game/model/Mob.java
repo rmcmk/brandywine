@@ -3,7 +3,6 @@ package me.ryleykimmel.brandywine.game.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import me.ryleykimmel.brandywine.ServerContext;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.model.skill.SkillSet;
 import me.ryleykimmel.brandywine.game.update.UpdateBlock;
@@ -64,10 +63,9 @@ public abstract class Mob extends Entity {
    * 
    * @param world The World this Mob is in.
    * @param type The type of this Entity.
-   * @param context The context of the Server.
    */
-  public Mob(World world, EntityType type, ServerContext context) {
-    super(world, type, context);
+  public Mob(World world, EntityType type) {
+    super(world, type);
   }
 
   /**

@@ -6,7 +6,6 @@ import java.util.Arrays;
 import io.netty.buffer.ByteBuf;
 import me.ryleykimmel.brandywine.common.util.ByteBufUtil;
 import me.ryleykimmel.brandywine.fs.FileSystem;
-import me.ryleykimmel.brandywine.network.game.GameSession;
 import me.ryleykimmel.brandywine.network.game.frame.FrameReader;
 import me.ryleykimmel.brandywine.network.msg.MessageDecoder;
 import me.ryleykimmel.brandywine.network.msg.impl.LoginMessage;
@@ -36,7 +35,7 @@ public final class LoginMessageDecoder implements MessageDecoder<LoginMessage> {
       "122066559200764105847137341522490789724859876187185283619811173874738826634470436084258034811334465937176630152256062472452945449770303734554500065326243031415229867217558700157658911934536431275351026725267163220047422105624981686172662220393958694949845524268416752886307282943151281612837317011104001141977");
 
   @Override
-  public LoginMessage decode(GameSession session, FrameReader reader) {
+  public LoginMessage decode(FrameReader reader) {
     ByteBuf buffer = reader.getBuffer();
 
     int magic = buffer.readUnsignedByte();

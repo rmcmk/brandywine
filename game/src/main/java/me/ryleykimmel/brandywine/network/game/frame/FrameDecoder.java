@@ -5,6 +5,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Preconditions;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -45,6 +47,16 @@ public final class FrameDecoder extends ByteToMessageDecoder {
   private static final Logger logger = LoggerFactory.getLogger(FrameDecoder.class);
 
   /**
+   * The GameSession we're decoding for.
+   */
+  private final GameSession session;
+
+  /**
+   * The Frame metadata set.
+   */
+  private final FrameMetadataSet metadataSet;
+
+  /**
    * The metadata of the Frame we're decoding.
    */
   private FrameMetadata metadata;
@@ -55,22 +67,19 @@ public final class FrameDecoder extends ByteToMessageDecoder {
   private int payloadLength;
 
   /**
-   * The GameSession we're decoding for.
-   */
-  private final GameSession session;
-
-  /**
    * The current State of the Frame decoder.
    */
   private State state = State.DECODE_OPCODE;
 
   /**
-   * Constructs a new {@link FrameDecoder} with the specified GameSession.
+   * Constructs a new {@link FrameDecoder}.
    *
    * @param session The GameSession we're decoding for.
+   * @param metadataSet The Frame metadata set.
    */
-  public FrameDecoder(GameSession session) {
-    this.session = session;
+  public FrameDecoder(GameSession session, FrameMetadataSet metadataSet) {
+    this.session = Preconditions.checkNotNull(session, "GameSession may not be null.");
+    this.metadataSet = Preconditions.checkNotNull(metadataSet, "GameSession may not be null.");;
   }
 
   @Override
@@ -100,8 +109,6 @@ public final class FrameDecoder extends ByteToMessageDecoder {
     if (!buffer.isReadable()) {
       return;
     }
-
-    FrameMetadataSet metadataSet = session.getContext().getFrameMetadataSet();
 
     int cipheredOpcode = buffer.readUnsignedByte();
     int opcode =
@@ -174,7 +181,7 @@ public final class FrameDecoder extends ByteToMessageDecoder {
    * @param state The next State in the decoder.
    */
   private void checkpoint(State state) {
-    this.state = state;
+    this.state = Preconditions.checkNotNull(state, "State may not be null.");
   }
 
 }

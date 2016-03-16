@@ -24,6 +24,62 @@ import me.ryleykimmel.brandywine.fs.archive.Archive;
 public final class FileSystem {
 
   /**
+   * Constructs and initializes a {@link FileSystem} from the specified {@code directory}.
+   *
+   * @param directory The directory of the FileSystem.
+   * @return The created FileSystem, never {@code
+   * null}.
+   * @throws IOException If some I/O exception occurs.
+   */
+  public static FileSystem create(String directory) throws IOException {
+    Path root = Paths.get(directory);
+    Path data = root.resolve(DATA_PREFIX);
+
+    Preconditions.checkArgument(Files.isDirectory(root), "Supplied path must be a directory!");
+    Preconditions.checkArgument(Files.exists(data), "No data file found in the specified path!");
+
+    SeekableByteChannel dataChannel = Files.newByteChannel(data);
+
+    Cache[] caches = new Cache[MAXIMUM_INDICES];
+    Archive[] archives = new Archive[MAXIMUM_ARCHIVES];
+    int[] archiveChecksums = new int[archives.length];
+
+    for (int index = 0; index < caches.length; index++) {
+      Path path = root.resolve(INDEX_PREFIX + index);
+
+      // indices are in order, if one does not exist there are no more indices.
+      if (Files.notExists(path)) {
+        logger.info("Found {} caches in the file system.", index);
+        break;
+      }
+
+      SeekableByteChannel indexChannel = Files.newByteChannel(path);
+      caches[index] = new Cache(index, dataChannel, indexChannel);
+    }
+
+    Cache cache = Preconditions.checkNotNull(caches[CONFIG_INDEX],
+        "Configuration cache is null - unable to decode archives");
+
+    Buffer archiveChecksumTable = buildArchiveHashTable(cache);
+    for (int index = 0; index < archiveChecksums.length; index++) {
+      archiveChecksums[index] = archiveChecksumTable.getInt(index * Integer.BYTES);
+    }
+
+    // We don't use index 0
+    for (int index = 1; index < archives.length; index++) {
+      Buffer buffer = cache.getFile(index);
+      archives[index] = Archive.decode(buffer);
+    }
+
+    logger.info("Decoded {} archives from the configuration cache.", archives.length);
+
+    FileSystem fileSystem =
+        new FileSystem(caches, archives, archiveChecksums, archiveChecksumTable);
+
+    return fileSystem;
+  }
+
+  /**
    * The Logger for this class.
    */
   private static final Logger logger = LoggerFactory.getLogger(FileSystem.class);
@@ -152,62 +208,6 @@ public final class FileSystem {
     this.archives = archives;
     this.archiveChecksums = archiveChecksums;
     this.archiveChecksumTable = archiveChecksumTable;
-  }
-
-  /**
-   * Constructs and initializes a {@link FileSystem} from the specified {@code directory}.
-   *
-   * @param directory The directory of the FileSystem.
-   * @return The created FileSystem, never {@code
-   * null}.
-   * @throws IOException If some I/O exception occurs.
-   */
-  public static FileSystem create(String directory) throws IOException {
-    Path root = Paths.get(directory);
-    Path data = root.resolve(DATA_PREFIX);
-
-    Preconditions.checkArgument(Files.isDirectory(root), "Supplied path must be a directory!");
-    Preconditions.checkArgument(Files.exists(data), "No data file found in the specified path!");
-
-    SeekableByteChannel dataChannel = Files.newByteChannel(data);
-
-    Cache[] caches = new Cache[MAXIMUM_INDICES];
-    Archive[] archives = new Archive[MAXIMUM_ARCHIVES];
-    int[] archiveChecksums = new int[archives.length];
-
-    for (int index = 0; index < caches.length; index++) {
-      Path path = root.resolve(INDEX_PREFIX + index);
-
-      // indices are in order, if one does not exist there are no more indices.
-      if (Files.notExists(path)) {
-        logger.info("Found {} caches in the file system.", index);
-        break;
-      }
-
-      SeekableByteChannel indexChannel = Files.newByteChannel(path);
-      caches[index] = new Cache(index, dataChannel, indexChannel);
-    }
-
-    Cache cache = Preconditions.checkNotNull(caches[CONFIG_INDEX],
-        "Configuration cache is null - unable to decode archives");
-
-    Buffer archiveChecksumTable = buildArchiveHashTable(cache);
-    for (int index = 0; index < archiveChecksums.length; index++) {
-      archiveChecksums[index] = archiveChecksumTable.getInt(index * Integer.BYTES);
-    }
-
-    // We don't use index 0
-    for (int index = 1; index < archives.length; index++) {
-      Buffer buffer = cache.getFile(index);
-      archives[index] = Archive.decode(buffer);
-    }
-
-    logger.info("Decoded {} archives from the configuration cache.", archives.length);
-
-    FileSystem fileSystem =
-        new FileSystem(caches, archives, archiveChecksums, archiveChecksumTable);
-
-    return fileSystem;
   }
 
   /**

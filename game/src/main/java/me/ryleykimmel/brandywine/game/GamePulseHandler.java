@@ -1,15 +1,14 @@
 package me.ryleykimmel.brandywine.game;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import me.ryleykimmel.brandywine.ServerContext;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
+
 import me.ryleykimmel.brandywine.Service;
-import me.ryleykimmel.brandywine.common.util.ThreadFactoryUtil;
 
 /**
  * Pulses game functions at a fixed rate.
@@ -27,35 +26,23 @@ public final class GamePulseHandler implements Runnable {
   private static final Logger logger = LoggerFactory.getLogger(GamePulseHandler.class);
 
   /**
-   * A ScheduledExecutorService for scheduling this task.
+   * A mapping of {@link Service} types to {@link Service}s.
    */
-  private final ScheduledExecutorService executor =
-      Executors.newSingleThreadScheduledExecutor(ThreadFactoryUtil.create(this).build());
+  private final Map<Class<? extends Service>, Service> services;
 
   /**
-   * The context of the Server.
+   * Constructs a new {@link GamePulseHandler}.
+   * 
+   * @param services The mapping of Services.
    */
-  private final ServerContext context;
-
-  /**
-   * Constructs a new {@link GamePulseHandler} with the specified ServerContext.
-   *
-   * @param context The context of the Server.
-   */
-  public GamePulseHandler(ServerContext context) {
-    this.context = context;
-  }
-
-  /**
-   * Initializes this GamePulseHandler.
-   */
-  public void init() {
-    executor.scheduleAtFixedRate(this, PULSE_DELAY, PULSE_DELAY, TimeUnit.MILLISECONDS);
+  public GamePulseHandler(Map<Class<? extends Service>, Service> services) {
+    this.services =
+        ImmutableMap.copyOf(Preconditions.checkNotNull(services, "Service map may not be null."));
   }
 
   @Override
   public void run() {
-    for (Service service : context.getServices()) {
+    for (Service service : services.values()) {
       try {
         long elapsed = service.pulse();
         long diff = service.getInterval() - elapsed;

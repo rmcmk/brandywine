@@ -2,9 +2,9 @@ package me.ryleykimmel.brandywine;
 
 import java.util.concurrent.TimeUnit;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Stopwatch;
 
-import io.netty.util.internal.StringUtil;
 import me.ryleykimmel.brandywine.game.GamePulseHandler;
 
 /**
@@ -16,11 +16,6 @@ public abstract class Service {
    * The current delay until this Service is executed.
    */
   private int currentDelay;
-
-  /**
-   * The context of the Server.
-   */
-  protected final ServerContext context;
 
   /**
    * The delay (number of intervals) until this Service is executed.
@@ -38,24 +33,20 @@ public abstract class Service {
   private final Stopwatch stopwatch = Stopwatch.createUnstarted();
 
   /**
-   * Constructs a new {@link Service} with the specified ServerContext and a default interval of
+   * Constructs a new {@link Service} with the default interval of
    * {@link GamePulseHandler#PULSE_DELAY}.
-   *
-   * @param context The context of the Server.
    */
-  public Service(ServerContext context) {
-    this(context, GamePulseHandler.PULSE_DELAY);
+  public Service() {
+    this(GamePulseHandler.PULSE_DELAY);
   }
 
   /**
-   * Constructs a new {@link Service} with the specified ServerContext and interval.
+   * Constructs a new {@link Service} with the specified interval.
    *
-   * @param context The context of the Server.
    * @param interval The interval, in milliseconds representing how often this Service will be
    * executed.
    */
-  public Service(ServerContext context, long interval) {
-    this.context = context;
+  public Service(long interval) {
     this.interval = interval;
 
     delay = (int) (interval / GamePulseHandler.PULSE_DELAY);
@@ -94,7 +85,7 @@ public abstract class Service {
 
   @Override
   public final String toString() {
-    return StringUtil.simpleClassName(this);
+    return MoreObjects.toStringHelper(this).toString();
   }
 
   /**

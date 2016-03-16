@@ -2,11 +2,14 @@ package me.ryleykimmel.brandywine.network.game;
 
 import java.util.List;
 
+import com.google.common.base.Preconditions;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
+import me.ryleykimmel.brandywine.network.game.frame.FrameMetadataSet;
 import me.ryleykimmel.brandywine.network.msg.Message;
 
 /**
@@ -20,22 +23,22 @@ public final class MessageEncoder extends MessageToMessageEncoder<Message> {
   private final ByteBufAllocator allocator = new PooledByteBufAllocator();
 
   /**
-   * The GameSession we're encoding for.
+   * The metadata of the Frame we are encoding.
    */
-  private final GameSession session;
+  private final FrameMetadataSet metadata;
 
   /**
-   * Constructs a new {@link MessageEncoder} with the specified GameSession.
+   * Constructs a new {@link MessageEncoder}.
    *
-   * @param session The GameSession we're encoding for.
+   * @param metadata The metadata of the Frame we are encoding.
    */
-  public MessageEncoder(GameSession session) {
-    this.session = session;
+  public MessageEncoder(FrameMetadataSet metadata) {
+    this.metadata = Preconditions.checkNotNull(metadata, "FrameMetadataSet may not be null.");
   }
 
   @Override
   protected void encode(ChannelHandlerContext ctx, Message message, List<Object> out) {
-    out.add(session.getContext().getFrameMetadataSet().encode(message, allocator));
+    out.add(metadata.encode(message, allocator));
   }
 
 }

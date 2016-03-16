@@ -3,7 +3,6 @@ package me.ryleykimmel.brandywine.game;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import me.ryleykimmel.brandywine.ServerContext;
 import me.ryleykimmel.brandywine.Service;
 import me.ryleykimmel.brandywine.game.model.World;
 import me.ryleykimmel.brandywine.game.model.player.Player;
@@ -44,12 +43,10 @@ public final class GameService extends Service {
   private final World world = new World();
 
   /**
-   * Constructs a new {@link GameService} with the specified ServerContext.
-   *
-   * @param context The context of the server.
+   * Constructs a new {@link GameService}.
    */
-  public GameService(ServerContext context) {
-    super(context, PULSE_INTERVAL);
+  public GameService() {
+    super(PULSE_INTERVAL);
   }
 
   /**

@@ -13,9 +13,9 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
-import me.ryleykimmel.brandywine.ServerContext;
 import me.ryleykimmel.brandywine.game.GameService;
 import me.ryleykimmel.brandywine.game.model.player.Player;
+import me.ryleykimmel.brandywine.network.game.frame.FrameMetadataSet;
 import me.ryleykimmel.brandywine.network.isaac.IsaacRandom;
 import me.ryleykimmel.brandywine.network.isaac.IsaacRandomPair;
 import me.ryleykimmel.brandywine.network.msg.GameMessageDispatcher;
@@ -45,11 +45,6 @@ public final class GameSession {
   private final long sessionKey = RANDOM.nextLong();
 
   /**
-   * The context of the Server.
-   */
-  private final ServerContext context;
-
-  /**
    * The SocketChannel this Session is listening on.
    */
   private final SocketChannel channel;
@@ -73,11 +68,9 @@ public final class GameSession {
   /**
    * Constructs a new {@link GameSession} with the specified ServerContext and SocketChannel.
    *
-   * @param context The context of the Server.
    * @param channel The SocketChannel this Session is listening on.
    */
-  public GameSession(ServerContext context, SocketChannel channel) {
-    this.context = context;
+  public GameSession(SocketChannel channel) {
     this.channel = channel;
   }
 
@@ -206,11 +199,12 @@ public final class GameSession {
   /**
    * Dispatches the specified Message for this GameSession.
    * 
+   * @param metadata The metadata for the specified Frame.
    * @param message The Message to dispatch.
    */
   @SuppressWarnings("unchecked")
-  public void dispatch(Message message) {
-    MessageHandler<Message> handler = context.getFrameMetadataSet().getHandler(message);
+  public void dispatch(FrameMetadataSet metadata, Message message) {
+    MessageHandler<Message> handler = metadata.getHandler(message);
     if (handler != null) {
       dispatcher.dispatch(handler, message);
     }
@@ -247,9 +241,10 @@ public final class GameSession {
 
   /**
    * Destroys this GameSession.
+   * 
+   * @param service The GameService, used to queue the removal of this GameSession's Player.
    */
-  public void destroy() {
-    GameService service = context.getService(GameService.class);
+  public void destroy(GameService service) {
     Optional<Player> player = Optional.ofNullable(attr().getAndRemove());
     player.ifPresent(service::removePlayer);
   }
@@ -261,15 +256,6 @@ public final class GameSession {
    */
   public InetSocketAddress getRemoteAddress() {
     return channel.remoteAddress();
-  }
-
-  /**
-   * Gets the ServerContext of this Session.
-   *
-   * @return The context of the Server.
-   */
-  public ServerContext getContext() {
-    return context;
   }
 
   /**

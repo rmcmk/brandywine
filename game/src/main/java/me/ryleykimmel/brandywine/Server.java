@@ -4,13 +4,19 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sql2o.Sql2o;
 
-import com.google.common.base.MoreObjects;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 import com.moandjiezana.toml.Toml;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -22,10 +28,13 @@ import io.netty.channel.ServerChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.util.internal.StringUtil;
 import me.ryleykimmel.brandywine.common.util.ClassUtil;
+import me.ryleykimmel.brandywine.common.util.ThreadFactoryUtil;
 import me.ryleykimmel.brandywine.common.util.TomlUtil;
 import me.ryleykimmel.brandywine.fs.FileSystem;
 import me.ryleykimmel.brandywine.game.GamePulseHandler;
+import me.ryleykimmel.brandywine.game.GameService;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationService;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationStrategy;
 import me.ryleykimmel.brandywine.network.game.GameChannelInitializer;
@@ -35,78 +44,6 @@ import me.ryleykimmel.brandywine.network.game.frame.FrameMetadataSet;
  * The core class of the Server.
  */
 final class Server {
-
-  /**
-   * The Logger for this class.
-   */
-  private static final Logger logger = LoggerFactory.getLogger(Server.class);
-
-  /**
-   * The context of this Server.
-   */
-  private final ServerContext context = new ServerContext(this);
-
-  /**
-   * The FrameMetadataSet for this Server.
-   */
-  private final FrameMetadataSet frameMetadataSet = new FrameMetadataSet();
-
-  /**
-   * The name of this Server.
-   */
-  private String name = "Brandywine";
-
-  /**
-   * The game port this Server will listen on.
-   */
-  private int gamePort = 43594;
-
-  /**
-   * The maximum amount of connections per host.
-   */
-  private int connectionLimit = 1;
-
-  /**
-   * The address for the Servers database.
-   */
-  private String databaseAddress = "localhost";
-
-  /**
-   * The port the Servers database is listening on.
-   */
-  private int databasePort = 3306;
-
-  /**
-   * The username of the Servers database.
-   */
-  private String databaseUsername = "root";
-
-  /**
-   * The password of the Servers database.
-   */
-  private String databasePassword = "";
-
-  /**
-   * The AuthenticationStrategy used to authenticate upstream login requests.
-   */
-  private AuthenticationStrategy authenticationStrategy = AuthenticationService.DEFAULT_STRATEGY;
-
-  /**
-   * This Servers database configuration.
-   */
-  private Sql2o sql2o;
-
-  /**
-   * The FileSystem for this Server.
-   */
-  private FileSystem fileSystem;
-
-  /**
-   * Constructs a new {@link Server}.
-   */
-  private Server() {
-    logger.info("{} is initializing!", name);
-  }
 
   /**
    * The entry point of this application which implements the command line-interface.
@@ -124,13 +61,64 @@ final class Server {
   }
 
   /**
+   * The Logger for this class.
+   */
+  private static final Logger logger = LoggerFactory.getLogger(Server.class);
+
+  /**
+   * A Map of all of the registered Services.
+   */
+  private final Map<Class<? extends Service>, Service> services = new HashMap<>();
+
+  /**
+   * The FrameMetadataSet for this Server.
+   */
+  private FrameMetadataSet frameMetadataSet;
+
+  /**
+   * The name of this Server.
+   */
+  private String name;
+
+  /**
+   * The game port this Server will listen on.
+   */
+  private int gamePort;
+
+  /**
+   * The maximum amount of connections per host.
+   */
+  private int connectionLimit;
+
+  /**
+   * The AuthenticationStrategy used to authenticate upstream login requests.
+   */
+  private AuthenticationStrategy authenticationStrategy;
+
+  /**
+   * This Servers database configuration.
+   */
+  private Sql2o sql2o;
+
+  /**
+   * The FileSystem for this Server.
+   */
+  private FileSystem fileSystem;
+
+  /**
+   * Constructs a new {@link Server}.
+   */
+  protected Server() {}
+
+  /**
    * Initializes this Server.
    * 
    * @throws Exception If some exception occurs.
    */
-  public void init() throws Exception {
+  private void init() throws Exception {
     initConfig();
     initServices();
+    initPulse();
   }
 
   /**
@@ -158,17 +146,15 @@ final class Server {
         throw new StartupException(path + " is not an instance of AuthenticationStrategy.");
       }
 
-      AuthenticationStrategy authenticationStrategy =
-          (AuthenticationStrategy) clazz.getConstructor(ServerContext.class).newInstance(context);
+      AuthenticationStrategy authenticationStrategy = (AuthenticationStrategy) clazz.newInstance();
       this.authenticationStrategy = authenticationStrategy;
     }
 
     toml = TomlUtil.read(data.resolve("database.toml"));
 
-    databaseAddress = toml.getString("url");
-    databasePort = toml.getLong("port").intValue();
-    databaseUsername = toml.getString("username");
-    databasePassword = toml.getString("password");
+    String databaseAddress = toml.getString("url");
+    String databaseUsername = toml.getString("username");
+    String databasePassword = toml.getString("password");
     sql2o = new Sql2o(databaseAddress, databaseUsername, databasePassword);
   }
 
@@ -188,20 +174,27 @@ final class Server {
         throw new StartupException(path + " is not an instance of Service.");
       }
 
-      Service service = (Service) clazz.getConstructor(ServerContext.class).newInstance(context);
-      context.addService(service.getClass(), service);
+      Service service = (Service) clazz.newInstance();
+      services.put(service.getClass(), service);
     }
+  }
+
+  /**
+   * Initializes the GamePulseHandler.
+   */
+  private void initPulse() {
+    GamePulseHandler pulseHandler = new GamePulseHandler(services);
+    ScheduledExecutorService executor =
+        Executors.newSingleThreadScheduledExecutor(ThreadFactoryUtil.create(pulseHandler).build());
+    executor.scheduleAtFixedRate(pulseHandler, GamePulseHandler.PULSE_DELAY,
+        GamePulseHandler.PULSE_DELAY, TimeUnit.MILLISECONDS);
   }
 
   /**
    * Starts this Server.
    */
-  public void start() {
-    setup(gamePort, new GameChannelInitializer(context));
-
-    GamePulseHandler handler = new GamePulseHandler(context);
-    handler.init();
-
+  private void start() {
+    setup(gamePort, new GameChannelInitializer(getService(GameService.class), frameMetadataSet));
     logger.info("{} has started successfully!", name);
   }
 
@@ -212,7 +205,7 @@ final class Server {
    * @param port The port to bind the ServerChannel to.
    * @param initializer A specialized {@link ChannelHandler} used to serve {@link Channel} requests.
    */
-  public void setup(int port, ChannelInitializer<SocketChannel> initializer) {
+  private void setup(int port, ChannelInitializer<SocketChannel> initializer) {
     ServerBootstrap bootstrap = new ServerBootstrap();
     SocketAddress address = new InetSocketAddress(port);
 
@@ -227,6 +220,28 @@ final class Server {
     bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
     bootstrap.childHandler(initializer);
     bootstrap.bind(address);
+  }
+
+  /**
+   * Gets a Service from its type.
+   *
+   * @param clazz The type of the Service, may not be {@code null}.
+   * @return The instance of the Service, never {@code null}.
+   */
+  @SuppressWarnings("unchecked")
+  public <T extends Service> T getService(Class<T> clazz) {
+    Preconditions.checkNotNull(clazz, "Service type may not be null.");
+    return (T) Preconditions.checkNotNull(services.get(clazz),
+        "Service for: " + StringUtil.simpleClassName(clazz) + " does not exist.");
+  }
+
+  /**
+   * Gets a shallow-copy of all {@link Service}s, as a {@link ImmutableSet}.
+   *
+   * @return The shallow ImmutableSet of Services.
+   */
+  public ImmutableSet<Service> getServices() {
+    return ImmutableSet.copyOf(services.values());
   }
 
   /**
@@ -248,57 +263,12 @@ final class Server {
   }
 
   /**
-   * Gets the game port this Server will listen on.
-   *
-   * @return The game port.
-   */
-  public int getGamePort() {
-    return gamePort;
-  }
-
-  /**
    * Gets the maximum amount of connections per host.
    * 
    * @return The maximum amount of connections per host.
    */
   public int getConnectionLimit() {
     return connectionLimit;
-  }
-
-  /**
-   * Gets the address for the Servers database.
-   * 
-   * @return The address for the Servers database.
-   */
-  public String getDatabaseAddress() {
-    return databaseAddress;
-  }
-
-  /**
-   * Gets the port the Servers database is listening on.
-   * 
-   * @return The port the Servers database is listening on.
-   */
-  public int getDatabasePort() {
-    return databasePort;
-  }
-
-  /**
-   * Gets the username of the Servers database.
-   * 
-   * @return The username of the Servers database.
-   */
-  public String getDatabaseUsername() {
-    return databaseUsername;
-  }
-
-  /**
-   * Gets the password of the Servers database.
-   * 
-   * @return The password of the Servers database.
-   */
-  public String getDatabasePassword() {
-    return databasePassword;
   }
 
   /**
@@ -326,11 +296,6 @@ final class Server {
    */
   public Sql2o getSql2o() {
     return sql2o;
-  }
-
-  @Override
-  public String toString() {
-    return MoreObjects.toStringHelper(this).add("name", name).add("gamePort", gamePort).toString();
   }
 
 }

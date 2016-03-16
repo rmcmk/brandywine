@@ -4,7 +4,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.google.common.base.MoreObjects;
 
-import me.ryleykimmel.brandywine.ServerContext;
 import me.ryleykimmel.brandywine.game.model.EntityType;
 import me.ryleykimmel.brandywine.game.model.Mob;
 import me.ryleykimmel.brandywine.game.model.Position;
@@ -89,11 +88,9 @@ public final class Player extends Mob {
    * @param session The GameSession this Player is attached to.
    * @param credentials The credentials of this Player.
    * @param world The World this Player is in.
-   * @param context The context of the Server.
    */
-  public Player(GameSession session, PlayerCredentials credentials, World world,
-      ServerContext context) {
-    super(world, EntityType.PLAYER, context);
+  public Player(GameSession session, PlayerCredentials credentials, World world) {
+    super(world, EntityType.PLAYER);
     this.session = session;
     this.credentials = credentials;
 
@@ -124,7 +121,7 @@ public final class Player extends Mob {
     teleport(position);
 
     write(new RebuildRegionMessage(position));
-    write(new ServerChatMessage("Welcome to %s.", session.getContext().getName()));
+    write(new ServerChatMessage("Welcome to %s.", "Brandywine")); // TODO: Access to Environment
 
     if (isMember()) {
       write(new ServerChatMessage("You are a member!"));

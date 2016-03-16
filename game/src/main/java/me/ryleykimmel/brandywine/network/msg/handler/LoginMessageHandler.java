@@ -1,5 +1,7 @@
 package me.ryleykimmel.brandywine.network.msg.handler;
 
+import com.google.common.base.Preconditions;
+
 import io.netty.channel.ChannelFutureListener;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationRequest;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationService;
@@ -29,6 +31,20 @@ public final class LoginMessageHandler implements GameMessageHandler<LoginMessag
    */
   private static final int EXPECTED_BLOCK_OPCODE = 10;
 
+  /**
+   * The AuthenticationService used to forward login requests.
+   */
+  private final AuthenticationService service;
+
+  /**
+   * Constructs a new {@link LoginMessageHandler}.
+   * 
+   * @param service The AuthenticationService used to forward login requests.
+   */
+  public LoginMessageHandler(AuthenticationService service) {
+    this.service = Preconditions.checkNotNull(service, "AuthenticationService may not be null.");
+  }
+
   @Override
   public void handle(GameSession session, LoginMessage message) {
     if (message.getDummy() != EXPECTED_DUMMY) {
@@ -53,13 +69,17 @@ public final class LoginMessageHandler implements GameMessageHandler<LoginMessag
 
     int[] sessionKeys = message.getSessionKeys();
 
+    if (sessionKeys.length != 4) { // TODO: Rid of magic
+      closeWithResponse(session, LoginResponseMessage.STATUS_BAD_SESSION_ID);
+      return;
+    }
+
     long sessionKey = (long) sessionKeys[2] << 32L | sessionKeys[3] & 0xFFFFFFFFL;
     if (session.getSessionKey() != sessionKey) {
       closeWithResponse(session, LoginResponseMessage.STATUS_BAD_SESSION_ID);
       return;
     }
 
-    AuthenticationService service = session.getContext().getService(AuthenticationService.class);
     service.submit(new AuthenticationRequest(session, new PlayerCredentials(message.getUserId(),
         message.getUsername(), message.getPassword(), sessionKeys)));
   }

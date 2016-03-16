@@ -15,7 +15,7 @@ public final class MobRepositoryTest {
   private static final class MobStub extends Mob {
 
     public MobStub() {
-      super(null, null, null);
+      super(null, null);
     }
 
   }

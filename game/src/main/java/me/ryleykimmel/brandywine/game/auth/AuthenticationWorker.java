@@ -3,8 +3,9 @@ package me.ryleykimmel.brandywine.game.auth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Preconditions;
+
 import io.netty.channel.ChannelFutureListener;
-import me.ryleykimmel.brandywine.ServerContext;
 import me.ryleykimmel.brandywine.game.GameService;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.network.game.GameSession;
@@ -21,9 +22,14 @@ public final class AuthenticationWorker implements Runnable {
   private static final Logger logger = LoggerFactory.getLogger(AuthenticationWorker.class);
 
   /**
-   * The context of the Server.
+   * The service used to queue game requests.
    */
-  private final ServerContext context;
+  private final GameService service;
+
+  /**
+   * The strategy used to authenticate {@link AuthenticationRequest}s.
+   */
+  private final AuthenticationStrategy strategy;
 
   /**
    * The request to authenticate.
@@ -31,25 +37,27 @@ public final class AuthenticationWorker implements Runnable {
   private final AuthenticationRequest request;
 
   /**
-   * Constructs a new {@link AuthenticationWorker} with the specified and AuthenticationRequest.
+   * Constructs a new {@link AuthenticationWorker}.
    *
-   * @param context The context of the Server.
+   * @param service The service used to queue game requests.
+   * @param strategy The strategy used to authenticate {@link AuthenticationRequest}s.
    * @param request The request to authenticate.
    */
-  public AuthenticationWorker(ServerContext context, AuthenticationRequest request) {
-    this.context = context;
-    this.request = request;
+  public AuthenticationWorker(GameService service, AuthenticationStrategy strategy,
+      AuthenticationRequest request) {
+    this.service = Preconditions.checkNotNull(service, "GameService may not be null.");
+    this.strategy = Preconditions.checkNotNull(strategy, "AuthenticationStrategy may not be null.");
+    this.request = Preconditions.checkNotNull(request, "AuthenticationRequest may not be null.");
   }
 
   @Override
   public void run() {
     GameSession session = request.getSession();
-    GameService service = context.getService(GameService.class);
 
-    Player player = new Player(session, request.getCredentials(), service.getWorld(), context);
+    Player player = new Player(session, request.getCredentials(), service.getWorld());
 
     try {
-      AuthenticationResponse response = context.getAuthenticationStrategy().authenticate(player);
+      AuthenticationResponse response = strategy.authenticate(player);
 
       if (response.getStatus() != LoginResponseMessage.STATUS_OK) {
         closeWithResponse(session, response.getStatus());

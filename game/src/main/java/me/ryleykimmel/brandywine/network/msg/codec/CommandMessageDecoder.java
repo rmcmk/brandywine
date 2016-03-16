@@ -1,6 +1,5 @@
 package me.ryleykimmel.brandywine.network.msg.codec;
 
-import me.ryleykimmel.brandywine.network.game.GameSession;
 import me.ryleykimmel.brandywine.network.game.frame.FrameReader;
 import me.ryleykimmel.brandywine.network.msg.MessageDecoder;
 import me.ryleykimmel.brandywine.network.msg.impl.CommandMessage;
@@ -11,7 +10,7 @@ import me.ryleykimmel.brandywine.network.msg.impl.CommandMessage;
 public final class CommandMessageDecoder implements MessageDecoder<CommandMessage> {
 
   @Override
-  public CommandMessage decode(GameSession session, FrameReader reader) {
+  public CommandMessage decode(FrameReader reader) {
     return new CommandMessage(reader.getString());
   }
 

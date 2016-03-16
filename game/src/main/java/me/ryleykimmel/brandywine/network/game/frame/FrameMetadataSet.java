@@ -15,7 +15,6 @@ import com.moandjiezana.toml.Toml;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.util.internal.StringUtil;
 import me.ryleykimmel.brandywine.common.util.TomlUtil;
-import me.ryleykimmel.brandywine.network.game.GameSession;
 import me.ryleykimmel.brandywine.network.msg.Message;
 import me.ryleykimmel.brandywine.network.msg.MessageDecoder;
 import me.ryleykimmel.brandywine.network.msg.MessageEncoder;
@@ -204,15 +203,14 @@ public final class FrameMetadataSet {
   /**
    * Decodes the specified Frame into a Message.
    * 
-   * @param session The GameSession.
    * @param frame The Frame to decode.
    * @return The decoded Message, never {@code null}.
    */
   @SuppressWarnings("unchecked")
-  public <T extends Message> T decode(GameSession session, Frame frame) {
+  public <T extends Message> T decode(Frame frame) {
     MessageDecoder<T> decoder = (MessageDecoder<T>) decoders.get(frame.getOpcode());
     FrameReader reader = new FrameReader(frame);
-    return decoder.decode(session, reader);
+    return decoder.decode(reader);
   }
 
   /**

@@ -6,12 +6,13 @@ import java.util.List;
 
 import org.sql2o.Connection;
 import org.sql2o.Query;
+import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 import org.sql2o.data.Row;
 
+import com.google.common.base.Preconditions;
 import com.lambdaworks.crypto.SCryptUtil;
 
-import me.ryleykimmel.brandywine.ServerContext;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationResponse;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationStrategy;
 import me.ryleykimmel.brandywine.game.model.player.Player;
@@ -33,17 +34,17 @@ public final class SQLAuthenticationStrategy implements AuthenticationStrategy {
   private static final int MAXIMUM_PASSWORD_LENGTH = 20;
 
   /**
-   * The context of the Server.
+   * The Sql2o used to create JDBC {@link Connection}s.
    */
-  private final ServerContext context;
+  private final Sql2o sql2o;
 
   /**
-   * Constructs a new {@link SQLAuthenticationStrategy} with the specified ServerContext.
+   * Constructs a new {@link SQLAuthenticationStrategy}.
    * 
-   * @param context The context of the Server.
+   * @param sql2o The Sql2o used to create JDBC {@link Connection}s.
    */
-  public SQLAuthenticationStrategy(ServerContext context) {
-    this.context = context;
+  public SQLAuthenticationStrategy(Sql2o sql2o) {
+    this.sql2o = Preconditions.checkNotNull(sql2o, "Sql2o may not be null.");
   }
 
   @Override
@@ -61,7 +62,7 @@ public final class SQLAuthenticationStrategy implements AuthenticationStrategy {
       return AuthenticationResponse.INVALID_CREDENTIALS;
     }
 
-    try (Connection connection = context.getSql2o().open()) {
+    try (Connection connection = sql2o.open()) {
       String remoteAddress = player.getSession().getRemoteAddress().getHostString();
 
       Query select =

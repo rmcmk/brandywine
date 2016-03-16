@@ -4,7 +4,6 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 import me.ryleykimmel.brandywine.game.model.Position;
-import me.ryleykimmel.brandywine.network.game.GameSession;
 import me.ryleykimmel.brandywine.network.game.frame.DataOrder;
 import me.ryleykimmel.brandywine.network.game.frame.DataTransformation;
 import me.ryleykimmel.brandywine.network.game.frame.DataType;
@@ -18,7 +17,7 @@ import me.ryleykimmel.brandywine.network.msg.impl.MovementMessage;
 public final class MovementMessageDecoder implements MessageDecoder<MovementMessage> {
 
   @Override
-  public MovementMessage decode(GameSession session, FrameReader reader) {
+  public MovementMessage decode(FrameReader reader) {
     int length = reader.getLength();
     if (reader.getOpcode() == 248) {
       length -= 14; // strip off anti-cheat data

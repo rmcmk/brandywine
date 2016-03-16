@@ -5,9 +5,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import me.ryleykimmel.brandywine.ServerContext;
+import com.google.common.base.Preconditions;
+
 import me.ryleykimmel.brandywine.Service;
 import me.ryleykimmel.brandywine.common.util.ThreadFactoryUtil;
+import me.ryleykimmel.brandywine.game.GameService;
 
 /**
  * Services AuthenticationRequests every pulse.
@@ -41,12 +43,25 @@ public final class AuthenticationService extends Service {
       Executors.newCachedThreadPool(ThreadFactoryUtil.create(this).build());
 
   /**
-   * Constructs a new {@link AuthenticationService} with the specified ServerContext.
-   *
-   * @param context The context of the Server.
+   * The service used to queue game requests.
    */
-  public AuthenticationService(ServerContext context) {
-    super(context, PULSE_INTERVAL);
+  private final GameService service;
+
+  /**
+   * The strategy used to authenticate {@link AuthenticationRequest}s.
+   */
+  private final AuthenticationStrategy strategy;
+
+  /**
+   * Constructs a new {@link AuthenticationService}.
+   *
+   * @param service The service used to queue game requests.
+   * @param strategy The strategy used to authenticate {@link AuthenticationRequest}s.
+   */
+  public AuthenticationService(GameService service, AuthenticationStrategy strategy) {
+    super(PULSE_INTERVAL);
+    this.service = Preconditions.checkNotNull(service, "GameService may not be null.");
+    this.strategy = Preconditions.checkNotNull(strategy, "AuthenticationStrategy may not be null.");
   }
 
   /**
@@ -66,7 +81,7 @@ public final class AuthenticationService extends Service {
         break;
       }
 
-      executor.submit(new AuthenticationWorker(context, request));
+      executor.submit(new AuthenticationWorker(service, strategy, request));
     }
   }
 

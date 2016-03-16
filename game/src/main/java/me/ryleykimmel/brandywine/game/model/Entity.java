@@ -1,6 +1,5 @@
 package me.ryleykimmel.brandywine.game.model;
 
-import me.ryleykimmel.brandywine.ServerContext;
 import me.ryleykimmel.brandywine.game.area.Region;
 import me.ryleykimmel.brandywine.game.area.RegionRepository;
 
@@ -25,11 +24,6 @@ public abstract class Entity {
   protected final EntityType type;
 
   /**
-   * The context of the Server.
-   */
-  protected final ServerContext context;
-
-  /**
    * The current Position of this Entity.
    */
   protected Position position = DEFAULT_POSITION;
@@ -39,12 +33,10 @@ public abstract class Entity {
    * 
    * @param world The World this Entity is in.
    * @param type The type of this Entity.
-   * @param context The context of the Server.
    */
-  public Entity(World world, EntityType type, ServerContext context) {
+  public Entity(World world, EntityType type) {
     this.world = world;
     this.type = type;
-    this.context = context;
   }
 
   /**
@@ -92,15 +84,6 @@ public abstract class Entity {
    */
   public final EntityType getType() {
     return type;
-  }
-
-  /**
-   * Gets the context of the Server.
-   * 
-   * @return The context of the Server.
-   */
-  public final ServerContext getContext() {
-    return context;
   }
 
   /**
