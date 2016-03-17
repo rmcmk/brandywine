@@ -7,6 +7,7 @@ import com.google.common.base.Preconditions;
 
 import io.netty.channel.ChannelFutureListener;
 import me.ryleykimmel.brandywine.game.GameService;
+import me.ryleykimmel.brandywine.game.io.ResponseCode;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.network.game.GameSession;
 import me.ryleykimmel.brandywine.network.msg.impl.LoginResponseMessage;
@@ -57,26 +58,26 @@ public final class AuthenticationWorker implements Runnable {
     Player player = new Player(session, request.getCredentials(), service.getWorld());
 
     try {
-      AuthenticationResponse response = strategy.authenticate(player);
+      ResponseCode response = strategy.authenticate(player);
 
-      if (response.getStatus() != LoginResponseMessage.STATUS_OK) {
-        closeWithResponse(session, response.getStatus());
+      if (response != ResponseCode.STATUS_OK) {
+        closeWithResponse(session, response);
         return;
       }
 
       if (service.isPlayerOnline(player)) {
-        closeWithResponse(session, LoginResponseMessage.STATUS_ACCOUNT_ONLINE);
+        closeWithResponse(session, ResponseCode.STATUS_ACCOUNT_ONLINE);
         return;
       }
 
       if (!service.queuePlayer(player)) {
-        closeWithResponse(session, LoginResponseMessage.STATUS_SERVER_FULL);
+        closeWithResponse(session, ResponseCode.STATUS_SERVER_FULL);
         return;
       }
 
     } catch (Exception cause) {
       logger.error("Error occured while authenticating.", cause);
-      closeWithResponse(session, LoginResponseMessage.STATUS_COULD_NOT_COMPLETE);
+      closeWithResponse(session, ResponseCode.STATUS_COULD_NOT_COMPLETE);
     }
   }
 
@@ -86,7 +87,7 @@ public final class AuthenticationWorker implements Runnable {
    * @param session The GameSession to close.
    * @param response The response to send.
    */
-  private void closeWithResponse(GameSession session, int response) {
+  private void closeWithResponse(GameSession session, ResponseCode response) {
     session.writeAndFlush(new LoginResponseMessage(response))
         .addListener(ChannelFutureListener.CLOSE);
   }

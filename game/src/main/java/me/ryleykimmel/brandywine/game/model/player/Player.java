@@ -4,6 +4,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.google.common.base.MoreObjects;
 
+import me.ryleykimmel.brandywine.game.io.ResponseCode;
 import me.ryleykimmel.brandywine.game.model.EntityType;
 import me.ryleykimmel.brandywine.game.model.Mob;
 import me.ryleykimmel.brandywine.game.model.Position;
@@ -110,7 +111,7 @@ public final class Player extends Mob {
    */
   public void login() {
     write(
-        new LoginResponseMessage(LoginResponseMessage.STATUS_OK, privileges.getPrimaryId(), false));
+        new LoginResponseMessage(ResponseCode.STATUS_OK, privileges.getPrimaryId(), false));
     write(new InitializePlayerMessage(isMember(), getIndex()));
 
     session.seedCiphers(credentials.getSessionKeys());

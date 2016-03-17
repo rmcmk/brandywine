@@ -3,6 +3,7 @@ package me.ryleykimmel.brandywine.game.auth;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import me.ryleykimmel.brandywine.game.io.ResponseCode;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 
 /**
@@ -19,6 +20,6 @@ public interface AuthenticationStrategy {
    * @throws IOException If some I/O error occurs.
    * @throws SQLException If some database access error occurs.
    */
-  AuthenticationResponse authenticate(Player player) throws IOException, SQLException;
+  ResponseCode authenticate(Player player) throws IOException, SQLException;
 
 }

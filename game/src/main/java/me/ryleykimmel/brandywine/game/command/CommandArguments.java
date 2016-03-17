@@ -5,8 +5,6 @@ import java.util.Arrays;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 
-import me.ryleykimmel.brandywine.common.Assertions;
-
 /**
  * Represents the arguments of a Command.
  */
@@ -179,7 +177,7 @@ public final class CommandArguments {
    * @param index The current argument index.
    */
   private void checkIndex(int index) {
-    Assertions.checkWithin(0, arguments.length, index,
+    Preconditions.checkElementIndex(index, arguments.length,
         "Index out of bounds: " + index + " length: " + arguments.length);
     Preconditions.checkNotNull(arguments[index], "Argument for index: " + index + " is null.");
   }

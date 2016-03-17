@@ -5,6 +5,7 @@ import com.google.common.base.Preconditions;
 import io.netty.channel.ChannelFutureListener;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationRequest;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationService;
+import me.ryleykimmel.brandywine.game.io.ResponseCode;
 import me.ryleykimmel.brandywine.game.model.player.PlayerCredentials;
 import me.ryleykimmel.brandywine.network.game.GameSession;
 import me.ryleykimmel.brandywine.network.msg.GameMessageHandler;
@@ -48,35 +49,35 @@ public final class LoginMessageHandler implements GameMessageHandler<LoginMessag
   @Override
   public void handle(GameSession session, LoginMessage message) {
     if (message.getDummy() != EXPECTED_DUMMY) {
-      closeWithResponse(session, LoginResponseMessage.STATUS_LOGIN_SERVER_REJECTED_SESSION);
+      closeWithResponse(session, ResponseCode.STATUS_LOGIN_SERVER_REJECTED_SESSION);
       return;
     }
 
     if (message.getClientVersion() != CLIENT_VERSION) {
-      closeWithResponse(session, LoginResponseMessage.STATUS_GAME_UPDATED);
+      closeWithResponse(session, ResponseCode.STATUS_GAME_UPDATED);
       return;
     }
 
     if (message.getDetail() != 0 && message.getDetail() != 1) {
-      closeWithResponse(session, LoginResponseMessage.STATUS_LOGIN_SERVER_REJECTED_SESSION);
+      closeWithResponse(session, ResponseCode.STATUS_LOGIN_SERVER_REJECTED_SESSION);
       return;
     }
 
     if (message.getBlockOperationCode() != EXPECTED_BLOCK_OPCODE) {
-      closeWithResponse(session, LoginResponseMessage.STATUS_LOGIN_SERVER_REJECTED_SESSION);
+      closeWithResponse(session, ResponseCode.STATUS_LOGIN_SERVER_REJECTED_SESSION);
       return;
     }
 
     int[] sessionKeys = message.getSessionKeys();
 
     if (sessionKeys.length != 4) { // TODO: Rid of magic
-      closeWithResponse(session, LoginResponseMessage.STATUS_BAD_SESSION_ID);
+      closeWithResponse(session, ResponseCode.STATUS_BAD_SESSION_ID);
       return;
     }
 
     long sessionKey = (long) sessionKeys[2] << 32L | sessionKeys[3] & 0xFFFFFFFFL;
     if (session.getSessionKey() != sessionKey) {
-      closeWithResponse(session, LoginResponseMessage.STATUS_BAD_SESSION_ID);
+      closeWithResponse(session, ResponseCode.STATUS_BAD_SESSION_ID);
       return;
     }
 
@@ -90,7 +91,7 @@ public final class LoginMessageHandler implements GameMessageHandler<LoginMessag
    * @param session The GameSession to close.
    * @param response The response to send.
    */
-  private void closeWithResponse(GameSession session, int response) {
+  private void closeWithResponse(GameSession session, ResponseCode response) {
     session.writeAndFlush(new LoginResponseMessage(response))
         .addListener(ChannelFutureListener.CLOSE);
   }

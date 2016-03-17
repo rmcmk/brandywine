@@ -10,6 +10,7 @@ import com.google.common.base.Preconditions;
 import me.ryleykimmel.brandywine.Service;
 import me.ryleykimmel.brandywine.common.util.ThreadFactoryUtil;
 import me.ryleykimmel.brandywine.game.GameService;
+import me.ryleykimmel.brandywine.game.io.ResponseCode;
 
 /**
  * Services AuthenticationRequests every pulse.
@@ -19,7 +20,7 @@ public final class AuthenticationService extends Service {
   /**
    * Represents the default {@link AuthenticationStrategy}.
    */
-  public static final AuthenticationStrategy DEFAULT_STRATEGY = p -> AuthenticationResponse.SUCCESS;
+  public static final AuthenticationStrategy DEFAULT_STRATEGY = p -> ResponseCode.STATUS_OK;
 
   /**
    * How often the requests are serviced, in milliseconds.

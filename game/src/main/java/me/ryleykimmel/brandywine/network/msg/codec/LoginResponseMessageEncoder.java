@@ -1,5 +1,6 @@
 package me.ryleykimmel.brandywine.network.msg.codec;
 
+import me.ryleykimmel.brandywine.game.io.ResponseCode;
 import me.ryleykimmel.brandywine.network.game.frame.DataType;
 import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
 import me.ryleykimmel.brandywine.network.msg.MessageEncoder;
@@ -12,8 +13,9 @@ public final class LoginResponseMessageEncoder implements MessageEncoder<LoginRe
 
   @Override
   public void encode(LoginResponseMessage message, FrameBuilder builder) {
-    builder.put(DataType.BYTE, message.getStatus());
-    if (message.getStatus() == LoginResponseMessage.STATUS_OK) {
+    ResponseCode response = message.getResponse();
+    builder.put(DataType.BYTE, response.getCode());
+    if (response == ResponseCode.STATUS_OK) {
       builder.put(DataType.BYTE, message.getPrivilege());
       builder.put(DataType.BYTE, message.isFlagged() ? 1 : 0);
     }

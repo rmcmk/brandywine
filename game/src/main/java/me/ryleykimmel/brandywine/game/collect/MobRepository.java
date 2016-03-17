@@ -169,13 +169,9 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
    * @return The Mob instance.
    */
   public T get(int index) {
-    int actual = index - 1;
-    if (actual < 0 || actual >= capacity) {
-      throw new ArrayIndexOutOfBoundsException(
-          "index: " + index + ", actual: " + actual + " is out of bounds, capacity: " + capacity);
-    }
-
-    return mobs[actual];
+    int normalized = Preconditions.checkElementIndex(index - 1, capacity,
+        "index: " + index + " is out of bounds, capacity: " + capacity);
+    return mobs[normalized];
   }
 
   @Override
@@ -205,10 +201,10 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
         "Mob index mismatch, unable to remove Mob. [index=" + mob.getIndex() + ", expected=" + index
             + "]");
 
-    int actual = index - 1;
+    int normalized = index - 1;
 
-    indices.offer(actual);
-    mobs[actual] = null;
+    indices.offer(normalized);
+    mobs[normalized] = null;
     mob.setIndex(-1);
     size--;
   }

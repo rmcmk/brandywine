@@ -13,8 +13,8 @@ import org.sql2o.data.Row;
 import com.google.common.base.Preconditions;
 import com.lambdaworks.crypto.SCryptUtil;
 
-import me.ryleykimmel.brandywine.game.auth.AuthenticationResponse;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationStrategy;
+import me.ryleykimmel.brandywine.game.io.ResponseCode;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.model.player.PlayerCredentials;
 
@@ -48,18 +48,18 @@ public final class SQLAuthenticationStrategy implements AuthenticationStrategy {
   }
 
   @Override
-  public AuthenticationResponse authenticate(Player player) {
+  public ResponseCode authenticate(Player player) {
     PlayerCredentials credentials = player.getCredentials();
 
     String username = credentials.getUsername();
     String password = credentials.getPassword();
 
     if (username.isEmpty() || username.length() > MAXIMUM_USERNAME_LENGTH) {
-      return AuthenticationResponse.INVALID_CREDENTIALS;
+      return ResponseCode.STATUS_INVALID_CREDENTIALS;
     }
 
     if (password.isEmpty() || password.length() > MAXIMUM_PASSWORD_LENGTH) {
-      return AuthenticationResponse.INVALID_CREDENTIALS;
+      return ResponseCode.STATUS_INVALID_CREDENTIALS;
     }
 
     try (Connection connection = sql2o.open()) {
@@ -85,7 +85,7 @@ public final class SQLAuthenticationStrategy implements AuthenticationStrategy {
           delete.addParameter("remote_addr", remoteAddress);
           delete.executeUpdate();
         } else if (count >= 5) {
-          return AuthenticationResponse.TOO_MANY_LOGINS;
+          return ResponseCode.STATUS_TOO_MANY_LOGINS;
         }
       }
 
@@ -97,7 +97,7 @@ public final class SQLAuthenticationStrategy implements AuthenticationStrategy {
       if (results.isEmpty()) {
         // Account does not exist, maybe create response code for 'you must create an
         // account before playing'
-        return AuthenticationResponse.SUCCESS;
+        return ResponseCode.STATUS_OK;
       }
 
       for (Row result : results) {
@@ -112,16 +112,16 @@ public final class SQLAuthenticationStrategy implements AuthenticationStrategy {
           insert.addParameter("remote_addr", remoteAddress);
           insert.executeUpdate();
 
-          return AuthenticationResponse.INVALID_CREDENTIALS;
+          return ResponseCode.STATUS_INVALID_CREDENTIALS;
         }
 
         player.setDatabaseId(id);
       }
     } catch (Sql2oException cause) { // SQL server offline
-      return AuthenticationResponse.LOGIN_SERVER_OFFLINE;
+      return ResponseCode.STATUS_LOGIN_SERVER_OFFLINE;
     }
 
-    return AuthenticationResponse.SUCCESS;
+    return ResponseCode.STATUS_OK;
   }
 
 }
