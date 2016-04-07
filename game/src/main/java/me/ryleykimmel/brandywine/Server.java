@@ -4,9 +4,7 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -15,8 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sql2o.Sql2o;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
 import com.moandjiezana.toml.Toml;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -28,7 +24,6 @@ import io.netty.channel.ServerChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.util.internal.StringUtil;
 import me.ryleykimmel.brandywine.common.util.ClassUtil;
 import me.ryleykimmel.brandywine.common.util.ThreadFactoryUtil;
 import me.ryleykimmel.brandywine.common.util.TomlUtil;
@@ -64,11 +59,11 @@ final class Server {
    * The Logger for this class.
    */
   private static final Logger logger = LoggerFactory.getLogger(Server.class);
-
+  
   /**
-   * A Map of all of the registered Services.
+   * The ServiceSet for this Server.
    */
-  private final Map<Class<? extends Service>, Service> services = new HashMap<>();
+  private final ServiceSet services = new ServiceSet();
 
   /**
    * The FrameMetadataSet for this Server.
@@ -175,7 +170,7 @@ final class Server {
       }
 
       Service service = (Service) clazz.newInstance();
-      services.put(service.getClass(), service);
+      services.register(service);
     }
   }
 
@@ -194,7 +189,7 @@ final class Server {
    * Starts this Server.
    */
   private void start() {
-    setup(gamePort, new GameChannelInitializer(getService(GameService.class), frameMetadataSet));
+    setup(gamePort, new GameChannelInitializer(services.get(GameService.class), frameMetadataSet));
     logger.info("{} has started successfully!", name);
   }
 
@@ -220,28 +215,6 @@ final class Server {
     bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
     bootstrap.childHandler(initializer);
     bootstrap.bind(address);
-  }
-
-  /**
-   * Gets a Service from its type.
-   *
-   * @param clazz The type of the Service, may not be {@code null}.
-   * @return The instance of the Service, never {@code null}.
-   */
-  @SuppressWarnings("unchecked")
-  public <T extends Service> T getService(Class<T> clazz) {
-    Preconditions.checkNotNull(clazz, "Service type may not be null.");
-    return (T) Preconditions.checkNotNull(services.get(clazz),
-        "Service for: " + StringUtil.simpleClassName(clazz) + " does not exist.");
-  }
-
-  /**
-   * Gets a shallow-copy of all {@link Service}s, as a {@link ImmutableSet}.
-   *
-   * @return The shallow ImmutableSet of Services.
-   */
-  public ImmutableSet<Service> getServices() {
-    return ImmutableSet.copyOf(services.values());
   }
 
   /**

@@ -14,15 +14,14 @@ subprojects {
 		compile 'org.apache.commons:commons-compress:1.10'
 		compile 'org.apache.commons:commons-lang3:3.4'
 		compile 'mysql:mysql-connector-java:5.1.38'
-		compile 'org.slf4j:slf4j-api:1.7.19'
-		compile 'org.slf4j:slf4j-simple:1.7.19'
+		compile 'org.slf4j:slf4j-api:1.7.21'
+		compile 'org.slf4j:slf4j-simple:1.7.21'
 		compile 'io.netty:netty-all:4.0.34.Final'
 		compile 'com.google.guava:guava:19.0'
 		compile 'com.google.code.gson:gson:2.6.2'
 		compile 'com.moandjiezana.toml:toml4j:0.5.1'
 		compile 'org.sql2o:sql2o:1.5.4'
 		compile 'com.lambdaworks:scrypt:1.4.0'
-		compile 'javax.inject:javax.inject:1'
 
 		testCompile 'junit:junit:4.12'
 	}

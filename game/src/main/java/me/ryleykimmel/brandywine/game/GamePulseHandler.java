@@ -1,14 +1,10 @@
 package me.ryleykimmel.brandywine.game;
 
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
-
 import me.ryleykimmel.brandywine.Service;
+import me.ryleykimmel.brandywine.ServiceSet;
 
 /**
  * Pulses game functions at a fixed rate.
@@ -26,23 +22,22 @@ public final class GamePulseHandler implements Runnable {
   private static final Logger logger = LoggerFactory.getLogger(GamePulseHandler.class);
 
   /**
-   * A mapping of {@link Service} types to {@link Service}s.
+   * A mapping of {@link Service}s.
    */
-  private final Map<Class<? extends Service>, Service> services;
+  private final ServiceSet services;
 
   /**
    * Constructs a new {@link GamePulseHandler}.
    * 
    * @param services The mapping of Services.
    */
-  public GamePulseHandler(Map<Class<? extends Service>, Service> services) {
-    this.services =
-        ImmutableMap.copyOf(Preconditions.checkNotNull(services, "Service map may not be null."));
+  public GamePulseHandler(ServiceSet services) {
+    this.services = services;
   }
 
   @Override
   public void run() {
-    for (Service service : services.values()) {
+    for (Service service : services.getServices()) {
       try {
         long elapsed = service.pulse();
         long diff = service.getInterval() - elapsed;
