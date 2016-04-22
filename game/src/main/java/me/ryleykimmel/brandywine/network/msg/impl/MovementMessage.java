@@ -8,7 +8,7 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 /**
  * A {@link Message} which requests movement.
  */
-public final class MovementMessage implements Message {
+public final class MovementMessage extends Message {
 
   /**
    * Whether or not we should run.

@@ -5,7 +5,7 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 /**
  * A {@link Message} which sends initialization flags.
  */
-public final class InitializePlayerMessage implements Message {
+public final class InitializePlayerMessage extends Message {
 
   /**
    * The membership status of the Player.

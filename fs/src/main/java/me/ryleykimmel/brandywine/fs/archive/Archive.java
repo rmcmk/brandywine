@@ -9,7 +9,6 @@ import java.util.Optional;
 import com.google.common.collect.ImmutableMap;
 
 import me.ryleykimmel.brandywine.common.Buffer;
-import me.ryleykimmel.brandywine.common.Suppliers;
 import me.ryleykimmel.brandywine.common.util.CompressionUtil;
 
 /**
@@ -55,8 +54,8 @@ public final class Archive {
    * @return The entry.
    */
   public ArchiveEntry getEntry(String name) {
-    return getOptionalEntry(name)
-        .orElseThrow(Suppliers.illegal("ArchiveEntry not found for " + name + "."));
+    return getOptionalEntry(name).orElseThrow(
+        () -> new IllegalArgumentException("ArchiveEntry not found for " + name + "."));
   }
 
   /**

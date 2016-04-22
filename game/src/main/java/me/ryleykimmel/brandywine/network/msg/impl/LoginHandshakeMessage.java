@@ -5,7 +5,7 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 /**
  * A {@link Message} which initiates login to the server.
  */
-public final class LoginHandshakeMessage implements Message {
+public final class LoginHandshakeMessage extends Message {
 
   /**
    * The hash of the connecting clients username.

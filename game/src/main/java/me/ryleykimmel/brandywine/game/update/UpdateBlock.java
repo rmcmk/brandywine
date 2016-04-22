@@ -1,6 +1,6 @@
 package me.ryleykimmel.brandywine.game.update;
 
-import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
+import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
 
 /**
  * Represents an update block.

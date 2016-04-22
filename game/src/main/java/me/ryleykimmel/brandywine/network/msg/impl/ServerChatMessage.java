@@ -6,7 +6,7 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 /**
  * A {@link Message} which sends the specified chat message.
  */
-public final class ServerChatMessage implements Message {
+public final class ServerChatMessage extends Message {
 
   /**
    * The chat message.

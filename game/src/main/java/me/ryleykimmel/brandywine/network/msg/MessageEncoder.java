@@ -1,14 +1,14 @@
 package me.ryleykimmel.brandywine.network.msg;
 
-import me.ryleykimmel.brandywine.network.game.frame.Frame;
-import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
+import me.ryleykimmel.brandywine.network.frame.Frame;
+import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
 
 /**
  * An encoder which encodes some Message into a {@link Frame}.
  *
  * @param <T> The Message type.
  */
-public interface MessageEncoder<T extends Message> {
+interface MessageEncoder<T extends Message> {
 
   /**
    * Encodes the specified Message into a Frame.

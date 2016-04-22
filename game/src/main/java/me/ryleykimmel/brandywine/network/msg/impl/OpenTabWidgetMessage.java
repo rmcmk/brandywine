@@ -5,7 +5,7 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 /**
  * A {@link Message} sent to the client to open a tab widget.
  */
-public final class OpenTabWidgetMessage implements Message {
+public final class OpenTabWidgetMessage extends Message {
 
   /**
    * The Widget id.

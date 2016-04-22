@@ -9,7 +9,7 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 /**
  * A {@link Message} which updates Players.
  */
-public final class PlayerUpdateMessage implements Message {
+public final class PlayerUpdateMessage extends Message {
 
   /**
    * The last known region.

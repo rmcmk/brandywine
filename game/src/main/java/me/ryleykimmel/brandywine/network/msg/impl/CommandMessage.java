@@ -5,7 +5,7 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 /**
  * A {@link Message} which performs a command-action.
  */
-public final class CommandMessage implements Message {
+public final class CommandMessage extends Message {
 
   /**
    * The command.

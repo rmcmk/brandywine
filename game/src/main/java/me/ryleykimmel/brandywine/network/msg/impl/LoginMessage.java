@@ -5,7 +5,7 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 /**
  * A {@link Message} which requests login to the server.
  */
-public final class LoginMessage implements Message {
+public final class LoginMessage extends Message {
 
   /**
    * A constant dummy value.

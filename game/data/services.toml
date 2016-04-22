@@ -1,4 +1,0 @@
-services = [
-	"me.ryleykimmel.brandywine.game.GameService",
-	"me.ryleykimmel.brandywine.game.auth.AuthenticationService"
-]

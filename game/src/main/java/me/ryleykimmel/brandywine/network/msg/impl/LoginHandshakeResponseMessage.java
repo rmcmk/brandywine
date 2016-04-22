@@ -5,7 +5,7 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 /**
  * A {@link Message} which responds to a {@link LoginHandshakeMessage}.
  */
-public final class LoginHandshakeResponseMessage implements Message {
+public final class LoginHandshakeResponseMessage extends Message {
 
   /**
    * The status of the response.

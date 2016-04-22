@@ -3,7 +3,7 @@ package me.ryleykimmel.brandywine.game.auth;
 import com.google.common.base.MoreObjects;
 
 import me.ryleykimmel.brandywine.game.model.player.PlayerCredentials;
-import me.ryleykimmel.brandywine.network.game.GameSession;
+import me.ryleykimmel.brandywine.network.Session;
 
 /**
  * Represents an authentication request.
@@ -13,7 +13,7 @@ public final class AuthenticationRequest {
   /**
    * The GameSession who is making the request.
    */
-  private final GameSession session;
+  private final Session session;
 
   /**
    * The PlayerCredentials that are requesting authentication.
@@ -27,7 +27,7 @@ public final class AuthenticationRequest {
    * @param session The GameSession who is making the request.
    * @param credentials The PlayerCredentials that are requesting authentication.
    */
-  public AuthenticationRequest(GameSession session, PlayerCredentials credentials) {
+  public AuthenticationRequest(Session session, PlayerCredentials credentials) {
     this.session = session;
     this.credentials = credentials;
   }
@@ -37,7 +37,7 @@ public final class AuthenticationRequest {
    *
    * @return The GameSession who is making the request.
    */
-  public GameSession getSession() {
+  public Session getSession() {
     return session;
   }
 

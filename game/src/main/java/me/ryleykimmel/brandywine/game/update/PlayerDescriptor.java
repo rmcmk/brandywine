@@ -3,9 +3,9 @@ package me.ryleykimmel.brandywine.game.update;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.update.blocks.AppearancePlayerBlock;
 import me.ryleykimmel.brandywine.game.update.blocks.ChatPlayerBlock;
-import me.ryleykimmel.brandywine.network.game.frame.DataOrder;
-import me.ryleykimmel.brandywine.network.game.frame.DataType;
-import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
+import me.ryleykimmel.brandywine.network.frame.DataOrder;
+import me.ryleykimmel.brandywine.network.frame.DataType;
+import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
 
 /**
  * Describes a segment of the Player updating procedure.

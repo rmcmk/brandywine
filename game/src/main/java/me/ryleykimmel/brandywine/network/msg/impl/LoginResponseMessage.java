@@ -6,7 +6,7 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 /**
  * A {@link Message} which responds to a {@link LoginMessage}.
  */
-public final class LoginResponseMessage implements Message {
+public final class LoginResponseMessage extends Message {
 
   /**
    * The response code.

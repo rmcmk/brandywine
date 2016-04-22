@@ -6,7 +6,7 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 /**
  * A {@link Message} which rebuilds the region for the specified Position.
  */
-public final class RebuildRegionMessage implements Message {
+public final class RebuildRegionMessage extends Message {
 
   /**
    * The Position of the region to rebuild.

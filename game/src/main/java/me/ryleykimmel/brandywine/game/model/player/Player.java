@@ -10,9 +10,8 @@ import me.ryleykimmel.brandywine.game.model.Mob;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.model.World;
 import me.ryleykimmel.brandywine.game.update.blocks.AppearancePlayerBlock;
-import me.ryleykimmel.brandywine.network.game.GameSession;
+import me.ryleykimmel.brandywine.network.Session;
 import me.ryleykimmel.brandywine.network.msg.Message;
-import me.ryleykimmel.brandywine.network.msg.PlayerMessageDispatcher;
 import me.ryleykimmel.brandywine.network.msg.impl.InitializePlayerMessage;
 import me.ryleykimmel.brandywine.network.msg.impl.LoginResponseMessage;
 import me.ryleykimmel.brandywine.network.msg.impl.RebuildRegionMessage;
@@ -46,7 +45,7 @@ public final class Player extends Mob {
   /**
    * The GameSession this Player is attached to.
    */
-  private final GameSession session;
+  private final Session session;
 
   /**
    * The credentials of this Player.
@@ -90,7 +89,7 @@ public final class Player extends Mob {
    * @param credentials The credentials of this Player.
    * @param world The World this Player is in.
    */
-  public Player(GameSession session, PlayerCredentials credentials, World world) {
+  public Player(Session session, PlayerCredentials credentials, World world) {
     super(world, EntityType.PLAYER);
     this.session = session;
     this.credentials = credentials;
@@ -110,13 +109,8 @@ public final class Player extends Mob {
    * Logs this Player into the World.
    */
   public void login() {
-    write(
-        new LoginResponseMessage(ResponseCode.STATUS_OK, privileges.getPrimaryId(), false));
+    write(new LoginResponseMessage(ResponseCode.STATUS_OK, privileges.getPrimaryId(), false));
     write(new InitializePlayerMessage(isMember(), getIndex()));
-
-    session.seedCiphers(credentials.getSessionKeys());
-    session.setMessageDispatcher(new PlayerMessageDispatcher(this));
-    session.attr().set(this);
 
     setLastKnownRegion(position);
     teleport(position);
@@ -130,7 +124,7 @@ public final class Player extends Mob {
 
     // skills.addListener(new SynchronizationSkillListener(this));
     // skills.addListener(new LevelUpSkillListener(this));
-    //
+
     // skills.refresh();
   }
 
@@ -166,7 +160,7 @@ public final class Player extends Mob {
    * 
    * @return The GameSession this Player is attached to.
    */
-  public GameSession getSession() {
+  public Session getSession() {
     return session;
   }
 

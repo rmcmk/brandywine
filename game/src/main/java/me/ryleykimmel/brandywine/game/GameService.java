@@ -3,9 +3,9 @@ package me.ryleykimmel.brandywine.game;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import me.ryleykimmel.brandywine.Service;
 import me.ryleykimmel.brandywine.game.model.World;
 import me.ryleykimmel.brandywine.game.model.player.Player;
+import me.ryleykimmel.brandywine.service.Service;
 
 /**
  * Services the game every pulse.
@@ -40,13 +40,16 @@ public final class GameService extends Service {
   /**
    * The game World.
    */
-  private final World world = new World();
+  private final World world;
 
   /**
    * Constructs a new {@link GameService}.
+   * 
+   * @param world The game World.
    */
-  public GameService() {
+  public GameService(World world) {
     super(PULSE_INTERVAL);
+    this.world = world;
   }
 
   /**

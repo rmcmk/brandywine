@@ -7,10 +7,10 @@ import java.util.concurrent.Executors;
 
 import com.google.common.base.Preconditions;
 
-import me.ryleykimmel.brandywine.Service;
 import me.ryleykimmel.brandywine.common.util.ThreadFactoryUtil;
 import me.ryleykimmel.brandywine.game.GameService;
 import me.ryleykimmel.brandywine.game.io.ResponseCode;
+import me.ryleykimmel.brandywine.service.Service;
 
 /**
  * Services AuthenticationRequests every pulse.

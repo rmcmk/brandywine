@@ -120,6 +120,7 @@ public abstract class Mob extends Entity {
    */
   public final void setRunning(boolean running) {
     this.running = running;
+    // TODO: Configs
   }
 
   /**

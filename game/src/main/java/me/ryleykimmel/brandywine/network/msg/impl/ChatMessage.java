@@ -5,7 +5,7 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 /**
  * A {@link Message} sent by the client to send a public chat message to other players.
  */
-public final class ChatMessage implements Message {
+public final class ChatMessage extends Message {
 
   /**
    * The text color.

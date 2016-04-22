@@ -6,7 +6,7 @@ import me.ryleykimmel.brandywine.network.msg.Message;
 /**
  * A {@link Message} which updates the specified Skill.
  */
-public final class UpdateSkillMessage implements Message {
+public final class UpdateSkillMessage extends Message {
 
   /**
    * The Skill to be updated.

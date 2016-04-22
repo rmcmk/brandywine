@@ -7,12 +7,10 @@ import java.util.Optional;
 import me.ryleykimmel.brandywine.game.area.Region;
 import me.ryleykimmel.brandywine.game.area.RegionRepository;
 import me.ryleykimmel.brandywine.game.collect.MobRepository;
-import me.ryleykimmel.brandywine.game.command.CommandEvent;
-import me.ryleykimmel.brandywine.game.command.CommandEventListener;
 import me.ryleykimmel.brandywine.game.event.Event;
-import me.ryleykimmel.brandywine.game.event.EventListener;
-import me.ryleykimmel.brandywine.game.event.EventListenerChain;
-import me.ryleykimmel.brandywine.game.event.EventListenerChainSet;
+import me.ryleykimmel.brandywine.game.event.EventConsumer;
+import me.ryleykimmel.brandywine.game.event.EventConsumerChain;
+import me.ryleykimmel.brandywine.game.event.EventConsumerChainSet;
 import me.ryleykimmel.brandywine.game.model.npc.Npc;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.update.ParallelUpdater;
@@ -60,15 +58,17 @@ public final class World {
   private final RegionRepository regionRepository = new RegionRepository();
 
   /**
-   * The EventListenerChainSet for this World.
+   * The EventConsumerChainSet for this World.
    */
-  private final EventListenerChainSet events = new EventListenerChainSet();
+  private final EventConsumerChainSet events;
 
   /**
    * Constructs a new {@link World}.
+   * 
+   * @param events The EventConsumerChainSet for this World.
    */
-  public World() {
-    putListener(CommandEvent.class, new CommandEventListener());
+  public World(EventConsumerChainSet events) {
+    this.events = events;
   }
 
   /**
@@ -105,6 +105,26 @@ public final class World {
   }
 
   /**
+   * Notifies the appropriate {@link EventConsumerChain} that an {@link Event} has occurred.
+   *
+   * @param event The Event.
+   * @return {@code true} if the Event should continue on with its outcome, {@code false} if not.
+   */
+  public <T extends Event> boolean notify(T event) {
+    return events.notify(event);
+  }
+
+  /**
+   * Places the {@link EventConsumerChain} into the EventConsumerChainSet.
+   *
+   * @param clazz The {@link Class} to associate the EventListenerChain with.
+   * @param consumer The EventListenerChain.
+   */
+  public <T extends Event> void addConsumer(Class<T> clazz, EventConsumer<T> consumer) {
+    events.addConsumer(clazz, consumer);
+  }
+
+  /**
    * Checks whether or not the specified Player is online.
    *
    * @param player The Player to check.
@@ -133,26 +153,6 @@ public final class World {
   public Optional<Player> get(long username) {
     Player player = players.get(username);
     return Optional.ofNullable(player);
-  }
-
-  /**
-   * Places the {@link EventListenerChain} into this set.
-   *
-   * @param clazz The {@link Class} to associate the EventListenerChain with.
-   * @param listener The EventListenerChain.
-   */
-  public <E extends Event> void putListener(Class<E> clazz, EventListener<E> listener) {
-    events.putListener(clazz, listener);
-  }
-
-  /**
-   * Notifies the appropriate {@link EventListenerChain} that an {@link Event} has occurred.
-   *
-   * @param event The Event.
-   * @return {@code true} if the Event should continue on with its outcome, {@code false} if not.
-   */
-  public <E extends Event> boolean notify(E event) {
-    return events.notify(event);
   }
 
   /**

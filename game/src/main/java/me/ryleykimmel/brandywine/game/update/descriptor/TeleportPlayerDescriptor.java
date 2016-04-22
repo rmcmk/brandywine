@@ -3,7 +3,7 @@ package me.ryleykimmel.brandywine.game.update.descriptor;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.update.PlayerDescriptor;
-import me.ryleykimmel.brandywine.network.game.frame.FrameBuilder;
+import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
 
 /**
  * A PlayerDescriptor which encodes the teleportation of a Player.

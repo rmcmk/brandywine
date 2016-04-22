@@ -9,7 +9,7 @@ import io.netty.channel.ChannelFutureListener;
 import me.ryleykimmel.brandywine.game.GameService;
 import me.ryleykimmel.brandywine.game.io.ResponseCode;
 import me.ryleykimmel.brandywine.game.model.player.Player;
-import me.ryleykimmel.brandywine.network.game.GameSession;
+import me.ryleykimmel.brandywine.network.Session;
 import me.ryleykimmel.brandywine.network.msg.impl.LoginResponseMessage;
 
 /**
@@ -53,7 +53,7 @@ public final class AuthenticationWorker implements Runnable {
 
   @Override
   public void run() {
-    GameSession session = request.getSession();
+    Session session = request.getSession();
 
     Player player = new Player(session, request.getCredentials(), service.getWorld());
 
@@ -87,7 +87,7 @@ public final class AuthenticationWorker implements Runnable {
    * @param session The GameSession to close.
    * @param response The response to send.
    */
-  private void closeWithResponse(GameSession session, ResponseCode response) {
+  private void closeWithResponse(Session session, ResponseCode response) {
     session.writeAndFlush(new LoginResponseMessage(response))
         .addListener(ChannelFutureListener.CLOSE);
   }

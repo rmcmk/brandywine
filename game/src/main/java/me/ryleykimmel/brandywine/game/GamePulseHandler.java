@@ -3,8 +3,8 @@ package me.ryleykimmel.brandywine.game;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import me.ryleykimmel.brandywine.Service;
-import me.ryleykimmel.brandywine.ServiceSet;
+import me.ryleykimmel.brandywine.service.Service;
+import me.ryleykimmel.brandywine.service.ServiceSet;
 
 /**
  * Pulses game functions at a fixed rate.
