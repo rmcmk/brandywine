@@ -3,7 +3,7 @@ package me.ryleykimmel.brandywine.game.update.task;
 import me.ryleykimmel.brandywine.game.area.Region;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.model.player.Player;
-import me.ryleykimmel.brandywine.network.msg.impl.RebuildRegionMessage;
+import me.ryleykimmel.brandywine.game.msg.RebuildRegionMessage;
 
 /**
  * An UpdateTask which performs pre-update logic, before updating has occurred.

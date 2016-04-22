@@ -13,6 +13,7 @@ import me.ryleykimmel.brandywine.game.model.Direction;
 import me.ryleykimmel.brandywine.game.model.EntityType;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.model.player.Player;
+import me.ryleykimmel.brandywine.game.msg.PlayerUpdateMessage;
 import me.ryleykimmel.brandywine.game.update.PlayerDescriptor;
 import me.ryleykimmel.brandywine.game.update.blocks.AppearancePlayerBlock;
 import me.ryleykimmel.brandywine.game.update.blocks.ChatPlayerBlock;
@@ -22,7 +23,6 @@ import me.ryleykimmel.brandywine.game.update.descriptor.RemovePlayerDescriptor;
 import me.ryleykimmel.brandywine.game.update.descriptor.RunPlayerDescriptor;
 import me.ryleykimmel.brandywine.game.update.descriptor.TeleportPlayerDescriptor;
 import me.ryleykimmel.brandywine.game.update.descriptor.WalkPlayerDescriptor;
-import me.ryleykimmel.brandywine.network.msg.impl.PlayerUpdateMessage;
 
 /**
  * An UpdateTask which updates your Player and surrounding Players.

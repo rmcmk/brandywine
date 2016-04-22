@@ -14,9 +14,9 @@ import com.google.common.base.Preconditions;
 import com.lambdaworks.crypto.SCryptUtil;
 
 import me.ryleykimmel.brandywine.game.auth.AuthenticationStrategy;
-import me.ryleykimmel.brandywine.game.io.ResponseCode;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.model.player.PlayerCredentials;
+import me.ryleykimmel.brandywine.network.ResponseCode;
 
 /**
  * An {@link AuthenticationStrategy} which utilizes jdbc-SQL to validate requests.

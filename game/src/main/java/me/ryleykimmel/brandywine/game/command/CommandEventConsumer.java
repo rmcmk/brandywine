@@ -3,7 +3,7 @@ package me.ryleykimmel.brandywine.game.command;
 import me.ryleykimmel.brandywine.game.event.EventConsumer;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.model.player.Player;
-import me.ryleykimmel.brandywine.network.msg.impl.ServerChatMessage;
+import me.ryleykimmel.brandywine.game.msg.ServerChatMessage;
 
 /**
  * Listens for CommandEvent's.

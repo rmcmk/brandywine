@@ -24,7 +24,7 @@ import me.ryleykimmel.brandywine.game.model.Position;
 public final class Region {
 
   /**
-   * A {@link RegionListener} for {@link UpdateOperation}s.
+   * A {@link RegionListener} for update operations.
    */
   private static final class UpdateRegionListener implements RegionListener {
 

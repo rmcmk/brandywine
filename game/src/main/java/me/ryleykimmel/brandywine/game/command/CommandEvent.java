@@ -1,6 +1,6 @@
 package me.ryleykimmel.brandywine.game.command;
 
-import me.ryleykimmel.brandywine.game.event.impl.MobEvent;
+import me.ryleykimmel.brandywine.game.event.MobEvent;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 
 /**

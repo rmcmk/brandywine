@@ -4,18 +4,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.google.common.base.MoreObjects;
 
-import me.ryleykimmel.brandywine.game.io.ResponseCode;
 import me.ryleykimmel.brandywine.game.model.EntityType;
 import me.ryleykimmel.brandywine.game.model.Mob;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.model.World;
+import me.ryleykimmel.brandywine.game.msg.InitializePlayerMessage;
+import me.ryleykimmel.brandywine.game.msg.LoginResponseMessage;
+import me.ryleykimmel.brandywine.game.msg.RebuildRegionMessage;
+import me.ryleykimmel.brandywine.game.msg.ServerChatMessage;
 import me.ryleykimmel.brandywine.game.update.blocks.AppearancePlayerBlock;
+import me.ryleykimmel.brandywine.network.ResponseCode;
 import me.ryleykimmel.brandywine.network.Session;
 import me.ryleykimmel.brandywine.network.msg.Message;
-import me.ryleykimmel.brandywine.network.msg.impl.InitializePlayerMessage;
-import me.ryleykimmel.brandywine.network.msg.impl.LoginResponseMessage;
-import me.ryleykimmel.brandywine.network.msg.impl.RebuildRegionMessage;
-import me.ryleykimmel.brandywine.network.msg.impl.ServerChatMessage;
 
 /**
  * Represents a Player character.

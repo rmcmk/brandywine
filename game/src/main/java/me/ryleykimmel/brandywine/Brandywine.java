@@ -12,15 +12,15 @@ import me.ryleykimmel.brandywine.game.auth.AuthenticationService;
 import me.ryleykimmel.brandywine.game.auth.impl.SqlAuthenticationStrategy;
 import me.ryleykimmel.brandywine.game.command.CommandEvent;
 import me.ryleykimmel.brandywine.game.command.CommandEventConsumer;
+import me.ryleykimmel.brandywine.game.login.LoginSession;
+import me.ryleykimmel.brandywine.game.login.LoginSessionHandler;
 import me.ryleykimmel.brandywine.game.model.World;
-import me.ryleykimmel.brandywine.network.GenericSession;
-import me.ryleykimmel.brandywine.network.GenericSessionHandler;
+import me.ryleykimmel.brandywine.game.msg.LoginHandshakeMessage;
+import me.ryleykimmel.brandywine.game.msg.codec.LoginHandshakeMessageCodec;
+import me.ryleykimmel.brandywine.game.msg.event.LoginHandshakeMessageConsumer;
 import me.ryleykimmel.brandywine.network.frame.FrameMapping;
 import me.ryleykimmel.brandywine.network.frame.codec.FrameCodec;
 import me.ryleykimmel.brandywine.network.frame.codec.FrameMessageCodec;
-import me.ryleykimmel.brandywine.network.msg.codec.LoginHandshakeMessageCodec;
-import me.ryleykimmel.brandywine.network.msg.event.LoginHandshakeMessageConsumer;
-import me.ryleykimmel.brandywine.network.msg.impl.LoginHandshakeMessage;
 import me.ryleykimmel.brandywine.server.Server;
 
 /**
@@ -40,11 +40,11 @@ final class Brandywine {
       server.initializer(new ChannelInitializer<SocketChannel>() {
         @Override
         protected void initChannel(SocketChannel channel) {
-          GenericSession session = new GenericSession(channel);
+          LoginSession session = new LoginSession(channel);
           channel.pipeline()
               .addLast("frame_codec", new FrameCodec<>(session, server.getFrameMetadataSet()))
               .addLast("message_codec", new FrameMessageCodec(server.getFrameMetadataSet()))
-              .addLast("handler", new GenericSessionHandler(server, session));
+              .addLast("handler", new LoginSessionHandler(server.getEvents(), session));
         }
       });
 

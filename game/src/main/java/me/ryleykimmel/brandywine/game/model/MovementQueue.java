@@ -4,7 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Queue;
 
-import me.ryleykimmel.brandywine.network.msg.impl.ResetDestinationMessage;
+import me.ryleykimmel.brandywine.game.msg.ResetDestinationMessage;
 
 /**
  * A queue of {@link Direction}s which a {@link Mob} will follow.

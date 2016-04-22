@@ -7,10 +7,10 @@ import com.google.common.base.Preconditions;
 
 import io.netty.channel.ChannelFutureListener;
 import me.ryleykimmel.brandywine.game.GameService;
-import me.ryleykimmel.brandywine.game.io.ResponseCode;
 import me.ryleykimmel.brandywine.game.model.player.Player;
+import me.ryleykimmel.brandywine.game.msg.LoginResponseMessage;
+import me.ryleykimmel.brandywine.network.ResponseCode;
 import me.ryleykimmel.brandywine.network.Session;
-import me.ryleykimmel.brandywine.network.msg.impl.LoginResponseMessage;
 
 /**
  * A {@link Runnable} worker which manages {@link AuthenticationRequest}s.
