@@ -42,10 +42,19 @@ public final class CommandArguments {
    * Tests whether or not there is at least {@code amount} remaining arguments.
    * 
    * @param amount The amount of arguments.
-   * @return {@code true} if there is at least {@code amount} arguments, otherwise {@code false}.
+   * @return {@code true} if there is at least {@code amount} arguments.
    */
   public boolean hasRemaining(int amount) {
     return remaining() >= amount;
+  }
+
+  /**
+   * Tests whether or not there is at least one remaining argument.
+   * 
+   * @return {@code true} if there is at least 1 remaining argument.
+   */
+  public boolean hasRemaining() {
+    return hasRemaining(1);
   }
 
   /**
@@ -100,8 +109,7 @@ public final class CommandArguments {
    * @return The argument at {@code index}.
    */
   public String getString(int index) {
-    checkIndex(index);
-    return arguments[index];
+    return checkIndex(index);
   }
 
   /**
@@ -111,8 +119,7 @@ public final class CommandArguments {
    * @return The argument at {@code index} represented as an int.
    */
   public int getInteger(int index) {
-    checkIndex(index);
-    String argument = arguments[index];
+    String argument = checkIndex(index);
     try {
       return Integer.parseInt(argument);
     } catch (NumberFormatException cause) {
@@ -128,9 +135,8 @@ public final class CommandArguments {
    * @return The argument at {@code index} represented as a boolean.
    */
   public boolean getBoolean(int index) {
-    checkIndex(index);
-    String argument = arguments[index];
-    if (!"true".equalsIgnoreCase(argument) && !"false".equalsIgnoreCase(argument)) {
+    String argument = checkIndex(index);
+    if (!argument.equalsIgnoreCase("true") && !argument.equalsIgnoreCase("false")) {
       throw new IllegalArgumentException(
           "Only \"true\" or \"false\" is accepted for boolean input.");
     }
@@ -144,8 +150,7 @@ public final class CommandArguments {
    * @return The argument at {@code index} represented as a long.
    */
   public long getLong(int index) {
-    checkIndex(index);
-    String argument = arguments[index];
+    String argument = checkIndex(index);
     try {
       return Long.parseLong(argument);
     } catch (NumberFormatException cause) {
@@ -161,8 +166,7 @@ public final class CommandArguments {
    * @return The argument at {@code index} represented as a double.
    */
   public double getDouble(int index) {
-    checkIndex(index);
-    String argument = arguments[index];
+    String argument = checkIndex(index);
     try {
       return Double.parseDouble(argument);
     } catch (NumberFormatException cause) {
@@ -175,11 +179,13 @@ public final class CommandArguments {
    * Ensures the specified index is within bounds and is non-null.
    * 
    * @param index The current argument index.
+   * @return The argument at {@code index}.
    */
-  private void checkIndex(int index) {
+  private String checkIndex(int index) {
     Preconditions.checkElementIndex(index, arguments.length,
         "Index out of bounds: " + index + " length: " + arguments.length);
-    Preconditions.checkNotNull(arguments[index], "Argument for index: " + index + " is null.");
+    return Preconditions.checkNotNull(arguments[index],
+        "Argument for index: " + index + " is null.");
   }
 
   @Override
