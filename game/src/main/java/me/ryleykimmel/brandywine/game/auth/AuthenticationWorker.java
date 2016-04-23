@@ -7,10 +7,10 @@ import com.google.common.base.Preconditions;
 
 import io.netty.channel.ChannelFutureListener;
 import me.ryleykimmel.brandywine.game.GameService;
+import me.ryleykimmel.brandywine.game.login.LoginSession;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.msg.LoginResponseMessage;
 import me.ryleykimmel.brandywine.network.ResponseCode;
-import me.ryleykimmel.brandywine.network.Session;
 
 /**
  * A {@link Runnable} worker which manages {@link AuthenticationRequest}s.
@@ -53,7 +53,7 @@ public final class AuthenticationWorker implements Runnable {
 
   @Override
   public void run() {
-    Session session = request.getSession();
+    LoginSession session = request.getSession();
 
     Player player = new Player(session, request.getCredentials(), service.getWorld());
 
@@ -82,12 +82,12 @@ public final class AuthenticationWorker implements Runnable {
   }
 
   /**
-   * Closes the specified GameSession after sending the specified response code.
+   * Closes the specified LoginSession after sending the specified response code.
    * 
-   * @param session The GameSession to close.
+   * @param session The LoginSession to close.
    * @param response The response to send.
    */
-  private void closeWithResponse(Session session, ResponseCode response) {
+  private void closeWithResponse(LoginSession session, ResponseCode response) {
     session.writeAndFlush(new LoginResponseMessage(response))
         .addListener(ChannelFutureListener.CLOSE);
   }

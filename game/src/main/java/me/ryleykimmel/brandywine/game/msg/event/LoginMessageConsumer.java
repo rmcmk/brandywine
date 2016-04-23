@@ -54,7 +54,7 @@ public final class LoginMessageConsumer implements EventConsumer<LoginMessage> {
   }
 
   /**
-   * Closes the specified GameSession after sending the specified response code.
+   * Closes the specified LoginSession after sending the specified response code.
    * 
    * @param response The response to send.
    */
