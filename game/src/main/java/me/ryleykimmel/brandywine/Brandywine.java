@@ -8,17 +8,14 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import me.ryleykimmel.brandywine.fs.FileSystem;
 import me.ryleykimmel.brandywine.game.GameService;
+import me.ryleykimmel.brandywine.game.GameSession;
+import me.ryleykimmel.brandywine.game.GameSessionHandler;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationService;
 import me.ryleykimmel.brandywine.game.auth.impl.SqlAuthenticationStrategy;
-import me.ryleykimmel.brandywine.game.command.CommandEvent;
-import me.ryleykimmel.brandywine.game.command.CommandEventConsumer;
-import me.ryleykimmel.brandywine.game.login.LoginSession;
-import me.ryleykimmel.brandywine.game.login.LoginSessionHandler;
-import me.ryleykimmel.brandywine.game.model.World;
 import me.ryleykimmel.brandywine.game.msg.LoginHandshakeMessage;
 import me.ryleykimmel.brandywine.game.msg.codec.LoginHandshakeMessageCodec;
-import me.ryleykimmel.brandywine.game.msg.event.LoginHandshakeMessageConsumer;
 import me.ryleykimmel.brandywine.network.frame.FrameMapping;
+import me.ryleykimmel.brandywine.network.frame.FrameMetadataSet;
 import me.ryleykimmel.brandywine.network.frame.codec.FrameCodec;
 import me.ryleykimmel.brandywine.network.frame.codec.FrameMessageCodec;
 import me.ryleykimmel.brandywine.server.Server;
@@ -38,23 +35,20 @@ final class Brandywine {
       Server server = new Server();
 
       server.initializer(new ChannelInitializer<SocketChannel>() {
+
+        private final FrameMetadataSet metadata = createFrameMetadataSet();
+
         @Override
         protected void initChannel(SocketChannel channel) {
-          LoginSession session = new LoginSession(channel);
-          channel.pipeline()
-              .addLast("frame_codec", new FrameCodec<>(session, server.getFrameMetadataSet()))
-              .addLast("message_codec", new FrameMessageCodec(server.getFrameMetadataSet()))
-              .addLast("handler", new LoginSessionHandler(server.getEvents(), session));
+          GameSession session = new GameSession(channel);
+
+          channel.pipeline().addLast("frame_codec", new FrameCodec<>(session, metadata))
+              .addLast("message_codec", new FrameMessageCodec(metadata))
+              .addLast("handler", new GameSessionHandler(session));
         }
       });
 
-      server.registerFrame(FrameMapping.create(LoginHandshakeMessage.class,
-          new LoginHandshakeMessageCodec(), 14, 1));
-
-      server.addConsumer(LoginHandshakeMessage.class, new LoginHandshakeMessageConsumer(null));
-      server.addConsumer(CommandEvent.class, new CommandEventConsumer());
-
-      GameService gameService = new GameService(new World(server.getEvents()));
+      GameService gameService = new GameService();
       server.setName("RuneScape").setFileSystem(FileSystem.create("data/fs"))
           .setSql2o(new Sql2o("jdbc:mysql://localhost/game_server", "root", ""))
           .setAuthenticationStrategy(new SqlAuthenticationStrategy(server.getSql2o()))
@@ -65,6 +59,20 @@ final class Brandywine {
     } catch (IOException cause) {
       throw new InitializationException(cause);
     }
+  }
+
+  /**
+   * Creates a new {@link FrameMetadataSet}.
+   * 
+   * @return The new FrameMetadataSet, never {@code null}.
+   */
+  private static FrameMetadataSet createFrameMetadataSet() {
+    FrameMetadataSet metadata = new FrameMetadataSet();
+
+    metadata.register(
+        FrameMapping.create(LoginHandshakeMessage.class, new LoginHandshakeMessageCodec(), 14, 1));
+
+    return metadata;
   }
 
   /**

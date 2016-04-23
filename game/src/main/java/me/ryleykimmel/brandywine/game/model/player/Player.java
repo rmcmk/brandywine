@@ -4,6 +4,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.google.common.base.MoreObjects;
 
+import me.ryleykimmel.brandywine.game.GameSession;
+import me.ryleykimmel.brandywine.game.event.Event;
+import me.ryleykimmel.brandywine.game.event.EventConsumer;
+import me.ryleykimmel.brandywine.game.event.EventConsumerChain;
 import me.ryleykimmel.brandywine.game.model.EntityType;
 import me.ryleykimmel.brandywine.game.model.Mob;
 import me.ryleykimmel.brandywine.game.model.Position;
@@ -14,7 +18,6 @@ import me.ryleykimmel.brandywine.game.msg.RebuildRegionMessage;
 import me.ryleykimmel.brandywine.game.msg.ServerChatMessage;
 import me.ryleykimmel.brandywine.game.update.blocks.AppearancePlayerBlock;
 import me.ryleykimmel.brandywine.network.ResponseCode;
-import me.ryleykimmel.brandywine.network.Session;
 import me.ryleykimmel.brandywine.network.msg.Message;
 
 /**
@@ -45,7 +48,7 @@ public final class Player extends Mob {
   /**
    * The GameSession this Player is attached to.
    */
-  private final Session session;
+  private final GameSession session;
 
   /**
    * The credentials of this Player.
@@ -89,7 +92,7 @@ public final class Player extends Mob {
    * @param credentials The credentials of this Player.
    * @param world The World this Player is in.
    */
-  public Player(Session session, PlayerCredentials credentials, World world) {
+  public Player(GameSession session, PlayerCredentials credentials, World world) {
     super(world, EntityType.PLAYER);
     this.session = session;
     this.credentials = credentials;
@@ -103,6 +106,26 @@ public final class Player extends Mob {
   @Override
   public void write(Message message) {
     session.voidWrite(message);
+  }
+
+  /**
+   * Notifies the appropriate {@link EventConsumerChain} that an {@link Event} has occurred.
+   *
+   * @param event The Event.
+   * @return {@code true} if the Event should continue on with its outcome.
+   */
+  public <E extends Event> boolean notify(E event) {
+    return session.notify(event);
+  }
+
+  /**
+   * Places the {@link EventConsumerChain} into this set.
+   *
+   * @param clazz The {@link Class} to associate the EventListenerChain with.
+   * @param consumer The EventListenerChain.
+   */
+  public <E extends Event> void addConsumer(Class<E> clazz, EventConsumer<E> consumer) {
+    session.addConsumer(clazz, consumer);
   }
 
   /**
@@ -160,7 +183,7 @@ public final class Player extends Mob {
    * 
    * @return The GameSession this Player is attached to.
    */
-  public Session getSession() {
+  public GameSession getSession() {
     return session;
   }
 

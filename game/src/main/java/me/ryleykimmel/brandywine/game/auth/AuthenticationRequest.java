@@ -2,7 +2,7 @@ package me.ryleykimmel.brandywine.game.auth;
 
 import com.google.common.base.MoreObjects;
 
-import me.ryleykimmel.brandywine.game.login.LoginSession;
+import me.ryleykimmel.brandywine.game.GameSession;
 import me.ryleykimmel.brandywine.game.model.player.PlayerCredentials;
 
 /**
@@ -11,9 +11,9 @@ import me.ryleykimmel.brandywine.game.model.player.PlayerCredentials;
 public final class AuthenticationRequest {
 
   /**
-   * The LoginSession who is making the request.
+   * The GameSession who is making the request.
    */
-  private final LoginSession session;
+  private final GameSession session;
 
   /**
    * The PlayerCredentials that are requesting authentication.
@@ -24,20 +24,20 @@ public final class AuthenticationRequest {
    * Constructs a new {@link AuthenticationRequest} with the specified LoginSession and
    * PlayerCredentials.
    *
-   * @param session The LoginSession who is making the request.
+   * @param session The GameSession who is making the request.
    * @param credentials The PlayerCredentials that are requesting authentication.
    */
-  public AuthenticationRequest(LoginSession session, PlayerCredentials credentials) {
+  public AuthenticationRequest(GameSession session, PlayerCredentials credentials) {
     this.session = session;
     this.credentials = credentials;
   }
 
   /**
-   * Gets the LoginSession who is making the request.
+   * Gets the GameSession who is making the request.
    *
-   * @return The LoginSession who is making the request.
+   * @return The GameSession who is making the request.
    */
-  public LoginSession getSession() {
+  public GameSession getSession() {
     return session;
   }
 

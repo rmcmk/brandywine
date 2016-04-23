@@ -1,22 +1,18 @@
-package me.ryleykimmel.brandywine.game.login;
+package me.ryleykimmel.brandywine.game;
 
 import io.netty.channel.ChannelHandlerContext;
-import me.ryleykimmel.brandywine.game.event.EventConsumerChainSet;
 import me.ryleykimmel.brandywine.network.SessionHandler;
 import me.ryleykimmel.brandywine.network.msg.Message;
 
-public final class LoginSessionHandler extends SessionHandler<LoginSession> {
+public class GameSessionHandler extends SessionHandler<GameSession> {
 
-  private final EventConsumerChainSet events;
-
-  public LoginSessionHandler(EventConsumerChainSet events, LoginSession session) {
+  public GameSessionHandler(GameSession session) {
     super(session);
-    this.events = events;
   }
 
   @Override
   protected void channelRead0(ChannelHandlerContext ctx, Message message) {
-    events.notify(message);
+    session.notify(message);
   }
 
   @Override

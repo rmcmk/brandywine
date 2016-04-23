@@ -7,10 +7,6 @@ import java.util.Optional;
 import me.ryleykimmel.brandywine.game.area.Region;
 import me.ryleykimmel.brandywine.game.area.RegionRepository;
 import me.ryleykimmel.brandywine.game.collect.MobRepository;
-import me.ryleykimmel.brandywine.game.event.Event;
-import me.ryleykimmel.brandywine.game.event.EventConsumer;
-import me.ryleykimmel.brandywine.game.event.EventConsumerChain;
-import me.ryleykimmel.brandywine.game.event.EventConsumerChainSet;
 import me.ryleykimmel.brandywine.game.model.npc.Npc;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.update.ParallelUpdater;
@@ -58,20 +54,6 @@ public final class World {
   private final RegionRepository regionRepository = new RegionRepository();
 
   /**
-   * The EventConsumerChainSet for this World.
-   */
-  private final EventConsumerChainSet events;
-
-  /**
-   * Constructs a new {@link World}.
-   * 
-   * @param events The EventConsumerChainSet for this World.
-   */
-  public World(EventConsumerChainSet events) {
-    this.events = events;
-  }
-
-  /**
    * Attempts to add the specified Player to the World.
    *
    * @param player The Player to add.
@@ -102,26 +84,6 @@ public final class World {
     region.removeEntity(player);
 
     playerRepository.remove(player);
-  }
-
-  /**
-   * Notifies the appropriate {@link EventConsumerChain} that an {@link Event} has occurred.
-   *
-   * @param event The Event.
-   * @return {@code true} if the Event should continue on with its outcome, {@code false} if not.
-   */
-  public <T extends Event> boolean notify(T event) {
-    return events.notify(event);
-  }
-
-  /**
-   * Places the {@link EventConsumerChain} into the EventConsumerChainSet.
-   *
-   * @param clazz The {@link Class} to associate the EventListenerChain with.
-   * @param consumer The EventListenerChain.
-   */
-  public <T extends Event> void addConsumer(Class<T> clazz, EventConsumer<T> consumer) {
-    events.addConsumer(clazz, consumer);
   }
 
   /**

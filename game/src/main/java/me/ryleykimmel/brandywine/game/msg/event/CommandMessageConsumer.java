@@ -28,7 +28,7 @@ public final class CommandMessageConsumer implements EventConsumer<CommandMessag
     String[] filtered = Arrays.copyOfRange(components, 1, components.length);
     String[] arguments = Strings.split(String.join(" ", filtered), '"');
 
-    player.getWorld().notify(new CommandEvent(player, name, new CommandArguments(arguments)));
+    player.notify(new CommandEvent(player, name, new CommandArguments(arguments)));
   }
 
 }

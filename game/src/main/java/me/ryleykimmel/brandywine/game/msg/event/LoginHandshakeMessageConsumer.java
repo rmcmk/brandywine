@@ -1,7 +1,7 @@
 package me.ryleykimmel.brandywine.game.msg.event;
 
+import me.ryleykimmel.brandywine.game.GameSession;
 import me.ryleykimmel.brandywine.game.event.EventConsumer;
-import me.ryleykimmel.brandywine.game.login.LoginSession;
 import me.ryleykimmel.brandywine.game.msg.LoginHandshakeMessage;
 import me.ryleykimmel.brandywine.game.msg.LoginHandshakeResponseMessage;
 
@@ -11,16 +11,16 @@ import me.ryleykimmel.brandywine.game.msg.LoginHandshakeResponseMessage;
 public final class LoginHandshakeMessageConsumer implements EventConsumer<LoginHandshakeMessage> {
 
   /**
-   * The GenericSession which intercepted this MessageReceivedEvent.
+   * The GameSession which intercepted this LoginHandshakeMessage.
    */
-  private final LoginSession session;
+  private final GameSession session;
 
   /**
    * Constructs a new {@link LoginHandshakeMessageConsumer}.
    * 
-   * @param session The GenericSession which intercepted this MessageReceivedEvent.
+   * @param session The GameSession which intercepted this LoginHandshakeMessage.
    */
-  public LoginHandshakeMessageConsumer(LoginSession session) {
+  public LoginHandshakeMessageConsumer(GameSession session) {
     this.session = session;
   }
 

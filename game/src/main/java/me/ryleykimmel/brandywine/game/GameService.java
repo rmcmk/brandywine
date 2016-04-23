@@ -40,16 +40,13 @@ public final class GameService extends Service {
   /**
    * The game World.
    */
-  private final World world;
+  private final World world = new World();
 
   /**
    * Constructs a new {@link GameService}.
-   * 
-   * @param world The game World.
    */
-  public GameService(World world) {
+  public GameService() {
     super(PULSE_INTERVAL);
-    this.world = world;
   }
 
   /**

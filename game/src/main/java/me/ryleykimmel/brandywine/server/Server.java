@@ -22,10 +22,6 @@ import me.ryleykimmel.brandywine.fs.FileSystem;
 import me.ryleykimmel.brandywine.game.GamePulseHandler;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationService;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationStrategy;
-import me.ryleykimmel.brandywine.game.event.Event;
-import me.ryleykimmel.brandywine.game.event.EventConsumer;
-import me.ryleykimmel.brandywine.game.event.EventConsumerChain;
-import me.ryleykimmel.brandywine.game.event.EventConsumerChainSet;
 import me.ryleykimmel.brandywine.network.frame.FrameMapping;
 import me.ryleykimmel.brandywine.network.frame.FrameMetadataSet;
 import me.ryleykimmel.brandywine.network.msg.Message;
@@ -43,19 +39,9 @@ public final class Server {
   private final ServiceSet services = new ServiceSet();
 
   /**
-   * The {@link FrameMetadataSet} for this Server.
-   */
-  private final FrameMetadataSet frameMetadataSet = new FrameMetadataSet();
-
-  /**
    * The {@link ServerBootstrap} for this Server.
    */
   private final ServerBootstrap bootstrap = new ServerBootstrap();
-
-  /**
-   * The {@link EventConsumerChainSet} for this Server.
-   */
-  private final EventConsumerChainSet events = new EventConsumerChainSet();
 
   /**
    * The name of this Server.
@@ -117,17 +103,6 @@ public final class Server {
   }
 
   /**
-   * Registers the specified FrameMapping to the FrameMetadataSet.
-   * 
-   * @param mapping The FrameMapping, may not be {@code null}.
-   * @return This Server instance, for chaining.
-   */
-  public <T extends Message> Server registerFrame(FrameMapping<T> mapping) {
-    frameMetadataSet.register(mapping);
-    return this;
-  }
-
-  /**
    * Configures the {@link ChannelInitializer}, used to configure {@link Channel}s once they have
    * been registered in the event loop.
    * 
@@ -135,35 +110,6 @@ public final class Server {
    */
   public void initializer(ChannelInitializer<SocketChannel> initializer) {
     bootstrap.childHandler(initializer);
-  }
-
-  /**
-   * Notifies the appropriate {@link EventConsumerChain} that an {@link Event} has occurred.
-   *
-   * @param event The Event.
-   * @return {@code true} if the Event should continue on with its outcome, {@code false} if not.
-   */
-  public <T extends Event> boolean notify(T event) {
-    return events.notify(event);
-  }
-
-  /**
-   * Places the {@link EventConsumerChain} into the EventConsumerChainSet.
-   *
-   * @param clazz The {@link Class} to associate the EventListenerChain with.
-   * @param consumer The EventListenerChain.
-   */
-  public <T extends Event> void addConsumer(Class<T> clazz, EventConsumer<T> consumer) {
-    events.addConsumer(clazz, consumer);
-  }
-
-  /**
-   * Gets the FrameMetadataSet for this Server.
-   * 
-   * @return The FrameMetadataSet for this Server.
-   */
-  public FrameMetadataSet getFrameMetadataSet() {
-    return frameMetadataSet;
   }
 
   /**
@@ -248,15 +194,6 @@ public final class Server {
   public Server setSql2o(Sql2o sql2o) {
     this.sql2o = Optional.of(sql2o);
     return this;
-  }
-
-  /**
-   * Gets the {@link EventConsumerChainSet} for this Server.
-   * 
-   * @return The EventConsumerChainSet for this Server.
-   */
-  public EventConsumerChainSet getEvents() {
-    return events;
   }
 
 }

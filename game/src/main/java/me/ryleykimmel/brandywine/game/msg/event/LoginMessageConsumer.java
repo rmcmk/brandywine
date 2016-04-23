@@ -3,10 +3,10 @@ package me.ryleykimmel.brandywine.game.msg.event;
 import com.google.common.base.Preconditions;
 
 import io.netty.channel.ChannelFutureListener;
+import me.ryleykimmel.brandywine.game.GameSession;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationRequest;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationService;
 import me.ryleykimmel.brandywine.game.event.EventConsumer;
-import me.ryleykimmel.brandywine.game.login.LoginSession;
 import me.ryleykimmel.brandywine.game.model.player.PlayerCredentials;
 import me.ryleykimmel.brandywine.game.msg.LoginMessage;
 import me.ryleykimmel.brandywine.game.msg.LoginResponseMessage;
@@ -33,9 +33,9 @@ public final class LoginMessageConsumer implements EventConsumer<LoginMessage> {
   private static final int EXPECTED_BLOCK_OPCODE = 10;
 
   /**
-   * The login Session.
+   * The GameSession.
    */
-  private final LoginSession session;
+  private final GameSession session;
 
   /**
    * The AuthenticationService used to forward login requests.
@@ -45,10 +45,10 @@ public final class LoginMessageConsumer implements EventConsumer<LoginMessage> {
   /**
    * Constructs a new {@link LoginMessageConsumer}.
    * 
-   * @param session The login Session.
+   * @param session The GameSession.
    * @param service The AuthenticationService used to forward login requests.
    */
-  public LoginMessageConsumer(LoginSession session, AuthenticationService service) {
+  public LoginMessageConsumer(GameSession session, AuthenticationService service) {
     this.session = Preconditions.checkNotNull(session, "LoginSession may not be null.");
     this.service = Preconditions.checkNotNull(service, "AuthenticationService may not be null.");
   }
