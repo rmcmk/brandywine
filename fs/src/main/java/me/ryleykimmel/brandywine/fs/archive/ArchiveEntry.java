@@ -5,7 +5,7 @@ import me.ryleykimmel.brandywine.common.Buffer;
 /**
  * A single entry in an {@link Archive}. This class is immutable.
  */
-public final class ArchiveEntry {
+final class ArchiveEntry {
 
   /**
    * The buffer of this entry.
@@ -23,7 +23,7 @@ public final class ArchiveEntry {
    * @param identifier The identifier.
    * @param buffer The buffer containing this entry's data.
    */
-  public ArchiveEntry(int identifier, Buffer buffer) {
+  protected ArchiveEntry(int identifier, Buffer buffer) {
     this.identifier = identifier;
     this.buffer = buffer.asReadOnlyBuffer();
   }

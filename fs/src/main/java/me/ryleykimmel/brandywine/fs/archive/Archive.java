@@ -9,7 +9,6 @@ import java.util.Optional;
 import com.google.common.collect.ImmutableMap;
 
 import me.ryleykimmel.brandywine.common.Buffer;
-import me.ryleykimmel.brandywine.common.util.CompressionUtil;
 
 /**
  * An archive in the RuneScape cache. An archive is a set of files which can be completely
@@ -20,7 +19,7 @@ public final class Archive {
   /**
    * The empty Archive.
    */
-  public static final Archive EMPTY_ARCHIVE = new Archive(Collections.emptyMap());
+  private static final Archive EMPTY_ARCHIVE = new Archive(Collections.emptyMap());
 
   /**
    * The entries in this archive.
@@ -32,7 +31,7 @@ public final class Archive {
    * 
    * @param entries The entries in this archive.
    */
-  public Archive(Map<Integer, ArchiveEntry> entries) {
+  private Archive(Map<Integer, ArchiveEntry> entries) {
     this.entries = ImmutableMap.copyOf(entries);
   }
 
@@ -75,7 +74,7 @@ public final class Archive {
     boolean extracted = size != extractedSize;
 
     if (extracted) {
-      buffer = CompressionUtil.bunzip2(buffer);
+      buffer = CompressionUtil.INSTANCE.bunzip2(buffer);
     }
 
     int count = buffer.getUnsignedShort();
@@ -92,10 +91,9 @@ public final class Archive {
     Map<Integer, ArchiveEntry> entries = new HashMap<>(count);
     for (int entry = 0; entry < count; entry++) {
       Buffer data = Buffer.allocate(extracted ? extractedSizes[entry] : sizes[entry]);
-      data.fill(buffer);
+      Buffer filled = extracted ? data : data.fill(buffer);
 
-      entries.put(identifiers[entry],
-          new ArchiveEntry(identifiers[entry], extracted ? data : CompressionUtil.bunzip2(data)));
+      entries.put(identifiers[entry], new ArchiveEntry(identifiers[entry], filled));
     }
 
     return new Archive(entries);

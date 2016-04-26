@@ -46,7 +46,7 @@ final class Brandywine {
               .addLast("message_codec", new FrameMessageCodec(metadata))
               .addLast("handler", new GameSessionHandler(session));
         }
-      });
+    });
 
       GameService gameService = new GameService();
       server.setName("RuneScape").setFileSystem(FileSystem.create("data/fs"))
