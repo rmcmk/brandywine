@@ -1,9 +1,22 @@
-subprojects {
-	apply plugin: 'java'
-	apply plugin: 'eclipse'
+buildscript {
+	ext.kotlin_version = '1.0.1-2'
 
 	repositories {
-	    mavenCentral()
+		mavenCentral()
+	}
+
+	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+	}
+}
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'idea'
+	apply plugin: 'kotlin'
+
+	repositories {
+		mavenCentral()
 	}
 
 	dependencies {
@@ -16,8 +29,12 @@ subprojects {
 		compile 'com.google.guava:guava:19.0'
 		compile 'org.sql2o:sql2o:1.5.4'
 		compile 'com.lambdaworks:scrypt:1.4.0'
+		compile 'org.reflections:reflections:0.9.10'
+		compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+		compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
 		testCompile 'junit:junit:4.12'
+		testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 		testCompile 'org.powermock:powermock-module-junit4:1.6.4'
 		testCompile 'org.powermock:powermock-api-mockito:1.6.4'
 		testCompile 'com.google.truth:truth:0.28'
