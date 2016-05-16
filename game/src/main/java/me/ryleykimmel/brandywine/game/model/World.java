@@ -7,6 +7,10 @@ import java.util.Optional;
 import me.ryleykimmel.brandywine.game.area.Region;
 import me.ryleykimmel.brandywine.game.area.RegionRepository;
 import me.ryleykimmel.brandywine.game.collect.MobRepository;
+import me.ryleykimmel.brandywine.game.event.Event;
+import me.ryleykimmel.brandywine.game.event.EventConsumer;
+import me.ryleykimmel.brandywine.game.event.EventConsumerChain;
+import me.ryleykimmel.brandywine.game.event.EventConsumerChainSet;
 import me.ryleykimmel.brandywine.game.model.npc.Npc;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.update.ParallelUpdater;
@@ -54,6 +58,11 @@ public final class World {
   private final RegionRepository regionRepository = new RegionRepository();
 
   /**
+   * The {@link EventConsumerChainSet} for this World.
+   */
+  private final EventConsumerChainSet events = new EventConsumerChainSet();
+
+  /**
    * Attempts to add the specified Player to the World.
    *
    * @param player The Player to add.
@@ -74,7 +83,7 @@ public final class World {
 
   /**
    * Finalizes the removal of the specified Player.
-   * 
+   *
    * @param player The Player to remove.
    */
   public void finalizePlayerRemoval(Player player) {
@@ -125,6 +134,26 @@ public final class World {
   }
 
   /**
+   * Notifies the appropriate {@link EventConsumerChain} that an {@link Event} has occurred.
+   *
+   * @param event The Event.
+   * @return {@code true} if the Event should continue on with its outcome.
+   */
+  public <E extends Event> boolean notify(E event) {
+    return events.notify(event);
+  }
+
+  /**
+   * Places the {@link EventConsumerChain} into this set.
+   *
+   * @param clazz The {@link Class} to associate the EventListenerChain with.
+   * @param consumer The EventListenerChain.
+   */
+  public <E extends Event> void addConsumer(Class<E> clazz, EventConsumer<E> consumer) {
+    events.addConsumer(clazz, consumer);
+  }
+
+  /**
    * Gets the total amount of Players online.
    *
    * @return The total amount of Players online.
@@ -162,11 +191,20 @@ public final class World {
 
   /**
    * Gets this World's RegionRepository.
-   * 
+   *
    * @return The RegionRepository for this World.
    */
   public RegionRepository getRegionRepository() {
     return regionRepository;
+  }
+
+  /**
+   * Gets this World's EventConsumerChainSet.
+   *
+   * @return The EventConsumerChainSet for this World.
+   */
+  public EventConsumerChainSet getEvents() {
+    return events;
   }
 
 }

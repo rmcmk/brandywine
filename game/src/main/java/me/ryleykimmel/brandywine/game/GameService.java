@@ -40,13 +40,16 @@ public final class GameService extends Service {
   /**
    * The game World.
    */
-  private final World world = new World();
+  private final World world;
 
-  /**
+   /**
    * Constructs a new {@link GameService}.
+   *
+   * @param world The game World.
    */
-  public GameService() {
+  public GameService(World world) {
     super(PULSE_INTERVAL);
+    this.world = world;
   }
 
   /**
@@ -65,7 +68,7 @@ public final class GameService extends Service {
 
   /**
    * Removes the specified Player from the World.
-   * 
+   *
    * @param player The Player to remove.
    */
   public void removePlayer(Player player) {
@@ -74,7 +77,7 @@ public final class GameService extends Service {
 
   /**
    * Finalizes the removal of the specified Player.
-   * 
+   *
    * @param player The Player being removed.
    */
   public synchronized void finalizePlayerRemoval(Player player) {
@@ -83,7 +86,7 @@ public final class GameService extends Service {
 
   /**
    * Tests whether or not the specified Player is online or is queued to become online.
-   * 
+   *
    * @param player The Player to test.
    * @return {@code true} if the Player is online or is awaiting login otherwise {@code false}.
    */

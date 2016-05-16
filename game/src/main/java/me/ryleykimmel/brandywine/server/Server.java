@@ -44,11 +44,6 @@ public final class Server {
   private final ServerBootstrap bootstrap = new ServerBootstrap();
 
   /**
-   * The name of this Server.
-   */
-  private String name = "Brandywine";
-
-  /**
    * The AuthenticationStrategy used to authenticate upstream login requests.
    */
   private AuthenticationStrategy authenticationStrategy = AuthenticationService.DEFAULT_STRATEGY;
@@ -113,15 +108,6 @@ public final class Server {
   }
 
   /**
-   * Gets the name of this Server.
-   *
-   * @return The name of this Server.
-   */
-  public String getName() {
-    return name;
-  }
-
-  /**
    * Gets the AuthenticationStrategy used by the Server.
    * 
    * @return The AuthenticationStrategy used by the Server.
@@ -148,18 +134,6 @@ public final class Server {
   public Sql2o getSql2o() {
     return sql2o.orElseThrow(() -> new UnsupportedOperationException(
         "No database provider configured, use Server#setSql2o to configure one."));
-  }
-
-  /**
-   * Configures the name of this Server.
-   * 
-   * @param name The name of this Server, may not be {@code null} or empty.
-   * @return This Server instance, for chaining.
-   */
-  public Server setName(String name) {
-    Assertions.checkNonEmpty(name, "Name cannot be null or empty.");
-    this.name = name;
-    return this;
   }
 
   /**

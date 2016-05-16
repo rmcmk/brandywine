@@ -29,7 +29,7 @@ public abstract class Mob extends Entity {
   private final Set<Player> localPlayers = new HashSet<>();
 
   /**
-   * A {@link Set} of pending {@link UpdateBlocks}.
+   * A {@link Set} of pending {@link UpdateBlock}s.
    */
   private final Set<UpdateBlock> pendingUpdates = new HashSet<>();
 

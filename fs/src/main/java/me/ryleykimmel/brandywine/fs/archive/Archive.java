@@ -9,6 +9,7 @@ import java.util.Optional;
 import com.google.common.collect.ImmutableMap;
 
 import me.ryleykimmel.brandywine.common.Buffer;
+import me.ryleykimmel.brandywine.common.util.CompressionUtil;
 
 /**
  * An archive in the RuneScape cache. An archive is a set of files which can be completely
@@ -74,7 +75,7 @@ public final class Archive {
     boolean extracted = size != extractedSize;
 
     if (extracted) {
-      buffer = CompressionUtil.INSTANCE.bunzip2(buffer);
+      buffer = CompressionUtil.bunzip2(buffer);
     }
 
     int count = buffer.getUnsignedShort();

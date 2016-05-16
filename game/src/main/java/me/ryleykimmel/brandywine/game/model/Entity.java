@@ -2,6 +2,9 @@ package me.ryleykimmel.brandywine.game.model;
 
 import me.ryleykimmel.brandywine.game.area.Region;
 import me.ryleykimmel.brandywine.game.area.RegionRepository;
+import me.ryleykimmel.brandywine.game.event.Event;
+import me.ryleykimmel.brandywine.game.event.EventConsumer;
+import me.ryleykimmel.brandywine.game.event.EventConsumerChain;
 
 /**
  * Represents an Entity within the game World.
@@ -57,6 +60,26 @@ public abstract class Entity {
     currentRegion.removeEntity(this);
     this.position = position;
     next.addEntity(this);
+  }
+
+  /**
+   * Notifies the appropriate {@link EventConsumerChain} that an {@link Event} has occurred.
+   *
+   * @param event The Event.
+   * @return {@code true} if the Event should continue on with its outcome.
+   */
+  public <E extends Event> boolean notify(E event) {
+    return world.notify(event);
+  }
+
+  /**
+   * Places the {@link EventConsumerChain} into this set.
+   *
+   * @param clazz The {@link Class} to associate the EventListenerChain with.
+   * @param consumer The EventListenerChain.
+   */
+  public <E extends Event> void addConsumer(Class<E> clazz, EventConsumer<E> consumer) {
+    world.addConsumer(clazz, consumer);
   }
 
   /**

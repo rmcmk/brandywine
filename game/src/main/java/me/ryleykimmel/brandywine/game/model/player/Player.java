@@ -109,26 +109,6 @@ public final class Player extends Mob {
   }
 
   /**
-   * Notifies the appropriate {@link EventConsumerChain} that an {@link Event} has occurred.
-   *
-   * @param event The Event.
-   * @return {@code true} if the Event should continue on with its outcome.
-   */
-  public <E extends Event> boolean notify(E event) {
-    return session.notify(event);
-  }
-
-  /**
-   * Places the {@link EventConsumerChain} into this set.
-   *
-   * @param clazz The {@link Class} to associate the EventListenerChain with.
-   * @param consumer The EventListenerChain.
-   */
-  public <E extends Event> void addConsumer(Class<E> clazz, EventConsumer<E> consumer) {
-    session.addConsumer(clazz, consumer);
-  }
-
-  /**
    * Logs this Player into the World.
    */
   public void login() {
@@ -139,7 +119,7 @@ public final class Player extends Mob {
     teleport(position);
 
     write(new RebuildRegionMessage(position));
-    write(new ServerChatMessage("Welcome to %s.", "Brandywine")); // TODO: Access to Environment
+    write(new ServerChatMessage("Welcome to %s.", "Brandywine"));
 
     if (isMember()) {
       write(new ServerChatMessage("You are a member!"));

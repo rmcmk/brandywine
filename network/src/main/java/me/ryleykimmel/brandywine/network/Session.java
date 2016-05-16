@@ -1,18 +1,14 @@
 package me.ryleykimmel.brandywine.network;
 
+import com.google.common.base.MoreObjects;
+
 import java.net.InetSocketAddress;
 import java.security.SecureRandom;
 import java.util.Random;
 
-import com.google.common.base.MoreObjects;
-
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.socket.SocketChannel;
-import me.ryleykimmel.brandywine.game.event.Event;
-import me.ryleykimmel.brandywine.game.event.EventConsumer;
-import me.ryleykimmel.brandywine.game.event.EventConsumerChain;
-import me.ryleykimmel.brandywine.game.event.EventConsumerChainSet;
 import me.ryleykimmel.brandywine.network.msg.Message;
 
 /**
@@ -30,11 +26,6 @@ public abstract class Session {
    * The key of this Session.
    */
   private final long sessionKey = RANDOM.nextLong();
-
-  /**
-   * The EventConsumerChainSet for this Session.
-   */
-  private final EventConsumerChainSet events = new EventConsumerChainSet();
 
   /**
    * The SocketChannel this Session is listening on.
@@ -62,26 +53,6 @@ public abstract class Session {
    */
   public final long getSessionKey() {
     return sessionKey;
-  }
-
-  /**
-   * Notifies the appropriate {@link EventConsumerChain} that an {@link Event} has occurred.
-   *
-   * @param event The Event.
-   * @return {@code true} if the Event should continue on with its outcome.
-   */
-  public <E extends Event> boolean notify(E event) {
-    return events.notify(event);
-  }
-
-  /**
-   * Places the {@link EventConsumerChain} into this set.
-   *
-   * @param clazz The {@link Class} to associate the EventListenerChain with.
-   * @param consumer The EventListenerChain.
-   */
-  public <E extends Event> void addConsumer(Class<E> clazz, EventConsumer<E> consumer) {
-    events.addConsumer(clazz, consumer);
   }
 
   /**
