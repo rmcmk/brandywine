@@ -154,6 +154,15 @@ public final class World {
   }
 
   /**
+   * Places the {@link EventConsumerChain} into this set.
+   *
+   * @param consumer The EventListenerChain.
+   */
+  public <E extends Event> void addConsumer(@NotNull EventConsumer<E> consumer) {
+    events.addConsumer(consumer);
+  }
+
+  /**
    * Gets the total amount of Players online.
    *
    * @return The total amount of Players online.

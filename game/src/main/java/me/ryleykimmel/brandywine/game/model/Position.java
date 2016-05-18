@@ -57,7 +57,7 @@ public final class Position {
     this.x = x;
     this.y = y;
     this.height = Preconditions.checkElementIndex(height, HEIGHT_LEVELS,
-        "Height must be [0, 3), received " + height + ".");;
+        "Height must be [0, 3), received " + height + ".");
   }
 
   /**
