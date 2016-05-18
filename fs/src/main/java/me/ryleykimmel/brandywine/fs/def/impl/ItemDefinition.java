@@ -1,8 +1,8 @@
 package me.ryleykimmel.brandywine.fs.def.impl;
 
-import java.util.List;
-
 import com.google.common.base.MoreObjects;
+
+import java.util.List;
 
 import me.ryleykimmel.brandywine.fs.def.Definition;
 

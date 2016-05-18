@@ -1,9 +1,9 @@
 package me.ryleykimmel.brandywine.network.frame;
 
-import java.util.Objects;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
+
+import java.util.Objects;
 
 import me.ryleykimmel.brandywine.common.Assertions;
 

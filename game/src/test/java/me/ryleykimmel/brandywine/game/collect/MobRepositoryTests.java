@@ -1,9 +1,5 @@
 package me.ryleykimmel.brandywine.game.collect;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.when;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -13,6 +9,10 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import me.ryleykimmel.brandywine.game.model.Mob;
 import me.ryleykimmel.brandywine.game.model.player.Player;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.powermock.api.mockito.PowerMockito.mock;
+import static org.powermock.api.mockito.PowerMockito.when;
 
 /**
  * Tests the {@link MobRepository} class.

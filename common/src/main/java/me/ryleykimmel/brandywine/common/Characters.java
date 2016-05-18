@@ -1,8 +1,8 @@
 package me.ryleykimmel.brandywine.common;
 
-import java.util.List;
-
 import com.google.common.primitives.Chars;
+
+import java.util.List;
 
 /**
  * A static-utility class containing extension and helper methods for {@code char}s

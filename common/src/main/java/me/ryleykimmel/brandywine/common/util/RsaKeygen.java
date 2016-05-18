@@ -1,5 +1,10 @@
 package me.ryleykimmel.brandywine.common.util;
 
+import com.google.common.base.Stopwatch;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -15,11 +20,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.concurrent.TimeUnit;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Stopwatch;
 
 /**
  * A utility class which generates RSA public and private keypairs.

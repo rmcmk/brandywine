@@ -1,10 +1,10 @@
 package me.ryleykimmel.brandywine.common;
 
-import static com.google.common.truth.Truth.assertThat;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+
+import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Tests the {@link Characters} class.

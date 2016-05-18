@@ -1,9 +1,9 @@
 package me.ryleykimmel.brandywine.common;
 
+import com.google.common.collect.Iterables;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.common.collect.Iterables;
 
 /**
  * A static-utility class containing extension and helper methods for {@link String strings}.

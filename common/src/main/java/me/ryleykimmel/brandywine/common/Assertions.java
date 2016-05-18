@@ -1,10 +1,10 @@
 package me.ryleykimmel.brandywine.common;
 
-import java.util.Objects;
-import java.util.stream.Stream;
-
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+
+import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * Contains utility methods similar to (and utilizing) Guava's {@link Preconditions}.

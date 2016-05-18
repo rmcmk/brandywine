@@ -1,8 +1,8 @@
 package me.ryleykimmel.brandywine.common;
 
-import java.nio.ByteBuffer;
-
 import com.google.common.base.Preconditions;
+
+import java.nio.ByteBuffer;
 
 /**
  * A wrapper for {@link ByteBuffer} that adds methods to read unsigned data types and specific
