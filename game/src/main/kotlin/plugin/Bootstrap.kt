@@ -49,15 +49,15 @@ fun main(args: Array<String>) = try {
             registerService(gameService).registerService(AuthenticationService(gameService, server.authenticationStrategy)).
             init(43594)
 
-    parse()
+    loadPluginEvents()
 } catch (cause: IOException) {
     throw InitializationException(cause)
 }
 
 /**
- * Parses Kotlin plugins
+ * Loads Kotlin plugin events.
  */
-fun parse() {
+fun loadPluginEvents() {
     val reflections = Reflections("plugin")
     val classes = reflections.getSubTypesOf(EventConsumer::class.java)
     classes.forEach { world.addConsumer(it.newInstance()) }
@@ -73,7 +73,6 @@ fun createFrameMetadataSet(): FrameMetadataSet {
     val metadata = FrameMetadataSet()
 
     metadata.register(LoginHandshakeMessage::class, 14, 1)
-
 
     return metadata
 }
