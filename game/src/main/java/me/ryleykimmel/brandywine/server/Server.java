@@ -1,30 +1,30 @@
 package me.ryleykimmel.brandywine.server;
 
+import com.google.common.base.Preconditions;
+
+import org.sql2o.Sql2o;
+
 import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.sql2o.Sql2o;
-
-import com.google.common.base.Preconditions;
-
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.ServerChannel;
+import io.netty.channel.epoll.Epoll;
+import io.netty.channel.epoll.EpollEventLoopGroup;
+import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import me.ryleykimmel.brandywine.common.Assertions;
 import me.ryleykimmel.brandywine.common.util.ThreadFactoryUtil;
 import me.ryleykimmel.brandywine.fs.FileSystem;
 import me.ryleykimmel.brandywine.game.GamePulseHandler;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationService;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationStrategy;
-import me.ryleykimmel.brandywine.network.frame.FrameMapping;
-import me.ryleykimmel.brandywine.network.frame.FrameMetadataSet;
-import me.ryleykimmel.brandywine.network.msg.Message;
 import me.ryleykimmel.brandywine.service.Service;
 import me.ryleykimmel.brandywine.service.ServiceSet;
 
@@ -60,7 +60,7 @@ public final class Server {
 
   /**
    * Initializes and binds this Server.
-   * 
+   *
    * @param port The port this Server listens on.
    */
   public void init(int port) {
@@ -70,10 +70,14 @@ public final class Server {
     executor.scheduleAtFixedRate(pulseHandler, GamePulseHandler.PULSE_DELAY,
         GamePulseHandler.PULSE_DELAY, TimeUnit.MILLISECONDS);
 
-    EventLoopGroup parentGroup = new NioEventLoopGroup();
-    EventLoopGroup childGroup = new NioEventLoopGroup();
+    boolean epoll = Epoll.isAvailable();
 
-    bootstrap.channel(NioServerSocketChannel.class).group(parentGroup, childGroup).bind(port);
+    Class<? extends ServerChannel> serverChannel = epoll ? EpollServerSocketChannel.class : NioServerSocketChannel.class;
+
+    EventLoopGroup parentGroup = epoll ? new EpollEventLoopGroup() : new NioEventLoopGroup();
+    EventLoopGroup childGroup = epoll ? new EpollEventLoopGroup() : new NioEventLoopGroup();
+
+    bootstrap.channel(serverChannel).group(parentGroup, childGroup).bind(port);
   }
 
   /**
