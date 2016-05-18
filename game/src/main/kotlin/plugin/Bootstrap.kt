@@ -80,6 +80,6 @@ fun createFrameMetadataSet(): FrameMetadataSet {
 @Suppress("unchecked_cast")
 fun <T : Message> FrameMetadataSet.register(message: KClass<T>, opcode: Int, length: Int) {
     val packageName = message.java.`package`.name
-    val codec = Class.forName("$packageName.codec.${message.simpleName}").newInstance() as MessageCodec<T>
+    val codec = Class.forName("$packageName.codec.${message.simpleName}Codec").newInstance() as MessageCodec<T>
     this.register(FrameMapping.create(message.java, codec, opcode, length))
 }

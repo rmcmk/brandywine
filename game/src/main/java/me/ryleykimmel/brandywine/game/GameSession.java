@@ -35,14 +35,4 @@ public final class GameSession extends Session {
         return events.notify(event);
     }
 
-    /**
-     * Places the {@link EventConsumerChain} into this set.
-     *
-     * @param clazz    The {@link Class} to associate the EventListenerChain with.
-     * @param consumer The EventListenerChain.
-     */
-    public <E extends Event> void addConsumer(Class<E> clazz, EventConsumer<E> consumer) {
-        events.addConsumer(clazz, consumer);
-    }
-
 }

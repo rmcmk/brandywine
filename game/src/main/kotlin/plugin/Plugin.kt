@@ -1,7 +1,6 @@
 package plugin
 
-import me.ryleykimmel.brandywine.game.model.Position
-import me.ryleykimmel.brandywine.game.model.World
+import me.ryleykimmel.brandywine.game.model.*
 import me.ryleykimmel.brandywine.game.model.player.Player
 import me.ryleykimmel.brandywine.game.msg.ServerChatMessage
 import java.util.concurrent.ThreadLocalRandom
@@ -14,4 +13,14 @@ fun random(range: Int): Int = random.nextInt(range)
 fun Player.message(message: String, vararg objects: Any) = this.write(ServerChatMessage(message, objects))
 fun Player.teleport(x: Int, y: Int, height: Int = this.position.height) = this.teleport(Position(x, y, height))
 
-fun World.each(action: (Int, Player) -> Unit) = this.players.filterNotNull().forEachIndexed(action)
+fun Player.region() = world.regionRepository.get(this.position.regionCoordinates)
+fun <T : Entity> Player.surrounding(type: EntityType) = this.region().getEntities<T>(type)
+
+fun World.each(type: EntityType, action: (Int, Mob) -> Unit) {
+    val collection = when (type) {
+        EntityType.NPC -> world.npcs
+        EntityType.PLAYER -> world.players
+    }
+
+    collection.filterNotNull().forEachIndexed(action);
+}

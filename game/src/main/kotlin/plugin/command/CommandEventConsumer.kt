@@ -3,8 +3,12 @@ package plugin.command
 import me.ryleykimmel.brandywine.game.command.CommandEvent
 import me.ryleykimmel.brandywine.game.event.Consumes
 import me.ryleykimmel.brandywine.game.event.EventConsumer
+import me.ryleykimmel.brandywine.game.model.EntityType
+import me.ryleykimmel.brandywine.game.model.player.Player
 import plugin.message
+import plugin.surrounding
 import plugin.teleport
+import plugin.world
 
 @Consumes(CommandEvent::class)
 class CommandEventConsumer : EventConsumer<CommandEvent> {
@@ -14,9 +18,8 @@ class CommandEventConsumer : EventConsumer<CommandEvent> {
         val args = event.arguments
 
         when (event.name) {
-            "pos" -> {
-                player.message("You are standing at: %s", player.position);
-            }
+            "pos" -> player.message("You are standing at: %s", player.position);
+            "print-surrounding" -> player.surrounding<Player>(EntityType.PLAYER).forEach { player.message("Player in your region: %s", it.username) }
 
             "tele-to" -> {
                 if (!args.hasRemaining(2)) {

@@ -73,16 +73,6 @@ public abstract class Entity {
   }
 
   /**
-   * Places the {@link EventConsumerChain} into this set.
-   *
-   * @param clazz The {@link Class} to associate the EventListenerChain with.
-   * @param consumer The EventListenerChain.
-   */
-  public <E extends Event> void addConsumer(Class<E> clazz, EventConsumer<E> consumer) {
-    world.addConsumer(clazz, consumer);
-  }
-
-  /**
    * Gets this Entity's current Position.
    *
    * @return This Entity's current Position.
