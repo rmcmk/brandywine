@@ -158,7 +158,7 @@ public final class World {
    *
    * @param consumer The EventListenerChain.
    */
-  public <E extends Event> void addConsumer(@NotNull EventConsumer<E> consumer) {
+  public <E extends Event> void addConsumer(EventConsumer<E> consumer) {
     events.addConsumer(consumer);
   }
 
