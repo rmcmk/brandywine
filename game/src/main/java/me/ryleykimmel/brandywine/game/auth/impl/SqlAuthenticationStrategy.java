@@ -1,22 +1,20 @@
 package me.ryleykimmel.brandywine.game.auth.impl;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-
+import com.google.common.base.Preconditions;
+import com.lambdaworks.crypto.SCryptUtil;
+import me.ryleykimmel.brandywine.game.auth.AuthenticationStrategy;
+import me.ryleykimmel.brandywine.game.model.player.Player;
+import me.ryleykimmel.brandywine.game.model.player.PlayerCredentials;
+import me.ryleykimmel.brandywine.network.ResponseCode;
 import org.sql2o.Connection;
 import org.sql2o.Query;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 import org.sql2o.data.Row;
 
-import com.google.common.base.Preconditions;
-import com.lambdaworks.crypto.SCryptUtil;
-
-import me.ryleykimmel.brandywine.game.auth.AuthenticationStrategy;
-import me.ryleykimmel.brandywine.game.model.player.Player;
-import me.ryleykimmel.brandywine.game.model.player.PlayerCredentials;
-import me.ryleykimmel.brandywine.network.ResponseCode;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 /**
  * An {@link AuthenticationStrategy} which utilizes jdbc-SQL to validate requests.

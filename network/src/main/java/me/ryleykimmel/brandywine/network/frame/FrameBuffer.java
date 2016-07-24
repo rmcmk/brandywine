@@ -1,7 +1,6 @@
 package me.ryleykimmel.brandywine.network.frame;
 
 import com.google.common.base.Preconditions;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.util.ReferenceCounted;
 import me.ryleykimmel.brandywine.common.Assertions;

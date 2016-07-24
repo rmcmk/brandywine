@@ -1,43 +1,45 @@
 buildscript {
-	ext.kotlin_version = '1.0.2'
+    ext.kotlin_version = '1.0.3'
 
-	repositories {
-		mavenCentral()
-	}
+    repositories {
+        mavenCentral()
+    }
 
-	dependencies {
-		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-	}
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
 }
 
 subprojects {
-	apply plugin: 'java'
-	apply plugin: 'idea'
-	apply plugin: 'kotlin'
+    apply plugin: 'java'
+    apply plugin: 'kotlin'
 
-	repositories {
-		mavenCentral()
-	}
+    repositories {
+        mavenCentral()
+    }
 
-	dependencies {
-		compile 'org.apache.commons:commons-compress:1.11'
-		compile 'org.apache.commons:commons-lang3:3.4'
-		compile 'mysql:mysql-connector-java:6.0.2'
-		compile 'org.slf4j:slf4j-api:1.7.21'
-		compile 'org.slf4j:slf4j-simple:1.7.21'
-		compile 'io.netty:netty-all:4.0.36.Final'
-		compile 'com.google.guava:guava:19.0'
-		compile 'org.sql2o:sql2o:1.5.4'
-		compile 'com.lambdaworks:scrypt:1.4.0'
-		compile 'org.reflections:reflections:0.9.10'
-		compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-		compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    dependencies {
+        compile 'org.apache.commons:commons-compress:1.12'
+        compile 'org.apache.commons:commons-lang3:3.4'
 
-		testCompile 'junit:junit:4.12'
-		testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
-		testCompile 'org.powermock:powermock-module-junit4:1.6.5'
-		testCompile 'org.powermock:powermock-api-mockito:1.6.5'
-		testCompile 'com.google.truth:truth:0.28'
-	}
+        compile 'mysql:mysql-connector-java:6.0.3'
+        compile 'io.netty:netty-all:4.0.36.Final'
+        compile 'com.google.guava:guava:19.0'
+        compile 'org.sql2o:sql2o:1.5.4'
+        compile 'com.lambdaworks:scrypt:1.4.0'
+        compile 'org.reflections:reflections:0.9.10'
+
+        compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+        compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+        compile 'org.slf4j:slf4j-api:1.7.20'
+        compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.21'
+
+        testCompile 'junit:junit:4.12'
+        testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+        testCompile 'org.powermock:powermock-module-junit4:1.6.5'
+        testCompile 'org.powermock:powermock-api-mockito:1.6.5'
+        testCompile 'com.google.truth:truth:0.28'
+    }
 
 }

@@ -1,11 +1,11 @@
 package me.ryleykimmel.brandywine.game.model.player;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Preconditions;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Preconditions;
 
 /**
  * Represents the appearance of a Player.

@@ -1,9 +1,6 @@
 package me.ryleykimmel.brandywine.network.frame.codec;
 
-import java.util.List;
-
 import com.google.common.base.Preconditions;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.PooledByteBufAllocator;
@@ -12,6 +9,8 @@ import io.netty.handler.codec.MessageToMessageCodec;
 import me.ryleykimmel.brandywine.network.frame.Frame;
 import me.ryleykimmel.brandywine.network.frame.FrameMetadataSet;
 import me.ryleykimmel.brandywine.network.msg.Message;
+
+import java.util.List;
 
 /**
  * A standard codec used for decoding and encoding {@link Frame} and {@link Message} objects.

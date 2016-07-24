@@ -2,10 +2,9 @@ package me.ryleykimmel.brandywine.network.frame;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
+import me.ryleykimmel.brandywine.common.Assertions;
 
 import java.util.Objects;
-
-import me.ryleykimmel.brandywine.common.Assertions;
 
 /**
  * Meta information configuration for Frames.
@@ -40,13 +39,11 @@ public final class FrameMetadata {
   /**
    * Constructs a new {@link FrameMetadata}.
    * 
-   * @param opcode The identifier. Must be greater than zero and less than the
-   * {@link FrameMetadata#MAXIMUM_OPCODE},
-   * @param length The length of the Frame. Must be either greater than or equal to zero or one of:
-   * {@link FrameMetadata#VARIABLE_BYTE_LENGTH} or {@link FrameMetadata#VARIABLE_SHORT_LENGTH}.
+   * @param opcode The identifier. Must be greater than zero and less than {@link FrameMetadata#MAXIMUM_OPCODE},
+   * @param length The length of the Frame. Must be either greater than or equal to zero or one of: {@link FrameMetadata#VARIABLE_BYTE_LENGTH} or {@link FrameMetadata#VARIABLE_SHORT_LENGTH}.
    */
   public FrameMetadata(int opcode, int length) {
-    Assertions.checkWithin(-1, MAXIMUM_OPCODE, opcode, "Invalid opcode: " + opcode);
+    Assertions.checkWithin(0, MAXIMUM_OPCODE, opcode, "Invalid opcode: " + opcode);
     if (length < 0) {
       Preconditions.checkArgument(length == VARIABLE_BYTE_LENGTH || length == VARIABLE_SHORT_LENGTH,
           "Invalid length: " + length);
@@ -71,18 +68,6 @@ public final class FrameMetadata {
    */
   public int getLength() {
     return length;
-  }
-
-  /**
-   * Tests whether or not this Frame is headless.
-   * <p>
-   * A headless Frame has a fixed length of <tt>0</tt> and <tt>-1</tt> as the opcode.
-   * </p>
-   * 
-   * @return {@code true} iff this Frame is headless.
-   */
-  public boolean isHeadless() {
-    return opcode == -1 && length == 0;
   }
 
   /**

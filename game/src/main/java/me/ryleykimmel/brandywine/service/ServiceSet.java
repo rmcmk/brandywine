@@ -1,13 +1,12 @@
 package me.ryleykimmel.brandywine.service;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
+import io.netty.util.internal.StringUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
-
-import io.netty.util.internal.StringUtil;
 
 /**
  * A representation of registered {@link Service}s.

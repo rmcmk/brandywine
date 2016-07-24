@@ -1,14 +1,12 @@
 package me.ryleykimmel.brandywine.network.frame;
 
-import org.apache.commons.lang3.builder.Builder;
-
 import com.google.common.base.Preconditions;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import me.ryleykimmel.brandywine.common.Assertions;
 import me.ryleykimmel.brandywine.common.util.ByteBufUtil;
 import me.ryleykimmel.brandywine.network.frame.FrameBuffer.WritingFrameBuffer;
+import org.apache.commons.lang3.builder.Builder;
 
 /**
  * An implementation of a WritingFrameBuffer which builds Frames from its contents.

@@ -33,12 +33,13 @@ public final class LevelUpSkillListener implements SkillListener {
 
     if (skill.isCombatSkill()) {
       int oldCombatLevel = skills.getCombatLevel();
-      skills.calculateCombatLevel();
+      int newCombatLevel = skills.calculateCombatLevel();
 
-      int delta = skills.getCombatLevel() - oldCombatLevel;
+      int delta = newCombatLevel - oldCombatLevel;
       if (delta > 0) {
+        skills.setCombatLevel(newCombatLevel);
         player.write(new ServerChatMessage("Congratulations, your Combat level is now %s.",
-            skills.getCombatLevel()));
+          skills.getCombatLevel()));
         player.updateAppearance();
       }
     }

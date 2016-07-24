@@ -1,14 +1,6 @@
 package me.ryleykimmel.brandywine.server;
 
 import com.google.common.base.Preconditions;
-
-import org.sql2o.Sql2o;
-
-import java.util.Optional;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -27,6 +19,12 @@ import me.ryleykimmel.brandywine.game.auth.AuthenticationService;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationStrategy;
 import me.ryleykimmel.brandywine.service.Service;
 import me.ryleykimmel.brandywine.service.ServiceSet;
+import org.sql2o.Sql2o;
+
+import java.util.Optional;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The core class of the Server.

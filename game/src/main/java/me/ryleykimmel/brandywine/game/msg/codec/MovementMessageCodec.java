@@ -1,21 +1,20 @@
 package me.ryleykimmel.brandywine.game.msg.codec;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.msg.MovementMessage;
 import me.ryleykimmel.brandywine.network.frame.DataOrder;
 import me.ryleykimmel.brandywine.network.frame.DataTransformation;
 import me.ryleykimmel.brandywine.network.frame.DataType;
-import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
 import me.ryleykimmel.brandywine.network.frame.FrameReader;
 import me.ryleykimmel.brandywine.network.msg.MessageCodec;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 /**
  * MessageCodec for the {@link MovementMessage}.
  */
-public final class MovementMessageCodec implements MessageCodec<MovementMessage> {
+public final class MovementMessageCodec extends MessageCodec<MovementMessage> {
 
   @Override
   public MovementMessage decode(FrameReader reader) {
@@ -46,11 +45,6 @@ public final class MovementMessageCodec implements MessageCodec<MovementMessage>
     }
 
     return new MovementMessage(positions, run);
-  }
-
-  @Override
-  public void encode(MovementMessage message, FrameBuilder builder) {
-
   }
 
 }

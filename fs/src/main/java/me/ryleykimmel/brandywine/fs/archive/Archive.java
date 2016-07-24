@@ -1,15 +1,14 @@
 package me.ryleykimmel.brandywine.fs.archive;
 
+import com.google.common.collect.ImmutableMap;
+import me.ryleykimmel.brandywine.common.Buffer;
+import me.ryleykimmel.brandywine.common.util.CompressionUtil;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
-import com.google.common.collect.ImmutableMap;
-
-import me.ryleykimmel.brandywine.common.Buffer;
-import me.ryleykimmel.brandywine.common.util.CompressionUtil;
 
 /**
  * An archive in the RuneScape cache. An archive is a set of files which can be completely

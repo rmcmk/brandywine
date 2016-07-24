@@ -1,7 +1,6 @@
 package me.ryleykimmel.brandywine.fs;
 
 import com.google.common.base.Preconditions;
-
 import me.ryleykimmel.brandywine.common.Buffer;
 
 /**

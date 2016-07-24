@@ -1,11 +1,5 @@
 package me.ryleykimmel.brandywine.game.update.task;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Stream;
-
 import me.ryleykimmel.brandywine.game.area.Region;
 import me.ryleykimmel.brandywine.game.area.RegionCoordinates;
 import me.ryleykimmel.brandywine.game.area.RegionRepository;
@@ -17,12 +11,13 @@ import me.ryleykimmel.brandywine.game.msg.PlayerUpdateMessage;
 import me.ryleykimmel.brandywine.game.update.PlayerDescriptor;
 import me.ryleykimmel.brandywine.game.update.blocks.AppearancePlayerBlock;
 import me.ryleykimmel.brandywine.game.update.blocks.ChatPlayerBlock;
-import me.ryleykimmel.brandywine.game.update.descriptor.AddPlayerDescriptor;
-import me.ryleykimmel.brandywine.game.update.descriptor.IdlePlayerDescriptor;
-import me.ryleykimmel.brandywine.game.update.descriptor.RemovePlayerDescriptor;
-import me.ryleykimmel.brandywine.game.update.descriptor.RunPlayerDescriptor;
-import me.ryleykimmel.brandywine.game.update.descriptor.TeleportPlayerDescriptor;
-import me.ryleykimmel.brandywine.game.update.descriptor.WalkPlayerDescriptor;
+import me.ryleykimmel.brandywine.game.update.descriptor.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * An UpdateTask which updates your Player and surrounding Players.

@@ -1,9 +1,9 @@
 package me.ryleykimmel.brandywine.game.msg;
 
-import java.util.Queue;
-
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.network.msg.Message;
+
+import java.util.Queue;
 
 /**
  * A {@link Message} which requests movement.

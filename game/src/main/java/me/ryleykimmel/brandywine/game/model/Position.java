@@ -2,7 +2,6 @@ package me.ryleykimmel.brandywine.game.model;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
-
 import me.ryleykimmel.brandywine.game.area.Region;
 import me.ryleykimmel.brandywine.game.area.RegionCoordinates;
 

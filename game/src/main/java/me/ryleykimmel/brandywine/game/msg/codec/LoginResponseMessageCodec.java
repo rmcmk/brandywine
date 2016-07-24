@@ -4,13 +4,12 @@ import me.ryleykimmel.brandywine.game.msg.LoginResponseMessage;
 import me.ryleykimmel.brandywine.network.ResponseCode;
 import me.ryleykimmel.brandywine.network.frame.DataType;
 import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
-import me.ryleykimmel.brandywine.network.frame.FrameReader;
 import me.ryleykimmel.brandywine.network.msg.MessageCodec;
 
 /**
  * MessageCodec for the {@link LoginResponseMessage}.
  */
-public final class LoginResponseMessageCodec implements MessageCodec<LoginResponseMessage> {
+public final class LoginResponseMessageCodec extends MessageCodec<LoginResponseMessage> {
 
   @Override
   public void encode(LoginResponseMessage message, FrameBuilder builder) {
@@ -20,11 +19,6 @@ public final class LoginResponseMessageCodec implements MessageCodec<LoginRespon
       builder.put(DataType.BYTE, message.getPrivilege());
       builder.put(DataType.BYTE, message.isFlagged() ? 1 : 0);
     }
-  }
-
-  @Override
-  public LoginResponseMessage decode(FrameReader frame) {
-    return null;
   }
 
 }

@@ -1,29 +1,29 @@
 package me.ryleykimmel.brandywine.game.model.player;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import com.google.common.base.MoreObjects;
-
-import me.ryleykimmel.brandywine.game.GameSession;
-import me.ryleykimmel.brandywine.game.event.Event;
-import me.ryleykimmel.brandywine.game.event.EventConsumer;
-import me.ryleykimmel.brandywine.game.event.EventConsumerChain;
+import io.netty.util.AttributeKey;
 import me.ryleykimmel.brandywine.game.model.EntityType;
 import me.ryleykimmel.brandywine.game.model.Mob;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.model.World;
-import me.ryleykimmel.brandywine.game.msg.InitializePlayerMessage;
 import me.ryleykimmel.brandywine.game.msg.LoginResponseMessage;
-import me.ryleykimmel.brandywine.game.msg.RebuildRegionMessage;
-import me.ryleykimmel.brandywine.game.msg.ServerChatMessage;
 import me.ryleykimmel.brandywine.game.update.blocks.AppearancePlayerBlock;
 import me.ryleykimmel.brandywine.network.ResponseCode;
+import me.ryleykimmel.brandywine.network.Session;
 import me.ryleykimmel.brandywine.network.msg.Message;
+
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Represents a Player character.
  */
 public final class Player extends Mob {
+
+  /**
+   * Represents this Player as an AttributeKey.
+   */
+  public static final AttributeKey<Player> ATTRIBUTE_KEY = AttributeKey.valueOf("player");
 
   /**
    * The current amount of appearance tickets.
@@ -46,9 +46,9 @@ public final class Player extends Mob {
   private final PlayerPrivileges privileges = new PlayerPrivileges();
 
   /**
-   * The GameSession this Player is attached to.
+   * The Session this Player is attached to.
    */
-  private final GameSession session;
+  private Optional<Session> session = Optional.empty();
 
   /**
    * The credentials of this Player.
@@ -86,15 +86,13 @@ public final class Player extends Mob {
   private int appearanceTicket = nextAppearanceTicket();
 
   /**
-   * Constructs a new {@link Player} with the specified GameSession and PlayerCredentials.
-   * 
-   * @param session The GameSession this Player is attached to.
+   * Constructs a new {@link Player}.
+   *
    * @param credentials The credentials of this Player.
    * @param world The World this Player is in.
    */
-  public Player(GameSession session, PlayerCredentials credentials, World world) {
+  public Player(PlayerCredentials credentials, World world) {
     super(world, EntityType.PLAYER);
-    this.session = session;
     this.credentials = credentials;
 
     appearance.init();
@@ -105,7 +103,7 @@ public final class Player extends Mob {
 
   @Override
   public void write(Message message) {
-    session.voidWrite(message);
+    getSession().voidWrite(message);
   }
 
   /**
@@ -113,29 +111,15 @@ public final class Player extends Mob {
    */
   public void login() {
     write(new LoginResponseMessage(ResponseCode.STATUS_OK, privileges.getPrimaryId(), false));
-    write(new InitializePlayerMessage(isMember(), getIndex()));
-
-    setLastKnownRegion(position);
-    teleport(position);
-
-    write(new RebuildRegionMessage(position));
-    write(new ServerChatMessage("Welcome to %s.", "Brandywine"));
-
-    if (isMember()) {
-      write(new ServerChatMessage("You are a member!"));
-    }
-
-    // skills.addListener(new SynchronizationSkillListener(this));
-    // skills.addListener(new LevelUpSkillListener(this));
-
-    // skills.refresh();
+    getSession().attr(ATTRIBUTE_KEY).setIfAbsent(this);
+    world.notify(new InitializePlayerEvent(this));
   }
 
   /**
    * Disconnects this Player from the World.
    */
   public void disconnect() {
-    session.close();
+    getSession().close();
   }
 
   /**
@@ -148,7 +132,7 @@ public final class Player extends Mob {
 
   /**
    * Generates the next appearance ticket.
-   * 
+   *
    * @return The next available appearance ticket.
    */
   private static int nextAppearanceTicket() {
@@ -159,17 +143,17 @@ public final class Player extends Mob {
   }
 
   /**
-   * Gets the GameSession this Player is attached to.
-   * 
-   * @return The GameSession this Player is attached to.
+   * Gets the Session this Player is attached to.
+   *
+   * @return The Session this Player is attached to.
    */
-  public GameSession getSession() {
-    return session;
+  public Session getSession() {
+    return session.orElseThrow(() -> new IllegalStateException("Session has not been configured!"));
   }
 
   /**
    * Gets the Appearance for this Player.
-   * 
+   *
    * @return The Appearance for this Player.
    */
   public Appearance getAppearance() {
@@ -178,7 +162,7 @@ public final class Player extends Mob {
 
   /**
    * Gets this Players privileges.
-   * 
+   *
    * @return This Players privileges.
    */
   public PlayerPrivileges getPrivileges() {
@@ -187,7 +171,7 @@ public final class Player extends Mob {
 
   /**
    * Gets all of this Players appearance tickets.
-   * 
+   *
    * @return All of this Players appearance tickets.
    */
   public int[] getAppearanceTickets() {
@@ -196,7 +180,7 @@ public final class Player extends Mob {
 
   /**
    * Gets this Players appearance ticket.
-   * 
+   *
    * @return This Players appearance ticket.
    */
   public int getAppearanceTicket() {
@@ -205,7 +189,7 @@ public final class Player extends Mob {
 
   /**
    * Gets the credentials of this Player.
-   * 
+   *
    * @return This Players credentials.
    */
   public PlayerCredentials getCredentials() {
@@ -214,7 +198,7 @@ public final class Player extends Mob {
 
   /**
    * Gets whether or not the map region has changed.
-   * 
+   *
    * @return {@code true} if the map region has changed and an update is required, otherwise {@code
    * false}.
    */
@@ -224,7 +208,7 @@ public final class Player extends Mob {
 
   /**
    * Gets this Players id within the Servers database.
-   * 
+   *
    * @return This Players id within the Servers database.
    */
   public int getDatabaseId() {
@@ -233,7 +217,7 @@ public final class Player extends Mob {
 
   /**
    * Gets the last known region for this Player.
-   * 
+   *
    * @return The last known region for this Player.
    */
   public Position getLastKnownRegion() {
@@ -242,7 +226,7 @@ public final class Player extends Mob {
 
   /**
    * Gets this Players username.
-   * 
+   *
    * @return This Players username.
    */
   public String getUsername() {
@@ -251,7 +235,7 @@ public final class Player extends Mob {
 
   /**
    * Gets this Players encoded username.
-   * 
+   *
    * @return This Players encoded username.
    */
   public long getEncodedUsername() {
@@ -317,7 +301,7 @@ public final class Player extends Mob {
 
   /**
    * Sets the last known region for this Player.
-   * 
+   *
    * @param lastKnownRegion The last known region to set.
    */
   public void setLastKnownRegion(Position lastKnownRegion) {
@@ -327,7 +311,7 @@ public final class Player extends Mob {
 
   /**
    * Sets this Players id within the Servers database.
-   * 
+   *
    * @param databaseId The database id to set.
    */
   public void setDatabaseId(int databaseId) {
@@ -335,11 +319,20 @@ public final class Player extends Mob {
   }
 
   /**
+   * Sets the Session for this Player.
+   *
+   * @param session The Session for this Player.
+   */
+  public void setSession(Session session) {
+    this.session = Optional.of(session);
+  }
+
+  /**
    * Tests whether or not this Player is a member.
-   * 
+   *
    * @return {@code true} iff this Player is a member, otherwise {@code false}.
    */
-  private boolean isMember() {
+  public boolean isMember() {
     return false;
   }
 

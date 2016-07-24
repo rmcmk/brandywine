@@ -1,9 +1,5 @@
 package me.ryleykimmel.brandywine.game.model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
 import me.ryleykimmel.brandywine.game.area.Region;
 import me.ryleykimmel.brandywine.game.area.RegionRepository;
 import me.ryleykimmel.brandywine.game.collect.MobRepository;
@@ -15,6 +11,10 @@ import me.ryleykimmel.brandywine.game.model.npc.Npc;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.update.ParallelUpdater;
 import me.ryleykimmel.brandywine.game.update.Updater;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * A representation of the in-game World, containing repositories of {@link Mob mobs} and other
@@ -30,7 +30,7 @@ public final class World {
   /**
    * The maximum amount of Npcs that may occupy any given World.
    */
-  public static final int MAXIMUM_NPCS = 32_768;
+  public static final int MAXIMUM_NPCS = 32_767;
 
   /**
    * A {@link MobRepository} of registered Players.
@@ -60,7 +60,45 @@ public final class World {
   /**
    * The {@link EventConsumerChainSet} for this World.
    */
-  private final EventConsumerChainSet events = new EventConsumerChainSet();
+  private final EventConsumerChainSet events;
+
+  /**
+   * Constructs a new {@link World}.
+   *
+   * @param events The {@link EventConsumerChainSet} for this World.
+   */
+  public World(EventConsumerChainSet events) {
+    this.events = events;
+  }
+
+  /**
+   * Places the {@link EventConsumerChain} into this set.
+   *
+   * @param consumer The EventListenerChain.
+   */
+  public <E extends Event> void addConsumer(EventConsumer<E> consumer) {
+    events.addConsumer(consumer);
+  }
+
+  /**
+   * Places the {@link EventConsumerChain} into this set.
+   *
+   * @param clazz The {@link Class} to associate the EventListenerChain with.
+   * @param consumer The EventListenerChain.
+   */
+  public <E extends Event> void addConsumer(Class<E> clazz, EventConsumer<E> consumer) {
+    events.addConsumer(clazz, consumer);
+  }
+
+  /**
+   * Notifies the appropriate {@link EventConsumerChain} that an {@link Event} has occurred.
+   *
+   * @param event The Event.
+   * @return {@code true} if the Event should continue on with its outcome.
+   */
+  public <E extends Event> boolean notify(E event) {
+    return events.notify(event);
+  }
 
   /**
    * Attempts to add the specified Player to the World.
@@ -134,35 +172,6 @@ public final class World {
   }
 
   /**
-   * Notifies the appropriate {@link EventConsumerChain} that an {@link Event} has occurred.
-   *
-   * @param event The Event.
-   * @return {@code true} if the Event should continue on with its outcome.
-   */
-  public <E extends Event> boolean notify(E event) {
-    return events.notify(event);
-  }
-
-  /**
-   * Places the {@link EventConsumerChain} into this set.
-   *
-   * @param clazz The {@link Class} to associate the EventListenerChain with.
-   * @param consumer The EventListenerChain.
-   */
-  public <E extends Event> void addConsumer(Class<E> clazz, EventConsumer<E> consumer) {
-    events.addConsumer(clazz, consumer);
-  }
-
-  /**
-   * Places the {@link EventConsumerChain} into this set.
-   *
-   * @param consumer The EventListenerChain.
-   */
-  public <E extends Event> void addConsumer(EventConsumer<E> consumer) {
-    events.addConsumer(consumer);
-  }
-
-  /**
    * Gets the total amount of Players online.
    *
    * @return The total amount of Players online.
@@ -205,15 +214,6 @@ public final class World {
    */
   public RegionRepository getRegionRepository() {
     return regionRepository;
-  }
-
-  /**
-   * Gets this World's EventConsumerChainSet.
-   *
-   * @return The EventConsumerChainSet for this World.
-   */
-  public EventConsumerChainSet getEvents() {
-    return events;
   }
 
 }

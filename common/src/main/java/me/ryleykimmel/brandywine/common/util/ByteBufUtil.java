@@ -1,9 +1,9 @@
 package me.ryleykimmel.brandywine.common.util;
 
+import io.netty.buffer.ByteBuf;
+
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
-
-import io.netty.buffer.ByteBuf;
 
 /**
  * A static-utility class containing extension or helper methods for {@link ByteBuf}s.

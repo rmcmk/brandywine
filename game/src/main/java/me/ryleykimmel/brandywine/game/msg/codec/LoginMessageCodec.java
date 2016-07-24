@@ -1,27 +1,26 @@
 package me.ryleykimmel.brandywine.game.msg.codec;
 
-import java.math.BigInteger;
-import java.util.Arrays;
-
 import io.netty.buffer.ByteBuf;
 import me.ryleykimmel.brandywine.common.util.ByteBufUtil;
 import me.ryleykimmel.brandywine.fs.FileSystem;
 import me.ryleykimmel.brandywine.game.msg.LoginMessage;
-import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
 import me.ryleykimmel.brandywine.network.frame.FrameReader;
 import me.ryleykimmel.brandywine.network.msg.MessageCodec;
+
+import java.math.BigInteger;
+import java.util.Arrays;
 
 /**
  * MessageCodec for the {@link LoginMessage}.
  */
-public final class LoginMessageCodec implements MessageCodec<LoginMessage> {
+public final class LoginMessageCodec extends MessageCodec<LoginMessage> {
 
   // TODO: Move all RSA stuff out of here and into the rsa_private directory
 
   /**
    * A flag denoting whether or not RSA encryption is enabled.
    */
-  private static final boolean ENABLE_RSA = true;
+  private static final boolean ENABLE_RSA = false;
 
   /**
    * The RSA modulus.
@@ -39,6 +38,7 @@ public final class LoginMessageCodec implements MessageCodec<LoginMessage> {
   public LoginMessage decode(FrameReader reader) {
     ByteBuf buffer = reader.getBuffer();
 
+    int length = buffer.readUnsignedByte(); // TODO: Verify
     int magic = buffer.readUnsignedByte();
     int clientVersion = buffer.readShort();
     int detail = buffer.readUnsignedByte();
@@ -77,11 +77,6 @@ public final class LoginMessageCodec implements MessageCodec<LoginMessage> {
     } finally {
       cipheredBuffer.release();
     }
-  }
-
-  @Override
-  public void encode(LoginMessage message, FrameBuilder builder) {
-
   }
 
 }

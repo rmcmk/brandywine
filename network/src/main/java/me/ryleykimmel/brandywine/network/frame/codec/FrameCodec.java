@@ -1,12 +1,6 @@
 package me.ryleykimmel.brandywine.network.frame.codec;
 
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.common.base.Preconditions;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageCodec;
@@ -14,8 +8,15 @@ import me.ryleykimmel.brandywine.network.Session;
 import me.ryleykimmel.brandywine.network.frame.Frame;
 import me.ryleykimmel.brandywine.network.frame.FrameMetadata;
 import me.ryleykimmel.brandywine.network.frame.FrameMetadataSet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class FrameCodec<T extends Session> extends ByteToMessageCodec<Frame> {
+import java.util.List;
+
+/**
+ * A codec for encoding and decoding Frames.
+ */
+public class FrameCodec extends ByteToMessageCodec<Frame> {
 
   /**
    * Represents the states of this FrameCodec.
@@ -39,9 +40,20 @@ public class FrameCodec<T extends Session> extends ByteToMessageCodec<Frame> {
 
   }
 
+
+  /**
+   * The Logger for this class.
+   */
   protected static final Logger logger = LoggerFactory.getLogger(FrameCodec.class);
 
-  protected final T session;
+  /**
+   * The Session for this FrameCodec.
+   */
+  protected final Session session;
+
+  /**
+   * The FrameMetadataSet for this FrameCodec.
+   */
   protected final FrameMetadataSet metadataSet;
 
   /**
@@ -59,18 +71,16 @@ public class FrameCodec<T extends Session> extends ByteToMessageCodec<Frame> {
    */
   private State state = State.DECODE_OPCODE;
 
-  public FrameCodec(T session, FrameMetadataSet metadataSet) {
+  public FrameCodec(Session session, FrameMetadataSet metadataSet) {
     this.session = session;
     this.metadataSet = metadataSet;
   }
 
-  @Override
-  protected void encode(ChannelHandlerContext ctx, Frame frame, ByteBuf buffer) {
+  @Override protected void encode(ChannelHandlerContext ctx, Frame frame, ByteBuf buffer) {
     buffer.writeBytes(frame.content());
   }
 
-  @Override
-  protected void decode(ChannelHandlerContext ctx, ByteBuf buffer, List<Object> out) {
+  @Override protected void decode(ChannelHandlerContext ctx, ByteBuf buffer, List<Object> out) {
     switch (state) {
       case DECODE_OPCODE:
         decodeOpcode(buffer, out);
@@ -86,72 +96,38 @@ public class FrameCodec<T extends Session> extends ByteToMessageCodec<Frame> {
     }
   }
 
-
   /**
    * Decodes the opcode of some Frame.
-   * 
+   *
    * @param buffer The Buffer to decode from.
    * @param out The List which decoded Frames are to be added.
    */
   protected void decodeOpcode(ByteBuf buffer, List<Object> out) {
-    int opcode = buffer.readUnsignedByte(); // Short circuit if no available bytes
-
-    metadata = metadataSet.getMetadata(opcode);
-    payloadLength = metadata.getLength();
-
-    if (metadata.hasVariableLength()) {
-      checkpoint(State.DECODE_LENGTH);
-    } else if (payloadLength == 0) {
-      out.add(new Frame(metadata));
-    } else {
-      checkpoint(State.DECODE_PAYLOAD);
-    }
+    int opcode = buffer.readUnsignedByte();
+    out.add(new Frame(metadataSet.getMetadata(opcode), buffer.readBytes(buffer.readableBytes())));
   }
 
   /**
    * Decodes the length of some Frame.
-   * 
+   *
    * @param buffer The Buffer to decode from.
    * @param out The List which decoded Frames are to be added.
    */
   protected void decodeLength(ByteBuf buffer, List<Object> out) {
-    int expected = Math.abs(metadata.getLength());
-    if (!buffer.isReadable(expected)) {
-      logger.error("Not enough bytes available to read frame {}'s length, closing session...",
-          metadata);
-      session.close();
-      return;
-    }
-
-    payloadLength = 0;
-    for (int i = 0; i < expected; i++) {
-      payloadLength |= buffer.readUnsignedByte() << 8 * (expected - 1 - i);
-    }
-
-    checkpoint(State.DECODE_PAYLOAD);
   }
 
   /**
    * Decodes the payload of some Frame.
-   * 
+   *
    * @param buffer The Buffer to decode from.
    * @param out The List which decoded Frames are to be added.
    */
   protected void decodePayload(ByteBuf buffer, List<Object> out) {
-    if (!buffer.isReadable(payloadLength)) {
-      logger.error("Not enough bytes available to decode frame {}'s payload, closing session...",
-          metadata);
-      session.close();
-      return;
-    }
-
-    out.add(new Frame(metadata, buffer.readBytes(payloadLength)));
-    checkpoint(State.DECODE_OPCODE);
   }
 
   /**
    * Updates the State of the decoder.
-   * 
+   *
    * @param state The next State in the decoder.
    */
   protected final void checkpoint(State state) {

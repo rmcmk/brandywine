@@ -1,11 +1,10 @@
 package me.ryleykimmel.brandywine.fs;
 
 import com.google.common.base.Preconditions;
+import me.ryleykimmel.brandywine.common.Buffer;
 
 import java.io.IOException;
 import java.nio.channels.SeekableByteChannel;
-
-import me.ryleykimmel.brandywine.common.Buffer;
 
 /**
  * Represents a Cache within a FileSystem.

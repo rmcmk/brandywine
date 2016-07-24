@@ -1,11 +1,11 @@
 package me.ryleykimmel.brandywine.game;
 
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
 import me.ryleykimmel.brandywine.game.model.World;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.service.Service;
+
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Services the game every pulse.
@@ -115,7 +115,6 @@ public final class GameService extends Service {
       }
 
       // Forward to IO service -- everything is verified and ready to go!
-
       if (!world.addPlayer(player)) {
         player.disconnect();
         continue;

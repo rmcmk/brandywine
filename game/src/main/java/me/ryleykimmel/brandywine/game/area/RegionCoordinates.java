@@ -1,7 +1,6 @@
 package me.ryleykimmel.brandywine.game.area;
 
 import com.google.common.base.MoreObjects;
-
 import me.ryleykimmel.brandywine.game.model.Position;
 
 /**

@@ -1,12 +1,12 @@
 package me.ryleykimmel.brandywine.game.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.model.skill.SkillSet;
 import me.ryleykimmel.brandywine.game.update.UpdateBlock;
 import me.ryleykimmel.brandywine.network.msg.Message;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Represents a mobile Entity within the game World.

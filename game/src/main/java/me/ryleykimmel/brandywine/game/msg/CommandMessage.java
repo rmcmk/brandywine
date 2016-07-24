@@ -14,7 +14,7 @@ public final class CommandMessage extends Message {
 
   /**
    * Constructs a new {@link CommandMessage} with the specified command.
-   * 
+   *
    * @param command The command.
    */
   public CommandMessage(String command) {
@@ -23,7 +23,7 @@ public final class CommandMessage extends Message {
 
   /**
    * Gets the command.
-   * 
+   *
    * @return The command.
    */
   public String getCommand() {

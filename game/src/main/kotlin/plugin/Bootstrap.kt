@@ -1,43 +1,76 @@
 package plugin
 
+import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInitializer
+import io.netty.channel.SimpleChannelInboundHandler
 import io.netty.channel.socket.SocketChannel
 import me.ryleykimmel.brandywine.InitializationException
 import me.ryleykimmel.brandywine.fs.FileSystem
 import me.ryleykimmel.brandywine.game.GameService
-import me.ryleykimmel.brandywine.game.GameSession
-import me.ryleykimmel.brandywine.game.GameSessionHandler
 import me.ryleykimmel.brandywine.game.auth.AuthenticationService
-import me.ryleykimmel.brandywine.game.auth.impl.SqlAuthenticationStrategy
-import me.ryleykimmel.brandywine.game.event.EventConsumer
+import me.ryleykimmel.brandywine.game.event.EventConsumerChainSet
 import me.ryleykimmel.brandywine.game.model.World
-import me.ryleykimmel.brandywine.game.msg.LoginHandshakeMessage
+import me.ryleykimmel.brandywine.game.model.player.Player
+import me.ryleykimmel.brandywine.game.msg.*
+import me.ryleykimmel.brandywine.network.ResponseCode
+import me.ryleykimmel.brandywine.network.Session
 import me.ryleykimmel.brandywine.network.frame.FrameMapping
+import me.ryleykimmel.brandywine.network.frame.FrameMetadata.VARIABLE_BYTE_LENGTH
+import me.ryleykimmel.brandywine.network.frame.FrameMetadata.VARIABLE_SHORT_LENGTH
 import me.ryleykimmel.brandywine.network.frame.FrameMetadataSet
 import me.ryleykimmel.brandywine.network.frame.codec.FrameCodec
 import me.ryleykimmel.brandywine.network.frame.codec.FrameMessageCodec
 import me.ryleykimmel.brandywine.network.msg.Message
 import me.ryleykimmel.brandywine.network.msg.MessageCodec
 import me.ryleykimmel.brandywine.server.Server
-import org.reflections.Reflections
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.sql2o.Sql2o
+import plugin.command.CommandEventConsumer
+import plugin.login.InitializePlayerEventConsumer
+import plugin.message.MessageListener
 import java.io.IOException
+import java.util.*
 import kotlin.reflect.KClass
 
-val logger = LoggerFactory.getLogger("plugin-bootstrap")
-val world = World()
+val world = World(EventConsumerChainSet())
+val server = Server()
+val gameMetadata = FrameMetadataSet()
+val loginMetadata = FrameMetadataSet()
+val messages = HashMap<KClass<*>, MessageListener<Any, Message>>()
+val logger: Logger = LoggerFactory.getLogger("plugin-bootstrap")
+
+// Required extension method, Kotlin does not natively support fetching object.getClass()
+val Any.kt: KClass<out Any>
+    get() = javaClass.kotlin
+
+@Suppress("UNCHECKED_CAST")
+fun <T : Message> FrameMetadataSet.register(message: KClass<T>, opcode: Int, length: Int) {
+    val packageName = message.java.`package`.name
+    val codec = Class.forName("$packageName.codec.${message.simpleName}Codec").newInstance() as MessageCodec<T>
+
+    try {
+        val listener = Class.forName("plugin.message.${message.simpleName}Listener")
+        messages[message] = listener.newInstance() as MessageListener<Any, Message>
+    } catch (cause: ClassNotFoundException) {
+        logger.debug("{} has no message listener.", message.simpleName)
+    }
+
+    this.register(FrameMapping.create(message.java, codec, opcode, length))
+}
 
 fun main(args: Array<String>) = try {
-    val server = Server()
-    val metadata = createFrameMetadataSet()
+    createFrameMetadata()
+
+    // TODO: Recursive event parsing
+    world.addConsumer(InitializePlayerEventConsumer())
+    world.addConsumer(CommandEventConsumer())
 
     server.initializer(object : ChannelInitializer<SocketChannel>() {
         override fun initChannel(channel: SocketChannel) {
-            val session = GameSession(channel, world.events)
-
-            channel.pipeline().addLast("frame_codec", FrameCodec(session, metadata)).
-                    addLast("message_codec", FrameMessageCodec(metadata)).
+            val session = Session(channel)
+            channel.pipeline().addLast("frame_codec", FrameCodec(session, loginMetadata)).
+                    addLast("message_codec", FrameMessageCodec(loginMetadata)).
                     addLast("handler", GameSessionHandler(session))
         }
     })
@@ -45,41 +78,57 @@ fun main(args: Array<String>) = try {
     val gameService = GameService(world)
     server.setFileSystem(FileSystem.create("data/fs/")).
             setSql2o(Sql2o("jdbc:mysql://localhost/game_server", "root", "")).
-            setAuthenticationStrategy(SqlAuthenticationStrategy(server.sql2o)).
+            setAuthenticationStrategy({ ResponseCode.STATUS_OK }).
             registerService(gameService).registerService(AuthenticationService(gameService, server.authenticationStrategy)).
             init(43594)
-
-    loadPluginEvents()
 } catch (cause: IOException) {
     throw InitializationException(cause)
 }
 
-/**
- * Loads Kotlin plugin events.
- */
-fun loadPluginEvents() {
-    val reflections = Reflections("plugin")
-    val classes = reflections.getSubTypesOf(EventConsumer::class.java)
-    classes.forEach { world.addConsumer(it.newInstance()) }
-    logger.info("Loaded {} Kotlin plugin event" + if (classes.size == 1) "." else "s.", classes.size)
+fun createFrameMetadata() {
+    loginMetadata.register(LoginHandshakeResponseMessage::class, 1, 17)
+    loginMetadata.register(LoginResponseMessage::class, 2, 3)
+
+    loginMetadata.register(LoginHandshakeMessage::class, 14, 1)
+    loginMetadata.register(LoginMessage::class, 16, VARIABLE_SHORT_LENGTH)
+    loginMetadata.register(LoginMessage::class, 18, VARIABLE_SHORT_LENGTH)
+
+    gameMetadata.register(PingMessage::class, 0, 0)
+    gameMetadata.register(FocusUpdateMessage::class, 3, 1)
+    gameMetadata.register(ChatMessage::class, 4, VARIABLE_BYTE_LENGTH)
+    gameMetadata.register(OpenTabWidgetMessage::class, 71, 3)
+    gameMetadata.register(RebuildRegionMessage::class, 73, 4)
+    gameMetadata.register(ResetDestinationMessage::class, 78, 0)
+    gameMetadata.register(PlayerUpdateMessage::class, 81, VARIABLE_SHORT_LENGTH)
+    gameMetadata.register(ArrowKeyMessage::class, 86, 4)
+    gameMetadata.register(MovementMessage::class, 98, VARIABLE_BYTE_LENGTH) // command movement
+    gameMetadata.register(CommandMessage::class, 103, VARIABLE_BYTE_LENGTH)
+    gameMetadata.register(UpdateSkillMessage::class, 134, 6)
+    gameMetadata.register(MovementMessage::class, 164, VARIABLE_BYTE_LENGTH) // game movement
+    gameMetadata.register(MouseClickedMessage::class, 241, 4)
+    gameMetadata.register(MovementMessage::class, 248, VARIABLE_BYTE_LENGTH) // minimap movement
+    gameMetadata.register(InitializePlayerMessage::class, 249, 3)
+    gameMetadata.register(ServerChatMessage::class, 253, VARIABLE_BYTE_LENGTH)
 }
 
-/**
- * Creates a new [FrameMetadataSet].
+class GameSessionHandler(val session: Session) : SimpleChannelInboundHandler<Message>() {
 
- * @return The new FrameMetadataSet, never `null`.
- */
-fun createFrameMetadataSet(): FrameMetadataSet {
-    val metadata = FrameMetadataSet()
+    override fun channelInactive(ctx: ChannelHandlerContext) {
+        val player = session.attr(Player.ATTRIBUTE_KEY).get()
+        if (player != null) {
+            server.getService(GameService::class).removePlayer(player)
+        }
+    }
 
-    metadata.register(LoginHandshakeMessage::class, 14, 1)
+    override fun channelRead0(ctx: ChannelHandlerContext, message: Message) {
+        val player = session.attr(Player.ATTRIBUTE_KEY).get()
+        val listener = messages[message.kt]
+        listener?.handle(player ?: session, message)
+    }
 
-    return metadata
-}
+    override fun exceptionCaught(ctx: ChannelHandlerContext, cause: Throwable) {
+        logger.error("Uncaught exception occurred upstream", cause)
+        session.close()
+    }
 
-@Suppress("unchecked_cast")
-fun <T : Message> FrameMetadataSet.register(message: KClass<T>, opcode: Int, length: Int) {
-    val packageName = message.java.`package`.name
-    val codec = Class.forName("$packageName.codec.${message.simpleName}Codec").newInstance() as MessageCodec<T>
-    this.register(FrameMapping.create(message.java, codec, opcode, length))
 }

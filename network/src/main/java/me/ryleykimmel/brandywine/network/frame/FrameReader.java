@@ -1,7 +1,6 @@
 package me.ryleykimmel.brandywine.network.frame;
 
 import com.google.common.base.Preconditions;
-
 import me.ryleykimmel.brandywine.common.Assertions;
 import me.ryleykimmel.brandywine.common.util.ByteBufUtil;
 import me.ryleykimmel.brandywine.network.frame.FrameBuffer.ReadingFrameBuffer;
@@ -344,7 +343,7 @@ public final class FrameReader extends ReadingFrameBuffer {
   /**
    * Reads {@code length} bytes into a byte array, in reverse, if and only if this buffer is in
    * {@link AccessMode#BYTE_ACCESS byte access}.
-   * 
+   *
    * @param transformation The DataTransformation to perform on the bytes.
    * @param length The amount of bytes to read.
    * @return The byte array.
@@ -362,8 +361,17 @@ public final class FrameReader extends ReadingFrameBuffer {
   }
 
   /**
+   * Gets the amount of remaining readable bytes.
+   *
+   * @return The amount of remaining readable bytes.
+   */
+  public int readableBytes() {
+    return buffer.readableBytes();
+  }
+
+  /**
    * Gets the length of the Frame we're reading.
-   * 
+   *
    * @return The length of the Frame we're reading.
    */
   public int getLength() {
@@ -372,11 +380,20 @@ public final class FrameReader extends ReadingFrameBuffer {
 
   /**
    * Gets the opcode of the Frame we're reading.
-   * 
+   *
    * @return The opcode of the Frame we're reading.
    */
   public int getOpcode() {
     return frame.getOpcode();
+  }
+
+  /**
+   * Gets the metadata of the Frame we're reading.
+   *
+   * @return The metadata of the Frame we're reading.
+   */
+  public FrameMetadata getMetadata() {
+    return frame.getMetadata();
   }
 
 }

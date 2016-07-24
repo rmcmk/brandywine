@@ -1,5 +1,11 @@
 package me.ryleykimmel.brandywine.fs;
 
+import com.google.common.base.Preconditions;
+import me.ryleykimmel.brandywine.common.Buffer;
+import me.ryleykimmel.brandywine.fs.archive.Archive;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
@@ -8,14 +14,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.CRC32;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Preconditions;
-
-import me.ryleykimmel.brandywine.common.Buffer;
-import me.ryleykimmel.brandywine.fs.archive.Archive;
 
 /**
  * A file system which consists of data and index files, index files point to blocks in the data

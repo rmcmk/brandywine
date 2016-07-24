@@ -2,9 +2,6 @@ package me.ryleykimmel.brandywine.game.model;
 
 import me.ryleykimmel.brandywine.game.area.Region;
 import me.ryleykimmel.brandywine.game.area.RegionRepository;
-import me.ryleykimmel.brandywine.game.event.Event;
-import me.ryleykimmel.brandywine.game.event.EventConsumer;
-import me.ryleykimmel.brandywine.game.event.EventConsumerChain;
 
 /**
  * Represents an Entity within the game World.
@@ -33,7 +30,7 @@ public abstract class Entity {
 
   /**
    * Constructs a new {@link Entity} with the specified World.
-   * 
+   *
    * @param world The World this Entity is in.
    * @param type The type of this Entity.
    */
@@ -55,21 +52,11 @@ public abstract class Entity {
 
     RegionRepository repository = world.getRegionRepository();
     Region currentRegion = repository.fromPosition(current),
-        next = repository.fromPosition(position);
+      next = repository.fromPosition(position);
 
     currentRegion.removeEntity(this);
     this.position = position;
     next.addEntity(this);
-  }
-
-  /**
-   * Notifies the appropriate {@link EventConsumerChain} that an {@link Event} has occurred.
-   *
-   * @param event The Event.
-   * @return {@code true} if the Event should continue on with its outcome.
-   */
-  public <E extends Event> boolean notify(E event) {
-    return world.notify(event);
   }
 
   /**
@@ -83,7 +70,7 @@ public abstract class Entity {
 
   /**
    * Gets the World this Entity is in.
-   * 
+   *
    * @return The World this Entity is in.
    */
   public final World getWorld() {
@@ -92,7 +79,7 @@ public abstract class Entity {
 
   /**
    * Gets the type of this Entity.
-   * 
+   *
    * @return The type of this Entity.
    */
   public final EntityType getType() {
@@ -101,7 +88,7 @@ public abstract class Entity {
 
   /**
    * Tests whether or not this Entity is an instance of the specified EntityType.
-   * 
+   *
    * @param type The type of the Entity.
    * @return {@code true} iff this Entity is an instance of the specified EntityType.
    */

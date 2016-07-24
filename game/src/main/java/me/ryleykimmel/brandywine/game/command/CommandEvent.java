@@ -1,12 +1,17 @@
 package me.ryleykimmel.brandywine.game.command;
 
-import me.ryleykimmel.brandywine.game.event.MobEvent;
+import me.ryleykimmel.brandywine.game.event.Event;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 
 /**
- * A PlayerEvent which is listened for when a {@link Player} inputs a command.
+ * An Event which is listened for when a {@link Player} inputs a command.
  */
-public final class CommandEvent extends MobEvent<Player> {
+public final class CommandEvent extends Event {
+
+  /**
+   * The Player who executed this Event.
+   */
+  private final Player player;
 
   /**
    * The name of the command.
@@ -20,20 +25,29 @@ public final class CommandEvent extends MobEvent<Player> {
 
   /**
    * Constructs a new {@link CommandEvent} with the specified Player, name and CommandArguments.
-   * 
-   * @param player The Player who is listening for commands.
+   *
+   * @param player The Player who executed this Event.
    * @param name The name of the command.
    * @param arguments The command's arguments.
    */
   public CommandEvent(Player player, String name, CommandArguments arguments) {
-    super(player);
+    this.player = player;
     this.name = name;
     this.arguments = arguments;
   }
 
   /**
+   * Gets the Player who executed this Event.
+   *
+   * @return The Player who executed this Event.
+   */
+  public Player getPlayer() {
+    return player;
+  }
+
+  /**
    * Gets the name of the command.
-   * 
+   *
    * @return The name of the command.
    */
   public String getName() {
@@ -42,7 +56,7 @@ public final class CommandEvent extends MobEvent<Player> {
 
   /**
    * Gets the arguments for the command.
-   * 
+   *
    * @return The arguments for the command.
    */
   public CommandArguments getArguments() {

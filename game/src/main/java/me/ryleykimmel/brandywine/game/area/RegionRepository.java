@@ -1,13 +1,12 @@
 package me.ryleykimmel.brandywine.game.area;
 
+import com.google.common.collect.ImmutableList;
+import me.ryleykimmel.brandywine.game.model.Position;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import com.google.common.collect.ImmutableList;
-
-import me.ryleykimmel.brandywine.game.model.Position;
 
 /**
  * A repository of {@link Region}s, backed by a {@link HashMap} of {@link RegionCoordinates} that

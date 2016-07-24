@@ -3,13 +3,12 @@ package me.ryleykimmel.brandywine.game.msg.codec;
 import me.ryleykimmel.brandywine.game.msg.PlayerUpdateMessage;
 import me.ryleykimmel.brandywine.game.update.PlayerDescriptor;
 import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
-import me.ryleykimmel.brandywine.network.frame.FrameReader;
 import me.ryleykimmel.brandywine.network.msg.MessageCodec;
 
 /**
  * MessageCodec for the {@link PlayerUpdateMessage}.
  */
-public final class PlayerUpdateMessageCodec implements MessageCodec<PlayerUpdateMessage> {
+public final class PlayerUpdateMessageCodec extends MessageCodec<PlayerUpdateMessage> {
 
   @Override
   public void encode(PlayerUpdateMessage message, FrameBuilder builder) {
@@ -30,11 +29,6 @@ public final class PlayerUpdateMessageCodec implements MessageCodec<PlayerUpdate
     } else {
       builder.switchToByteAccess();
     }
-  }
-
-  @Override
-  public PlayerUpdateMessage decode(FrameReader frame) {
-    return null;
   }
 
 }

@@ -1,7 +1,6 @@
 package me.ryleykimmel.brandywine.common.util;
 
 import com.google.common.base.Stopwatch;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

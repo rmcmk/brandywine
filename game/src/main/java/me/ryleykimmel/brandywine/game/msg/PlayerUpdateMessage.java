@@ -1,10 +1,10 @@
 package me.ryleykimmel.brandywine.game.msg;
 
-import java.util.List;
-
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.update.PlayerDescriptor;
 import me.ryleykimmel.brandywine.network.msg.Message;
+
+import java.util.List;
 
 /**
  * A {@link Message} which updates Players.

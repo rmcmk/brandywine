@@ -2,10 +2,9 @@ package me.ryleykimmel.brandywine.service;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Stopwatch;
+import me.ryleykimmel.brandywine.game.GamePulseHandler;
 
 import java.util.concurrent.TimeUnit;
-
-import me.ryleykimmel.brandywine.game.GamePulseHandler;
 
 /**
  * Represents a Service that is executed every {@code n} milliseconds.

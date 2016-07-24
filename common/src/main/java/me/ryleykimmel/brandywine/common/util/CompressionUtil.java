@@ -1,15 +1,13 @@
 package me.ryleykimmel.brandywine.common.util;
 
 import com.google.common.io.ByteStreams;
-
+import me.ryleykimmel.brandywine.common.Buffer;
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
-
-import me.ryleykimmel.brandywine.common.Buffer;
 
 /**
  * A static-utility class containing containing extension or helper methods to compress and

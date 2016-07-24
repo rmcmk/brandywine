@@ -1,10 +1,9 @@
 package me.ryleykimmel.brandywine.game;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import me.ryleykimmel.brandywine.service.Service;
 import me.ryleykimmel.brandywine.service.ServiceSet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Pulses game functions at a fixed rate.
@@ -46,7 +45,7 @@ public final class GamePulseHandler implements Runnable {
               Math.abs(diff), elapsed);
         }
       } catch (Exception cause) {
-        logger.error("Erorr occured while executing service.", cause);
+        logger.error("Error occurred while executing service.", cause);
       }
     }
   }

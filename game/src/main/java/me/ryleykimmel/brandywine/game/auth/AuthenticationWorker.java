@@ -1,16 +1,14 @@
 package me.ryleykimmel.brandywine.game.auth;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.common.base.Preconditions;
-
 import io.netty.channel.ChannelFutureListener;
 import me.ryleykimmel.brandywine.game.GameService;
-import me.ryleykimmel.brandywine.game.GameSession;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.msg.LoginResponseMessage;
 import me.ryleykimmel.brandywine.network.ResponseCode;
+import me.ryleykimmel.brandywine.network.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A {@link Runnable} worker which manages {@link AuthenticationRequest}s.
@@ -53,9 +51,9 @@ public final class AuthenticationWorker implements Runnable {
 
   @Override
   public void run() {
-    GameSession session = request.getSession();
-
-    Player player = new Player(session, request.getCredentials(), service.getWorld());
+    Session session = request.getSession();
+    Player player = new Player(request.getCredentials(), service.getWorld());
+    player.setSession(session);
 
     try {
       ResponseCode response = strategy.authenticate(player);
@@ -76,18 +74,18 @@ public final class AuthenticationWorker implements Runnable {
       }
 
     } catch (Exception cause) {
-      logger.error("Error occured while authenticating.", cause);
+      logger.error("Error occurred while authenticating.", cause);
       closeWithResponse(session, ResponseCode.STATUS_COULD_NOT_COMPLETE);
     }
   }
 
   /**
-   * Closes the specified GameSession after sending the specified response code.
+   * Closes the specified Session after sending the specified response code.
    * 
-   * @param session The GameSession to close.
+   * @param session The Session to close.
    * @param response The response to send.
    */
-  private void closeWithResponse(GameSession session, ResponseCode response) {
+  private void closeWithResponse(Session session, ResponseCode response) {
     session.writeAndFlush(new LoginResponseMessage(response))
         .addListener(ChannelFutureListener.CLOSE);
   }

@@ -1,21 +1,22 @@
 package me.ryleykimmel.brandywine.network;
 
 import com.google.common.base.MoreObjects;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.util.Attribute;
+import io.netty.util.AttributeKey;
+import me.ryleykimmel.brandywine.network.msg.Message;
 
 import java.net.InetSocketAddress;
 import java.security.SecureRandom;
 import java.util.Random;
 
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.socket.SocketChannel;
-import me.ryleykimmel.brandywine.network.msg.Message;
-
 /**
  * A session which is attached to some {@link SocketChannel}, every connected SocketChannel has
  * their own session in order to perform session specific functions, such as writing, flushing, etc.
  */
-public abstract class Session {
+public final class Session {
 
   /**
    * A SecureRandom generator, used for generating session keys.
@@ -51,7 +52,7 @@ public abstract class Session {
    *
    * @return This Sessions key.
    */
-  public final long getSessionKey() {
+  public long getSessionKey() {
     return sessionKey;
   }
 
@@ -64,7 +65,7 @@ public abstract class Session {
    * @param message The Message to write.
    * @return The ChannelFuture instance.
    */
-  public final ChannelFuture write(Message message) {
+  public ChannelFuture write(Message message) {
     return channel.write(message);
   }
 
@@ -74,7 +75,7 @@ public abstract class Session {
    * @param message The Message to write.
    * @return The ChannelFuture instance.
    */
-  public final ChannelFuture writeAndFlush(Message message) {
+  public ChannelFuture writeAndFlush(Message message) {
     return channel.writeAndFlush(message);
   }
 
@@ -86,7 +87,7 @@ public abstract class Session {
    *
    * @param message The Message to write.
    */
-  public final void voidWrite(Message message) {
+  public void voidWrite(Message message) {
     channel.write(message, channel.voidPromise());
   }
 
@@ -95,14 +96,14 @@ public abstract class Session {
    *
    * @param message The Message to write.
    */
-  public final void voidWriteAndFlush(Message message) {
+  public void voidWriteAndFlush(Message message) {
     channel.writeAndFlush(message, channel.voidPromise());
   }
 
   /**
    * Requests that all pending Messages be flushed from the SocketChannel.
    */
-  public final void flush() {
+  public void flush() {
     channel.flush();
   }
 
@@ -113,7 +114,7 @@ public abstract class Session {
    * to perform other events on channel close see {@link Session#onClose(ChannelFutureListener)}.
    * </p>
    */
-  public final void close() {
+  public void close() {
     if (closed) {
       return;
     }
@@ -127,7 +128,7 @@ public abstract class Session {
    * 
    * @param listener The ChannelFutureListener to perform when this Session is closed.
    */
-  public final void onClose(ChannelFutureListener listener) {
+  public void onClose(ChannelFutureListener listener) {
     channel.closeFuture().addListener(listener);
   }
 
@@ -136,7 +137,7 @@ public abstract class Session {
    * 
    * @return {@code true} if this Session is closed or is no longer active.
    */
-  public final boolean isClosed() {
+  public boolean isClosed() {
     return closed; // XXX: Other tests?
   }
 
@@ -145,7 +146,7 @@ public abstract class Session {
    *
    * @return The remote connected address of this Session.
    */
-  public final InetSocketAddress getRemoteAddress() {
+  public InetSocketAddress getRemoteAddress() {
     return channel.remoteAddress();
   }
 
@@ -154,12 +155,22 @@ public abstract class Session {
    *
    * @return The SocketChannel this Session is listening on.
    */
-  public final SocketChannel getChannel() {
+  public SocketChannel getChannel() {
     return channel;
   }
 
-  @Override
-  public int hashCode() {
+  /**
+   * Gets the Attribute for the specified AttributeKey.
+   *
+   * @param key The AttributeKey.
+   * @param <T> The Attributes type.
+   * @return The Attribute for the specified key.
+   */
+  public <T> Attribute<T> attr(AttributeKey<T> key) {
+    return channel.attr(key);
+  }
+
+  @Override public int hashCode() {
     return Long.hashCode(sessionKey);
   }
 

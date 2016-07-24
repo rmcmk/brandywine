@@ -8,34 +8,34 @@ import me.ryleykimmel.brandywine.game.model.player.Player
 import plugin.message
 import plugin.surrounding
 import plugin.teleport
-import plugin.world
 
 @Consumes(CommandEvent::class)
-class CommandEventConsumer : EventConsumer<CommandEvent> {
+class CommandEventConsumer() : EventConsumer<CommandEvent> {
 
     override fun accept(event: CommandEvent) {
-        val player = event.mob
         val args = event.arguments
 
-        when (event.name) {
-            "pos" -> player.message("You are standing at: %s", player.position);
-            "print-surrounding" -> player.surrounding<Player>(EntityType.PLAYER).forEach { player.message("Player in your region: %s", it.username) }
+        with(event.player) {
+            when (event.name) {
+                "pos" -> message("You are standing at: %s", position)
+                "print-surrounding" -> surrounding<Player>(EntityType.PLAYER).forEach { message("Player in your region: %s", it.username) }
 
-            "tele-to" -> {
-                if (!args.hasRemaining(2)) {
-                    player.message(
-                            "There are 2 required arguments: ::tele-to [x, y, optional-height]")
-                    return
-                }
+                "tele-to" -> {
+                    if (!args.hasRemaining(2)) {
+                        message(
+                                "There are 2 required arguments: ::tele-to [x, y, optional-height]")
+                        return
+                    }
 
-                try {
-                    val x = args.nextInteger
-                    val y = args.nextInteger
-                    val height = if (args.hasRemaining(1)) args.nextInteger else player.position.height
+                    try {
+                        val x = args.nextInteger
+                        val y = args.nextInteger
+                        val height = if (args.hasRemaining(1)) args.nextInteger else position.height
 
-                    player.teleport(x, y, height)
-                } catch (cause: NumberFormatException) {
-                    player.message("The arguments for this command may only be numeric.")
+                        teleport(x, y, height)
+                    } catch (cause: NumberFormatException) {
+                        message("The arguments for this command may only be numeric.")
+                    }
                 }
             }
         }

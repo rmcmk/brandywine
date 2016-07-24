@@ -1,10 +1,9 @@
 package me.ryleykimmel.brandywine.fs.def.impl;
 
 import com.google.common.base.MoreObjects;
+import me.ryleykimmel.brandywine.fs.def.Definition;
 
 import java.util.List;
-
-import me.ryleykimmel.brandywine.fs.def.Definition;
 
 /**
  * Represents the Definition of an Item object.

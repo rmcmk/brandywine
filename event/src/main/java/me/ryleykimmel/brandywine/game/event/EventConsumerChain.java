@@ -1,9 +1,9 @@
 package me.ryleykimmel.brandywine.game.event;
 
+import com.google.common.base.MoreObjects;
+
 import java.util.HashSet;
 import java.util.Set;
-
-import com.google.common.base.MoreObjects;
 
 /**
  * A chain of {@link EventConsumer}s.

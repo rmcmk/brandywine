@@ -1,10 +1,9 @@
 package me.ryleykimmel.brandywine.game.model.player;
 
-import java.util.Arrays;
-
 import com.google.common.base.MoreObjects;
-
 import me.ryleykimmel.brandywine.common.util.NameUtil;
+
+import java.util.Arrays;
 
 /**
  * Represents the credentials of a Player.

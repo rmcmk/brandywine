@@ -25,11 +25,6 @@ public final class PlayerPrivileges {
   private final Deque<PlayerPrivilege> privileges =
       new ArrayDeque<>(EnumSet.of(PlayerPrivilege.NONE)); // Everyone has 'none'
 
-  /**
-   * Whether or not these PlayerPrivileges are root.
-   */
-  private boolean root;
-
   public int getPrimaryId() {
     PlayerPrivilege primary = privileges.peek();
     return primary.getId();
@@ -56,7 +51,7 @@ public final class PlayerPrivileges {
   }
 
   public boolean has(PlayerPrivilege privilege) {
-    return privileges.contains(privilege) || root;
+    return privileges.contains(privilege);
   }
 
   public boolean hasAll(PlayerPrivilege... privileges) {
@@ -77,22 +72,6 @@ public final class PlayerPrivileges {
     }
 
     return false;
-  }
-
-  public boolean isRoot() {
-    return root;
-  }
-
-  public void removeRoot() {
-    root = false;
-  }
-
-  public boolean assignRoot() {
-    if (!has(PlayerPrivilege.ADMINISTRATOR)) {
-      return false;
-    }
-
-    return root = true;
   }
 
 }

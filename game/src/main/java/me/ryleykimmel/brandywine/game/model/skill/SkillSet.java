@@ -1,15 +1,14 @@
 package me.ryleykimmel.brandywine.game.model.skill;
 
+import com.google.common.base.Preconditions;
+import com.google.common.primitives.Ints;
+import me.ryleykimmel.brandywine.game.model.Mob;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
-
-import com.google.common.base.Preconditions;
-import com.google.common.primitives.Ints;
-
-import me.ryleykimmel.brandywine.game.model.Mob;
 
 public final class SkillSet {
 

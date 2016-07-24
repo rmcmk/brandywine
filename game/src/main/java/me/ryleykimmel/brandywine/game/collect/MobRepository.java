@@ -1,17 +1,12 @@
 package me.ryleykimmel.brandywine.game.collect;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.stream.IntStream;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
-
 import me.ryleykimmel.brandywine.game.model.Mob;
+
+import java.lang.reflect.Array;
+import java.util.*;
+import java.util.stream.IntStream;
 
 /**
  * A {@link MobRepository} is a repository of {@link Mob}s that are currently active in the game

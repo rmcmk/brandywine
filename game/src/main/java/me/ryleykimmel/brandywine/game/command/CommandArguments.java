@@ -1,9 +1,9 @@
 package me.ryleykimmel.brandywine.game.command;
 
-import java.util.Arrays;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
+
+import java.util.Arrays;
 
 /**
  * Represents the arguments of a Command.
