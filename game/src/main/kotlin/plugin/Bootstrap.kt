@@ -4,9 +4,12 @@ import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.SimpleChannelInboundHandler
 import io.netty.channel.socket.SocketChannel
+import me.ryleykimmel.brandywine.Server
 import me.ryleykimmel.brandywine.fs.FileSystem
 import me.ryleykimmel.brandywine.game.GameService
 import me.ryleykimmel.brandywine.game.auth.AuthenticationService
+import me.ryleykimmel.brandywine.game.event.Consumes
+import me.ryleykimmel.brandywine.game.event.EventConsumer
 import me.ryleykimmel.brandywine.game.event.EventConsumerChainSet
 import me.ryleykimmel.brandywine.game.model.World
 import me.ryleykimmel.brandywine.game.model.player.Player
@@ -15,12 +18,10 @@ import me.ryleykimmel.brandywine.network.Session
 import me.ryleykimmel.brandywine.network.frame.codec.FrameCodec
 import me.ryleykimmel.brandywine.network.frame.codec.FrameMessageCodec
 import me.ryleykimmel.brandywine.network.msg.Message
-import me.ryleykimmel.brandywine.Server
+import org.reflections.Reflections
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.sql2o.Sql2o
-import plugin.command.CommandEventConsumer
-import plugin.login.InitializePlayerEventConsumer
 import plugin.message.MessageRegistrar
 import plugin.task.Tasks
 import java.io.IOException
@@ -35,9 +36,9 @@ fun main(vararg args: String) = try {
     Tasks.schedule()
     MessageRegistrar.init()
 
-    // TODO: Recursive event parsing
-    world.addConsumer(InitializePlayerEventConsumer())
-    world.addConsumer(CommandEventConsumer())
+    val reflections = Reflections("plugin")
+    val events = reflections.getTypesAnnotatedWith(Consumes::class.java)
+    events.forEach { world.addConsumer(it.newInstance() as EventConsumer<*>) }
 
     server.initializer(object : ChannelInitializer<SocketChannel>() {
         override fun initChannel(channel: SocketChannel) {
