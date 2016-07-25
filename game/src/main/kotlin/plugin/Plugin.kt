@@ -9,8 +9,6 @@ import java.util.concurrent.ThreadLocalRandom
 import java.util.stream.Stream
 import kotlin.reflect.KClass
 
-// val tasks = Tasks()
-
 val random = ThreadLocalRandom.current()
 
 fun random(min: Int, max: Int): Int = random.nextInt(max - min) + min
@@ -22,7 +20,7 @@ fun Player.teleport(x: Int, y: Int, height: Int = this.position.height) = this.t
 fun Player.region() = world.regionRepository.get(this.position.regionCoordinates)
 fun <T : Entity> Player.surrounding(type: EntityType): Stream<T> = this.region().getEntities<T>(type)
 
-fun World.each(type: EntityType, action: (Int, Mob) -> Unit) {
+inline fun World.each(type: EntityType, action: (Int, Mob) -> Unit) {
     val collection = when (type) {
         EntityType.NPC -> world.npcs
         EntityType.PLAYER -> world.players
