@@ -27,7 +27,7 @@ public final class SkillUtil {
    * @return The experience of the specified level.
    */
   public static double experienceOf(int level) {
-    return EXPERIENCE_TABLE[checkLevel(level)];
+    return EXPERIENCE_TABLE[checkLevel(level) - 1];
   }
 
   /**
