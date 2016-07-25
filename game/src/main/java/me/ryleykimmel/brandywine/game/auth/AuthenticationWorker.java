@@ -43,7 +43,7 @@ public final class AuthenticationWorker implements Runnable {
    * @param request The request to authenticate.
    */
   public AuthenticationWorker(GameService service, AuthenticationStrategy strategy,
-      AuthenticationRequest request) {
+                               AuthenticationRequest request) {
     this.service = Preconditions.checkNotNull(service, "GameService may not be null.");
     this.strategy = Preconditions.checkNotNull(strategy, "AuthenticationStrategy may not be null.");
     this.request = Preconditions.checkNotNull(request, "AuthenticationRequest may not be null.");
@@ -81,13 +81,13 @@ public final class AuthenticationWorker implements Runnable {
 
   /**
    * Closes the specified Session after sending the specified response code.
-   * 
+   *
    * @param session The Session to close.
    * @param response The response to send.
    */
   private void closeWithResponse(Session session, ResponseCode response) {
     session.writeAndFlush(new LoginResponseMessage(response))
-        .addListener(ChannelFutureListener.CLOSE);
+      .addListener(ChannelFutureListener.CLOSE);
   }
 
 }

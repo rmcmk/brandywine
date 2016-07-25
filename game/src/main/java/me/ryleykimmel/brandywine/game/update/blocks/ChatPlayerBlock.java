@@ -12,19 +12,20 @@ import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
  */
 public class ChatPlayerBlock extends UpdateBlock {
 
-  public static ChatPlayerBlock create(Player player, ChatMessage message) {
-    return new ChatPlayerBlock(player.getPrivileges().getPrimaryId(), message);
-  }
-
   private static final int MASK = 0x80;
 
   private final int privilegeId;
+
   private final ChatMessage chatMessage;
 
   public ChatPlayerBlock(int privilegeId, ChatMessage chatMessage) {
     super(MASK);
     this.privilegeId = privilegeId;
     this.chatMessage = chatMessage;
+  }
+
+  public static ChatPlayerBlock create(Player player, ChatMessage message) {
+    return new ChatPlayerBlock(player.getPrivileges().getPrimaryId(), message);
   }
 
   public ChatMessage getChatMessage() {

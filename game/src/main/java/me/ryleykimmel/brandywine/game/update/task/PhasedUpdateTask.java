@@ -20,7 +20,7 @@ public final class PhasedUpdateTask implements UpdateTask {
 
   /**
    * Constructs a new {@link PhasedUpdateTask} with the specified Phaser and UpdateTask.
-   * 
+   *
    * @param phaser The Phaser to notify when the task has completed.
    * @param task The UpdateTask to perform.
    */

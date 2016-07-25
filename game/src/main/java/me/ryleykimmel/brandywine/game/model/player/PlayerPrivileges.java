@@ -6,24 +6,8 @@ import java.util.EnumSet;
 
 public final class PlayerPrivileges {
 
-  public enum PlayerPrivilege {
-
-    NONE(0), MODERATOR(1), ADMINISTRATOR(2);
-
-    private final int id;
-
-    private PlayerPrivilege(int id) {
-      this.id = id;
-    }
-
-    public int getId() {
-      return id;
-    }
-
-  }
-
-  private final Deque<PlayerPrivilege> privileges =
-      new ArrayDeque<>(EnumSet.of(PlayerPrivilege.NONE)); // Everyone has 'none'
+  private final Deque<PlayerPrivilege> privileges = new ArrayDeque<>(EnumSet.of(
+    PlayerPrivilege.NONE)); // Everyone has 'none'
 
   public int getPrimaryId() {
     PlayerPrivilege primary = privileges.peek();
@@ -72,6 +56,22 @@ public final class PlayerPrivileges {
     }
 
     return false;
+  }
+
+  public enum PlayerPrivilege {
+
+    NONE(0), MODERATOR(1), ADMINISTRATOR(2);
+
+    private final int id;
+
+    private PlayerPrivilege(int id) {
+      this.id = id;
+    }
+
+    public int getId() {
+      return id;
+    }
+
   }
 
 }

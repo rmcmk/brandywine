@@ -61,7 +61,7 @@ public final class EventConsumerChain<E extends Event> {
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this).add("type", type).add("consumers", consumers)
-        .toString();
+             .toString();
   }
 
 }

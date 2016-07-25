@@ -46,14 +46,14 @@ public final class Player extends Mob {
   private final PlayerPrivileges privileges = new PlayerPrivileges();
 
   /**
-   * The Session this Player is attached to.
-   */
-  private Optional<Session> session = Optional.empty();
-
-  /**
    * The credentials of this Player.
    */
   private final PlayerCredentials credentials;
+
+  /**
+   * The Session this Player is attached to.
+   */
+  private Optional<Session> session = Optional.empty();
 
   /**
    * The current maximum viewing distance of this player.
@@ -101,6 +101,18 @@ public final class Player extends Mob {
     flagUpdate(AppearancePlayerBlock.create(this));
   }
 
+  /**
+   * Generates the next appearance ticket.
+   *
+   * @return The next available appearance ticket.
+   */
+  private static int nextAppearanceTicket() {
+    if (appearanceTicketCounter.incrementAndGet() == 0) {
+      appearanceTicketCounter.set(1);
+    }
+    return appearanceTicketCounter.get();
+  }
+
   @Override
   public void write(Message message) {
     getSession().voidWrite(message);
@@ -131,24 +143,21 @@ public final class Player extends Mob {
   }
 
   /**
-   * Generates the next appearance ticket.
-   *
-   * @return The next available appearance ticket.
-   */
-  private static int nextAppearanceTicket() {
-    if (appearanceTicketCounter.incrementAndGet() == 0) {
-      appearanceTicketCounter.set(1);
-    }
-    return appearanceTicketCounter.get();
-  }
-
-  /**
    * Gets the Session this Player is attached to.
    *
    * @return The Session this Player is attached to.
    */
   public Session getSession() {
     return session.orElseThrow(() -> new IllegalStateException("Session has not been configured!"));
+  }
+
+  /**
+   * Sets the Session for this Player.
+   *
+   * @param session The Session for this Player.
+   */
+  public void setSession(Session session) {
+    this.session = Optional.of(session);
   }
 
   /**
@@ -216,12 +225,31 @@ public final class Player extends Mob {
   }
 
   /**
+   * Sets this Players id within the Servers database.
+   *
+   * @param databaseId The database id to set.
+   */
+  public void setDatabaseId(int databaseId) {
+    this.databaseId = databaseId;
+  }
+
+  /**
    * Gets the last known region for this Player.
    *
    * @return The last known region for this Player.
    */
   public Position getLastKnownRegion() {
     return lastKnownRegion;
+  }
+
+  /**
+   * Sets the last known region for this Player.
+   *
+   * @param lastKnownRegion The last known region to set.
+   */
+  public void setLastKnownRegion(Position lastKnownRegion) {
+    this.lastKnownRegion = lastKnownRegion;
+    mapRegionChanged = true;
   }
 
   /**
@@ -297,34 +325,6 @@ public final class Player extends Mob {
     if (viewingDistance > 1) {
       viewingDistance--;
     }
-  }
-
-  /**
-   * Sets the last known region for this Player.
-   *
-   * @param lastKnownRegion The last known region to set.
-   */
-  public void setLastKnownRegion(Position lastKnownRegion) {
-    this.lastKnownRegion = lastKnownRegion;
-    mapRegionChanged = true;
-  }
-
-  /**
-   * Sets this Players id within the Servers database.
-   *
-   * @param databaseId The database id to set.
-   */
-  public void setDatabaseId(int databaseId) {
-    this.databaseId = databaseId;
-  }
-
-  /**
-   * Sets the Session for this Player.
-   *
-   * @param session The Session for this Player.
-   */
-  public void setSession(Session session) {
-    this.session = Optional.of(session);
   }
 
   /**

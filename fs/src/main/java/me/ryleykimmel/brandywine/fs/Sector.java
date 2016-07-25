@@ -35,7 +35,7 @@ public final class Sector {
 
   /**
    * Constructs a new {@link Sector} with the specified id, block, next id and index.
-   * 
+   *
    * @param id The id of this Sector.
    * @param block A pointer to a block of data within this Sector.
    * @param next The next Sector id.
@@ -50,13 +50,13 @@ public final class Sector {
 
   /**
    * Decodes the specified {@link Buffer} into a Sector.
-   * 
+   *
    * @param buffer The Buffer to decode the Sector from.
    * @return The new Sector, never {@code null}.
    */
   public static Sector decode(Buffer buffer) {
     Preconditions.checkArgument(buffer.remaining() >= BYTES,
-        "Incorrect buffer length: " + buffer.remaining() + ", expected: " + BYTES);
+      "Incorrect buffer length: " + buffer.remaining() + ", expected: " + BYTES);
 
     int id = buffer.getUnsignedShort();
     int block = buffer.getUnsignedShort();
@@ -68,7 +68,7 @@ public final class Sector {
 
   /**
    * Gets the id of this Sector.
-   * 
+   *
    * @return The id of this Sector.
    */
   public int getId() {
@@ -77,7 +77,7 @@ public final class Sector {
 
   /**
    * Gets the pointer to a block of data within this Sector.
-   * 
+   *
    * @return The pointer to a block of data within this Sector.
    */
   public int getBlock() {
@@ -86,7 +86,7 @@ public final class Sector {
 
   /**
    * Gets the next Sector id.
-   * 
+   *
    * @return The next Sector id.
    */
   public int getNext() {
@@ -95,7 +95,7 @@ public final class Sector {
 
   /**
    * Gets the Index this Sector is in.
-   * 
+   *
    * @return The Index this Sector is in.
    */
   public int getIndex() {

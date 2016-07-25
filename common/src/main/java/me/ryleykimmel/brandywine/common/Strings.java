@@ -11,6 +11,12 @@ import java.util.List;
 public final class Strings {
 
   /**
+   * Sole private constructor to discourage instantiation of this class.
+   */
+  private Strings() {
+  }
+
+  /**
    * Lower-cases the specified {@code String} and capitalizes the first character.
    *
    * @param string The String, may not be {@code null}.
@@ -81,7 +87,7 @@ public final class Strings {
     StringBuilder builder = new StringBuilder(string.length() + 16 * args.length);
 
     int templateStart = 0;
-    for (int index = 0, length = args.length; index < length;) {
+    for (int index = 0, length = args.length; index < length; ) {
       int placeholderStart = string.indexOf("%s", templateStart);
       if (placeholderStart == -1) {
         break;
@@ -97,7 +103,7 @@ public final class Strings {
 
   /**
    * Splits the specified {@code String} into segments delimited by {@code delim}.
-   *
+   * <p>
    * <pre>
    * {@code
    * String string = "\"I am a String\" Hey hey hey";
@@ -136,10 +142,5 @@ public final class Strings {
 
     return Iterables.toArray(arguments, String.class);
   }
-
-  /**
-   * Sole private constructor to discourage instantiation of this class.
-   */
-  private Strings() {}
 
 }

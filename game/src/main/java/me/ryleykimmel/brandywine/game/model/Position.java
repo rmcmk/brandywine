@@ -56,7 +56,7 @@ public final class Position {
     this.x = x;
     this.y = y;
     this.height = Preconditions.checkElementIndex(height, HEIGHT_LEVELS,
-        "Height must be [0, 3), received " + height + ".");
+      "Height must be [0, 3), received " + height + ".");
   }
 
   /**
@@ -97,7 +97,7 @@ public final class Position {
 
   /**
    * Gets the delta x coordinate between this Position and the specified Position.
-   * 
+   *
    * @param other The other Position.
    * @return The delta x coordinate.
    */
@@ -107,7 +107,7 @@ public final class Position {
 
   /**
    * Gets the delta y coordinate between this Position and the specified Position.
-   * 
+   *
    * @param other The other Position.
    * @return The delta y coordinate.
    */
@@ -275,7 +275,7 @@ public final class Position {
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this).add("x", x).add("y", y).add("height", height)
-        .toString();
+             .toString();
   }
 
 

@@ -17,77 +17,6 @@ import java.util.stream.IntStream;
 public final class MobRepository<T extends Mob> implements Iterable<T> {
 
   /**
-   * An Iterator for some MobRepository.
-   *
-   * @param <T> The Type of Mob.
-   */
-  private static final class MobRepositoryIterator<T extends Mob> implements Iterator<T> {
-
-    /**
-     * The current index.
-     */
-    private int current;
-
-    /**
-     * The last index found.
-     */
-    private int last = -1;
-
-    /**
-     * The MobRepository we're iterating over.
-     */
-    private final MobRepository<T> repository;
-
-    /**
-     * Constructs a new {@link MobRepositoryIterator} with the specified MobRepository.
-     * 
-     * @param repository The MobRepository we're iterating over.
-     */
-    private MobRepositoryIterator(MobRepository<T> repository) {
-      this.repository = repository;
-    }
-
-    @Override
-    public boolean hasNext() {
-      int index = current;
-
-      // return true iff there is a non-null element within the repository
-      while (index <= repository.size()) {
-        T mob = repository.mobs[index++];
-        if (mob != null) {
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    @Override
-    public T next() {
-      while (current <= repository.size()) {
-        T mob = repository.mobs[current++];
-        if (mob != null) {
-          last = current;
-          return mob;
-        }
-      }
-
-      throw new NoSuchElementException("There are no more elements!");
-    }
-
-    @Override
-    public void remove() {
-      if (last == -1) {
-        throw new IllegalStateException("remove() may only be called once per call to next()");
-      }
-
-      repository.remove(last);
-      last = -1;
-    }
-
-  }
-
-  /**
    * A {@link Queue} of available indices.
    */
   private final Queue<Integer> indices = new PriorityQueue<>();
@@ -98,14 +27,14 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
   private final T[] mobs;
 
   /**
-   * The current size of this repository.
-   */
-  private int size = 0;
-
-  /**
    * The capacity of this repository.
    */
   private final int capacity;
+
+  /**
+   * The current size of this repository.
+   */
+  private int size = 0;
 
   /**
    * Constructs a new {@link MobRepository} with the specified capacity.
@@ -165,7 +94,7 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
    */
   public T get(int index) {
     int normalized = Preconditions.checkElementIndex(index - 1, capacity,
-        "index: " + index + " is out of bounds, capacity: " + capacity);
+      "index: " + index + " is out of bounds, capacity: " + capacity);
     return mobs[normalized];
   }
 
@@ -193,8 +122,8 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
     Mob mob = get(index);
 
     Preconditions.checkArgument(mob.getIndex() == index,
-        "Mob index mismatch, unable to remove Mob. [index=" + mob.getIndex() + ", expected=" + index
-            + "]");
+      "Mob index mismatch, unable to remove Mob. [index=" + mob.getIndex() + ", expected=" + index
+        + "]");
 
     int normalized = index - 1;
 
@@ -216,7 +145,79 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this).add("mobs", Arrays.toString(mobs)).add("size", size)
-        .add("capacity", capacity).toString();
+             .add("capacity", capacity).toString();
+  }
+
+
+  /**
+   * An Iterator for some MobRepository.
+   *
+   * @param <T> The Type of Mob.
+   */
+  private static final class MobRepositoryIterator<T extends Mob> implements Iterator<T> {
+
+    /**
+     * The MobRepository we're iterating over.
+     */
+    private final MobRepository<T> repository;
+
+    /**
+     * The current index.
+     */
+    private int current;
+
+    /**
+     * The last index found.
+     */
+    private int last = -1;
+
+    /**
+     * Constructs a new {@link MobRepositoryIterator} with the specified MobRepository.
+     *
+     * @param repository The MobRepository we're iterating over.
+     */
+    private MobRepositoryIterator(MobRepository<T> repository) {
+      this.repository = repository;
+    }
+
+    @Override
+    public boolean hasNext() {
+      int index = current;
+
+      // return true iff there is a non-null element within the repository
+      while (index <= repository.size()) {
+        T mob = repository.mobs[index++];
+        if (mob != null) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    @Override
+    public T next() {
+      while (current <= repository.size()) {
+        T mob = repository.mobs[current++];
+        if (mob != null) {
+          last = current;
+          return mob;
+        }
+      }
+
+      throw new NoSuchElementException("There are no more elements!");
+    }
+
+    @Override
+    public void remove() {
+      if (last == -1) {
+        throw new IllegalStateException("remove() may only be called once per call to next()");
+      }
+
+      repository.remove(last);
+      last = -1;
+    }
+
   }
 
 }

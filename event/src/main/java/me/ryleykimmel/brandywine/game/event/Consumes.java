@@ -10,11 +10,11 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 public @interface Consumes {
 
-    /**
-     * Gets the {@link Event} type that a {@link EventConsumer} consumes.
-     *
-     * @return The Event type.
-     */
-    Class<? extends Event> value();
+  /**
+   * Gets the {@link Event} type that a {@link EventConsumer} consumes.
+   *
+   * @return The Event type.
+   */
+  Class<? extends Event> value();
 
 }

@@ -12,11 +12,6 @@ import java.util.concurrent.TimeUnit;
 public abstract class Service {
 
   /**
-   * The current delay until this Service is executed.
-   */
-  private int currentDelay;
-
-  /**
    * The delay (number of intervals) until this Service is executed.
    */
   private final int delay;
@@ -30,6 +25,11 @@ public abstract class Service {
    * This Services internal Stopwatch, used for debugging purposes.
    */
   private final Stopwatch stopwatch = Stopwatch.createUnstarted();
+
+  /**
+   * The current delay until this Service is executed.
+   */
+  private int currentDelay;
 
   /**
    * Constructs a new {@link Service} with the default interval of
@@ -75,7 +75,7 @@ public abstract class Service {
 
   /**
    * Gets this Service's pulse interval.
-   * 
+   *
    * @return This Service's pulse interval.
    */
   public final long getInterval() {

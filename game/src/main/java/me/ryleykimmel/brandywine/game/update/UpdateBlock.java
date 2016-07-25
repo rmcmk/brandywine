@@ -14,7 +14,7 @@ public abstract class UpdateBlock {
 
   /**
    * Constructs a new {@link UpdateBlock} with the specified mask.
-   * 
+   *
    * @param mask The Mask of this UpdateBlock.
    */
   public UpdateBlock(int mask) {
@@ -23,7 +23,7 @@ public abstract class UpdateBlock {
 
   /**
    * Gets the Mask of this UpdateBlock.
-   * 
+   *
    * @return The Mask of this UpdateBlock.
    */
   public final int getMask() {
@@ -32,7 +32,7 @@ public abstract class UpdateBlock {
 
   /**
    * Encodes this UpdateBlock.
-   * 
+   *
    * @param builder The FrameBuilder used to encode this UpdateBlock.
    */
   public abstract void encode(FrameBuilder builder);

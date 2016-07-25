@@ -28,12 +28,12 @@ public final class ServiceSet {
   public <T extends Service> T get(Class<T> clazz) {
     Preconditions.checkNotNull(clazz, "Service type may not be null.");
     return (T) Preconditions.checkNotNull(services.get(clazz),
-        "Service for: " + StringUtil.simpleClassName(clazz) + " does not exist.");
+      "Service for: " + StringUtil.simpleClassName(clazz) + " does not exist.");
   }
 
   /**
    * Registers the specified Service.
-   * 
+   *
    * @param service The Service to register, may not be {@code null}.
    */
   public void register(Service service) {

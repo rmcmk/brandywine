@@ -125,7 +125,7 @@ public final class Session {
 
   /**
    * Adds the specified {@link ChannelFutureListener} to be performed when this Session is closed.
-   * 
+   *
    * @param listener The ChannelFutureListener to perform when this Session is closed.
    */
   public void onClose(ChannelFutureListener listener) {
@@ -134,7 +134,7 @@ public final class Session {
 
   /**
    * Tests whether or not this Session has been closed or is no longer active.
-   * 
+   *
    * @return {@code true} if this Session is closed or is no longer active.
    */
   public boolean isClosed() {
@@ -170,7 +170,8 @@ public final class Session {
     return channel.attr(key);
   }
 
-  @Override public int hashCode() {
+  @Override
+  public int hashCode() {
     return Long.hashCode(sessionKey);
   }
 

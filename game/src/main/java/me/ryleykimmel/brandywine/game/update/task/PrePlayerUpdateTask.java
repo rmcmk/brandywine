@@ -17,7 +17,7 @@ public final class PrePlayerUpdateTask implements UpdateTask {
 
   /**
    * Constructs a new {@link PrePlayerUpdateTask} with the specified Player.
-   * 
+   *
    * @param player The Player we are performing pre-update logic for.
    */
   public PrePlayerUpdateTask(Player player) {
@@ -41,7 +41,7 @@ public final class PrePlayerUpdateTask implements UpdateTask {
 
   /**
    * Determines if a region change is required for the specified Player.
-   * 
+   *
    * @return {@code true} if a region change is required and the region needs rebuilt, otherwise
    * {@code false}.
    */
@@ -53,9 +53,9 @@ public final class PrePlayerUpdateTask implements UpdateTask {
     int deltaY = position.getLocalY(lastKnownRegion);
 
     return deltaX <= Position.MAX_DISTANCE
-        || deltaX >= Region.VIEWPORT_WIDTH - Position.MAX_DISTANCE - 1
-        || deltaY <= Position.MAX_DISTANCE
-        || deltaY >= Region.VIEWPORT_WIDTH - Position.MAX_DISTANCE - 1;
+             || deltaX >= Region.VIEWPORT_WIDTH - Position.MAX_DISTANCE - 1
+             || deltaY <= Position.MAX_DISTANCE
+             || deltaY >= Region.VIEWPORT_WIDTH - Position.MAX_DISTANCE - 1;
   }
 
 }

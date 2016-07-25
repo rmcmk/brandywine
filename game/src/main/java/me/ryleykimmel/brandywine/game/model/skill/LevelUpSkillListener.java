@@ -16,7 +16,7 @@ public final class LevelUpSkillListener implements SkillListener {
 
   /**
    * Constructs a new {@link LevelUpSkillListener} with the specified Player.
-   * 
+   *
    * @param player The Player.
    */
   public LevelUpSkillListener(Player player) {
@@ -27,9 +27,10 @@ public final class LevelUpSkillListener implements SkillListener {
   public void leveledUp(SkillSet skills, Skill skill) {
     // TODO: 'Click here to continue' level up widget
 
-    player
-        .write(new ServerChatMessage("You've just advanced %s %s level! You have reached level %s.",
-            Strings.getIndefiniteArticle(skill.getName()), skill.getName(), skill.getLevel()));
+    player.write(
+      new ServerChatMessage("You've just advanced %s %s level! You have reached level %s.",
+                             Strings.getIndefiniteArticle(skill.getName()), skill.getName(),
+                             skill.getLevel()));
 
     if (skill.isCombatSkill()) {
       int oldCombatLevel = skills.getCombatLevel();
@@ -39,7 +40,7 @@ public final class LevelUpSkillListener implements SkillListener {
       if (delta > 0) {
         skills.setCombatLevel(newCombatLevel);
         player.write(new ServerChatMessage("Congratulations, your Combat level is now %s.",
-          skills.getCombatLevel()));
+                                            skills.getCombatLevel()));
         player.updateAppearance();
       }
     }

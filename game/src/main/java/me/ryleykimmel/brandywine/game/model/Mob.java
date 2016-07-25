@@ -60,7 +60,7 @@ public abstract class Mob extends Entity {
 
   /**
    * Constructs a new {@link Mob} with the specified World.
-   * 
+   *
    * @param world The World this Mob is in.
    * @param type The type of this Entity.
    */
@@ -78,6 +78,15 @@ public abstract class Mob extends Entity {
   }
 
   /**
+   * Sets the index of this Mob.
+   *
+   * @param index The new index of this Mob.
+   */
+  public final void setIndex(int index) {
+    this.index = index;
+  }
+
+  /**
    * Gets this Mobs movement queue.
    *
    * @return This Mobs movement queue.
@@ -88,20 +97,11 @@ public abstract class Mob extends Entity {
 
   /**
    * Gets this Mobs skill set.
-   * 
+   *
    * @return This Mobs skills set.
    */
   public final SkillSet getSkills() {
     return skills;
-  }
-
-  /**
-   * Sets the index of this Mob.
-   *
-   * @param index The new index of this Mob.
-   */
-  public final void setIndex(int index) {
-    this.index = index;
   }
 
   /**
@@ -200,7 +200,7 @@ public abstract class Mob extends Entity {
 
   /**
    * Flags an UpdateBlock.
-   * 
+   *
    * @param block The UpdateBlock to flag.
    */
   public final void flagUpdate(UpdateBlock block) {
@@ -211,7 +211,7 @@ public abstract class Mob extends Entity {
 
   /**
    * Gets the {@link Set} of pending {@link UpdateBlock}s.
-   * 
+   *
    * @return The Set of pending UpdateBlocks.
    */
   public final Set<UpdateBlock> getPendingUpdates() {
@@ -220,7 +220,7 @@ public abstract class Mob extends Entity {
 
   /**
    * Writes the specified Message for this Mob.
-   * 
+   *
    * @param message The Message to write.
    */
   public void write(Message message) {

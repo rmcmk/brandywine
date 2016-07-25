@@ -239,9 +239,9 @@ public final class FrameReader extends ReadingFrameBuffer {
 
       case MIDDLE:
         Preconditions.checkArgument(transformation == DataTransformation.NONE,
-            "middle endian cannot be transformed");
-        Preconditions.checkArgument(type == DataType.INT,
-            "middle endian can only be used with an integer");
+          "middle endian cannot be transformed");
+        Preconditions
+          .checkArgument(type == DataType.INT, "middle endian can only be used with an integer");
 
         longValue |= (buffer.readByte() & 0xFF) << 8;
         longValue |= buffer.readByte() & 0xFF;
@@ -251,9 +251,9 @@ public final class FrameReader extends ReadingFrameBuffer {
 
       case INVERSED_MIDDLE:
         Preconditions.checkArgument(transformation == DataTransformation.NONE,
-            "inversed middle endian cannot be transformed");
+          "inversed middle endian cannot be transformed");
         Preconditions.checkArgument(type == DataType.INT,
-            "inversed middle endian can only be used with an integer");
+          "inversed middle endian can only be used with an integer");
 
         longValue |= (buffer.readByte() & 0xFF) << 16;
         longValue |= (buffer.readByte() & 0xFF) << 24;

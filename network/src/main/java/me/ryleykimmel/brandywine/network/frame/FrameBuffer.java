@@ -11,29 +11,13 @@ import me.ryleykimmel.brandywine.common.Assertions;
 abstract class FrameBuffer implements ReferenceCounted {
 
   /**
-   * Represents the type of this FrameBuffer.
-   */
-  private enum Type {
-
-    /**
-     * Indicates that this is an input or reader FrameBuffer.
-     */
-    READER,
-
-    /**
-     * Indicates that this is an output or writer FrameBuffer.
-     */
-    WRITER
-
-  }
-
-  /**
    * An array of bit masks. The element {@code n} is equal to {@code 2<sup>n</sup> - 1}.
    */
   protected static final int[] BIT_MASKS = {0x0, 0x1, 0x3, 0x7, 0xf, 0x1f, 0x3f, 0x7f, 0xff, 0x1ff,
-      0x3ff, 0x7ff, 0xfff, 0x1fff, 0x3fff, 0x7fff, 0xffff, 0x1ffff, 0x3ffff, 0x7ffff, 0xfffff,
-      0x1fffff, 0x3fffff, 0x7fffff, 0xffffff, 0x1ffffff, 0x3ffffff, 0x7ffffff, 0xfffffff,
-      0x1fffffff, 0x3fffffff, 0x7fffffff, -1};
+    0x3ff, 0x7ff, 0xfff, 0x1fff, 0x3fff, 0x7fff, 0xffff, 0x1ffff, 0x3ffff, 0x7ffff, 0xfffff,
+    0x1fffff, 0x3fffff, 0x7fffff, 0xffffff, 0x1ffffff, 0x3ffffff, 0x7ffffff, 0xfffffff, 0x1fffffff,
+    0x3fffffff, 0x7fffffff, -1
+  };
 
   /**
    * The backing ByteBuf.
@@ -151,7 +135,7 @@ abstract class FrameBuffer implements ReferenceCounted {
    */
   protected final void checkByteAccess() {
     Preconditions.checkArgument(mode == AccessMode.BYTE_ACCESS,
-        "For byte-based calls to work, the mode must be byte access");
+      "For byte-based calls to work, the mode must be byte access");
   }
 
   /**
@@ -160,8 +144,26 @@ abstract class FrameBuffer implements ReferenceCounted {
    */
   protected final void checkBitAccess() {
     Preconditions.checkArgument(mode == AccessMode.BIT_ACCESS,
-        "For bit-based calls to work, the mode must be bit access");
+      "For bit-based calls to work, the mode must be bit access");
   }
+
+  /**
+   * Represents the type of this FrameBuffer.
+   */
+  private enum Type {
+
+    /**
+     * Indicates that this is an input or reader FrameBuffer.
+     */
+    READER,
+
+    /**
+     * Indicates that this is an output or writer FrameBuffer.
+     */
+    WRITER
+
+  }
+
 
   /**
    * An adapter implementation of an input or reading FrameBuffer.
@@ -178,6 +180,7 @@ abstract class FrameBuffer implements ReferenceCounted {
     }
 
   }
+
 
   /**
    * An adapter implementation of an output or writing FrameBuffer.

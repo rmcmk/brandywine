@@ -38,7 +38,7 @@ public final class SqlAuthenticationStrategy implements AuthenticationStrategy {
 
   /**
    * Constructs a new {@link SqlAuthenticationStrategy}.
-   * 
+   *
    * @param sql2o The Sql2o used to create JDBC {@link Connection}s.
    */
   public SqlAuthenticationStrategy(Sql2o sql2o) {
@@ -63,8 +63,8 @@ public final class SqlAuthenticationStrategy implements AuthenticationStrategy {
     try (Connection connection = sql2o.open()) {
       String remoteAddress = player.getSession().getRemoteAddress().getHostString();
 
-      Query select =
-          connection.createQuery("SELECT * FROM failed_logins WHERE remote_addr = :remote_addr");
+      Query select = connection
+                       .createQuery("SELECT * FROM failed_logins WHERE remote_addr = :remote_addr");
       select.addParameter("remote_addr", remoteAddress);
 
       List<Row> results = select.executeAndFetchTable().rows();
@@ -78,8 +78,8 @@ public final class SqlAuthenticationStrategy implements AuthenticationStrategy {
         Instant now = Instant.now();
 
         if (now.isAfter(expire)) {
-          Query delete =
-              connection.createQuery("DELETE FROM failed_logins WHERE remote_addr = :remote_addr");
+          Query delete = connection.createQuery(
+            "DELETE FROM failed_logins WHERE remote_addr = :remote_addr");
           delete.addParameter("remote_addr", remoteAddress);
           delete.executeUpdate();
         } else if (count >= 5) {
@@ -104,7 +104,7 @@ public final class SqlAuthenticationStrategy implements AuthenticationStrategy {
 
         if (!SCryptUtil.check(password, remotePassword)) {
           Query insert = connection.createQuery(
-              "INSERT INTO failed_logins (count, timestamp, remote_addr) VALUES (:count, :timestamp, :remote_addr) ON DUPLICATE KEY UPDATE count = VALUES(count), timestamp = VALUES(timestamp), remote_addr = VALUES(remote_addr)");
+            "INSERT INTO failed_logins (count, timestamp, remote_addr) VALUES (:count, :timestamp, :remote_addr) ON DUPLICATE KEY UPDATE count = VALUES(count), timestamp = VALUES(timestamp), remote_addr = VALUES(remote_addr)");
           insert.addParameter("count", count + 1);
           insert.addParameter("timestamp", System.currentTimeMillis());
           insert.addParameter("remote_addr", remoteAddress);

@@ -25,7 +25,7 @@ public final class ParallelUpdater implements Updater {
    * A fixed ExecutorService thread-pool used for executing UpdateTasks.
    */
   private final ExecutorService executor = Executors.newFixedThreadPool(
-      Runtime.getRuntime().availableProcessors(), ThreadFactoryUtil.create(this).build());
+    Runtime.getRuntime().availableProcessors(), ThreadFactoryUtil.create(this).build());
 
   @Override
   public void update(MobRepository<Player> players, MobRepository<Npc> npcs) {

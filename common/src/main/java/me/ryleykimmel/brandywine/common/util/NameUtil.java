@@ -9,6 +9,12 @@ import com.google.common.base.Strings;
 public final class NameUtil {
 
   /**
+   * Sole private constructor to discourage instantiation of this class.
+   */
+  private NameUtil() {
+  }
+
+  /**
    * Decodes the base 37 value into a String.
    *
    * @param value The String, expressed in base 37 as a {@code long}.
@@ -46,7 +52,7 @@ public final class NameUtil {
    */
   public static long encodeBase37(String string) {
     Preconditions.checkArgument(!Strings.isNullOrEmpty(string) || string.length() < 13,
-        "Input string must be [1, 12] and non-null.");
+      "Input string must be [1, 12] and non-null.");
 
     long encoded = 0;
 
@@ -71,10 +77,5 @@ public final class NameUtil {
 
     return encoded;
   }
-
-  /**
-   * Sole private constructor to discourage instantiation of this class.
-   */
-  private NameUtil() {}
 
 }

@@ -13,8 +13,7 @@ public final class EventConsumerChainSet {
   /**
    * The Map of Event Classes to EventConsumerChains.
    */
-  private final Map<Class<? extends Event>, EventConsumerChain<? extends Event>> chains =
-      new HashMap<>();
+  private final Map<Class<? extends Event>, EventConsumerChain<? extends Event>> chains = new HashMap<>();
 
   /**
    * Notifies the appropriate {@link EventConsumerChain} that an {@link Event} has occurred.
@@ -36,8 +35,8 @@ public final class EventConsumerChainSet {
    */
   public <E extends Event> void addConsumer(Class<E> clazz, EventConsumer<E> consumer) {
     @SuppressWarnings("unchecked")
-    EventConsumerChain<E> chain =
-        (EventConsumerChain<E>) chains.computeIfAbsent(clazz, EventConsumerChain::new);
+    EventConsumerChain<E> chain = (EventConsumerChain<E>) chains.computeIfAbsent(clazz,
+      EventConsumerChain::new);
     chain.add(consumer);
   }
 
@@ -48,7 +47,8 @@ public final class EventConsumerChainSet {
    */
   public <E extends Event> void addConsumer(EventConsumer<E> consumer) {
     Consumes consumes = consumer.getClass().getAnnotation(Consumes.class);
-    Preconditions.checkNotNull(consumes, "EventConsumer must be annotated with @Consumes to infer Event type.");
+    Preconditions.checkNotNull(consumes,
+      "EventConsumer must be annotated with @Consumes to infer Event type.");
     @SuppressWarnings("unchecked")
     Class<E> clazz = (Class<E>) consumes.value();
     addConsumer(clazz, consumer);

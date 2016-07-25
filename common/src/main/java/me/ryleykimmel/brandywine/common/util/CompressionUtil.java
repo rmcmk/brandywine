@@ -16,6 +16,12 @@ import java.util.zip.GZIPInputStream;
 public final class CompressionUtil {
 
   /**
+   * Sole private constructor to discourage instantiation of this class.
+   */
+  private CompressionUtil() {
+  }
+
+  /**
    * Uncompresses the GZIP {@code byte} array.
    *
    * @param bytes The compressed bytes.
@@ -83,10 +89,5 @@ public final class CompressionUtil {
       is.close();
     }
   }
-
-  /**
-   * Sole private constructor to discourage instantiation of this class.
-   */
-  private CompressionUtil() {}
 
 }

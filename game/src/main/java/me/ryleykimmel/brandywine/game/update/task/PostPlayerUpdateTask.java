@@ -14,7 +14,7 @@ public final class PostPlayerUpdateTask implements UpdateTask {
 
   /**
    * Constructs a new {@link PostPlayerUpdateTask} with the specified Player.
-   * 
+   *
    * @param player The Player we are performing post-update logic for.
    */
   public PostPlayerUpdateTask(Player player) {

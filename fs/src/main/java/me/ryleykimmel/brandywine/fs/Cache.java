@@ -38,7 +38,7 @@ public final class Cache {
 
   /**
    * Constructs a new {@link Cache} with the specified index id, data channel and index channel.
-   * 
+   *
    * @param indexId The index this Cache is within.
    * @param dataChannel The data channel.
    * @param indexChannel The index channel.
@@ -51,7 +51,7 @@ public final class Cache {
 
   /**
    * Gets the file, represented as a {@link Buffer}, with the specified id.
-   * 
+   *
    * @param id The id of the file.
    * @return A Buffer representing the files content.
    * @throws IOException If some I/O exception occurs.
@@ -67,7 +67,7 @@ public final class Cache {
     for (int block = 0; read < size; block++) {
       Sector sector = getSector(next);
       Preconditions.checkArgument(sector.getBlock() == block,
-          "Block mismatch, expected: " + block + ", actual: " + sector.getBlock());
+        "Block mismatch, expected: " + block + ", actual: " + sector.getBlock());
 
       int unread = Math.min(CHUNK_SIZE, size - read);
       long position = (long) next * BLOCK_SIZE + Sector.BYTES;
@@ -84,9 +84,9 @@ public final class Cache {
 
       if (size > read) {
         Preconditions.checkArgument(sector.getIndex() == indexId,
-            "Index id mismatch, expected: " + indexId + " actual: " + sector.getIndex());
+          "Index id mismatch, expected: " + indexId + " actual: " + sector.getIndex());
         Preconditions.checkArgument(sector.getId() == id,
-            "Id mismatch, expected: " + id + ", actual: " + sector.getId());
+          "Id mismatch, expected: " + id + ", actual: " + sector.getId());
       }
     }
 
@@ -95,7 +95,7 @@ public final class Cache {
 
   /**
    * Gets the Sector for the specified block.
-   * 
+   *
    * @param block The block.
    * @return The Sector.
    * @throws IOException If some I/O exception occurs.
@@ -115,7 +115,7 @@ public final class Cache {
 
   /**
    * Gets the Index for the specified id.
-   * 
+   *
    * @param id The id of the Index.
    * @return The Index.
    * @throws IOException If some I/O exception occurs.

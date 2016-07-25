@@ -9,7 +9,7 @@ import me.ryleykimmel.brandywine.network.msg.MessageCodec;
  * MessageCodec for the {@link LoginHandshakeResponseMessage}.
  */
 public final class LoginHandshakeResponseMessageCodec
-    extends MessageCodec<LoginHandshakeResponseMessage> {
+  extends MessageCodec<LoginHandshakeResponseMessage> {
 
   @Override
   public void encode(LoginHandshakeResponseMessage message, FrameBuilder builder) {

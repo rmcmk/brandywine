@@ -10,7 +10,8 @@ import me.ryleykimmel.brandywine.network.msg.MessageCodec;
  */
 public final class MouseClickedMessageCodec extends MessageCodec<MouseClickedMessage> {
 
-  @Override public MouseClickedMessage decode(FrameReader frame) {
+  @Override
+  public MouseClickedMessage decode(FrameReader frame) {
     int value = (int) frame.getUnsigned(DataType.INT);
 
     long delay = (value >> 20) * 50;

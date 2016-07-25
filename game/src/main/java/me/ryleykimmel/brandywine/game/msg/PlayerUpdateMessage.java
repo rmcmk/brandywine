@@ -38,7 +38,7 @@ public final class PlayerUpdateMessage extends Message {
 
   /**
    * Constructs a new {@link PlayerUpdateMessage}.
-   * 
+   *
    * @param lastKnownRegion The last known region.
    * @param position The current position.
    * @param localPlayerCount The local player count.
@@ -46,7 +46,7 @@ public final class PlayerUpdateMessage extends Message {
    * @param descriptors The surrounding Players descriptors.
    */
   public PlayerUpdateMessage(Position lastKnownRegion, Position position, int localPlayerCount,
-      PlayerDescriptor descriptor, List<PlayerDescriptor> descriptors) {
+                              PlayerDescriptor descriptor, List<PlayerDescriptor> descriptors) {
     this.lastKnownRegion = lastKnownRegion;
     this.position = position;
     this.localPlayerCount = localPlayerCount;
@@ -56,7 +56,7 @@ public final class PlayerUpdateMessage extends Message {
 
   /**
    * Gets the last known region.
-   * 
+   *
    * @return The last know region.
    */
   public Position getLastKnownRegion() {
@@ -65,7 +65,7 @@ public final class PlayerUpdateMessage extends Message {
 
   /**
    * Gets the current position.
-   * 
+   *
    * @return The currnet position.
    */
   public Position getPosition() {
@@ -74,7 +74,7 @@ public final class PlayerUpdateMessage extends Message {
 
   /**
    * Gets the local player count.
-   * 
+   *
    * @return The local player count.
    */
   public int getLocalPlayerCount() {
@@ -83,7 +83,7 @@ public final class PlayerUpdateMessage extends Message {
 
   /**
    * Gets this Players descriptor.
-   * 
+   *
    * @return This Players descriptor.
    */
   public PlayerDescriptor getDescriptor() {
@@ -92,7 +92,7 @@ public final class PlayerUpdateMessage extends Message {
 
   /**
    * Gets the surrounding Players descriptors.
-   * 
+   *
    * @return The surrounding Players descriptors.
    */
   public List<PlayerDescriptor> getDescriptors() {

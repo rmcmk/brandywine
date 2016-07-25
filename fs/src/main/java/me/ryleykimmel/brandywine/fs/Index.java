@@ -25,7 +25,7 @@ public final class Index {
 
   /**
    * Creates the index.
-   * 
+   *
    * @param size The size of the file.
    * @param sector The first Sector in this Index.
    */
@@ -36,13 +36,13 @@ public final class Index {
 
   /**
    * Decodes the specified {@link Buffer} into an Index.
-   * 
+   *
    * @param buffer The Buffer to decode the Index from.
    * @return The new Index, never {@code null}.
    */
   public static Index decode(Buffer buffer) {
     Preconditions.checkArgument(buffer.remaining() == BYTES,
-        "Incorrect buffer length: " + buffer.remaining() + ", expected: " + BYTES);
+      "Incorrect buffer length: " + buffer.remaining() + ", expected: " + BYTES);
 
     int size = buffer.getUnsignedTriByte();
     int sector = buffer.getUnsignedTriByte();
@@ -52,7 +52,7 @@ public final class Index {
 
   /**
    * Gets the first Sector in this Index.
-   * 
+   *
    * @return The first Sector in this Index.
    */
   public int getSector() {
@@ -61,7 +61,7 @@ public final class Index {
 
   /**
    * Gets the size of the file.
-   * 
+   *
    * @return The size of the file.
    */
   public int getSize() {

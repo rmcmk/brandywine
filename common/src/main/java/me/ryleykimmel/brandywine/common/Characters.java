@@ -15,6 +15,12 @@ public final class Characters {
   public static final List<Character> VOWELS = Chars.asList('a', 'e', 'i', 'o', 'u');
 
   /**
+   * Sole private constructor to discourage instantiation of this class.
+   */
+  private Characters() {
+  }
+
+  /**
    * Returns a flag denoting whether or not the specified {@code char} is a vowel.
    *
    * @param character The character to check.
@@ -24,10 +30,5 @@ public final class Characters {
   public static boolean isVowel(char character) {
     return VOWELS.contains(Character.toLowerCase(character));
   }
-
-  /**
-   * Sole private constructor to discourage instantiation of this class.
-   */
-  private Characters() {}
 
 }

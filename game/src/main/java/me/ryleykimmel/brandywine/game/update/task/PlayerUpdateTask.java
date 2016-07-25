@@ -41,7 +41,7 @@ public final class PlayerUpdateTask implements UpdateTask {
 
   /**
    * Constructs a new {@link PlayerUpdateTask} with the specified Player and surrounding players.
-   * 
+   *
    * @param player The Player we are updating.
    */
   public PlayerUpdateTask(Player player) {
@@ -51,7 +51,7 @@ public final class PlayerUpdateTask implements UpdateTask {
   /**
    * Creates a PlayerDescriptor based upon the specified Player's current state (walking, running,
    * teleporting, etc).
-   * 
+   *
    * @param player The Player to create the descriptor for.
    * @param position the Position.
    * @param lastKnownRegion The last known region.
@@ -59,23 +59,23 @@ public final class PlayerUpdateTask implements UpdateTask {
    * @throws IllegalStateException If the PlayerDescriptor was unable to be created.
    */
   private PlayerDescriptor createStateDescriptor(Player player, Position position,
-      Position lastKnownRegion) {
+                                                  Position lastKnownRegion) {
     if (player.isTeleporting()) {
       return new TeleportPlayerDescriptor(player, position, lastKnownRegion);
     }
 
     if (player.getFirstDirection() == Direction.NONE
-        && player.getSecondDirection() == Direction.NONE) {
+          && player.getSecondDirection() == Direction.NONE) {
       return new IdlePlayerDescriptor(player);
     }
 
     if (player.getFirstDirection() != Direction.NONE
-        && player.getSecondDirection() == Direction.NONE) {
+          && player.getSecondDirection() == Direction.NONE) {
       return new WalkPlayerDescriptor(player);
     }
 
     if (player.getFirstDirection() != Direction.NONE
-        && player.getSecondDirection() != Direction.NONE) {
+          && player.getSecondDirection() != Direction.NONE) {
       return new RunPlayerDescriptor(player);
     }
 
@@ -99,7 +99,7 @@ public final class PlayerUpdateTask implements UpdateTask {
     Set<Player> localPlayers = player.getLocalPlayers();
     int localPlayerCount = localPlayers.size();
 
-    for (Iterator<Player> it = localPlayers.iterator(); it.hasNext();) {
+    for (Iterator<Player> it = localPlayers.iterator(); it.hasNext(); ) {
       Player other = it.next();
       if (removeable(position, viewingDistance, other)) {
         it.remove();
@@ -120,7 +120,7 @@ public final class PlayerUpdateTask implements UpdateTask {
     regions.add(current.getCoordinates());
 
     Stream<Player> players = regions.stream().map(repository::get)
-        .flatMap(region -> region.getEntities(EntityType.PLAYER));
+                               .flatMap(region -> region.getEntities(EntityType.PLAYER));
 
     Iterator<Player> iterator = players.iterator();
     int added = 0;
@@ -136,7 +136,7 @@ public final class PlayerUpdateTask implements UpdateTask {
       Player other = iterator.next();
 
       if (!player.equals(other) && position.isWithinDistance(other.getPosition(), viewingDistance)
-          && !localPlayers.contains(other)) {
+            && !localPlayers.contains(other)) {
         localPlayers.add(other);
         descriptors.add(new AddPlayerDescriptor(other, position));
         added++;
@@ -144,13 +144,13 @@ public final class PlayerUpdateTask implements UpdateTask {
     }
 
     player.write(new PlayerUpdateMessage(lastKnownRegion, position, localPlayerCount, descriptor,
-        descriptors));
+                                          descriptors));
   }
 
   /**
    * Tests whether or not the specified Player has a cached appearance within the specified
    * appearance ticket array.
-   * 
+   *
    * @param tickets The appearance tickets.
    * @param player The Player.
    * @return {@code true} if the specified Player has a cached appearance.
@@ -181,8 +181,9 @@ public final class PlayerUpdateTask implements UpdateTask {
     }
 
     Position otherPosition = other.getPosition();
-    return otherPosition.getLongestDelta(position) > distance
-        || !otherPosition.isWithinDistance(position, distance);
+    return otherPosition.getLongestDelta(position) > distance || !otherPosition
+                                                                    .isWithinDistance(position,
+                                                                      distance);
   }
 
 }

@@ -18,16 +18,6 @@ import java.util.stream.Stream;
 public final class Region {
 
   /**
-   * A {@link RegionListener} for update operations.
-   */
-  private static final class UpdateRegionListener implements RegionListener {
-
-    @Override
-    public void execute(Region region, Entity entity, EntityUpdateType update) {}
-
-  }
-
-  /**
    * The width and length of a Region, in tiles.
    */
   public static final int SIZE = 8;
@@ -105,7 +95,7 @@ public final class Region {
   /**
    * Adds a {@link Entity} to the Region. Note that this does not spawn the Entity, or do any other
    * action other than register it to this Region.
-   *
+   * <p>
    * By default, this method notifies RegionListeners for this region of the addition.
    *
    * @param entity The Entity.
@@ -117,7 +107,7 @@ public final class Region {
 
   /**
    * Checks if this Region contains the specified Entity.
-   *
+   * <p>
    * This method operates in constant time.
    *
    * @param entity The Entity.
@@ -161,7 +151,7 @@ public final class Region {
   public <T extends Entity> Stream<T> getEntities(EntityType... types) {
     Set<EntityType> set = ImmutableSet.copyOf(types);
     return (Stream<T>) entities.values().stream().flatMap(Collection::stream)
-        .filter(entity -> set.contains(entity.getType()));
+                         .filter(entity -> set.contains(entity.getType()));
   }
 
   /**
@@ -194,7 +184,7 @@ public final class Region {
     Set<EntityType> set = ImmutableSet.copyOf(types);
     @SuppressWarnings("unchecked")
     Set<T> filtered = (Set<T>) local.stream().filter(entity -> set.contains(entity.getType()))
-        .collect(Collectors.toSet());
+                                 .collect(Collectors.toSet());
     return ImmutableSet.copyOf(filtered);
   }
 
@@ -242,8 +232,8 @@ public final class Region {
     Set<Entity> local = entities.get(position);
 
     if (local == null || !local.remove(entity)) {
-      throw new IllegalArgumentException(
-          "Entity (" + entity + ") belongs in (" + toString() + ") but does not exist.");
+      throw new IllegalArgumentException("Entity (" + entity + ") belongs in (" + toString()
+                                           + ") but does not exist.");
     }
 
     notifyListeners(entity, EntityUpdateType.REMOVE);
@@ -262,7 +252,19 @@ public final class Region {
    */
   private void checkPosition(Position position) {
     Preconditions.checkArgument(coordinates.equals(RegionCoordinates.fromPosition(position)),
-        "Position is not included in this Region.");
+      "Position is not included in this Region.");
+  }
+
+
+  /**
+   * A {@link RegionListener} for update operations.
+   */
+  private static final class UpdateRegionListener implements RegionListener {
+
+    @Override
+    public void execute(Region region, Entity entity, EntityUpdateType update) {
+    }
+
   }
 
 }

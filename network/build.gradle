@@ -1,5 +1,5 @@
 dependencies {
-	compile project(":fs")
-	compile project(":event")
-	compile project(":common")
+    compile project(":fs")
+    compile project(":event")
+    compile project(":common")
 }

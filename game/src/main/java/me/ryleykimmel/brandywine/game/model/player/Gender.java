@@ -22,7 +22,7 @@ public enum Gender {
 
   /**
    * Constructs a new {@link Gender} with the specified value.
-   * 
+   *
    * @param value The value of the Gender.
    */
   private Gender(int value) {
@@ -30,17 +30,8 @@ public enum Gender {
   }
 
   /**
-   * Gets the value of the Gender.
-   * 
-   * @return The value of the Gender.
-   */
-  public int getValue() {
-    return value;
-  }
-
-  /**
    * Gets the Gender based on the specified value.
-   * 
+   *
    * @param value The value of the Gender to get.
    * @return The Gender for the specified value.
    */
@@ -53,6 +44,15 @@ public enum Gender {
     }
 
     throw new IllegalArgumentException(value + " is not a recgonized gender.");
+  }
+
+  /**
+   * Gets the value of the Gender.
+   *
+   * @return The value of the Gender.
+   */
+  public int getValue() {
+    return value;
   }
 
 }

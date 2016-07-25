@@ -16,7 +16,7 @@ public final class SynchronizationSkillListener implements SkillListener {
 
   /**
    * Constructs a new {@link SynchronizationSkillListener} with the specified Player.
-   * 
+   *
    * @param player The Player.
    */
   public SynchronizationSkillListener(Player player) {

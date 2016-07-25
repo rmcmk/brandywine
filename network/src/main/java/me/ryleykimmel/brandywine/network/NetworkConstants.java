@@ -20,6 +20,7 @@ public final class NetworkConstants {
   /**
    * Sole private constructor to discourage instantiation of this class.
    */
-  private NetworkConstants() {}
+  private NetworkConstants() {
+  }
 
 }

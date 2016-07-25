@@ -10,16 +10,6 @@ import me.ryleykimmel.brandywine.game.model.Position;
 public final class RegionCoordinates {
 
   /**
-   * Gets the RegionCoordinates for the specified {@link Position}.
-   *
-   * @param position The Position.
-   * @return The RegionCoordinates.
-   */
-  public static RegionCoordinates fromPosition(Position position) {
-    return new RegionCoordinates(position.getTopLeftRegionX(), position.getTopLeftRegionY());
-  }
-
-  /**
    * The x coordinate of this region.
    */
   private final int x;
@@ -38,6 +28,16 @@ public final class RegionCoordinates {
   public RegionCoordinates(int x, int y) {
     this.x = x;
     this.y = y;
+  }
+
+  /**
+   * Gets the RegionCoordinates for the specified {@link Position}.
+   *
+   * @param position The Position.
+   * @return The RegionCoordinates.
+   */
+  public static RegionCoordinates fromPosition(Position position) {
+    return new RegionCoordinates(position.getTopLeftRegionX(), position.getTopLeftRegionY());
   }
 
   @Override

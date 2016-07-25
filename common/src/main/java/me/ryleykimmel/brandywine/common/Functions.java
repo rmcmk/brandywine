@@ -16,8 +16,14 @@ import java.util.stream.StreamSupport;
 public final class Functions {
 
   /**
+   * Sole private constructor to discourage instantiation of this class.
+   */
+  private Functions() {
+  }
+
+  /**
    * Gets a Stream of instances of {@code T} for the specified Object within this Function.
-   *
+   * <p>
    * <p>
    * The intended use of this Function is for {@link Stream#flatMap(Function)}.
    *
@@ -32,7 +38,7 @@ public final class Functions {
   /**
    * Gets an IntStream of character values from the specified {@code char}s. Any char which maps to
    * a surrogate code point is passed through uninterpreted.
-   *
+   * <p>
    * <p>
    * If the sequence is mutated while the stream is being read, the result is undefined.
    *
@@ -68,13 +74,8 @@ public final class Functions {
     }
 
     return StreamSupport.intStream(
-        () -> Spliterators.spliterator(new CharIterator(), chars.length, Spliterator.ORDERED),
-        Spliterator.SUBSIZED | Spliterator.SIZED | Spliterator.ORDERED, false);
+      () -> Spliterators.spliterator(new CharIterator(), chars.length, Spliterator.ORDERED),
+      Spliterator.SUBSIZED | Spliterator.SIZED | Spliterator.ORDERED, false);
   }
-
-  /**
-   * Sole private constructor to discourage instantiation of this class.
-   */
-  private Functions() {}
 
 }

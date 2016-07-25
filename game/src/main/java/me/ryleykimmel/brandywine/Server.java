@@ -61,14 +61,17 @@ public final class Server {
    */
   public void init(int port) {
     GamePulseHandler pulseHandler = new GamePulseHandler(services);
-    ScheduledExecutorService executor =
-        Executors.newSingleThreadScheduledExecutor(ThreadFactoryUtil.create(pulseHandler).build());
-    executor.scheduleAtFixedRate(pulseHandler, GamePulseHandler.PULSE_DELAY,
-        GamePulseHandler.PULSE_DELAY, TimeUnit.MILLISECONDS);
+    ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor(
+      ThreadFactoryUtil.create(pulseHandler).build());
+    executor
+      .scheduleAtFixedRate(pulseHandler, GamePulseHandler.PULSE_DELAY, GamePulseHandler.PULSE_DELAY,
+        TimeUnit.MILLISECONDS);
 
     boolean epoll = Epoll.isAvailable();
 
-    Class<? extends ServerChannel> serverChannel = epoll ? EpollServerSocketChannel.class : NioServerSocketChannel.class;
+    Class<? extends ServerChannel> serverChannel = epoll ?
+                                                     EpollServerSocketChannel.class :
+                                                     NioServerSocketChannel.class;
 
     EventLoopGroup parentGroup = epoll ? new EpollEventLoopGroup() : new NioEventLoopGroup();
     EventLoopGroup childGroup = epoll ? new EpollEventLoopGroup() : new NioEventLoopGroup();
@@ -88,7 +91,7 @@ public final class Server {
 
   /**
    * Registers the specified Service.
-   * 
+   *
    * @param service The Service to register, may not be {@code null}.
    * @return This Server instance, for chaining.
    */
@@ -100,7 +103,7 @@ public final class Server {
   /**
    * Configures the {@link ChannelInitializer}, used to configure {@link Channel}s once they have
    * been registered in the event loop.
-   * 
+   *
    * @param initializer The ChannelInitializer to use, may not be {@code null}.
    */
   public void initializer(ChannelInitializer<SocketChannel> initializer) {
@@ -109,11 +112,23 @@ public final class Server {
 
   /**
    * Gets the AuthenticationStrategy used by the Server.
-   * 
+   *
    * @return The AuthenticationStrategy used by the Server.
    */
   public AuthenticationStrategy getAuthenticationStrategy() {
     return authenticationStrategy;
+  }
+
+  /**
+   * Configures the AuthenticationStrategy this Server will use.
+   *
+   * @param authenticationStrategy The AuthenticationStrategy, may not be {@code null}.
+   * @return This Server instance, for chaining.
+   */
+  public Server setAuthenticationStrategy(AuthenticationStrategy authenticationStrategy) {
+    this.authenticationStrategy = Preconditions.checkNotNull(authenticationStrategy,
+      "AuthenticationStrategy may not be null.");
+    return this;
   }
 
   /**
@@ -122,35 +137,13 @@ public final class Server {
    * @return The FileSystem for this Server.
    */
   public FileSystem getFileSystem() {
-    return fileSystem.orElseThrow(() -> new UnsupportedOperationException(
-        "No FileSystem configured, use Server#setFileSystem to configure one."));
-  }
-
-  /**
-   * Gets this Servers database configuration.
-   * 
-   * @return This Servers database configuration.
-   */
-  public Sql2o getSql2o() {
-    return sql2o.orElseThrow(() -> new UnsupportedOperationException(
-        "No database provider configured, use Server#setSql2o to configure one."));
-  }
-
-  /**
-   * Configures the AuthenticationStrategy this Server will use.
-   * 
-   * @param authenticationStrategy The AuthenticationStrategy, may not be {@code null}.
-   * @return This Server instance, for chaining.
-   */
-  public Server setAuthenticationStrategy(AuthenticationStrategy authenticationStrategy) {
-    this.authenticationStrategy = Preconditions.checkNotNull(authenticationStrategy,
-        "AuthenticationStrategy may not be null.");
-    return this;
+    return fileSystem.orElseThrow(
+      () -> new UnsupportedOperationException("No FileSystem configured, use Server#setFileSystem to configure one."));
   }
 
   /**
    * Configures the FileSystem for this Server.
-   * 
+   *
    * @param fileSystem The FileSystem, may not be {@code null}.
    * @return This Server instance, for chaining.
    */
@@ -160,8 +153,18 @@ public final class Server {
   }
 
   /**
+   * Gets this Servers database configuration.
+   *
+   * @return This Servers database configuration.
+   */
+  public Sql2o getSql2o() {
+    return sql2o.orElseThrow(
+      () -> new UnsupportedOperationException("No database provider configured, use Server#setSql2o to configure one."));
+  }
+
+  /**
    * Configures the Sql2o database configuration for this Server.
-   * 
+   *
    * @param sql2o The Sql2o database configuration, may not be {@code null}.
    * @return This Server instance, for chaining.
    */

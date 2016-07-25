@@ -1,8 +1,8 @@
 package me.ryleykimmel.brandywine.game;
 
+import me.ryleykimmel.brandywine.Service;
 import me.ryleykimmel.brandywine.game.model.World;
 import me.ryleykimmel.brandywine.game.model.player.Player;
-import me.ryleykimmel.brandywine.Service;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -42,7 +42,7 @@ public final class GameService extends Service {
    */
   private final World world;
 
-   /**
+  /**
    * Constructs a new {@link GameService}.
    *
    * @param world The game World.

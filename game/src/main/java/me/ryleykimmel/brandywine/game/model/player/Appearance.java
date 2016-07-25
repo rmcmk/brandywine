@@ -13,104 +13,6 @@ import java.util.Objects;
 public final class Appearance {
 
   /**
-   * The mask appended to a Feature's style.
-   */
-  private static final int STYLE_MASK = 0x100;
-
-  /**
-   * Represents some feature on a Player.
-   */
-  private static final class Feature {
-
-    /**
-     * The style of this feature.
-     */
-    private int style;
-
-    /**
-     * The color of this feature.
-     */
-    private int color;
-
-    /**
-     * Constructs a new {@link Feature} with the specified style and color.
-     * 
-     * @param style The style of this feature.
-     * @param color The color of this feature.
-     */
-    private Feature(int style, int color) {
-      this.style = style;
-      this.color = color;
-    }
-
-    /**
-     * Constructs a new {@link Feature} with the specified style.
-     * 
-     * @param style The style of this feature.
-     */
-    private Feature(int style) {
-      this(style, 0);
-    }
-
-    /**
-     * Gets the style of this feature.
-     *
-     * @return The style of this feature.
-     */
-    private int getStyle() {
-      return style;
-    }
-
-    /**
-     * Gets the color of this feature.
-     *
-     * @return The color of this feature.
-     */
-    private int getColor() {
-      return color;
-    }
-
-    /**
-     * Sets the style of this feature.
-     *
-     * @param style The new style of this feature.
-     */
-    private void setStyle(int style) {
-      this.style = style;
-    }
-
-    /**
-     * Sets the color of this feature.
-     *
-     * @param color The new color of the feature.
-     */
-    private void setColor(int color) {
-      this.color = color;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      if (obj instanceof Feature) {
-        Feature other = (Feature) obj;
-        return style == other.style && color == other.color;
-      }
-
-      return false;
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(style, color);
-    }
-
-    @Override
-    public String toString() {
-      return MoreObjects.toStringHelper(this).add("style", style).add("color", color).toString();
-    }
-
-  }
-
-  /**
    * Represents the hair features id.
    */
   public static final int HAIR = 0;
@@ -151,14 +53,19 @@ public final class Appearance {
   public static final int SKIN = 7;
 
   /**
-   * The Gender.
+   * The mask appended to a Feature's style.
    */
-  private Gender gender = Gender.MALE;
+  private static final int STYLE_MASK = 0x100;
 
   /**
    * A {@link Map} of all of the Features.
    */
   private final Map<Integer, Feature> features = new HashMap<>();
+
+  /**
+   * The Gender.
+   */
+  private Gender gender = Gender.MALE;
 
   /**
    * Initializes the default Appearance for the current Gender.
@@ -169,7 +76,7 @@ public final class Appearance {
 
   /**
    * Initialize the default Appearance for the specified Gender.
-   * 
+   *
    * @param gender The Gender to initialize the default Appearance for.
    */
   public void init(Gender gender) {
@@ -245,18 +152,18 @@ public final class Appearance {
 
   /**
    * Gets a Feature for the specified id.
-   * 
+   *
    * @param id The id of the Feature.
    * @return The Feature for the specified id.
    */
   private Feature get(int id) {
-    return Preconditions.checkNotNull(features.get(id),
-        "Feature for id: " + id + " does not exist.");
+    return Preconditions
+             .checkNotNull(features.get(id), "Feature for id: " + id + " does not exist.");
   }
 
   /**
    * Gets whether or not this Appearance is male.
-   * 
+   *
    * @return Iff this Appearance is male.
    */
   public boolean isMale() {
@@ -265,7 +172,7 @@ public final class Appearance {
 
   /**
    * Gets whether or not this Appearance is female.
-   * 
+   *
    * @return Iff this Appearance is female.
    */
   public boolean isFemale() {
@@ -274,7 +181,7 @@ public final class Appearance {
 
   /**
    * Gets the Gender.
-   * 
+   *
    * @return The Gender.
    */
   public Gender getGender() {
@@ -283,11 +190,105 @@ public final class Appearance {
 
   /**
    * Sets the Gender.
-   * 
+   *
    * @param gender The Gender to set.
    */
   public void setGender(Gender gender) {
     this.gender = gender;
+  }
+
+
+  /**
+   * Represents some feature on a Player.
+   */
+  private static final class Feature {
+
+    /**
+     * The style of this feature.
+     */
+    private int style;
+
+    /**
+     * The color of this feature.
+     */
+    private int color;
+
+    /**
+     * Constructs a new {@link Feature} with the specified style and color.
+     *
+     * @param style The style of this feature.
+     * @param color The color of this feature.
+     */
+    private Feature(int style, int color) {
+      this.style = style;
+      this.color = color;
+    }
+
+    /**
+     * Constructs a new {@link Feature} with the specified style.
+     *
+     * @param style The style of this feature.
+     */
+    private Feature(int style) {
+      this(style, 0);
+    }
+
+    /**
+     * Gets the style of this feature.
+     *
+     * @return The style of this feature.
+     */
+    private int getStyle() {
+      return style;
+    }
+
+    /**
+     * Sets the style of this feature.
+     *
+     * @param style The new style of this feature.
+     */
+    private void setStyle(int style) {
+      this.style = style;
+    }
+
+    /**
+     * Gets the color of this feature.
+     *
+     * @return The color of this feature.
+     */
+    private int getColor() {
+      return color;
+    }
+
+    /**
+     * Sets the color of this feature.
+     *
+     * @param color The new color of the feature.
+     */
+    private void setColor(int color) {
+      this.color = color;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (obj instanceof Feature) {
+        Feature other = (Feature) obj;
+        return style == other.style && color == other.color;
+      }
+
+      return false;
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(style, color);
+    }
+
+    @Override
+    public String toString() {
+      return MoreObjects.toStringHelper(this).add("style", style).add("color", color).toString();
+    }
+
   }
 
 }

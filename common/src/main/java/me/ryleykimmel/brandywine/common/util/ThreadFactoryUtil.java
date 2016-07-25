@@ -12,6 +12,12 @@ import java.util.concurrent.ThreadFactory;
 public final class ThreadFactoryUtil {
 
   /**
+   * Sole private constructor to discourage instantiation of this class.
+   */
+  private ThreadFactoryUtil() {
+  }
+
+  /**
    * Creates a {@link ThreadFactoryBuilder} for the specified Object.
    *
    * @param obj The Object to create a ThreadFactory for.
@@ -30,10 +36,5 @@ public final class ThreadFactoryUtil {
   public static ThreadFactoryBuilder create(String name) {
     return new ThreadFactoryBuilder().setNameFormat(name.concat("-%d"));
   }
-
-  /**
-   * Sole private constructor to discourage instantiation of this class.
-   */
-  private ThreadFactoryUtil() {}
 
 }

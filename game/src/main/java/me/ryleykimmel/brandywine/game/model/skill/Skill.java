@@ -6,57 +6,6 @@ package me.ryleykimmel.brandywine.game.model.skill;
 public final class Skill {
 
   /**
-   * Creates a new Skill which is related to combat.
-   * 
-   * @param id The id of the Skill.
-   * @param name The name of the Skill.
-   * @param level The level of the Skill.
-   * @return The new Skill, never {@code null}.
-   */
-  public static Skill createCombatSkill(int id, String name, int level) {
-    return new Skill(id, name, true, level);
-  }
-
-  /**
-   * Creates a new Skill at the default level, which is related to combat
-   * 
-   * @param id The id of the Skill.
-   * @param name The name of the Skill.
-   * @return The new Skill, never {@code null}.
-   */
-  public static Skill createCombatSkill(int id, String name) {
-    return createCombatSkill(id, name, DEFAULT_LEVEL);
-  }
-
-  /**
-   * Creates a new Skill.
-   * 
-   * @param id The id of the Skill.
-   * @param name The name of the Skill.
-   * @param level The level of the Skill.
-   * @return The new Skill, never {@code null}.
-   */
-  public static Skill createSkill(int id, String name, int level) {
-    return new Skill(id, name, false, level);
-  }
-
-  /**
-   * Creates a new Skill at the default level.
-   * 
-   * @param id The id of the Skill.
-   * @param name The name of the Skill.
-   * @return The new Skill, never {@code null}.
-   */
-  public static Skill createSkill(int id, String name) {
-    return createSkill(id, name, DEFAULT_LEVEL);
-  }
-
-  /**
-   * The default level of a Skill.
-   */
-  private static final int DEFAULT_LEVEL = 1;
-
-  /**
    * The maximum level of a Skill.
    */
   public static final int MAXIMUM_LEVEL = 99;
@@ -172,6 +121,11 @@ public final class Skill {
   public static final int RUNECRAFT = 20;
 
   /**
+   * The default level of a Skill.
+   */
+  private static final int DEFAULT_LEVEL = 1;
+
+  /**
    * Represents the id of this Skill.
    */
   private final int id;
@@ -203,7 +157,7 @@ public final class Skill {
 
   /**
    * Constructs a new {@link Skill} with the specified id, name, combat skill flag and level.
-   * 
+   *
    * @param id The id of this Skill.
    * @param name The name of this Skill.
    * @param combatSkill Whether or not this Skill relates to combat.
@@ -220,8 +174,54 @@ public final class Skill {
   }
 
   /**
+   * Creates a new Skill which is related to combat.
+   *
+   * @param id The id of the Skill.
+   * @param name The name of the Skill.
+   * @param level The level of the Skill.
+   * @return The new Skill, never {@code null}.
+   */
+  public static Skill createCombatSkill(int id, String name, int level) {
+    return new Skill(id, name, true, level);
+  }
+
+  /**
+   * Creates a new Skill at the default level, which is related to combat
+   *
+   * @param id The id of the Skill.
+   * @param name The name of the Skill.
+   * @return The new Skill, never {@code null}.
+   */
+  public static Skill createCombatSkill(int id, String name) {
+    return createCombatSkill(id, name, DEFAULT_LEVEL);
+  }
+
+  /**
+   * Creates a new Skill.
+   *
+   * @param id The id of the Skill.
+   * @param name The name of the Skill.
+   * @param level The level of the Skill.
+   * @return The new Skill, never {@code null}.
+   */
+  public static Skill createSkill(int id, String name, int level) {
+    return new Skill(id, name, false, level);
+  }
+
+  /**
+   * Creates a new Skill at the default level.
+   *
+   * @param id The id of the Skill.
+   * @param name The name of the Skill.
+   * @return The new Skill, never {@code null}.
+   */
+  public static Skill createSkill(int id, String name) {
+    return createSkill(id, name, DEFAULT_LEVEL);
+  }
+
+  /**
    * Gets the id of this Skill.
-   * 
+   *
    * @return The id of this Skill.
    */
   public int getId() {
@@ -230,7 +230,7 @@ public final class Skill {
 
   /**
    * Gets the name of this Skill.
-   * 
+   *
    * @return The name of this Skill.
    */
   public String getName() {
@@ -239,7 +239,7 @@ public final class Skill {
 
   /**
    * Gets whether or not this Skill relates to combat.
-   * 
+   *
    * @return {@code true} if this Skill is a combat skill, otherwise {@code false}.
    */
   public boolean isCombatSkill() {
@@ -248,7 +248,7 @@ public final class Skill {
 
   /**
    * Gets the current level of this Skill.
-   * 
+   *
    * @return The current level of this Skill.
    */
   public int getCurrentLevel() {
@@ -256,8 +256,17 @@ public final class Skill {
   }
 
   /**
+   * Sets this Skills current level.
+   *
+   * @param currentLevel The new current level of this Skill.
+   */
+  public void setCurrentLevel(int currentLevel) {
+    this.currentLevel = SkillUtil.checkLevel(currentLevel);
+  }
+
+  /**
    * Gets the level of this Skill.
-   * 
+   *
    * @return The level of this Skill.
    */
   public int getLevel() {
@@ -265,8 +274,19 @@ public final class Skill {
   }
 
   /**
+   * Sets this Skills level.
+   *
+   * @param level The new level of this Skill.
+   */
+  public void setLevel(int level) {
+    this.level = SkillUtil.checkLevel(level);
+    this.experience = SkillUtil.experienceOf(level);
+    this.currentLevel = level;
+  }
+
+  /**
    * Gets the experience of this Skill.
-   * 
+   *
    * @return The experience of this Skill.
    */
   public double getExperience() {
@@ -275,7 +295,7 @@ public final class Skill {
 
   /**
    * Sets this Skills experience.
-   * 
+   *
    * @param experience The new experience of this Skill.
    */
   public void setExperience(double experience) {
@@ -286,26 +306,6 @@ public final class Skill {
 
     this.level = newLevel;
     this.currentLevel += delta;
-  }
-
-  /**
-   * Sets this Skills current level.
-   * 
-   * @param currentLevel The new current level of this Skill.
-   */
-  public void setCurrentLevel(int currentLevel) {
-    this.currentLevel = SkillUtil.checkLevel(currentLevel);
-  }
-
-  /**
-   * Sets this Skills level.
-   * 
-   * @param level The new level of this Skill.
-   */
-  public void setLevel(int level) {
-    this.level = SkillUtil.checkLevel(level);
-    this.experience = SkillUtil.experienceOf(level);
-    this.currentLevel = level;
   }
 
 }

@@ -12,25 +12,28 @@ import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
  */
 public final class AppearancePlayerBlock extends UpdateBlock {
 
-  public static AppearancePlayerBlock create(Player player) {
-    return new AppearancePlayerBlock(player.getAppearance(), player.getSkills().getCombatLevel(),
-        /* player.getSkills().getTotalLevel() */0, player.getEncodedUsername());
-  }
-
   private static final int MASK = 0x10;
 
   private final Appearance appearance;
+
   private final int combatLevel;
+
   private final int totalLevel;
+
   private final long encodedUsername;
 
   public AppearancePlayerBlock(Appearance appearance, int combatLevel, int totalLevel,
-      long encodedUsername) {
+                                long encodedUsername) {
     super(MASK);
     this.appearance = appearance;
     this.combatLevel = combatLevel;
     this.totalLevel = totalLevel;
     this.encodedUsername = encodedUsername;
+  }
+
+  public static AppearancePlayerBlock create(Player player) {
+    return new AppearancePlayerBlock(player.getAppearance(), player.getSkills().getCombatLevel(),
+        /* player.getSkills().getTotalLevel() */0, player.getEncodedUsername());
   }
 
   public Appearance getAppearance() {

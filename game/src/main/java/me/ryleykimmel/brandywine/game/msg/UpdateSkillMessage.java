@@ -15,7 +15,7 @@ public final class UpdateSkillMessage extends Message {
 
   /**
    * Constructs a new {@link UpdateSkillMessage} with the specified Skill.
-   * 
+   *
    * @param skill The Skill to be updated.
    */
   public UpdateSkillMessage(Skill skill) {
@@ -24,7 +24,7 @@ public final class UpdateSkillMessage extends Message {
 
   /**
    * Gets the Skill to be updated.
-   * 
+   *
    * @return The Skill to be updated.
    */
   public Skill getSkill() {

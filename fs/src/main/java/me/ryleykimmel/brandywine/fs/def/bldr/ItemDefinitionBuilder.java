@@ -85,7 +85,8 @@ public final class ItemDefinitionBuilder extends DefinitionBuilder<ItemDefinitio
   @Override
   public ItemDefinition build() {
     return new ItemDefinition(description, groundMenuActions, groundScales, id,
-        inventoryMenuActions, members, name, noteInfoId, noteTemplateId, stackable, team, value);
+                               inventoryMenuActions, members, name, noteInfoId, noteTemplateId,
+                               stackable, team, value);
   }
 
   /**
@@ -190,10 +191,10 @@ public final class ItemDefinitionBuilder extends DefinitionBuilder<ItemDefinitio
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this).add("id", id).add("description", description)
-        .add("groundMenuActions", groundMenuActions).add("groundScales", groundScales)
-        .add("inventoryMenuActions", inventoryMenuActions).add("members", members).add("name", name)
-        .add("noteInfoId", noteInfoId).add("noteTemplateId", noteTemplateId)
-        .add("stackable", stackable).add("team", team).add("value", value).toString();
+             .add("groundMenuActions", groundMenuActions).add("groundScales", groundScales)
+             .add("inventoryMenuActions", inventoryMenuActions).add("members", members)
+             .add("name", name).add("noteInfoId", noteInfoId).add("noteTemplateId", noteTemplateId)
+             .add("stackable", stackable).add("team", team).add("value", value).toString();
   }
 
 }

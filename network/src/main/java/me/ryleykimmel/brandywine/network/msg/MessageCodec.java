@@ -11,11 +11,13 @@ import me.ryleykimmel.brandywine.network.frame.FrameReader;
 public abstract class MessageCodec<T extends Message>
   implements MessageEncoder<T>, MessageDecoder<T> {
 
-  @Override public T decode(FrameReader frame) {
+  @Override
+  public T decode(FrameReader frame) {
     throw new IllegalStateException("decode not supported for " + frame.getMetadata());
   }
 
-  @Override public void encode(T message, FrameBuilder builder) {
+  @Override
+  public void encode(T message, FrameBuilder builder) {
     throw new IllegalStateException("encode not supported for " + message.getClass());
   }
 

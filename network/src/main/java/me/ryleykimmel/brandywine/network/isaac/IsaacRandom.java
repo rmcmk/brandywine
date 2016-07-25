@@ -7,7 +7,7 @@ import java.util.Random;
  * An implementation of the <a href="http://www.burtleburtle.net/bob/rand/isaacafa.html">ISAAC</a>
  * psuedorandom number generator.
  * </p>
- *
+ * <p>
  * <pre>
  *  ------------------------------------------------------------------------------ Rand.java:
  * By Bob Jenkins. My random number generator, ISAAC. rand.init() -- initialize rand.val() -- get a
@@ -23,7 +23,9 @@ import java.util.Random;
  */
 public final class IsaacRandom extends Random {
 
-  /** use serialVersionUID from JDK 1.1 for interoperability */
+  /**
+   * use serialVersionUID from JDK 1.1 for interoperability
+   */
   private static final long serialVersionUID = 7408360375871648078L;
 
   /**
@@ -94,7 +96,7 @@ public final class IsaacRandom extends Random {
     int i, j, x, y;
 
     last += ++counter;
-    for (i = 0, j = SIZE / 2; i < SIZE / 2;) {
+    for (i = 0, j = SIZE / 2; i < SIZE / 2; ) {
       x = state[i];
       accumulator ^= accumulator << 13;
       accumulator += state[j++];
@@ -120,7 +122,7 @@ public final class IsaacRandom extends Random {
       results[i++] = last = state[(y >> LOG_SIZE & MASK) >> 2] + x;
     }
 
-    for (j = 0; j < SIZE / 2;) {
+    for (j = 0; j < SIZE / 2; ) {
       x = state[i];
       accumulator ^= accumulator << 13;
       accumulator += state[j++];

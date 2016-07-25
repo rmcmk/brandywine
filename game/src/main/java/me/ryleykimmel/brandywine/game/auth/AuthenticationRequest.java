@@ -52,7 +52,7 @@ public final class AuthenticationRequest {
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this).add("session", session).add("credentials", credentials)
-        .toString();
+             .toString();
   }
 
 }

@@ -11,6 +11,12 @@ import java.util.stream.Stream;
 public final class Suppliers {
 
   /**
+   * Sole private constructor to discourage instantiation of this class.
+   */
+  private Suppliers() {
+  }
+
+  /**
    * Supplies a {@link Collection} to a {@link Collector}, ideal for supplying custom collections to
    * {@link Stream#collect}
    *
@@ -21,10 +27,5 @@ public final class Suppliers {
   public static <T, C extends Collection<T>> Collector<T, ?, C> collection(C collection) {
     return Collectors.toCollection(() -> collection);
   }
-
-  /**
-   * Sole private constructor to discourage instantiation of this class.
-   */
-  private Suppliers() {}
 
 }

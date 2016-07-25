@@ -22,7 +22,7 @@ public final class CommandArguments {
 
   /**
    * Constructs a new {@link CommandArguments} with the specified arguments.
-   * 
+   *
    * @param arguments The Command's arguments.
    */
   public CommandArguments(String[] arguments) {
@@ -31,7 +31,7 @@ public final class CommandArguments {
 
   /**
    * Gets the remaining amount of arguments.
-   * 
+   *
    * @return The amount of remaining arguments.
    */
   public int remaining() {
@@ -40,7 +40,7 @@ public final class CommandArguments {
 
   /**
    * Tests whether or not there is at least {@code amount} remaining arguments.
-   * 
+   *
    * @param amount The amount of arguments.
    * @return {@code true} if there is at least {@code amount} arguments.
    */
@@ -50,7 +50,7 @@ public final class CommandArguments {
 
   /**
    * Tests whether or not there is at least one remaining argument.
-   * 
+   *
    * @return {@code true} if there is at least 1 remaining argument.
    */
   public boolean hasRemaining() {
@@ -59,7 +59,7 @@ public final class CommandArguments {
 
   /**
    * Gets the next argument.
-   * 
+   *
    * @return The next argument.
    */
   public String getNext() {
@@ -68,7 +68,7 @@ public final class CommandArguments {
 
   /**
    * Gets the next argument as an {@code int}.
-   * 
+   *
    * @return The next argument as an {@code int}.
    */
   public int getNextInteger() {
@@ -77,7 +77,7 @@ public final class CommandArguments {
 
   /**
    * Gets the next argument as a {@code boolean}.
-   * 
+   *
    * @return The next argument as a {@code boolean}.
    */
   public boolean getNextBoolean() {
@@ -86,7 +86,7 @@ public final class CommandArguments {
 
   /**
    * Gets the next argument as a {@code long}.
-   * 
+   *
    * @return The next argument as a {@code long}.
    */
   public long getNextLong() {
@@ -95,7 +95,7 @@ public final class CommandArguments {
 
   /**
    * Gets the next argument as a {@code double}.
-   * 
+   *
    * @return The next argument as a {@code double}.
    */
   public double getNextDouble() {
@@ -104,7 +104,7 @@ public final class CommandArguments {
 
   /**
    * Attempts to get the argument at the specified index.
-   * 
+   *
    * @param index The index of the argument.
    * @return The argument at {@code index}.
    */
@@ -114,7 +114,7 @@ public final class CommandArguments {
 
   /**
    * Attempts to get an {@code int} at the specified index.
-   * 
+   *
    * @param index The index of the argument to parse an int.
    * @return The argument at {@code index} represented as an int.
    */
@@ -123,29 +123,28 @@ public final class CommandArguments {
     try {
       return Integer.parseInt(argument);
     } catch (NumberFormatException cause) {
-      throw new NumberFormatException(
-          "Argument: " + argument + " at index: " + index + " cannot be parsed as an integer.");
+      throw new NumberFormatException("Argument: " + argument + " at index: " + index
+                                        + " cannot be parsed as an integer.");
     }
   }
 
   /**
    * Attempts to get a {@code boolean} at the specified index.
-   * 
+   *
    * @param index The index of the argument to parse a boolean.
    * @return The argument at {@code index} represented as a boolean.
    */
   public boolean getBoolean(int index) {
     String argument = checkIndex(index);
     if (!argument.equalsIgnoreCase("true") && !argument.equalsIgnoreCase("false")) {
-      throw new IllegalArgumentException(
-          "Only \"true\" or \"false\" is accepted for boolean input.");
+      throw new IllegalArgumentException("Only \"true\" or \"false\" is accepted for boolean input.");
     }
     return Boolean.parseBoolean(argument);
   }
 
   /**
    * Attempts to get a {@code long} at the specified index.
-   * 
+   *
    * @param index The index of the argument to parse a long.
    * @return The argument at {@code index} represented as a long.
    */
@@ -154,14 +153,14 @@ public final class CommandArguments {
     try {
       return Long.parseLong(argument);
     } catch (NumberFormatException cause) {
-      throw new NumberFormatException(
-          "Argument: " + argument + " at index: " + index + " cannot be parsed as a long.");
+      throw new NumberFormatException("Argument: " + argument + " at index: " + index
+                                        + " cannot be parsed as a long.");
     }
   }
 
   /**
    * Attempts to get a {@code double} at the specified index.
-   * 
+   *
    * @param index The index of the argument to parse a double.
    * @return The argument at {@code index} represented as a double.
    */
@@ -170,22 +169,22 @@ public final class CommandArguments {
     try {
       return Double.parseDouble(argument);
     } catch (NumberFormatException cause) {
-      throw new NumberFormatException(
-          "Argument: " + argument + " at index: " + index + " cannot be parsed as a double.");
+      throw new NumberFormatException("Argument: " + argument + " at index: " + index
+                                        + " cannot be parsed as a double.");
     }
   }
 
   /**
    * Ensures the specified index is within bounds and is non-null.
-   * 
+   *
    * @param index The current argument index.
    * @return The argument at {@code index}.
    */
   private String checkIndex(int index) {
     Preconditions.checkElementIndex(index, arguments.length,
-        "Index out of bounds: " + index + " length: " + arguments.length);
-    return Preconditions.checkNotNull(arguments[index],
-        "Argument for index: " + index + " is null.");
+      "Index out of bounds: " + index + " length: " + arguments.length);
+    return Preconditions
+             .checkNotNull(arguments[index], "Argument for index: " + index + " is null.");
   }
 
   @Override

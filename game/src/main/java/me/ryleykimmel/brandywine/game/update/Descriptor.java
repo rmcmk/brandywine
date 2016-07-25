@@ -8,10 +8,15 @@ import java.util.Map;
 
 /**
  * Represents a Descriptor which encodes UpdateBlocks and other Descriptors.
- * 
+ *
  * @param <T> The Mob who owns this Descriptor.
  */
 public abstract class Descriptor<T extends Mob> {
+
+  /**
+   * The Mob who owns this Descriptor.
+   */
+  protected final T mob;
 
   /**
    * A Map of UpdateBlock types to UpdateBlocks.
@@ -24,13 +29,8 @@ public abstract class Descriptor<T extends Mob> {
   protected int mask = 0;
 
   /**
-   * The Mob who owns this Descriptor.
-   */
-  protected final T mob;
-
-  /**
    * Constructs a new {@link Descriptor} with the specified Mob and Updater.
-   * 
+   *
    * @param mob The Mob who owns this Descriptor.
    */
   public Descriptor(T mob) {
@@ -52,7 +52,7 @@ public abstract class Descriptor<T extends Mob> {
 
   /**
    * Removes the specified UpdateBlock.
-   * 
+   *
    * @param type The UpdateBlocks type.
    */
   public final void removeBlock(Class<? extends UpdateBlock> type) {
@@ -81,7 +81,7 @@ public abstract class Descriptor<T extends Mob> {
 
   /**
    * Encodes an UpdateBlock.
-   * 
+   *
    * @param blockBuilder The UpdateBlocks FrameBuilder.
    * @param type The UpdateBlocks type.
    */
@@ -94,7 +94,7 @@ public abstract class Descriptor<T extends Mob> {
 
   /**
    * Encodes this Descriptor.
-   * 
+   *
    * @param builder The FrameBuilder.
    * @param blockBuilder The UpdateBlock FrameBuilder.
    */
@@ -102,7 +102,7 @@ public abstract class Descriptor<T extends Mob> {
 
   /**
    * Encodes the state of this Descriptor.
-   * 
+   *
    * @param builder The FrameBuilder.
    * @param blockBuilder The UpdateBlock FrameBuilder.
    */

@@ -24,7 +24,7 @@ public final class TeleportPlayerDescriptor extends PlayerDescriptor {
   }
 
   public TeleportPlayerDescriptor(Player player, boolean mapRegionChanged, Position position,
-      Position lastKnownRegion) {
+                                   Position lastKnownRegion) {
     super(player);
     this.mapRegionChanged = mapRegionChanged;
     this.position = position;

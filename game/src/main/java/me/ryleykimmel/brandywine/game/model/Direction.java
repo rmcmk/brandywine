@@ -51,6 +51,20 @@ public enum Direction {
   SOUTH_EAST(7);
 
   /**
+   * The value of this Direction.
+   */
+  private final int value;
+
+  /**
+   * Constructs a new {@link Direction} with the specified value.
+   *
+   * @param value The value of this Direction.
+   */
+  private Direction(int value) {
+    this.value = value;
+  }
+
+  /**
    * Gets the Direction between the two {@link Position positions}.
    *
    * @param current The difference between two X coordinates.
@@ -98,20 +112,6 @@ public enum Direction {
             throw new IllegalArgumentException("Difference between Positions must be [-1, 1].");
         }
     }
-  }
-
-  /**
-   * The value of this Direction.
-   */
-  private final int value;
-
-  /**
-   * Constructs a new {@link Direction} with the specified value.
-   *
-   * @param value The value of this Direction.
-   */
-  private Direction(int value) {
-    this.value = value;
   }
 
   /**

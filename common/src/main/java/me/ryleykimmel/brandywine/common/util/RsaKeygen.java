@@ -42,7 +42,7 @@ public final class RsaKeygen {
 
   /**
    * Generates a public and private RSA keypair.
-   * 
+   *
    * @param path The root directory to write the RSA keypair.
    * @throws NoSuchAlgorithmException If the specified algorithm is not available in this
    * environment.
@@ -50,7 +50,7 @@ public final class RsaKeygen {
    * @throws IOException If some I/O exception occurs.
    */
   private void write(Path path)
-      throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
+    throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
     KeyPairGenerator generator = KeyPairGenerator.getInstance(ALGORITHM);
     generator.initialize(BITS);
 
@@ -66,7 +66,7 @@ public final class RsaKeygen {
 
   /**
    * Writes a RSA keypair to disk.
-   * 
+   *
    * @param root The root directory to write the RSA keypair.
    * @param modulus The RSA modulus.
    * @param exponent The RSA exponent.
@@ -74,7 +74,7 @@ public final class RsaKeygen {
    */
   private void write(Path root, BigInteger modulus, BigInteger exponent) throws IOException {
     try (BufferedWriter writer = Files.newBufferedWriter(root.resolve("rsa.toml"),
-        StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+      StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
       writer.write("modulus = \"");
       writer.write(modulus.toString());
       writer.write("\"");
@@ -89,7 +89,7 @@ public final class RsaKeygen {
 
   /**
    * Generates both the RSA public and private key pairs if they do not exist.
-   * 
+   *
    * @return {@code true} iff the RSA keypairs were successfully generated.
    */
   public boolean generate() {
@@ -104,7 +104,7 @@ public final class RsaKeygen {
     }
 
     logger.info("Took {}ms to generate public and private RSA keypairs.",
-        stopwatch.stop().elapsed(TimeUnit.MILLISECONDS));
+      stopwatch.stop().elapsed(TimeUnit.MILLISECONDS));
     return true;
   }
 

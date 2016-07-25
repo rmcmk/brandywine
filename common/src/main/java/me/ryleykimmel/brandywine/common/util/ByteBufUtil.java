@@ -23,6 +23,12 @@ public final class ByteBufUtil {
   public static final char DEFAULT_STRING_TERMINATOR = '\0';
 
   /**
+   * Sole private constructor to discourage instantiation of this class.
+   */
+  private ByteBufUtil() {
+  }
+
+  /**
    * Writes the specified null-terminated String to the specified ByteBuf.
    *
    * @param buffer The ByteBuf to write the String to.
@@ -90,7 +96,7 @@ public final class ByteBufUtil {
   public static String readString(ByteBuf buffer, char terminator) {
     ByteArrayOutputStream os = new ByteArrayOutputStream();
 
-    for (;;) {
+    for (; ; ) {
       int read = buffer.readUnsignedByte();
       if (read == terminator) {
         break;
@@ -100,10 +106,5 @@ public final class ByteBufUtil {
 
     return new String(os.toByteArray());
   }
-
-  /**
-   * Sole private constructor to discourage instantiation of this class.
-   */
-  private ByteBufUtil() {}
 
 }

@@ -82,8 +82,9 @@ public final class ItemDefinition extends Definition {
    * @param value The value of of the Item.
    */
   public ItemDefinition(String description, List<String> groundMenuActions,
-      List<Integer> groundScales, int id, List<String> inventoryMenuActions, boolean members,
-      String name, int noteInfoId, int noteTemplateId, boolean stackable, int team, int value) {
+                         List<Integer> groundScales, int id, List<String> inventoryMenuActions,
+                         boolean members, String name, int noteInfoId, int noteTemplateId,
+                         boolean stackable, int team, int value) {
     super(id);
     this.description = description;
     this.groundMenuActions = groundMenuActions;
@@ -200,10 +201,10 @@ public final class ItemDefinition extends Definition {
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this).add("id", id).add("description", description)
-        .add("groundMenuActions", groundMenuActions).add("groundScales", groundScales)
-        .add("inventoryMenuActions", inventoryMenuActions).add("members", members).add("name", name)
-        .add("noteInfoId", noteInfoId).add("noteTemplateId", noteTemplateId)
-        .add("stackable", stackable).add("team", team).add("value", value).toString();
+             .add("groundMenuActions", groundMenuActions).add("groundScales", groundScales)
+             .add("inventoryMenuActions", inventoryMenuActions).add("members", members)
+             .add("name", name).add("noteInfoId", noteInfoId).add("noteTemplateId", noteTemplateId)
+             .add("stackable", stackable).add("team", team).add("value", value).toString();
   }
 
 }

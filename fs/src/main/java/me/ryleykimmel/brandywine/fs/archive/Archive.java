@@ -28,7 +28,7 @@ public final class Archive {
 
   /**
    * Creates a new archive.
-   * 
+   *
    * @param entries The entries in this archive.
    */
   private Archive(Map<Integer, ArchiveEntry> entries) {
@@ -36,30 +36,8 @@ public final class Archive {
   }
 
   /**
-   * Gets the {@link ArchiveEntry} with the specified name, wrapped in an Optional.
-   * 
-   * @param name The name of the entry.
-   * @return The entry, wrapped in an Optional.
-   */
-  private Optional<ArchiveEntry> getOptionalEntry(String name) {
-    int hash = ArchiveUtil.hash(name);
-    return Optional.ofNullable(entries.get(hash));
-  }
-
-  /**
-   * Gets the {@link ArchiveEntry} with the specified name.
-   * 
-   * @param name The name of the entry.
-   * @return The entry.
-   */
-  public ArchiveEntry getEntry(String name) {
-    return getOptionalEntry(name).orElseThrow(
-        () -> new IllegalArgumentException("ArchiveEntry not found for " + name + "."));
-  }
-
-  /**
    * Decodes the {@link Archive} in the specified {@link Buffer}.
-   * 
+   *
    * @param buffer The buffer.
    * @return The archive.
    * @throws IOException If there is an error decompressing the data.
@@ -97,6 +75,28 @@ public final class Archive {
     }
 
     return new Archive(entries);
+  }
+
+  /**
+   * Gets the {@link ArchiveEntry} with the specified name, wrapped in an Optional.
+   *
+   * @param name The name of the entry.
+   * @return The entry, wrapped in an Optional.
+   */
+  private Optional<ArchiveEntry> getOptionalEntry(String name) {
+    int hash = ArchiveUtil.hash(name);
+    return Optional.ofNullable(entries.get(hash));
+  }
+
+  /**
+   * Gets the {@link ArchiveEntry} with the specified name.
+   *
+   * @param name The name of the entry.
+   * @return The entry.
+   */
+  public ArchiveEntry getEntry(String name) {
+    return getOptionalEntry(name).orElseThrow(
+      () -> new IllegalArgumentException("ArchiveEntry not found for " + name + "."));
   }
 
   @Override

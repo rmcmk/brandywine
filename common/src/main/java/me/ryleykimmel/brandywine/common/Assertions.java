@@ -12,8 +12,14 @@ import java.util.stream.Stream;
 public final class Assertions {
 
   /**
+   * Sole private constructor to discourage instantiation of this class.
+   */
+  private Assertions() {
+  }
+
+  /**
    * Verifies that the value of the specified long can be stored in a byte.
-   * 
+   *
    * @param value The integer value.
    * @param message The message of the exception thrown if the check fails.
    * @throws IllegalArgumentException If the value cannot be stored in a byte.
@@ -24,7 +30,7 @@ public final class Assertions {
 
   /**
    * Verifies that the value of the specified long can be stored in an int.
-   * 
+   *
    * @param value The long value.
    * @param message The message of the exception thrown if the check fails.
    * @throws IllegalArgumentException If the value cannot be stored in an int.
@@ -35,7 +41,7 @@ public final class Assertions {
 
   /**
    * Checks that the specified value is negative (i.e. {@code < 0}).
-   * 
+   *
    * @param value The value.
    * @param message The message of the exception thrown if the check fails.
    * @throws IllegalArgumentException If the specified value is not negative.
@@ -46,7 +52,7 @@ public final class Assertions {
 
   /**
    * Checks that the specified string is neither {@code null} nor {@link String#isEmpty() empty}.
-   * 
+   *
    * @param string The string to check.
    * @param message The message of the exception thrown if the check fails.
    * @throws IllegalArgumentException If the string is {@code null} or {@link String#isEmpty()
@@ -58,7 +64,7 @@ public final class Assertions {
 
   /**
    * Checks that the specified value is non-negative (i.e. {@code >= 0}).
-   * 
+   *
    * @param value The value.
    * @param message The message of the exception thrown if the check fails.
    * @throws IllegalArgumentException If the specified value is negative.
@@ -69,7 +75,7 @@ public final class Assertions {
 
   /**
    * Checks that each of the specified objects is non-null.
-   * 
+   *
    * @param message The message of the exception thrown if the check fails.
    * @param objects The objects to check.
    * @throws NullPointerException If any of the specified objects are null.
@@ -82,7 +88,7 @@ public final class Assertions {
 
   /**
    * Checks that the specified value is non-positive (i.e. {@code <= 0}).
-   * 
+   *
    * @param value The value.
    * @param message The message of the exception thrown if the check fails.
    * @throws IllegalArgumentException If the specified value is positive.
@@ -93,7 +99,7 @@ public final class Assertions {
 
   /**
    * Checks that the specified value is positive (i.e. {@code > 0}).
-   * 
+   *
    * @param value The value.
    * @param message The message of the exception thrown if the check fails.
    * @throws IllegalArgumentException If the specified value is not positive.
@@ -104,7 +110,7 @@ public final class Assertions {
 
   /**
    * Verifies that the value of the specified long can be stored in a short.
-   * 
+   *
    * @param value The long value.
    * @param message The message of the exception thrown if the check fails.
    * @throws IllegalArgumentException If the value cannot be stored in a short.
@@ -116,7 +122,7 @@ public final class Assertions {
   /**
    * Checks that the specified value is between the {@code start} and {@code end} values, inclusive
    * (i.e. {@code start <= value <= end}.
-   * 
+   *
    * @param start The start value.
    * @param end The end value.
    * @param value The value to check.
@@ -125,14 +131,9 @@ public final class Assertions {
    * fails.
    */
   public static void checkWithin(int start, int end, int value, String message) {
-    Preconditions.checkArgument(start <= end,
-        "End value must be greater than or equal to start value.");
+    Preconditions
+      .checkArgument(start <= end, "End value must be greater than or equal to start value.");
     Preconditions.checkArgument(value >= start && value <= end, message);
   }
-
-  /**
-   * Sole private constructor to discourage instantiation of this class.
-   */
-  private Assertions() {}
 
 }

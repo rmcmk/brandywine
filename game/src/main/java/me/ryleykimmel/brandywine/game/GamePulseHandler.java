@@ -27,7 +27,7 @@ public final class GamePulseHandler implements Runnable {
 
   /**
    * Constructs a new {@link GamePulseHandler}.
-   * 
+   *
    * @param services The mapping of Services.
    */
   public GamePulseHandler(ServiceSet services) {
@@ -41,8 +41,9 @@ public final class GamePulseHandler implements Runnable {
         long elapsed = service.pulse();
         long diff = service.getInterval() - elapsed;
         if (diff < 0) {
-          logger.warn("{} is being overloaded by {}% total {}ms", service.toString(),
-              Math.abs(diff), elapsed);
+          logger
+            .warn("{} is being overloaded by {}% total {}ms", service.toString(), Math.abs(diff),
+              elapsed);
         }
       } catch (Exception cause) {
         logger.error("Error occurred while executing service.", cause);

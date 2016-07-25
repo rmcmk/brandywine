@@ -11,7 +11,9 @@ import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
 public final class AddPlayerDescriptor extends PlayerDescriptor {
 
   private final int index;
+
   private final Position otherPosition;
+
   private final Position position;
 
   public AddPlayerDescriptor(Player player, Position otherPosition) {

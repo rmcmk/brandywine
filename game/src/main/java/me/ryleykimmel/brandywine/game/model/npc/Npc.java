@@ -11,7 +11,7 @@ public class Npc extends Mob {
 
   /**
    * Constructs a new {@link Npc}.
-   * 
+   *
    * @param world The World this Npc is in.
    */
   public Npc(World world) {

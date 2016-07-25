@@ -1,10 +1,10 @@
 package me.ryleykimmel.brandywine.game.auth;
 
 import com.google.common.base.Preconditions;
+import me.ryleykimmel.brandywine.Service;
 import me.ryleykimmel.brandywine.common.util.ThreadFactoryUtil;
 import me.ryleykimmel.brandywine.game.GameService;
 import me.ryleykimmel.brandywine.network.ResponseCode;
-import me.ryleykimmel.brandywine.Service;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -39,8 +39,8 @@ public final class AuthenticationService extends Service {
   /**
    * An {@link ExecutorService} for executing {@link AuthenticationWorker}s.
    */
-  private final ExecutorService executor =
-      Executors.newCachedThreadPool(ThreadFactoryUtil.create(this).build());
+  private final ExecutorService executor = Executors.newCachedThreadPool(
+    ThreadFactoryUtil.create(this).build());
 
   /**
    * The service used to queue game requests.

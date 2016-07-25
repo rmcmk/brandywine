@@ -16,12 +16,13 @@ public final class CipheredFrameCodec extends FrameCodec {
   private final IsaacRandomPair randomPair;
 
   public CipheredFrameCodec(Session session, FrameMetadataSet metadataSet,
-    IsaacRandomPair randomPair) {
+                             IsaacRandomPair randomPair) {
     super(session, metadataSet);
     this.randomPair = randomPair;
   }
 
-  @Override protected void encode(ChannelHandlerContext ctx, Frame frame, ByteBuf buffer) {
+  @Override
+  protected void encode(ChannelHandlerContext ctx, Frame frame, ByteBuf buffer) {
     IsaacRandom random = randomPair.getEncodingRandom();
     FrameMetadata metadata = metadataSet.getMetadata(frame.getOpcode());
 
@@ -47,7 +48,8 @@ public final class CipheredFrameCodec extends FrameCodec {
     buffer.writeBytes(frame.content());
   }
 
-  @Override protected void decodeOpcode(ByteBuf buffer, List<Object> out) {
+  @Override
+  protected void decodeOpcode(ByteBuf buffer, List<Object> out) {
     IsaacRandom random = randomPair.getDecodingRandom();
     int opcode = buffer.readUnsignedByte() - random.nextInt() & 0xFF;
 
@@ -67,7 +69,8 @@ public final class CipheredFrameCodec extends FrameCodec {
     }
   }
 
-  @Override protected void decodeLength(ByteBuf buffer, List<Object> out) {
+  @Override
+  protected void decodeLength(ByteBuf buffer, List<Object> out) {
     int expected = Math.abs(metadata.getLength());
     if (!buffer.isReadable(expected)) {
       logger.error("Not enough bytes available to read frame {}'s length, closing session...",
@@ -84,7 +87,8 @@ public final class CipheredFrameCodec extends FrameCodec {
     checkpoint(State.DECODE_PAYLOAD);
   }
 
-  @Override protected void decodePayload(ByteBuf buffer, List<Object> out) {
+  @Override
+  protected void decodePayload(ByteBuf buffer, List<Object> out) {
     if (!buffer.isReadable(payloadLength)) {
       logger.error("Not enough bytes available to decode frame {}'s payload, closing session...",
         metadata);

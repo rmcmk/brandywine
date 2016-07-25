@@ -107,7 +107,7 @@ public final class ResponseCode {
 
   /**
    * Constructs a new {@link ResponseCode}.
-   * 
+   *
    * @param code The response code.
    */
   public ResponseCode(int code) {
@@ -116,7 +116,7 @@ public final class ResponseCode {
 
   /**
    * Gets the response code.
-   * 
+   *
    * @return The response code.
    */
   public int getCode() {

@@ -5,19 +5,22 @@ import me.ryleykimmel.brandywine.network.msg.MessageCodec;
 
 public final class FrameMapping<T extends Message> {
 
-  public static <T extends Message> FrameMapping<T> create(Class<T> messageClass,
-      MessageCodec<T> codec, int opcode, int length) {
-    return new FrameMapping<>(messageClass, codec, new FrameMetadata(opcode, length));
-  }
-
   private final MessageCodec<T> codec;
+
   private final Class<T> messageClass;
+
   private final FrameMetadata metadata;
 
   private FrameMapping(Class<T> messageClass, MessageCodec<T> codec, FrameMetadata metadata) {
     this.messageClass = messageClass;
     this.codec = codec;
     this.metadata = metadata;
+  }
+
+  public static <T extends Message> FrameMapping<T> create(Class<T> messageClass,
+                                                            MessageCodec<T> codec, int opcode,
+                                                            int length) {
+    return new FrameMapping<>(messageClass, codec, new FrameMetadata(opcode, length));
   }
 
   public Class<T> getMessageClass() {

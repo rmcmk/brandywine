@@ -7,7 +7,7 @@ public interface SkillListener {
 
   /**
    * Listens for level up Skill events.
-   * 
+   *
    * @param skills The SkillSet.
    * @param skill The Skill that was leveled up.
    */
@@ -17,7 +17,7 @@ public interface SkillListener {
 
   /**
    * Listens for update Skill events.
-   * 
+   *
    * @param skills The SkillSet.
    * @param skill The Skill that was updated.
    */
@@ -27,7 +27,7 @@ public interface SkillListener {
 
   /**
    * Listens for bulk update Skill events.
-   * 
+   *
    * @param skills The SkillSet.
    */
   default void skillsUpdated(SkillSet skills) {

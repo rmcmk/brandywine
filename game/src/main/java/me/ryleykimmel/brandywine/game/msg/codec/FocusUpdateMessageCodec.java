@@ -10,7 +10,8 @@ import me.ryleykimmel.brandywine.network.msg.MessageCodec;
  */
 public final class FocusUpdateMessageCodec extends MessageCodec<FocusUpdateMessage> {
 
-  @Override public FocusUpdateMessage decode(FrameReader frame) {
+  @Override
+  public FocusUpdateMessage decode(FrameReader frame) {
     boolean focused = (byte) frame.getUnsigned(DataType.BYTE) == 1;
     return new FocusUpdateMessage(focused);
   }

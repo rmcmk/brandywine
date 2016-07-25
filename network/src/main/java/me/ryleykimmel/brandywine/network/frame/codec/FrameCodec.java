@@ -19,29 +19,6 @@ import java.util.List;
 public class FrameCodec extends ByteToMessageCodec<Frame> {
 
   /**
-   * Represents the states of this FrameCodec.
-   */
-  protected enum State {
-
-    /**
-     * The state in which we decode the opcode of some Frame.
-     */
-    DECODE_OPCODE,
-
-    /**
-     * The state in which we decode the length, if it is a variable byte or short, of some Frame.
-     */
-    DECODE_LENGTH,
-
-    /**
-     * The state in which we decode the payload of some Frame.
-     */
-    DECODE_PAYLOAD
-
-  }
-
-
-  /**
    * The Logger for this class.
    */
   protected static final Logger logger = LoggerFactory.getLogger(FrameCodec.class);
@@ -76,11 +53,13 @@ public class FrameCodec extends ByteToMessageCodec<Frame> {
     this.metadataSet = metadataSet;
   }
 
-  @Override protected void encode(ChannelHandlerContext ctx, Frame frame, ByteBuf buffer) {
+  @Override
+  protected void encode(ChannelHandlerContext ctx, Frame frame, ByteBuf buffer) {
     buffer.writeBytes(frame.content());
   }
 
-  @Override protected void decode(ChannelHandlerContext ctx, ByteBuf buffer, List<Object> out) {
+  @Override
+  protected void decode(ChannelHandlerContext ctx, ByteBuf buffer, List<Object> out) {
     switch (state) {
       case DECODE_OPCODE:
         decodeOpcode(buffer, out);
@@ -132,6 +111,28 @@ public class FrameCodec extends ByteToMessageCodec<Frame> {
    */
   protected final void checkpoint(State state) {
     this.state = Preconditions.checkNotNull(state, "State may not be null.");
+  }
+
+  /**
+   * Represents the states of this FrameCodec.
+   */
+  protected enum State {
+
+    /**
+     * The state in which we decode the opcode of some Frame.
+     */
+    DECODE_OPCODE,
+
+    /**
+     * The state in which we decode the length, if it is a variable byte or short, of some Frame.
+     */
+    DECODE_LENGTH,
+
+    /**
+     * The state in which we decode the payload of some Frame.
+     */
+    DECODE_PAYLOAD
+
   }
 
 }

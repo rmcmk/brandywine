@@ -38,7 +38,7 @@ public final class PlayerCredentials {
   /**
    * Constructs a new {@link PlayerCredentials} with the specified user id, username, password and
    * session keys.
-   * 
+   *
    * @param userId The user id.
    * @param username The username.
    * @param password The password.
@@ -54,7 +54,7 @@ public final class PlayerCredentials {
 
   /**
    * Gets the user id.
-   * 
+   *
    * @return The user id.
    */
   public int getUserId() {
@@ -63,7 +63,7 @@ public final class PlayerCredentials {
 
   /**
    * Gets the username.
-   * 
+   *
    * @return The username.
    */
   public String getUsername() {
@@ -72,7 +72,7 @@ public final class PlayerCredentials {
 
   /**
    * Gets the password.
-   * 
+   *
    * @return The password.
    */
   public String getPassword() {
@@ -81,7 +81,7 @@ public final class PlayerCredentials {
 
   /**
    * Gets the encoded username.
-   * 
+   *
    * @return The encoded username.
    */
   public long getEncodedUsername() {
@@ -90,7 +90,7 @@ public final class PlayerCredentials {
 
   /**
    * Gets the session keys.
-   * 
+   *
    * @return The session keys.
    */
   public int[] getSessionKeys() {
@@ -100,8 +100,8 @@ public final class PlayerCredentials {
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this).add("userId", userId).add("username", username)
-        .add("password", password).add("encodedUsername", encodedUsername)
-        .add("sessionKeys", Arrays.toString(sessionKeys)).toString();
+             .add("password", password).add("encodedUsername", encodedUsername)
+             .add("sessionKeys", Arrays.toString(sessionKeys)).toString();
   }
 
 }

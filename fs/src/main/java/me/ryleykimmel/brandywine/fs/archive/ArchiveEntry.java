@@ -19,7 +19,7 @@ final class ArchiveEntry {
 
   /**
    * Creates the archive entry.
-   * 
+   *
    * @param identifier The identifier.
    * @param buffer The buffer containing this entry's data.
    */
@@ -50,7 +50,7 @@ final class ArchiveEntry {
 
   /**
    * Gets a deep copy of the buffer of this entry.
-   * 
+   *
    * @return The buffer of this entry.
    */
   public Buffer getBuffer() {
@@ -59,7 +59,7 @@ final class ArchiveEntry {
 
   /**
    * Gets the identifier of this entry.
-   * 
+   *
    * @return The identifier of this entry.
    */
   public int getIdentifier() {
@@ -68,7 +68,7 @@ final class ArchiveEntry {
 
   /**
    * Gets the size of this entry (i.e. the capacity of the {@link Buffer} backing it), in bytes.
-   * 
+   *
    * @return The size of this entry.
    */
   public int getSize() {

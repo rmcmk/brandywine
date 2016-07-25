@@ -33,7 +33,7 @@ public final class Frame extends DefaultByteBufHolder {
 
   /**
    * Constructs a new Frame with an empty payload.
-   * 
+   *
    * @param metadata The metadata for this Frame.
    */
   public Frame(FrameMetadata metadata) {
@@ -42,7 +42,7 @@ public final class Frame extends DefaultByteBufHolder {
 
   /**
    * Gets the metadata for this Frame.
-   * 
+   *
    * @return The metadata for this Frame.
    */
   public FrameMetadata getMetadata() {

@@ -40,6 +40,15 @@ public abstract class Entity {
   }
 
   /**
+   * Gets this Entity's current Position.
+   *
+   * @return This Entity's current Position.
+   */
+  public final Position getPosition() {
+    return position;
+  }
+
+  /**
    * Sets the Position of this Entity.
    *
    * @param position The new Position of this Entity.
@@ -57,15 +66,6 @@ public abstract class Entity {
     currentRegion.removeEntity(this);
     this.position = position;
     next.addEntity(this);
-  }
-
-  /**
-   * Gets this Entity's current Position.
-   *
-   * @return This Entity's current Position.
-   */
-  public final Position getPosition() {
-    return position;
   }
 
   /**

@@ -133,9 +133,9 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
 
       case MIDDLE:
         Preconditions.checkArgument(transformation == DataTransformation.NONE,
-            "middle endian cannot be transformed");
-        Preconditions.checkArgument(type == DataType.INT,
-            "middle endian can only be used with an integer");
+          "middle endian cannot be transformed");
+        Preconditions
+          .checkArgument(type == DataType.INT, "middle endian can only be used with an integer");
 
         buffer.writeByte((byte) (longValue >> 8));
         buffer.writeByte((byte) longValue);
@@ -145,9 +145,9 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
 
       case INVERSED_MIDDLE:
         Preconditions.checkArgument(transformation == DataTransformation.NONE,
-            "inversed middle endian cannot be transformed");
+          "inversed middle endian cannot be transformed");
         Preconditions.checkArgument(type == DataType.INT,
-            "inversed middle endian can only be used with an integer");
+          "inversed middle endian can only be used with an integer");
 
         buffer.writeByte((byte) (longValue >> 16));
         buffer.writeByte((byte) (longValue >> 24));
@@ -261,7 +261,7 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
   /**
    * Writes all of the bytes from the specified FrameBuilder if and only if the specified
    * FrameBuilder and this FrameBuilder is in {@link AccessMode#BYTE_ACCESS byte access}.
-   * 
+   *
    * @param builder The FrameBuilder to write from.
    */
   public void putBytes(FrameBuilder builder) {
@@ -356,7 +356,7 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
 
   /**
    * Gets this FrameBuilders ByteBufAllocator.
-   * 
+   *
    * @return This FrameBuilders ByteBufAllocator.
    */
   public ByteBufAllocator allocator() {

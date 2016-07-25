@@ -11,7 +11,8 @@ import me.ryleykimmel.brandywine.network.msg.MessageCodec;
  */
 public final class ArrowKeyMessageCodec extends MessageCodec<ArrowKeyMessage> {
 
-  @Override public ArrowKeyMessage decode(FrameReader frame) {
+  @Override
+  public ArrowKeyMessage decode(FrameReader frame) {
     int roll = (int) frame.getUnsigned(DataType.SHORT, DataOrder.LITTLE);
     int yaw = (int) frame.getUnsigned(DataType.SHORT, DataOrder.LITTLE);
     return new ArrowKeyMessage(roll, yaw);

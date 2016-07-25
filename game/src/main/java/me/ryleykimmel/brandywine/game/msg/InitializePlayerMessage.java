@@ -20,7 +20,7 @@ public final class InitializePlayerMessage extends Message {
   /**
    * Constructs a new {@link InitializePlayerMessage} with the specified membership status and
    * internal index.
-   * 
+   *
    * @param member The membership status.
    * @param index The internal index.
    */
@@ -31,7 +31,7 @@ public final class InitializePlayerMessage extends Message {
 
   /**
    * Gets the membership status of the Player.
-   * 
+   *
    * @return {@code true} if the Player is a member otherwise {@code false}.
    */
   public boolean isMember() {
@@ -40,7 +40,7 @@ public final class InitializePlayerMessage extends Message {
 
   /**
    * Gets the internal index of the Player.
-   * 
+   *
    * @return The internal index of the Player.
    */
   public int getIndex() {
