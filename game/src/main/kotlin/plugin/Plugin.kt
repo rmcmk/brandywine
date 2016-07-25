@@ -3,8 +3,8 @@ package plugin
 import me.ryleykimmel.brandywine.game.model.*
 import me.ryleykimmel.brandywine.game.model.player.Player
 import me.ryleykimmel.brandywine.game.msg.ServerChatMessage
-import me.ryleykimmel.brandywine.server.Server
-import me.ryleykimmel.brandywine.service.Service
+import me.ryleykimmel.brandywine.Server
+import me.ryleykimmel.brandywine.Service
 import java.util.concurrent.ThreadLocalRandom
 import java.util.stream.Stream
 import kotlin.reflect.KClass

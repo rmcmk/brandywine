@@ -1,4 +1,4 @@
-package me.ryleykimmel.brandywine.service;
+package me.ryleykimmel.brandywine;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Stopwatch;

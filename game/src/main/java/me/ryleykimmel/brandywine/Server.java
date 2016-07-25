@@ -1,4 +1,4 @@
-package me.ryleykimmel.brandywine.server;
+package me.ryleykimmel.brandywine;
 
 import com.google.common.base.Preconditions;
 import io.netty.bootstrap.ServerBootstrap;
@@ -17,8 +17,6 @@ import me.ryleykimmel.brandywine.fs.FileSystem;
 import me.ryleykimmel.brandywine.game.GamePulseHandler;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationService;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationStrategy;
-import me.ryleykimmel.brandywine.service.Service;
-import me.ryleykimmel.brandywine.service.ServiceSet;
 import org.sql2o.Sql2o;
 
 import java.util.Optional;

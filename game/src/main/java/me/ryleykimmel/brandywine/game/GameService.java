@@ -2,7 +2,7 @@ package me.ryleykimmel.brandywine.game;
 
 import me.ryleykimmel.brandywine.game.model.World;
 import me.ryleykimmel.brandywine.game.model.player.Player;
-import me.ryleykimmel.brandywine.service.Service;
+import me.ryleykimmel.brandywine.Service;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;

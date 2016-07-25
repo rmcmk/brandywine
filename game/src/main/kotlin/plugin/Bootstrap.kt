@@ -4,7 +4,6 @@ import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.SimpleChannelInboundHandler
 import io.netty.channel.socket.SocketChannel
-import me.ryleykimmel.brandywine.InitializationException
 import me.ryleykimmel.brandywine.fs.FileSystem
 import me.ryleykimmel.brandywine.game.GameService
 import me.ryleykimmel.brandywine.game.auth.AuthenticationService
@@ -16,7 +15,7 @@ import me.ryleykimmel.brandywine.network.Session
 import me.ryleykimmel.brandywine.network.frame.codec.FrameCodec
 import me.ryleykimmel.brandywine.network.frame.codec.FrameMessageCodec
 import me.ryleykimmel.brandywine.network.msg.Message
-import me.ryleykimmel.brandywine.server.Server
+import me.ryleykimmel.brandywine.Server
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.sql2o.Sql2o
@@ -25,6 +24,7 @@ import plugin.login.InitializePlayerEventConsumer
 import plugin.message.MessageRegistrar
 import plugin.task.Tasks
 import java.io.IOException
+import java.io.UncheckedIOException
 import kotlin.reflect.KClass
 
 val world = World(EventConsumerChainSet())
@@ -55,7 +55,7 @@ fun main(vararg args: String) = try {
             registerService(gameService).registerService(AuthenticationService(gameService, server.authenticationStrategy)).
             init(43594)
 } catch (cause: IOException) {
-    throw InitializationException(cause)
+    throw UncheckedIOException(cause)
 }
 
 class SessionHandler(val session: Session) : SimpleChannelInboundHandler<Message>() {

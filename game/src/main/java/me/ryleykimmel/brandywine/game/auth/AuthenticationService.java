@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import me.ryleykimmel.brandywine.common.util.ThreadFactoryUtil;
 import me.ryleykimmel.brandywine.game.GameService;
 import me.ryleykimmel.brandywine.network.ResponseCode;
-import me.ryleykimmel.brandywine.service.Service;
+import me.ryleykimmel.brandywine.Service;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;

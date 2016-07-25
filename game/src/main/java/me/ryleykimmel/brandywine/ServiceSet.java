@@ -1,4 +1,4 @@
-package me.ryleykimmel.brandywine.service;
+package me.ryleykimmel.brandywine;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
