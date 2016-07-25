@@ -1,6 +1,5 @@
 package plugin.task
 
-import com.google.common.base.Stopwatch
 import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -13,18 +12,13 @@ object Tasks {
 
     private val tasks = ArrayList<Task>()
 
-    fun schedule() {
-        val stopwatch = Stopwatch.createUnstarted()
-        executor.scheduleAtFixedRate({
-            stopwatch.start()
-            try {
-                tick()
-            } catch (t: Throwable) {
-                t.printStackTrace()
-            }
-            println("Elapsed tick: ${stopwatch.reset().elapsed(TimeUnit.MILLISECONDS)}ms")
-        }, INTERVAL, INTERVAL, TimeUnit.MILLISECONDS)
-    }
+    fun schedule() = executor.scheduleAtFixedRate({
+        try {
+            tick()
+        } catch (t: Throwable) {
+            t.printStackTrace()
+        }
+    }, INTERVAL, INTERVAL, TimeUnit.MILLISECONDS)
 
     fun execute(runnable: Runnable) = executor.execute(runnable)
 
