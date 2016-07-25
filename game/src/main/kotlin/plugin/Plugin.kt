@@ -22,8 +22,8 @@ fun <T : Entity> Player.surrounding(type: EntityType): Stream<T> = this.region()
 
 inline fun World.each(type: EntityType, action: (Int, Mob) -> Unit) {
     val collection = when (type) {
-        EntityType.NPC -> world.npcs
-        EntityType.PLAYER -> world.players
+        EntityType.NPC -> this.npcs
+        EntityType.PLAYER -> this.players
     }
 
     collection.filterNotNull().forEachIndexed(action)

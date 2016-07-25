@@ -43,7 +43,7 @@ public final class Strings {
   /**
    * Capitalizes the first character in the specified String as well as the first character in
    * subsequent sentences within the specified String.
-   * 
+   *
    * @param string The String to capitalize.
    * @return The capitalized String.
    */
@@ -97,15 +97,15 @@ public final class Strings {
 
   /**
    * Splits the specified {@code String} into segments delimited by {@code delim}.
-   * 
+   *
    * <pre>
-   * <code>
+   * {@code
    * String string = "\"I am a String\" Hey hey hey";
    * Arrays.toString(explode(string, '"'));
    *          -> [I am a String, Hey, hey, hey]
-   * </code>
+   * }
    * </pre>
-   * 
+   *
    * @param string The {@code String} to explode.
    * @param delim The delimiter.
    * @return The exploded segments of the {@code String}.

@@ -15,9 +15,6 @@ import me.ryleykimmel.brandywine.network.isaac.IsaacRandom
 import me.ryleykimmel.brandywine.network.isaac.IsaacRandomPair
 import plugin.message
 import plugin.message.MessageRegistrar
-import plugin.server
-import plugin.task.Tasks
-import plugin.task.continuous
 
 @Consumes(InitializePlayerEvent::class)
 class InitializePlayerEventConsumer : EventConsumer<InitializePlayerEvent> {
