@@ -21,7 +21,7 @@ public abstract class Mob extends Entity {
   /**
    * This Mobs skill set.
    */
-  protected final SkillSet skills = new SkillSet(this);
+  protected final SkillSet skills = new SkillSet();
 
   /**
    * A {@link Set} of local Players.

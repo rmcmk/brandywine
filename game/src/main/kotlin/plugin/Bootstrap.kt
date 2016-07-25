@@ -19,7 +19,6 @@ import me.ryleykimmel.brandywine.network.frame.codec.FrameCodec
 import me.ryleykimmel.brandywine.network.frame.codec.FrameMessageCodec
 import me.ryleykimmel.brandywine.network.msg.Message
 import org.reflections.Reflections
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.sql2o.Sql2o
 import plugin.message.MessageRegistrar
@@ -30,7 +29,7 @@ import kotlin.reflect.KClass
 
 val world = World(EventConsumerChainSet())
 val server = Server()
-val logger: Logger = LoggerFactory.getLogger("plugin-bootstrap")
+val logger = LoggerFactory.getLogger("plugin-bootstrap")!!
 
 fun main(vararg args: String) = try {
     Tasks.schedule()
