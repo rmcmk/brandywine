@@ -10,7 +10,10 @@ import me.ryleykimmel.brandywine.network.frame.codec.CipheredFrameCodec
 import me.ryleykimmel.brandywine.network.frame.codec.FrameMessageCodec
 import me.ryleykimmel.brandywine.network.isaac.IsaacRandom
 import me.ryleykimmel.brandywine.network.isaac.IsaacRandomPair
-import plugin.gameMetadata
+import plugin.message
+import plugin.message.MessageRegistrar
+import plugin.task.Tasks
+import plugin.task.continuous
 
 @Consumes(InitializePlayerEvent::class)
 class InitializePlayerEventConsumer : EventConsumer<InitializePlayerEvent> {
@@ -18,8 +21,10 @@ class InitializePlayerEventConsumer : EventConsumer<InitializePlayerEvent> {
     override fun accept(event: InitializePlayerEvent) {
         with(event.player) {
             // Unsure of this...
-            session.channel.pipeline().replace("frame_codec", "ciphered_frame_codec", CipheredFrameCodec(session, gameMetadata, credentials.getRandomPair()))
-            session.channel.pipeline().replace("message_codec", "message_codec", FrameMessageCodec(gameMetadata))
+            session.channel.pipeline().replace("frame_codec", "ciphered_frame_codec",
+                    CipheredFrameCodec(session, MessageRegistrar.gameMetadata, credentials.getRandomPair()))
+            session.channel.pipeline().replace("message_codec", "message_codec",
+                    FrameMessageCodec(MessageRegistrar.gameMetadata))
 
             write(InitializePlayerMessage(isMember, index))
 
