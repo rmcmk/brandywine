@@ -1,4 +1,4 @@
-# Brandywine | ![Build status](https://travis-ci.org/ryleykimmel/brandywine.svg?branch=master) [![Dependency Status](https://www.versioneye.com/user/projects/56b9c04fe88337011cd2ee8b/badge.svg)](https://www.versioneye.com/user/projects/56b9c04fe88337011cd2ee8b)
+# Brandywine | ![Build status](https://travis-ci.org/ryleykimmel/brandywine.svg?branch=master) [![Dependency Status](https://www.versioneye.com/user/projects/56b9c04fe88337011cd2ee8b/badge.svg)](https://www.versioneye.com/user/projects/56b9c04fe88337011cd2ee8b) ![Licence](https://camo.githubusercontent.com/5cee7f5de5764b2350a876e3d821d10e8b6cc56c/687474703a2f2f696d672e736869656c64732e696f2f62616467652f6c6963656e73652d4953432d627269676874677265656e2e737667)
 
 Brandywine aims to provide a simple, elegant, robust and easy to use framework utilizing the latest and greatest Java features, here is how we will keep you covered...
 * Embracing Java's type system in the fullest, restricting unwanted behaviors at _compile time_
