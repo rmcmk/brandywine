@@ -26,14 +26,16 @@ subprojects {
         compile 'io.netty:netty-all:4.0.36.Final'
         compile 'com.google.guava:guava:19.0'
         compile 'org.sql2o:sql2o:1.5.4'
-        compile 'com.lambdaworks:scrypt:1.4.0'
         compile 'org.reflections:reflections:0.9.10'
+        compile 'com.lambdaworks:scrypt:1.4.0'
 
         compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
         compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
         compile 'org.slf4j:slf4j-api:1.7.21'
         compile 'org.slf4j:slf4j-simple:1.7.21'
+
+        compile group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.46'
 
         testCompile 'junit:junit:4.12'
         testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
