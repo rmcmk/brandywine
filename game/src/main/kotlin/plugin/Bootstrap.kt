@@ -35,10 +35,6 @@ fun main(vararg args: String) = try {
     Tasks.schedule()
     MessageRegistrar.init()
 
-    val reflections = Reflections("plugin")
-    val events = reflections.getTypesAnnotatedWith(Consumes::class.java)
-    events.forEach { world.addConsumer(it.newInstance() as EventConsumer<*>) }
-
     server.initializer(object : ChannelInitializer<SocketChannel>() {
         override fun initChannel(channel: SocketChannel) {
             val session = Session(channel)

@@ -26,7 +26,6 @@ subprojects {
         compile 'io.netty:netty-all:4.0.36.Final'
         compile 'com.google.guava:guava:19.0'
         compile 'org.sql2o:sql2o:1.5.4'
-        compile 'org.reflections:reflections:0.9.10'
         compile 'com.lambdaworks:scrypt:1.4.0'
 
         compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

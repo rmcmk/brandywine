@@ -2,6 +2,8 @@ package plugin
 
 import me.ryleykimmel.brandywine.Server
 import me.ryleykimmel.brandywine.Service
+import me.ryleykimmel.brandywine.game.event.Event
+import me.ryleykimmel.brandywine.game.event.EventConsumer
 import me.ryleykimmel.brandywine.game.model.*
 import me.ryleykimmel.brandywine.game.model.player.Player
 import me.ryleykimmel.brandywine.game.msg.ServerChatMessage
@@ -30,3 +32,8 @@ inline fun World.each(type: EntityType, action: (Int, Mob) -> Unit) {
 }
 
 fun <T : Service> Server.getService(clazz: KClass<T>) = this.getService(clazz.java)
+
+fun <T : Event> on(clazz: KClass<T>, action: (T) -> Unit) {
+    val consumer = EventConsumer<T> { action.invoke(it) }
+    world.addConsumer(clazz.java, consumer)
+}
