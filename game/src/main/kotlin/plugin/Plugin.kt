@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom
 import java.util.stream.Stream
 import kotlin.reflect.KClass
 
-val random = ThreadLocalRandom.current()
+val random = ThreadLocalRandom.current()!!
 
 fun random(min: Int, max: Int): Int = random.nextInt(max - min) + min
 fun random(range: Int): Int = random.nextInt(range)
@@ -19,10 +19,10 @@ fun random(range: Int): Int = random.nextInt(range)
 fun Player.message(message: String, vararg objects: Any) = this.write(ServerChatMessage(message, *objects))
 fun Player.teleport(x: Int, y: Int, height: Int = this.position.height) = this.teleport(Position(x, y, height))
 
-fun Player.region() = world.regionRepository.get(this.position.regionCoordinates)
+fun Player.region() = world.regionRepository.get(this.position.regionCoordinates)!!
 fun <T : Entity> Player.surrounding(type: EntityType): Stream<T> = this.region().getEntities<T>(type)
 
-inline fun World.each(type: EntityType, action: (Int, Mob) -> Unit) {
+inline fun World.each(type: EntityType, crossinline action: (Int, Mob) -> Unit) {
     val collection = when (type) {
         EntityType.NPC -> this.npcs
         EntityType.PLAYER -> this.players
@@ -31,9 +31,9 @@ inline fun World.each(type: EntityType, action: (Int, Mob) -> Unit) {
     collection.filterNotNull().forEachIndexed(action)
 }
 
-fun <T : Service> Server.getService(clazz: KClass<T>) = this.getService(clazz.java)
+fun <T : Service> Server.getService(clazz: KClass<T>) = this.getService(clazz.java)!!
 
-fun <T : Event> on(clazz: KClass<T>, action: (T) -> Unit) {
+inline fun <T : Event> on(clazz: KClass<T>, crossinline action: (T) -> Unit) {
     val consumer = EventConsumer<T> { action.invoke(it) }
     world.addConsumer(clazz.java, consumer)
 }

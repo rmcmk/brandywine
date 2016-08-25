@@ -18,7 +18,7 @@ object Tasks {
         } catch (t: Throwable) {
             t.printStackTrace()
         }
-    }, INTERVAL, INTERVAL, TimeUnit.MILLISECONDS)
+    }, INTERVAL, INTERVAL, TimeUnit.MILLISECONDS)!!
 
     fun execute(runnable: Runnable) = executor.execute(runnable)
 
