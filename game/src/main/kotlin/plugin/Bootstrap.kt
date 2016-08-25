@@ -8,8 +8,6 @@ import me.ryleykimmel.brandywine.Server
 import me.ryleykimmel.brandywine.fs.FileSystem
 import me.ryleykimmel.brandywine.game.GameService
 import me.ryleykimmel.brandywine.game.auth.AuthenticationService
-import me.ryleykimmel.brandywine.game.event.Consumes
-import me.ryleykimmel.brandywine.game.event.EventConsumer
 import me.ryleykimmel.brandywine.game.event.EventConsumerChainSet
 import me.ryleykimmel.brandywine.game.model.World
 import me.ryleykimmel.brandywine.game.model.player.Player
@@ -18,20 +16,18 @@ import me.ryleykimmel.brandywine.network.Session
 import me.ryleykimmel.brandywine.network.frame.codec.FrameCodec
 import me.ryleykimmel.brandywine.network.frame.codec.FrameMessageCodec
 import me.ryleykimmel.brandywine.network.msg.Message
-import org.reflections.Reflections
 import org.slf4j.LoggerFactory
 import org.sql2o.Sql2o
 import plugin.message.MessageRegistrar
 import plugin.task.Tasks
 import java.io.IOException
 import java.io.UncheckedIOException
-import kotlin.reflect.KClass
 
 val world = World(EventConsumerChainSet())
 val server = Server()
 val logger = LoggerFactory.getLogger("plugin-bootstrap")!!
 
-fun main(vararg args: String) = try {
+fun main(args: Array<String>) = try {
     Tasks.schedule()
     MessageRegistrar.init()
 
@@ -56,10 +52,6 @@ fun main(vararg args: String) = try {
 
 class SessionHandler(val session: Session) : SimpleChannelInboundHandler<Message>() {
 
-    // Required extension method, Kotlin does not natively support fetching object.getClass()
-    val Any.kt: KClass<out Any>
-        get() = javaClass.kotlin
-
     override fun channelInactive(ctx: ChannelHandlerContext) {
         val player = session.attr(Player.ATTRIBUTE_KEY).get()
         if (player != null) {
@@ -69,7 +61,7 @@ class SessionHandler(val session: Session) : SimpleChannelInboundHandler<Message
 
     override fun channelRead0(ctx: ChannelHandlerContext, message: Message) {
         val player = session.attr(Player.ATTRIBUTE_KEY).get()
-        val listener = MessageRegistrar.messages[message.kt]
+        val listener = MessageRegistrar.messages[message::class]
         listener?.handle(player ?: session, message)
     }
 
