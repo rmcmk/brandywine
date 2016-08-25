@@ -160,6 +160,17 @@ public final class Session {
   }
 
   /**
+   * Tests if the specified {@link AttributeKey} exists.
+   *
+   * @param key The AttributeKey.
+   * @param <T> The Attributes type.
+   * @return {@code true} iff the specified {@link AttributeKey} exists.
+   */
+  public <T> boolean hasAttr(AttributeKey<T> key) {
+    return channel.hasAttr(key);
+  }
+
+  /**
    * Gets the Attribute for the specified AttributeKey.
    *
    * @param key The AttributeKey.

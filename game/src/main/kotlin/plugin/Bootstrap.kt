@@ -53,8 +53,8 @@ fun main(args: Array<String>) = try {
 class SessionHandler(val session: Session) : SimpleChannelInboundHandler<Message>() {
 
     override fun channelInactive(ctx: ChannelHandlerContext) {
-        val player = session.attr(Player.ATTRIBUTE_KEY).get()
-        if (player != null) {
+        if (session.hasAttr(Player.ATTRIBUTE_KEY)) {
+            val player = session.attr(Player.ATTRIBUTE_KEY).get()
             server.getService(GameService::class).removePlayer(player)
         }
     }

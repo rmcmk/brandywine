@@ -1,6 +1,5 @@
 package plugin.message
 
-import me.ryleykimmel.brandywine.game.model.Position
 import me.ryleykimmel.brandywine.game.model.player.Player
 import me.ryleykimmel.brandywine.game.msg.MovementMessage
 
@@ -10,7 +9,7 @@ class MovementMessageListener : MessageListener<Player, MovementMessage> {
         val steps = message.steps
 
         with(source) {
-            val step: Position? = steps.poll() ?: return
+            val step = steps.poll() ?: return
 
             movementQueue.addFirstStep(step)
 
