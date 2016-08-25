@@ -46,7 +46,7 @@ public final class IsaacRandom extends Random {
   /**
    * A mask for pseudo-random lookup.
    */
-  private static int MASK = SIZE - 1 << 2;
+  private static final int MASK = SIZE - 1 << 2;
 
   /**
    * The results given to the user.

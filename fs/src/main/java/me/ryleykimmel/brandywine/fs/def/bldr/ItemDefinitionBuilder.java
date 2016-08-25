@@ -26,17 +26,17 @@ public final class ItemDefinitionBuilder extends DefinitionBuilder<ItemDefinitio
   /**
    * The ground menu actions of this item.
    */
-  private List<String> groundMenuActions = new ArrayList<>(5);
+  private final List<String> groundMenuActions = new ArrayList<>(5);
 
   /**
    * The x, y, and z ground scale values of this item.
    */
-  private List<Integer> groundScales = new ArrayList<>(DEFAULT_GROUND_SCALES);
+  private final List<Integer> groundScales = new ArrayList<>(DEFAULT_GROUND_SCALES);
 
   /**
    * The inventory menu actions of this item.
    */
-  private List<String> inventoryMenuActions = new ArrayList<>(5);
+  private final List<String> inventoryMenuActions = new ArrayList<>(5);
 
   /**
    * The members flag of this item.
