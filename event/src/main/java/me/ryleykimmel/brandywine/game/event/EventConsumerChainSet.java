@@ -1,7 +1,5 @@
 package me.ryleykimmel.brandywine.game.event;
 
-import com.google.common.base.Preconditions;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,20 +36,6 @@ public final class EventConsumerChainSet {
     EventConsumerChain<E> chain = (EventConsumerChain<E>) chains.computeIfAbsent(clazz,
       EventConsumerChain::new);
     chain.add(consumer);
-  }
-
-  /**
-   * Places the {@link EventConsumerChain} into this set.
-   *
-   * @param consumer The EventListenerChain.
-   */
-  public <E extends Event> void addConsumer(EventConsumer<E> consumer) {
-    Consumes consumes = consumer.getClass().getAnnotation(Consumes.class);
-    Preconditions.checkNotNull(consumes,
-      "EventConsumer must be annotated with @Consumes to infer Event type.");
-    @SuppressWarnings("unchecked")
-    Class<E> clazz = (Class<E>) consumes.value();
-    addConsumer(clazz, consumer);
   }
 
 }

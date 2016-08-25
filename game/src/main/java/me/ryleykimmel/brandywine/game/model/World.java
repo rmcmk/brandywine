@@ -74,15 +74,6 @@ public final class World {
   /**
    * Places the {@link EventConsumerChain} into this set.
    *
-   * @param consumer The EventListenerChain.
-   */
-  public <E extends Event> void addConsumer(EventConsumer<E> consumer) {
-    events.addConsumer(consumer);
-  }
-
-  /**
-   * Places the {@link EventConsumerChain} into this set.
-   *
    * @param clazz The {@link Class} to associate the EventListenerChain with.
    * @param consumer The EventListenerChain.
    */
