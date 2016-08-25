@@ -11,21 +11,28 @@ import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
 public class WalkPlayerDescriptor extends PlayerDescriptor {
 
   /**
-   * The direction of movement.
+   * The Direction of movement.
    */
   private final Direction direction;
 
+  /**
+   * Constructs a new WalkPlayerDescriptor.
+   *
+   * @param player The Player who is moving.
+   */
   public WalkPlayerDescriptor(Player player) {
     this(player, player.getFirstDirection());
   }
 
+  /**
+   * Constructs a new WalkPlayerDescriptor.
+   *
+   * @param player The Player who is moving.
+   * @param direction The Direction of movement.
+   */
   public WalkPlayerDescriptor(Player player, Direction direction) {
     super(player);
     this.direction = direction;
-  }
-
-  public Direction getDirection() {
-    return direction;
   }
 
   @Override

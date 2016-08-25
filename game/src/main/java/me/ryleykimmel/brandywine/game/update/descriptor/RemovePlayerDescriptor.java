@@ -9,6 +9,11 @@ import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
  */
 public final class RemovePlayerDescriptor extends PlayerDescriptor {
 
+  /**
+   * Constructs a new RemovePlayerDescriptor.
+   *
+   * @param player The Player we are removing.
+   */
   public RemovePlayerDescriptor(Player player) {
     super(player);
     clear();

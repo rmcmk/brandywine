@@ -9,6 +9,11 @@ import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
  */
 public final class IdlePlayerDescriptor extends PlayerDescriptor {
 
+  /**
+   * Constructs a new IdlePlayerDescriptor.
+   *
+   * @param player The Player who is idle.
+   */
   public IdlePlayerDescriptor(Player player) {
     super(player);
   }

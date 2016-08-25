@@ -18,5 +18,4 @@ public interface Updater {
    */
   void update(MobRepository<Player> players, MobRepository<Npc> npcs);
 
-
 }

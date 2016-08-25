@@ -12,6 +12,11 @@ import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
  */
 public abstract class PlayerDescriptor extends Descriptor<Player> {
 
+  /**
+   * Constructs a new PlayerDescriptor.
+   *
+   * @param player The Player who owns this Descriptor.
+   */
   public PlayerDescriptor(Player player) {
     super(player);
   }

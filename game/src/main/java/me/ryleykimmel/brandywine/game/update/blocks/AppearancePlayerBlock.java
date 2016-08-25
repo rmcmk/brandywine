@@ -12,16 +12,39 @@ import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
  */
 public final class AppearancePlayerBlock extends UpdateBlock {
 
+  /**
+   * The mask of this UpdateBlock.
+   */
   private static final int MASK = 0x10;
 
+  /**
+   * The Player's appearance.
+   */
   private final Appearance appearance;
 
+  /**
+   * The Player's combat level.
+   */
   private final int combatLevel;
 
+  /**
+   * The Player's total skill level.
+   */
   private final int totalLevel;
 
+  /**
+   * The Player's encoded username.
+   */
   private final long encodedUsername;
 
+  /**
+   * Constructs a new AppearancePlayerBlock.
+   *
+   * @param appearance The Player's appearance.
+   * @param combatLevel The Player's combat level.
+   * @param totalLevel The Player's total skill level.
+   * @param encodedUsername The Player's encoded username.
+   */
   public AppearancePlayerBlock(Appearance appearance, int combatLevel, int totalLevel,
                                 long encodedUsername) {
     super(MASK);
@@ -31,25 +54,15 @@ public final class AppearancePlayerBlock extends UpdateBlock {
     this.encodedUsername = encodedUsername;
   }
 
+  /**
+   * Creates a new {@link AppearancePlayerBlock} from the specified Player.
+   *
+   * @param player The Player to create an AppearancePlayerBlock from.
+   * @return A new AppearancePlayerBlock, never {@code null}.
+   */
   public static AppearancePlayerBlock create(Player player) {
     return new AppearancePlayerBlock(player.getAppearance(), player.getSkills().getCombatLevel(),
         /* player.getSkills().getTotalLevel() */0, player.getEncodedUsername());
-  }
-
-  public Appearance getAppearance() {
-    return appearance;
-  }
-
-  public int getCombatLevel() {
-    return combatLevel;
-  }
-
-  public int getTotalLevel() {
-    return totalLevel;
-  }
-
-  public long getEncodedUsername() {
-    return encodedUsername;
   }
 
   @Override
@@ -108,7 +121,7 @@ public final class AppearancePlayerBlock extends UpdateBlock {
 
     propertiesBuilder.put(DataType.LONG, encodedUsername);
     propertiesBuilder.put(DataType.BYTE, combatLevel);
-    propertiesBuilder.put(DataType.SHORT, 0);
+    propertiesBuilder.put(DataType.SHORT, totalLevel);
 
     builder.put(DataType.BYTE, DataTransformation.NEGATE, propertiesBuilder.getLength());
     builder.putBytes(propertiesBuilder);

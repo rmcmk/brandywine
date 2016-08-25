@@ -15,32 +15,41 @@ public final class TeleportPlayerDescriptor extends PlayerDescriptor {
    */
   private final boolean mapRegionChanged;
 
+  /**
+   * The Position of our Player before teleporting.
+   */
   private final Position position;
 
+  /**
+   * The last known region of our Player.
+   */
   private final Position lastKnownRegion;
 
+  /**
+   * Constructs a new TeleportPlayerDescriptor.
+   *
+   * @param player The Player who is teleporting.
+   * @param position The Position of our Player before teleporting.
+   * @param lastKnownRegion The last known region of our Player.
+   */
   public TeleportPlayerDescriptor(Player player, Position position, Position lastKnownRegion) {
     this(player, player.hasMapRegionChanged(), position, lastKnownRegion);
   }
 
+  /**
+   * Constructs a new TeleportPlayerDescriptor.
+   *
+   * @param player The Player who is teleporting.
+   * @param mapRegionChanged A flag denoting whether or not the map region has changed.
+   * @param position The Position of our Player before teleporting.
+   * @param lastKnownRegion The last known region of our Player.
+   */
   public TeleportPlayerDescriptor(Player player, boolean mapRegionChanged, Position position,
                                    Position lastKnownRegion) {
     super(player);
     this.mapRegionChanged = mapRegionChanged;
     this.position = position;
     this.lastKnownRegion = lastKnownRegion;
-  }
-
-  public boolean hasMapRegionChanged() {
-    return mapRegionChanged;
-  }
-
-  public Position getPosition() {
-    return position;
-  }
-
-  public Position getLastKnownRegion() {
-    return lastKnownRegion;
   }
 
   @Override

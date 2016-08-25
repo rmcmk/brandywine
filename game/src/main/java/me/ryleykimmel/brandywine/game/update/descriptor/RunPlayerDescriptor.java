@@ -11,31 +11,35 @@ import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
 public final class RunPlayerDescriptor extends PlayerDescriptor {
 
   /**
-   * The first direction of movement.
+   * The first Direction of movement.
    */
   private final Direction firstDirection;
 
   /**
-   * The second direction of movement.
+   * The second Direction of movement.
    */
   private final Direction secondDirection;
 
+  /**
+   * Constructs a new RunPlayerDescriptor.
+   *
+   * @param player The Player who is running.
+   */
   public RunPlayerDescriptor(Player player) {
     this(player, player.getFirstDirection(), player.getSecondDirection());
   }
 
+  /**
+   * Constructs a new RunPlayerDescriptor.
+   *
+   * @param player The Player who is running.
+   * @param firstDirection The first Direction of movement.
+   * @param secondDirection The second Direction of movement.
+   */
   public RunPlayerDescriptor(Player player, Direction firstDirection, Direction secondDirection) {
     super(player);
     this.firstDirection = firstDirection;
     this.secondDirection = secondDirection;
-  }
-
-  public Direction getFirstDirection() {
-    return firstDirection;
-  }
-
-  public Direction getSecondDirection() {
-    return secondDirection;
   }
 
   @Override

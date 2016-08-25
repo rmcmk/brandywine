@@ -122,7 +122,7 @@ public final class Player extends Mob {
    * Logs this Player into the World.
    */
   public void login() {
-    write(new LoginResponseMessage(ResponseCode.STATUS_OK, privileges.getPrimaryId(), false));
+    write(new LoginResponseMessage(ResponseCode.STATUS_OK, privileges.getCrownId(), false));
     getSession().attr(ATTRIBUTE_KEY).setIfAbsent(this);
     world.notify(new InitializePlayerEvent(this));
   }
