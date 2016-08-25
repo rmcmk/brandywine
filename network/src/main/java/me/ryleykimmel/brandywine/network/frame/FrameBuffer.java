@@ -120,6 +120,16 @@ abstract class FrameBuffer implements ReferenceCounted {
   }
 
   @Override
+  public ReferenceCounted touch() {
+    return buffer.touch();
+  }
+
+  @Override
+  public ReferenceCounted touch(Object hint) {
+    return buffer.touch(hint);
+  }
+
+  @Override
   public boolean release() {
     return buffer.release();
   }

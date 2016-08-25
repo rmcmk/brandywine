@@ -1,8 +1,9 @@
 buildscript {
-    ext.kotlin_version = '1.0.3'
+    ext.kotlin_version = '1.1-M01'
 
     repositories {
-        mavenCentral()
+        maven { url "http://dl.bintray.com/kotlin/kotlin-eap-1.1" }
+        jcenter()
     }
 
     dependencies {
@@ -15,7 +16,8 @@ subprojects {
     apply plugin: 'kotlin'
 
     repositories {
-        mavenCentral()
+        maven { url "http://dl.bintray.com/kotlin/kotlin-eap-1.1" }
+        jcenter()
     }
 
     dependencies {
@@ -23,13 +25,14 @@ subprojects {
         compile 'org.apache.commons:commons-lang3:3.4'
 
         compile 'mysql:mysql-connector-java:6.0.3'
-        compile 'io.netty:netty-all:4.0.36.Final'
+        compile 'io.netty:netty-all:4.1.4.Final'
         compile 'com.google.guava:guava:19.0'
         compile 'org.sql2o:sql2o:1.5.4'
         compile 'com.lambdaworks:scrypt:1.4.0'
 
         compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
         compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+        compile "org.jetbrains.kotlin:kotlin-compiler:$kotlin_version"
 
         compile 'org.slf4j:slf4j-api:1.7.21'
         compile 'org.slf4j:slf4j-simple:1.7.21'
@@ -40,7 +43,7 @@ subprojects {
         testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
         testCompile 'org.powermock:powermock-module-junit4:1.6.5'
         testCompile 'org.powermock:powermock-api-mockito:1.6.5'
-        testCompile 'com.google.truth:truth:0.28'
+        testCompile 'com.google.truth:truth:0.29'
     }
 
 }
