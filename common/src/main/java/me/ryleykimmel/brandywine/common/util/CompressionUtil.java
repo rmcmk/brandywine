@@ -29,7 +29,9 @@ public final class CompressionUtil {
    * @throws IOException If some I/O exception occurs.
    */
   public static byte[] gunzip(byte[] bytes) throws IOException {
-    return toByteArray(new GZIPInputStream(new ByteArrayInputStream(bytes)));
+    try (InputStream is = new GZIPInputStream(new ByteArrayInputStream(bytes))) {
+      return ByteStreams.toByteArray(is);
+    }
   }
 
   /**
@@ -58,7 +60,9 @@ public final class CompressionUtil {
     bzip2[3] = '1';
     System.arraycopy(bytes, 0, bzip2, 4, bytes.length);
 
-    return toByteArray(new BZip2CompressorInputStream(new ByteArrayInputStream(bzip2)));
+    try (InputStream is = new BZip2CompressorInputStream(new ByteArrayInputStream(bzip2))) {
+      return ByteStreams.toByteArray(is);
+    }
   }
 
   /**
@@ -70,24 +74,6 @@ public final class CompressionUtil {
    */
   public static Buffer bunzip2(Buffer buffer) throws IOException {
     return Buffer.wrap(bunzip2(buffer.getBytes()));
-  }
-
-  /**
-   * Copies all {@code byte}s from the specified InputStream into a {@code byte} array.
-   * <p>
-   * This method closes the InputStream.
-   * </p>
-   *
-   * @param is The InputStream to read from.
-   * @return A {@code byte} array containing all of the data from the specified InputStream.
-   * @throws IOException If some I/O exception occurs.
-   */
-  private static byte[] toByteArray(InputStream is) throws IOException {
-    try {
-      return ByteStreams.toByteArray(is);
-    } finally {
-      is.close();
-    }
   }
 
 }
