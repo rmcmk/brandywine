@@ -8,7 +8,7 @@ import me.ryleykimmel.brandywine.game.msg.LoginMessage
 import me.ryleykimmel.brandywine.game.msg.LoginResponseMessage
 import me.ryleykimmel.brandywine.network.ResponseCode
 import me.ryleykimmel.brandywine.network.Session
-import plugin.getService
+import me.ryleykimmel.brandywine.network.isaac.IsaacRandom
 import plugin.server
 
 class LoginMessageListener : MessageListener<Session, LoginMessage> {
@@ -39,7 +39,7 @@ class LoginMessageListener : MessageListener<Session, LoginMessage> {
                 return
             }
 
-            if (sessionKeys.size != 4) { // TODO: Rid of magic
+            if (sessionKeys.size != IsaacRandom.SEED_LENGTH) {
                 source.closeWithResponse(ResponseCode.STATUS_BAD_SESSION_ID)
                 return
             }
@@ -50,7 +50,7 @@ class LoginMessageListener : MessageListener<Session, LoginMessage> {
                 return
             }
 
-            server.getService(AuthenticationService::class).submit(AuthenticationRequest(source, PlayerCredentials(userId, username, password, sessionKeys)))
+            server.getService(AuthenticationService::class.java).submit(AuthenticationRequest(source, PlayerCredentials(userId, username, password, sessionKeys)))
         }
     }
 

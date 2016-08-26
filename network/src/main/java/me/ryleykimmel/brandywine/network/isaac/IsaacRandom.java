@@ -1,5 +1,7 @@
 package me.ryleykimmel.brandywine.network.isaac;
 
+import com.google.common.base.Preconditions;
+
 import java.util.Random;
 
 /**
@@ -27,6 +29,11 @@ public final class IsaacRandom extends Random {
    * use serialVersionUID from JDK 1.1 for interoperability
    */
   private static final long serialVersionUID = 7408360375871648078L;
+
+  /**
+   * The expected seed length.
+   */
+  public static final int SEED_LENGTH = 4;
 
   /**
    * The golden ratio.
@@ -84,8 +91,9 @@ public final class IsaacRandom extends Random {
    * @param seed The seed.
    */
   public IsaacRandom(int[] seed) {
-    int length = Math.min(seed.length, results.length);
-    System.arraycopy(seed, 0, results, 0, length);
+    Preconditions.checkArgument(seed.length == SEED_LENGTH,
+      "Invalid seed length: [" + seed.length + "] expected: " + SEED_LENGTH);
+    System.arraycopy(seed, 0, results, 0, SEED_LENGTH);
     init();
   }
 

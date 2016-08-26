@@ -5,6 +5,7 @@ import me.ryleykimmel.brandywine.common.util.ByteBufUtil;
 import me.ryleykimmel.brandywine.fs.FileSystem;
 import me.ryleykimmel.brandywine.game.msg.LoginMessage;
 import me.ryleykimmel.brandywine.network.frame.FrameReader;
+import me.ryleykimmel.brandywine.network.isaac.IsaacRandom;
 import me.ryleykimmel.brandywine.network.msg.MessageCodec;
 import me.ryleykimmel.brandywine.network.rsa.RsaKeygen;
 import me.ryleykimmel.brandywine.network.rsa.RsaKeypair;
@@ -18,11 +19,20 @@ import java.util.Arrays;
  */
 public final class LoginMessageCodec extends MessageCodec<LoginMessage> {
 
+  /**
+   * The amount of {@code byte}s that are not part of the RSA block.
+   */
+  private static final int NON_RSA_BYTE_LENGTH = Byte.BYTES * 40;
+
   @Override
   public LoginMessage decode(FrameReader reader) {
     ByteBuf buffer = reader.getBuffer();
 
-    int length = buffer.readUnsignedByte(); // TODO: Verify
+    int length = buffer.readUnsignedByte() - NON_RSA_BYTE_LENGTH;
+    if (length <= 0) {
+      throw new IllegalArgumentException("0 or negative login block length");
+    }
+
     int magic = buffer.readUnsignedByte();
     int clientVersion = buffer.readShort();
     int detail = buffer.readUnsignedByte();
@@ -31,6 +41,9 @@ public final class LoginMessageCodec extends MessageCodec<LoginMessage> {
     Arrays.setAll(archiveChecksums, index -> buffer.readInt());
 
     int blockLength = buffer.readUnsignedByte();
+    if (blockLength != length - Byte.BYTES) {
+      throw new IllegalArgumentException("Unexpected RSA block length");
+    }
 
     ByteBuf cipheredBuffer = buffer.alloc().buffer(blockLength);
 
@@ -47,7 +60,7 @@ public final class LoginMessageCodec extends MessageCodec<LoginMessage> {
     try {
       int blockOperationCode = cipheredBuffer.readUnsignedByte();
 
-      int[] sessionKeys = new int[4]; // TODO: Rid of magic number?
+      int[] sessionKeys = new int[IsaacRandom.SEED_LENGTH];
       Arrays.setAll(sessionKeys, index -> cipheredBuffer.readInt());
 
       int userId = cipheredBuffer.readInt();
