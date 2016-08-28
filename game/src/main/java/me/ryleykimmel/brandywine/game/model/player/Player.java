@@ -6,6 +6,7 @@ import me.ryleykimmel.brandywine.game.model.EntityType;
 import me.ryleykimmel.brandywine.game.model.Mob;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.model.World;
+import me.ryleykimmel.brandywine.game.model.inter.InterfaceSet;
 import me.ryleykimmel.brandywine.game.msg.LoginResponseMessage;
 import me.ryleykimmel.brandywine.game.update.blocks.AppearancePlayerBlock;
 import me.ryleykimmel.brandywine.network.ResponseCode;
@@ -44,6 +45,11 @@ public final class Player extends Mob {
    * The privileges for this Player.
    */
   private final PlayerPrivileges privileges = new PlayerPrivileges();
+
+  /**
+   * The InterfaceSet for this Player.
+   */
+  private final InterfaceSet interfaceSet = new InterfaceSet(this);
 
   /**
    * The credentials of this Player.
@@ -177,6 +183,15 @@ public final class Player extends Mob {
    */
   public PlayerPrivileges getPrivileges() {
     return privileges;
+  }
+
+  /**
+   * Gets this Players InterfaceSet.
+   *
+   * @return This Players InterfaceSet.
+   */
+  public InterfaceSet getInterfaceSet() {
+    return interfaceSet;
   }
 
   /**

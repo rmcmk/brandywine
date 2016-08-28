@@ -1,7 +1,7 @@
 package me.ryleykimmel.brandywine.network.msg;
 
 /**
- * Represents a message received from the client.
+ * A Message sent to or received from the client.
  */
 public abstract class Message {
 }

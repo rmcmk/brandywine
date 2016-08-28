@@ -3,7 +3,7 @@ package me.ryleykimmel.brandywine.game.model.player;
 import me.ryleykimmel.brandywine.game.event.Event;
 
 /**
- * An event which occurs when a Player is initialized.
+ * An Event which occurs when a Player is initialized.
  */
 public final class InitializePlayerEvent extends Event {
 

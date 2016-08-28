@@ -27,13 +27,14 @@ object MessageRegistrar {
         gameMetadata.register(PingMessage::class, 0, 0)
         gameMetadata.register(FocusUpdateMessage::class, 3, 1)
         gameMetadata.register(ChatMessage::class, 4, FrameMetadata.VARIABLE_BYTE_LENGTH)
-        gameMetadata.register(OpenTabWidgetMessage::class, 71, 3)
+        gameMetadata.register(OpenTabInterfaceMessage::class, 71, 3)
         gameMetadata.register(RebuildRegionMessage::class, 73, 4)
         gameMetadata.register(ResetDestinationMessage::class, 78, 0)
         gameMetadata.register(PlayerUpdateMessage::class, 81, FrameMetadata.VARIABLE_SHORT_LENGTH)
         gameMetadata.register(ArrowKeyMessage::class, 86, 4)
         gameMetadata.register(MovementMessage::class, 98, FrameMetadata.VARIABLE_BYTE_LENGTH) // command movement
         gameMetadata.register(CommandMessage::class, 103, FrameMetadata.VARIABLE_BYTE_LENGTH)
+        gameMetadata.register(CloseInterfaceMessage::class, 130, 0)
         gameMetadata.register(UpdateSkillMessage::class, 134, 6)
         gameMetadata.register(MovementMessage::class, 164, FrameMetadata.VARIABLE_BYTE_LENGTH) // game movement
         gameMetadata.register(MouseClickedMessage::class, 241, 4)
