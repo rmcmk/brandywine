@@ -16,6 +16,7 @@ import me.ryleykimmel.brandywine.network.Session
 import me.ryleykimmel.brandywine.network.frame.codec.FrameCodec
 import me.ryleykimmel.brandywine.network.frame.codec.FrameMessageCodec
 import me.ryleykimmel.brandywine.network.msg.Message
+import org.reflections.Reflections
 import org.slf4j.LoggerFactory
 import org.sql2o.Sql2o
 import plugin.message.MessageRegistrar
@@ -30,6 +31,9 @@ val logger = LoggerFactory.getLogger("plugin-bootstrap")!!
 fun main(args: Array<String>) = try {
     Tasks.schedule()
     MessageRegistrar.init()
+
+    val classes = Reflections().getSubTypesOf(Plugin::class.java)
+    classes.forEach { it.newInstance().run() }
 
     server.initializer(object : ChannelInitializer<SocketChannel>() {
         override fun initChannel(channel: SocketChannel) {
@@ -55,18 +59,19 @@ class SessionHandler(val session: Session) : SimpleChannelInboundHandler<Message
     override fun channelInactive(ctx: ChannelHandlerContext) {
         if (session.hasAttr(Player.ATTRIBUTE_KEY)) {
             val player = session.attr(Player.ATTRIBUTE_KEY).get()
-            server.getService(GameService::class).removePlayer(player)
+            server.getService(GameService::class.java).removePlayer(player)
         }
     }
 
     override fun channelRead0(ctx: ChannelHandlerContext, message: Message) {
         val player = session.attr(Player.ATTRIBUTE_KEY).get()
-        val listener = MessageRegistrar.messages[message::class]
+        val listener = MessageRegistrar.messages[message.javaClass.kotlin]
         listener?.handle(player ?: session, message)
     }
 
     override fun exceptionCaught(ctx: ChannelHandlerContext, cause: Throwable) {
         logger.error("Uncaught exception occurred upstream", cause)
+        cause.printStackTrace()
         session.close()
     }
 
