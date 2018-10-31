@@ -11,19 +11,35 @@ import me.ryleykimmel.brandywine.network.isaac.IsaacRandomPair;
 
 import java.util.List;
 
+/**
+ * A ciphered codec for encoding and decoding Frames.
+ */
 public final class CipheredFrameCodec extends FrameCodec {
 
+  /**
+   * The Isaac cipher pair.
+   */
   private final IsaacRandomPair randomPair;
 
-  public CipheredFrameCodec(Session session, FrameMetadataSet metadataSet,
-                             IsaacRandomPair randomPair) {
-    super(session, metadataSet);
+  /**
+   * Constructs a new {@link CipheredFrameCodec}.
+   *
+   * @param session The Session for this CipheredFrameCodec.
+   * @param randomPair The Isaac cipher pair.
+   */
+  public CipheredFrameCodec(Session session, IsaacRandomPair randomPair) {
+    super(session);
     this.randomPair = randomPair;
   }
 
   @Override
   protected void encode(ChannelHandlerContext ctx, Frame frame, ByteBuf buffer) {
+    if (session.isClosed()) {
+      return;
+    }
+
     IsaacRandom random = randomPair.getEncodingRandom();
+    FrameMetadataSet metadataSet = session.getFrameMetadataSet();
     FrameMetadata metadata = metadataSet.getMetadata(frame.getOpcode());
 
     buffer.writeByte(frame.getOpcode() + random.nextInt() & 0xFF);
@@ -51,10 +67,14 @@ public final class CipheredFrameCodec extends FrameCodec {
   @Override
   protected void decodeOpcode(ByteBuf buffer, List<Object> out) {
     IsaacRandom random = randomPair.getDecodingRandom();
+    FrameMetadataSet metadataSet = session.getFrameMetadataSet();
+
     int opcode = buffer.readUnsignedByte() - random.nextInt() & 0xFF;
 
     if (!metadataSet.hasMapping(opcode)) {
-      throw new IllegalStateException("Bad frame opcode: " + opcode);
+      logger.error("Frame opcode {} does not exist, closing session...", opcode);
+      session.close();
+      return;
     }
 
     metadata = metadataSet.getMetadata(opcode);
@@ -73,8 +93,7 @@ public final class CipheredFrameCodec extends FrameCodec {
   protected void decodeLength(ByteBuf buffer, List<Object> out) {
     int expected = Math.abs(metadata.getLength());
     if (!buffer.isReadable(expected)) {
-      logger.error("Not enough bytes available to read frame {}'s length, closing session...",
-        metadata);
+      logger.error("Not enough bytes available to read frame {}'s length, closing session...", metadata);
       session.close();
       return;
     }
@@ -90,8 +109,7 @@ public final class CipheredFrameCodec extends FrameCodec {
   @Override
   protected void decodePayload(ByteBuf buffer, List<Object> out) {
     if (!buffer.isReadable(payloadLength)) {
-      logger.error("Not enough bytes available to decode frame {}'s payload, closing session...",
-        metadata);
+      logger.error("Not enough bytes available to decode frame {}'s payload, closing session...", metadata);
       session.close();
       return;
     }

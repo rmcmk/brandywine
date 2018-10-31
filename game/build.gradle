@@ -1,3 +1,18 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'kotlin'
+
 dependencies {
     compile project(":network")
+
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-compiler', version: "$kotlin_version"
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jre8', version: "$kotlin_version"
 }

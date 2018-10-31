@@ -2,7 +2,7 @@ package me.ryleykimmel.brandywine.game.model.skill;
 
 import me.ryleykimmel.brandywine.common.Strings;
 import me.ryleykimmel.brandywine.game.model.player.Player;
-import me.ryleykimmel.brandywine.game.msg.ServerChatMessage;
+import me.ryleykimmel.brandywine.game.message.ServerChatMessage;
 
 /**
  * An implementation of a {@link SkillListener} that listens for leveled up Skill events.

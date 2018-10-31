@@ -31,24 +31,24 @@ public final class PlayerCredentials {
   private final long encodedUsername;
 
   /**
-   * The session keys.
+   * The session ids.
    */
-  private final int[] sessionKeys;
+  private final int[] sessionIds;
 
   /**
    * Constructs a new {@link PlayerCredentials} with the specified user id, username, password and
-   * session keys.
+   * session ids.
    *
    * @param userId The user id.
    * @param username The username.
    * @param password The password.
-   * @param sessionKeys The session keys.
+   * @param sessionIds The session ids.
    */
-  public PlayerCredentials(int userId, String username, String password, int[] sessionKeys) {
+  public PlayerCredentials(int userId, String username, String password, int[] sessionIds) {
     this.userId = userId;
     this.username = username;
     this.password = password;
-    this.sessionKeys = sessionKeys;
+    this.sessionIds = sessionIds;
     this.encodedUsername = NameUtil.encodeBase37(username);
   }
 
@@ -89,19 +89,19 @@ public final class PlayerCredentials {
   }
 
   /**
-   * Gets the session keys.
+   * Gets the session ids.
    *
-   * @return The session keys.
+   * @return The session ids.
    */
-  public int[] getSessionKeys() {
-    return sessionKeys;
+  public int[] getSessionIds() {
+    return sessionIds;
   }
 
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this).add("userId", userId).add("username", username)
              .add("password", password).add("encodedUsername", encodedUsername)
-             .add("sessionKeys", Arrays.toString(sessionKeys)).toString();
+             .add("sessionIds", Arrays.toString(sessionIds)).toString();
   }
 
 }

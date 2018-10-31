@@ -2,8 +2,10 @@ package me.ryleykimmel.brandywine.network.frame;
 
 import com.google.common.base.Preconditions;
 import io.netty.buffer.ByteBufAllocator;
-import me.ryleykimmel.brandywine.network.msg.Message;
-import me.ryleykimmel.brandywine.network.msg.MessageCodec;
+import me.ryleykimmel.brandywine.network.Session;
+import me.ryleykimmel.brandywine.network.message.Message;
+import me.ryleykimmel.brandywine.network.message.MessageCodec;
+import me.ryleykimmel.brandywine.network.message.MessageListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +27,40 @@ public final class FrameMetadataSet {
   private final Map<Integer, FrameMapping<? extends Message>> framesByOpcode = new HashMap<>();
 
   /**
+   * Delegate for {@link FrameMetadataSet#register(FrameMapping)}.
+   *
+   * @param message  The MessageCodec this FrameMapping is mapped to.
+   * @param codec    The Message class this FrameMapping is mapped to.
+   * @param listener The MessageListener this FrameMapping is mapped to.
+   * @param opcode   The opcode of the Frame.
+   * @param length   The length, in bytes, of the Frame.
+   * @param <T>      The Message type.
+   */
+  public <T extends Message> void register(Class<T> message,
+                                           MessageCodec<T> codec,
+                                           MessageListener<T> listener,
+                                           int opcode,
+                                           int length) {
+    register(FrameMapping.create(message, codec, listener, opcode, length));
+  }
+
+  /**
+   * Delegate for {@link FrameMetadataSet#register(FrameMapping)}.
+   *
+   * @param message  The MessageCodec this FrameMapping is mapped to.
+   * @param codec    The Message class this FrameMapping is mapped to.
+   * @param opcode   The opcode of the Frame.
+   * @param length   The length, in bytes, of the Frame.
+   * @param <T>      The Message type.
+   */
+  public <T extends Message> void register(Class<T> message,
+                                           MessageCodec<T> codec,
+                                           int opcode,
+                                           int length) {
+    register(FrameMapping.create(message, codec, opcode, length));
+  }
+
+  /**
    * Registers the specified FrameMapping.
    *
    * @param mapping The FrameMapping to register.
@@ -44,7 +80,8 @@ public final class FrameMetadataSet {
    */
   @SuppressWarnings("unchecked")
   public <T extends Message> T decode(Frame frame) {
-    MessageCodec<T> codec = (MessageCodec<T>) getMapping(frame.getOpcode()).getCodec();
+    MessageCodec<T> codec = (MessageCodec<T>) getMapping(frame.getOpcode()).map(FrameMapping::getCodec).orElseThrow(
+            () -> new NullPointerException("No FrameMapping found for opcode: " + frame.getOpcode()));
     FrameReader reader = new FrameReader(frame);
     return codec.decode(reader);
   }
@@ -58,11 +95,27 @@ public final class FrameMetadataSet {
    */
   @SuppressWarnings("unchecked")
   public <T extends Message> Frame encode(T message, ByteBufAllocator allocator) {
-    FrameMapping<T> mapping = (FrameMapping<T>) getMapping(message.getClass());
+    FrameMapping<T> mapping = (FrameMapping<T>) getMapping(message.getClass()).orElseThrow(
+            () -> new NullPointerException("No FrameMapping found for message: " + message.getClass().getSimpleName()));
     FrameMetadata metadata = mapping.getMetadata();
     FrameBuilder builder = new FrameBuilder(metadata, allocator);
     mapping.getCodec().encode(message, builder);
     return builder.build();
+  }
+
+  /**
+   * Handles a decoded Message.
+   *
+   * @param message The decoded Message.
+   * @param session The Session that received the Message.
+   */
+  @SuppressWarnings("unchecked")
+  public <T extends Message> void handle(T message, Session session) {
+    FrameMapping<T> mapping = (FrameMapping<T>) getMapping(message.getClass()).orElse(null);
+    if (mapping == null) {
+      return;
+    }
+    mapping.getListener().ifPresent(listener -> listener.handle(session, message));
   }
 
   /**
@@ -72,7 +125,8 @@ public final class FrameMetadataSet {
    * @return The FrameMetadata for the specified Message.
    */
   public <T extends Message> FrameMetadata getMetadata(Class<T> clazz) {
-    return getMapping(clazz).getMetadata();
+    return getMapping(clazz).orElseThrow(
+            () -> new IllegalArgumentException("Mapping for " + clazz.getSimpleName() + " not found.")).getMetadata();
   }
 
   /**
@@ -82,7 +136,8 @@ public final class FrameMetadataSet {
    * @return The FrameMetadata for the specified opcode.
    */
   public FrameMetadata getMetadata(int opcode) {
-    return getMapping(opcode).getMetadata();
+    return getMapping(opcode).orElseThrow(
+            () -> new IllegalArgumentException("Mapping for " + opcode + " not found.")).getMetadata();
   }
 
   /**
@@ -92,11 +147,8 @@ public final class FrameMetadataSet {
    * @return The FrameMapping for the specified Message.
    */
   @SuppressWarnings("unchecked")
-  public <T extends Message> FrameMapping<T> getMapping(Class<T> clazz) {
-    Optional<FrameMapping<T>> mapping = Optional
-                                          .ofNullable((FrameMapping<T>) framesByType.get(clazz));
-    return mapping.orElseThrow(
-      () -> new IllegalArgumentException("Mapping for " + clazz + " not found."));
+  public <T extends Message> Optional<FrameMapping<T>> getMapping(Class<T> clazz) {
+    return Optional.ofNullable((FrameMapping<T>) framesByType.get(clazz));
   }
 
   /**
@@ -106,11 +158,8 @@ public final class FrameMetadataSet {
    * @return The FrameMapping for the specified opcode.
    */
   @SuppressWarnings("unchecked")
-  public <T extends Message> FrameMapping<T> getMapping(int opcode) {
-    Optional<FrameMapping<T>> mapping = Optional
-                                          .ofNullable((FrameMapping<T>) framesByOpcode.get(opcode));
-    return mapping.orElseThrow(
-      () -> new IllegalArgumentException("Mapping for " + opcode + " not found."));
+  public <T extends Message> Optional<FrameMapping<T>> getMapping(int opcode) {
+    return Optional.ofNullable((FrameMapping<T>) framesByOpcode.get(opcode));
   }
 
   /**

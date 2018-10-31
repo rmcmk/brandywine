@@ -54,7 +54,7 @@ public final class ByteBufUtil {
    * @param buffer The ByteBuf to read from.
    * @return The null-terminated String.
    */
-  public static String getString(ByteBuf buffer) {
+  public static String readString(ByteBuf buffer) {
     return readString(buffer, DEFAULT_STRING_TERMINATOR);
   }
 
@@ -94,9 +94,9 @@ public final class ByteBufUtil {
    * @return The read String.
    */
   public static String readString(ByteBuf buffer, char terminator) {
-    ByteArrayOutputStream os = new ByteArrayOutputStream();
+    ByteArrayOutputStream os = new ByteArrayOutputStream(buffer.readableBytes());
 
-    for (; ; ) {
+    while (buffer.isReadable()) {
       int read = buffer.readUnsignedByte();
       if (read == terminator) {
         break;

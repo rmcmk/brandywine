@@ -1,20 +1,33 @@
 package me.ryleykimmel.brandywine.game.model.player;
 
 import com.google.common.base.MoreObjects;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelPipeline;
 import io.netty.util.AttributeKey;
+import me.ryleykimmel.brandywine.game.GameService;
+import me.ryleykimmel.brandywine.game.message.InitializePlayerMessage;
+import me.ryleykimmel.brandywine.game.message.RebuildRegionMessage;
 import me.ryleykimmel.brandywine.game.model.EntityType;
 import me.ryleykimmel.brandywine.game.model.Mob;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.model.World;
 import me.ryleykimmel.brandywine.game.model.inter.InterfaceSet;
-import me.ryleykimmel.brandywine.game.msg.LoginResponseMessage;
+import me.ryleykimmel.brandywine.game.message.LoginResponseMessage;
+import me.ryleykimmel.brandywine.game.model.skill.LevelUpSkillListener;
+import me.ryleykimmel.brandywine.game.model.skill.SynchronizationSkillListener;
 import me.ryleykimmel.brandywine.game.update.blocks.AppearancePlayerBlock;
 import me.ryleykimmel.brandywine.network.ResponseCode;
 import me.ryleykimmel.brandywine.network.Session;
-import me.ryleykimmel.brandywine.network.msg.Message;
+import me.ryleykimmel.brandywine.network.frame.codec.CipheredFrameCodec;
+import me.ryleykimmel.brandywine.network.frame.codec.FrameCodec;
+import me.ryleykimmel.brandywine.network.frame.codec.FrameMessageCodec;
+import me.ryleykimmel.brandywine.network.isaac.IsaacRandomPair;
+import me.ryleykimmel.brandywine.network.message.Message;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static me.ryleykimmel.brandywine.network.Session.*;
 
 /**
  * Represents a Player character.
@@ -128,10 +141,31 @@ public final class Player extends Mob {
    * Logs this Player into the World.
    */
   public void login() {
-    getSession().voidWriteAndFlush(
-      new LoginResponseMessage(ResponseCode.STATUS_OK, privileges.getCrownId(), false));
-    getSession().attr(ATTRIBUTE_KEY).setIfAbsent(this);
-    world.notify(new InitializePlayerEvent(this));
+    lastKnownRegion = position;
+    teleport(position);
+
+    Session session = getSession();
+    ChannelFuture future = session.writeAndFlush(new LoginResponseMessage(
+            ResponseCode.STATUS_OK, privileges.getCrownId(), false));
+
+    // Await final login message to complete before resuming the login procedure
+    future.addListener(listener -> {
+      ChannelPipeline pipeline = session.getChannel().pipeline();
+      pipeline.replace(FrameCodec.class, "ciphered_frame_codec", new CipheredFrameCodec(session, IsaacRandomPair.fromSeed(credentials.getSessionIds())));
+      pipeline.replace(FrameMessageCodec.class, "message_codec", new FrameMessageCodec(session));
+
+      session.onClose(__ -> world.getService(GameService.class).removePlayer(this));
+      session.attr(ATTRIBUTE_KEY).set(this);
+
+      write(new InitializePlayerMessage(isMember(), getIndex()));
+      write(new RebuildRegionMessage(position));
+
+      skills.addListener(new SynchronizationSkillListener(this));
+      skills.addListener(new LevelUpSkillListener(this));
+      skills.refresh();
+
+      world.notify(new InitializePlayerEvent(this));
+    });
   }
 
   /**

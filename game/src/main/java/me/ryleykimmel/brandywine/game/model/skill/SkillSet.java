@@ -187,15 +187,6 @@ public final class SkillSet {
   }
 
   /**
-   * Sets the level of <strong>every</strong> Skill.
-   *
-   * @param level The new level of each Skill.
-   */
-  public void setAll(int level) {
-    execute(skill -> setLevel(skill.getId(), level));
-  }
-
-  /**
    * Resets the current level of the Skill with the specified id.
    *
    * @param id The id of the Skill.

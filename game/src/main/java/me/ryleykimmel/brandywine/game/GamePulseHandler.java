@@ -2,8 +2,8 @@ package me.ryleykimmel.brandywine.game;
 
 import me.ryleykimmel.brandywine.Service;
 import me.ryleykimmel.brandywine.ServiceSet;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Pulses game functions at a fixed rate.
@@ -18,7 +18,7 @@ public final class GamePulseHandler implements Runnable {
   /**
    * The Logger for this class.
    */
-  private static final Logger logger = LoggerFactory.getLogger(GamePulseHandler.class);
+  private static final Logger logger = LogManager.getLogger(GamePulseHandler.class);
 
   /**
    * A mapping of {@link Service}s.
@@ -41,9 +41,7 @@ public final class GamePulseHandler implements Runnable {
         long elapsed = service.pulse();
         long diff = service.getInterval() - elapsed;
         if (diff < 0) {
-          logger
-            .warn("{} is being overloaded by {}% total {}ms", service.toString(), Math.abs(diff),
-              elapsed);
+          logger.warn("{} is being overloaded by {}% total {}ms", service.toString(), Math.abs(diff), elapsed);
         }
       } catch (Exception cause) {
         logger.error("Error occurred while executing service.", cause);

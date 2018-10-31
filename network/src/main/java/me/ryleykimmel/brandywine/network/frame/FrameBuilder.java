@@ -5,13 +5,12 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import me.ryleykimmel.brandywine.common.Assertions;
 import me.ryleykimmel.brandywine.common.util.ByteBufUtil;
-import me.ryleykimmel.brandywine.network.frame.FrameBuffer.WritingFrameBuffer;
 import org.apache.commons.lang3.builder.Builder;
 
 /**
- * An implementation of a WritingFrameBuffer which builds Frames from its contents.
+ * An implementation of a FrameBuffer which builds Frames from its contents.
  */
-public final class FrameBuilder extends WritingFrameBuffer implements Builder<Frame> {
+public final class FrameBuilder extends FrameBuffer implements Builder<Frame> {
 
   /**
    * The opcode of the Frame.
@@ -82,60 +81,20 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
 
     switch (order) {
       case LITTLE:
-        for (int i = 0; i < length; i++) {
-          if (i == 0 && transformation != DataTransformation.NONE) {
-            switch (transformation) {
-              case ADD:
-                buffer.writeByte((byte) (longValue + 128));
-                break;
-
-              case SUBTRACT:
-                buffer.writeByte((byte) (128 - longValue));
-                break;
-
-              case NEGATE:
-                buffer.writeByte((byte) -longValue);
-                break;
-
-              default:
-                throw new UnsupportedOperationException(transformation + " is not supported!");
-            }
-          } else {
-            buffer.writeByte((byte) (longValue >> i * 8));
-          }
+        for (int index = 0; index < length; index++) {
+          writeAndTransform(transformation, longValue, index);
         }
         break;
 
       case BIG:
-        for (int i = length - 1; i >= 0; i--) {
-          if (i == 0 && transformation != DataTransformation.NONE) {
-            switch (transformation) {
-              case ADD:
-                buffer.writeByte((byte) (longValue + 128));
-                break;
-
-              case SUBTRACT:
-                buffer.writeByte((byte) (128 - longValue));
-                break;
-
-              case NEGATE:
-                buffer.writeByte((byte) -longValue);
-                break;
-
-              default:
-                throw new UnsupportedOperationException(transformation + " is not supported!");
-            }
-          } else {
-            buffer.writeByte((byte) (longValue >> i * 8));
-          }
+        for (int index = length - 1; index >= 0; index--) {
+          writeAndTransform(transformation, longValue, index);
         }
         break;
 
       case MIDDLE:
-        Preconditions.checkArgument(transformation == DataTransformation.NONE,
-          "middle endian cannot be transformed");
-        Preconditions
-          .checkArgument(type == DataType.INT, "middle endian can only be used with an integer");
+        Preconditions.checkArgument(transformation == DataTransformation.NONE, "middle endian cannot be transformed");
+        Preconditions.checkArgument(type == DataType.INT, "middle endian can only be used with an integer");
 
         buffer.writeByte((byte) (longValue >> 8));
         buffer.writeByte((byte) longValue);
@@ -144,10 +103,8 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
         break;
 
       case INVERSED_MIDDLE:
-        Preconditions.checkArgument(transformation == DataTransformation.NONE,
-          "inversed middle endian cannot be transformed");
-        Preconditions.checkArgument(type == DataType.INT,
-          "inversed middle endian can only be used with an integer");
+        Preconditions.checkArgument(transformation == DataTransformation.NONE, "inversed middle endian cannot be transformed");
+        Preconditions.checkArgument(type == DataType.INT, "inversed middle endian can only be used with an integer");
 
         buffer.writeByte((byte) (longValue >> 16));
         buffer.writeByte((byte) (longValue >> 24));
@@ -157,6 +114,29 @@ public final class FrameBuilder extends WritingFrameBuffer implements Builder<Fr
 
       default:
         throw new UnsupportedOperationException(order + " is not supported!");
+    }
+  }
+
+  private void writeAndTransform(DataTransformation transformation, long longValue, int byteIndex) {
+    if (byteIndex == 0 && transformation != DataTransformation.NONE) {
+      switch (transformation) {
+        case ADD:
+          buffer.writeByte((byte) (longValue + 128));
+          break;
+
+        case SUBTRACT:
+          buffer.writeByte((byte) (128 - longValue));
+          break;
+
+        case NEGATE:
+          buffer.writeByte((byte) -longValue);
+          break;
+
+        default:
+          throw new UnsupportedOperationException(transformation + " is not supported!");
+      }
+    } else {
+      buffer.writeByte((byte) (longValue >> byteIndex * 8));
     }
   }
 

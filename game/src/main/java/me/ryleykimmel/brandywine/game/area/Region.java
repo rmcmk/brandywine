@@ -183,9 +183,8 @@ public final class Region {
 
     Set<EntityType> set = ImmutableSet.copyOf(types);
     @SuppressWarnings("unchecked")
-    Set<T> filtered = (Set<T>) local.stream().filter(entity -> set.contains(entity.getType()))
-                                 .collect(Collectors.toSet());
-    return ImmutableSet.copyOf(filtered);
+    Stream<T> filtered = (Stream<T>) local.stream().filter(entity -> set.contains(entity.getType()));
+    return ImmutableSet.copyOf(filtered.collect(Collectors.toSet()));
   }
 
   /**

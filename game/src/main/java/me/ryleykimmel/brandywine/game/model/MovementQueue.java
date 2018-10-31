@@ -1,6 +1,6 @@
 package me.ryleykimmel.brandywine.game.model;
 
-import me.ryleykimmel.brandywine.game.msg.ResetDestinationMessage;
+import me.ryleykimmel.brandywine.game.message.ResetDestinationMessage;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

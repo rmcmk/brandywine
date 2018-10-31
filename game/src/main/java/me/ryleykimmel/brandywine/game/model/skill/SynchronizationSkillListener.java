@@ -1,7 +1,7 @@
 package me.ryleykimmel.brandywine.game.model.skill;
 
 import me.ryleykimmel.brandywine.game.model.player.Player;
-import me.ryleykimmel.brandywine.game.msg.UpdateSkillMessage;
+import me.ryleykimmel.brandywine.game.message.UpdateSkillMessage;
 
 /**
  * An implementation of a {@link SkillListener} which keeps the server and client state of Skills

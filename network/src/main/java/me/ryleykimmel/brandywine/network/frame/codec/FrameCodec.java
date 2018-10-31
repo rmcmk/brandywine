@@ -7,9 +7,8 @@ import io.netty.handler.codec.ByteToMessageCodec;
 import me.ryleykimmel.brandywine.network.Session;
 import me.ryleykimmel.brandywine.network.frame.Frame;
 import me.ryleykimmel.brandywine.network.frame.FrameMetadata;
-import me.ryleykimmel.brandywine.network.frame.FrameMetadataSet;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -21,17 +20,12 @@ public class FrameCodec extends ByteToMessageCodec<Frame> {
   /**
    * The Logger for this class.
    */
-  protected static final Logger logger = LoggerFactory.getLogger(FrameCodec.class);
+  protected static final Logger logger = LogManager.getLogger(FrameCodec.class);
 
   /**
    * The Session for this FrameCodec.
    */
   protected final Session session;
-
-  /**
-   * The FrameMetadataSet for this FrameCodec.
-   */
-  protected final FrameMetadataSet metadataSet;
 
   /**
    * The metadata of the Frame we're decoding.
@@ -48,18 +42,30 @@ public class FrameCodec extends ByteToMessageCodec<Frame> {
    */
   private State state = State.DECODE_OPCODE;
 
-  public FrameCodec(Session session, FrameMetadataSet metadataSet) {
+  /**
+   * Constructs a new {@link FrameCodec}.
+   *
+   * @param session The Session for this FrameCodec.
+   */
+  public FrameCodec(Session session) {
     this.session = session;
-    this.metadataSet = metadataSet;
   }
 
   @Override
   protected void encode(ChannelHandlerContext ctx, Frame frame, ByteBuf buffer) {
+    if (session.isClosed()) {
+      return;
+    }
+
     buffer.writeBytes(frame.content());
   }
 
   @Override
   protected void decode(ChannelHandlerContext ctx, ByteBuf buffer, List<Object> out) {
+    if (session.isClosed()) {
+      return;
+    }
+
     switch (state) {
       case DECODE_OPCODE:
         decodeOpcode(buffer, out);
@@ -83,7 +89,8 @@ public class FrameCodec extends ByteToMessageCodec<Frame> {
    */
   protected void decodeOpcode(ByteBuf buffer, List<Object> out) {
     int opcode = buffer.readUnsignedByte();
-    out.add(new Frame(metadataSet.getMetadata(opcode), buffer.readBytes(buffer.readableBytes())));
+    out.add(new Frame(session.getFrameMetadataSet().getMetadata(opcode),
+            buffer.readBytes(buffer.readableBytes())));
   }
 
   /**

@@ -12,8 +12,7 @@ public final class PlayerPrivileges {
   /**
    * The Set of Privileges a Player has.
    */
-  private final Set<Privilege> privileges = new HashSet<>(EnumSet.of(
-    Privilege.NONE)); // Everyone has 'none'
+  private final Set<Privilege> privileges = new HashSet<>(EnumSet.of(Privilege.NONE)); // Everyone has 'none'
 
   /**
    * Gets the id of the most senior (as specified by {@link Enum#compareTo(Enum)}) Crown.

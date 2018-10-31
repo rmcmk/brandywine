@@ -4,11 +4,11 @@ import com.google.common.base.Preconditions;
 import io.netty.channel.ChannelFutureListener;
 import me.ryleykimmel.brandywine.game.GameService;
 import me.ryleykimmel.brandywine.game.model.player.Player;
-import me.ryleykimmel.brandywine.game.msg.LoginResponseMessage;
+import me.ryleykimmel.brandywine.game.message.LoginResponseMessage;
 import me.ryleykimmel.brandywine.network.ResponseCode;
 import me.ryleykimmel.brandywine.network.Session;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * A {@link Runnable} worker which manages {@link AuthenticationRequest}s.
@@ -18,7 +18,7 @@ public final class AuthenticationWorker implements Runnable {
   /**
    * The Logger for this class.
    */
-  private static final Logger logger = LoggerFactory.getLogger(AuthenticationWorker.class);
+  private static final Logger logger = LogManager.getLogger(AuthenticationWorker.class);
 
   /**
    * The service used to queue game requests.
@@ -86,8 +86,7 @@ public final class AuthenticationWorker implements Runnable {
    * @param response The response to send.
    */
   private void closeWithResponse(Session session, ResponseCode response) {
-    session.writeAndFlush(new LoginResponseMessage(response))
-      .addListener(ChannelFutureListener.CLOSE);
+    session.writeAndFlush(new LoginResponseMessage(response)).addListener(ChannelFutureListener.CLOSE);
   }
 
 }

@@ -3,8 +3,8 @@ package me.ryleykimmel.brandywine.fs;
 import com.google.common.base.Preconditions;
 import me.ryleykimmel.brandywine.common.Buffer;
 import me.ryleykimmel.brandywine.fs.archive.Archive;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.nio.channels.SeekableByteChannel;
@@ -94,7 +94,7 @@ public final class FileSystem {
   /**
    * The Logger for this class.
    */
-  private static final Logger logger = LoggerFactory.getLogger(FileSystem.class);
+  private static final Logger logger = LogManager.getLogger(FileSystem.class);
 
   /**
    * The maximum amount of Cache indices this FileSystem is allowed to have.
@@ -145,7 +145,7 @@ public final class FileSystem {
    * @param archiveChecksumTable A table of the Archive checksums.
    */
   private FileSystem(Cache[] caches, Archive[] archives, int[] archiveChecksums,
-                      Buffer archiveChecksumTable) {
+                     Buffer archiveChecksumTable) {
     this.caches = caches;
     this.archives = archives;
     this.archiveChecksums = archiveChecksums;
@@ -187,7 +187,7 @@ public final class FileSystem {
     }
 
     Cache cache = Preconditions.checkNotNull(caches[CONFIG_INDEX],
-      "Configuration cache is null - unable to decode archives");
+     "Configuration cache is null - unable to decode archives");
 
     Buffer archiveChecksumTable = buildArchiveHashTable(cache);
     for (int index = 0; index < archiveChecksums.length; index++) {
@@ -203,7 +203,7 @@ public final class FileSystem {
     logger.info("Decoded {} archives from the configuration cache.", archives.length);
 
     FileSystem fileSystem = new FileSystem(caches, archives, archiveChecksums,
-                                            archiveChecksumTable);
+                                           archiveChecksumTable);
 
     return fileSystem;
   }
@@ -250,7 +250,7 @@ public final class FileSystem {
    */
   public Archive getArchive(int id) {
     Preconditions
-      .checkElementIndex(id, archives.length, "Archive for id: " + id + " does not exist");
+     .checkElementIndex(id, archives.length, "Archive for id: " + id + " does not exist");
     Preconditions.checkNotNull(archives[id], "Archive for id: " + id + " is null");
 
     return archives[id];
@@ -284,9 +284,7 @@ public final class FileSystem {
    */
   public Buffer getFile(int index, int id) throws IOException {
     if (files.containsKey(id)) {
-      synchronized (files) {
-        return files.get(id).copy();
-      }
+      return files.get(id).copy();
     }
 
     Buffer buffer = getCache(index).getFile(id);

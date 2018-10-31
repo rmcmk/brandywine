@@ -60,8 +60,8 @@ public abstract class Entity {
     }
 
     RegionRepository repository = world.getRegionRepository();
-    Region currentRegion = repository.fromPosition(current),
-      next = repository.fromPosition(position);
+    Region currentRegion = repository.fromPosition(current);
+    Region next = repository.fromPosition(position);
 
     currentRegion.removeEntity(this);
     this.position = position;

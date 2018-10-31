@@ -1,10 +1,12 @@
 package me.ryleykimmel.brandywine.game.model.inter;
 
 import me.ryleykimmel.brandywine.game.model.player.Player;
-import me.ryleykimmel.brandywine.game.msg.CloseInterfaceMessage;
+import me.ryleykimmel.brandywine.game.message.CloseInterfaceMessage;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Maintains a set of open Interfaces.
@@ -12,9 +14,9 @@ import java.util.Map;
 public final class InterfaceSet {
 
   /**
-   * A mapping of InterfaceTypes to currently open Interfaces.
+   * A mapping of Interface ids to currently open Interfaces.
    */
-  private final Map<InterfaceType, Interface> interfaces = new HashMap<>();
+  private final Map<Integer, Interface> interfaces = new HashMap<>();
 
   /**
    * The Player who maintains this InterfaceSet.
@@ -42,6 +44,32 @@ public final class InterfaceSet {
   }
 
   /**
+   * Tests whether or not this InterfaceSet has the specified InterfaceType open.
+   *
+   * @param type The InterfaceType to test.
+   * @return {@code true} iff the specified InterfaceType is open.
+   */
+  public boolean isOpen(InterfaceType type) {
+    for (Interface inter : interfaces.values()) {
+      if (inter.getType() == type) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Tests whether or not this InterfaceSet has the specified Interface open.
+   *
+   * @param id The Interface id.
+   * @return {@code true} iff the specified Interface is open.
+   */
+  public boolean isOpen(int id) {
+    return interfaces.containsKey(id);
+  }
+
+  /**
    * Adds the specified Interface to this InterfaceSet.
    * <p>
    * This method should not be used for opening Interfaces, use {@link InterfaceSet#open(Interface)}
@@ -50,7 +78,7 @@ public final class InterfaceSet {
    * @param inter The Interface that was added.
    */
   public void add(Interface inter) {
-    interfaces.put(inter.getType(), inter);
+    interfaces.put(inter.getId(), inter);
   }
 
   /**
@@ -81,14 +109,25 @@ public final class InterfaceSet {
       return;
     }
 
+    remove(InterfaceType.DIALOGUE);
+    remove(InterfaceType.DYNAMIC_OVERLAY);
+
     player.write(new CloseInterfaceMessage());
 
     if (notify) {
       player.getWorld().notify(new InterfacesClosedEvent(player));
     }
+  }
 
-    interfaces.remove(InterfaceType.DIALOGUE);
-    interfaces.remove(InterfaceType.DYNAMIC_OVERLAY);
+  /**
+   * Removes all of the specified InterfaceTypes.
+   *
+   * @param type The InterfaceType to remove.
+   */
+  private void remove(InterfaceType type) {
+    Set<Interface> remove = interfaces.values().stream().filter(inter -> inter.getType() == type)
+                              .collect(Collectors.toSet());
+    remove.forEach(inter -> interfaces.remove(inter.getId()));
   }
 
   /**

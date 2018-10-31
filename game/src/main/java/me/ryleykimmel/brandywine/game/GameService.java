@@ -20,12 +20,12 @@ public final class GameService extends Service {
   /**
    * The maximum amount of Players registered per pulse.
    */
-  private static final int REGISTERS_PER_PULSE = 50;
+  private static final int REGISTERS_PER_PULSE = 10;
 
   /**
    * The maximum amount of unregisters per pulse.
    */
-  private static final int UNREGISTERS_PER_PULSE = 50;
+  private static final int UNREGISTERS_PER_PULSE = 10;
 
   /**
    * A {@link Queue} of Players awaiting registration.
@@ -58,7 +58,7 @@ public final class GameService extends Service {
    * @param player The Player to queue.
    * @return {@code true} if and only if the Player can be registered otherwise {@code false}.
    */
-  public synchronized boolean queuePlayer(Player player) {
+  public boolean queuePlayer(Player player) {
     if (queuedPlayers.size() + world.getPlayerCount() > World.MAXIMUM_PLAYERS) {
       return false;
     }
@@ -80,7 +80,7 @@ public final class GameService extends Service {
    *
    * @param player The Player being removed.
    */
-  public synchronized void finalizePlayerRemoval(Player player) {
+  public void finalizePlayerRemoval(Player player) {
     world.finalizePlayerRemoval(player);
   }
 
@@ -90,12 +90,12 @@ public final class GameService extends Service {
    * @param player The Player to test.
    * @return {@code true} if the Player is online or is awaiting login otherwise {@code false}.
    */
-  public synchronized boolean isPlayerOnline(Player player) {
+  public boolean isPlayerOnline(Player player) {
     return world.isOnline(player) || queuedPlayers.contains(player);
   }
 
   @Override
-  public synchronized void execute() {
+  public void execute() {
     for (int count = 0; count < UNREGISTERS_PER_PULSE; count++) {
       Player player = oldPlayers.poll();
       if (player == null) {

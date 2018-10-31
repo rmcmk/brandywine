@@ -1,5 +1,7 @@
 package me.ryleykimmel.brandywine.game.model;
 
+import me.ryleykimmel.brandywine.Service;
+import me.ryleykimmel.brandywine.ServiceSet;
 import me.ryleykimmel.brandywine.game.area.Region;
 import me.ryleykimmel.brandywine.game.area.RegionRepository;
 import me.ryleykimmel.brandywine.game.collect.MobRepository;
@@ -17,8 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * A representation of the in-game World, containing repositories of {@link Mob mobs} and other
- * things only relevant to the World.
+ * A representation of the in-game World, containing repositories of {@link Entity}'s and other things relevant to the World.
  */
 public final class World {
 
@@ -56,6 +57,11 @@ public final class World {
    * The {@link RegionRepository} for this World.
    */
   private final RegionRepository regionRepository = new RegionRepository();
+
+  /**
+   * The {@link ServiceSet} for this World.
+   */
+  private final ServiceSet services = new ServiceSet();
 
   /**
    * The {@link EventConsumerChainSet} for this World.
@@ -122,6 +128,34 @@ public final class World {
     region.removeEntity(player);
 
     playerRepository.remove(player);
+  }
+
+  /**
+   * Registers the specified Service.
+   *
+   * @param service The Service to register, may not be {@code null}.
+   */
+  public void registerService(Service service) {
+    services.register(service);
+  }
+
+  /**
+   * Gets a Service from its type.
+   *
+   * @param clazz The type of the Service, may not be {@code null}.
+   * @return The instance of the Service, never {@code null}.
+   */
+  public <T extends Service> T getService(Class<T> clazz) {
+    return services.get(clazz);
+  }
+
+  /**
+   * Gets the ServiceSet for this World.
+   *
+   * @return The ServiceSet for this World.
+   */
+  public ServiceSet getServices() {
+    return services;
   }
 
   /**

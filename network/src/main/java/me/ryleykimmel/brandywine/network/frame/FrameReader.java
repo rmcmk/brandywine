@@ -3,12 +3,11 @@ package me.ryleykimmel.brandywine.network.frame;
 import com.google.common.base.Preconditions;
 import me.ryleykimmel.brandywine.common.Assertions;
 import me.ryleykimmel.brandywine.common.util.ByteBufUtil;
-import me.ryleykimmel.brandywine.network.frame.FrameBuffer.ReadingFrameBuffer;
 
 /**
- * An implementation of a {@link ReadingFrameBuffer} which reads data from a Frames payload.
+ * An implementation of a {@link FrameBuffer} which reads data from a Frames payload.
  */
-public final class FrameReader extends ReadingFrameBuffer {
+public final class FrameReader extends FrameBuffer {
 
   /**
    * The Frame we're reading.
@@ -188,52 +187,14 @@ public final class FrameReader extends ReadingFrameBuffer {
 
     switch (order) {
       case LITTLE:
-        for (int i = 0; i < length; i++) {
-          if (i == 0 && transformation != DataTransformation.NONE) {
-            switch (transformation) {
-              case ADD:
-                longValue |= buffer.readByte() - 128 & 0xFFL;
-                break;
-
-              case SUBTRACT:
-                longValue |= 128 - buffer.readByte() & 0xFFL;
-                break;
-
-              case NEGATE:
-                longValue |= -buffer.readByte() & 0xFFL;
-                break;
-
-              default:
-                throw new UnsupportedOperationException(transformation + " is not supported!");
-            }
-          } else {
-            longValue |= (buffer.readByte() & 0xFFL) << i * 8;
-          }
+        for (int index = 0; index < length; index++) {
+          longValue = readAndTransform(transformation, longValue, index);
         }
         break;
 
       case BIG:
-        for (int i = length - 1; i >= 0; i--) {
-          if (i == 0 && transformation != DataTransformation.NONE) {
-            switch (transformation) {
-              case ADD:
-                longValue |= buffer.readByte() - 128 & 0xFFL;
-                break;
-
-              case SUBTRACT:
-                longValue |= 128 - buffer.readByte() & 0xFFL;
-                break;
-
-              case NEGATE:
-                longValue |= -buffer.readByte() & 0xFFL;
-                break;
-
-              default:
-                throw new UnsupportedOperationException(transformation + " is not supported!");
-            }
-          } else {
-            longValue |= (buffer.readByte() & 0xFFL) << i * 8;
-          }
+        for (int index = length - 1; index >= 0; index--) {
+          longValue = readAndTransform(transformation, longValue, index);
         }
         break;
 
@@ -265,6 +226,30 @@ public final class FrameReader extends ReadingFrameBuffer {
         throw new UnsupportedOperationException(order + " is not supported!");
     }
 
+    return longValue;
+  }
+
+  private long readAndTransform(DataTransformation transformation, long longValue, int byteIndex) {
+    if (byteIndex == 0 && transformation != DataTransformation.NONE) {
+      switch (transformation) {
+        case ADD:
+          longValue |= buffer.readByte() - 128 & 0xFFL;
+          break;
+
+        case SUBTRACT:
+          longValue |= 128 - buffer.readByte() & 0xFFL;
+          break;
+
+        case NEGATE:
+          longValue |= -buffer.readByte() & 0xFFL;
+          break;
+
+        default:
+          throw new UnsupportedOperationException(transformation + " is not supported!");
+      }
+    } else {
+      longValue |= (buffer.readByte() & 0xFFL) << byteIndex * 8;
+    }
     return longValue;
   }
 

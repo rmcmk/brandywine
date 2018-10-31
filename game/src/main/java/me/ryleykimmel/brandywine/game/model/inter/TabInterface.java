@@ -1,7 +1,7 @@
 package me.ryleykimmel.brandywine.game.model.inter;
 
 import me.ryleykimmel.brandywine.game.model.player.Player;
-import me.ryleykimmel.brandywine.game.msg.OpenTabInterfaceMessage;
+import me.ryleykimmel.brandywine.game.message.OpenTabInterfaceMessage;
 
 /**
  * Represents an Interface within the tab area.

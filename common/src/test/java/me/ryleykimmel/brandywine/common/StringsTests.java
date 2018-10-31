@@ -25,9 +25,9 @@ public final class StringsTests {
    */
   @Test
   public void toFirstUpper() {
-    String input = Strings.toFirstUpper("hEllO WoRlD"), expected = "Hello world";
+    assertThat(Strings.toFirstUpper("hEllO WoRlD")).isEqualTo("Hello world");
 
-    assertThat(input).isEqualTo(expected);
+    assertThat(Strings.toFirstUpper("h")).isEqualTo("H");
   }
 
   /**

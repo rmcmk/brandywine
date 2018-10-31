@@ -67,4 +67,13 @@ public final class Frame extends DefaultByteBufHolder {
     return length;
   }
 
+  /**
+   * Gets the remaining length (readable bytes left) of this Frame.
+   *
+   * @return The remaining length of this Frame.
+   */
+  public int getRemainingLength() {
+    return content().readableBytes();
+  }
+
 }

@@ -1,0 +1,4 @@
+task keygen(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'me.ryleykimmel.brandywine.common.rsa.RsaKeyGenerator'
+}

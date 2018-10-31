@@ -45,8 +45,7 @@ public final class FrameMetadata {
   public FrameMetadata(int opcode, int length) {
     Assertions.checkWithin(0, MAXIMUM_OPCODE, opcode, "Invalid opcode: " + opcode);
     if (length < 0) {
-      Preconditions.checkArgument(length == VARIABLE_BYTE_LENGTH || length == VARIABLE_SHORT_LENGTH,
-        "Invalid length: " + length);
+      Preconditions.checkArgument(length == VARIABLE_BYTE_LENGTH || length == VARIABLE_SHORT_LENGTH, "Invalid length: " + length);
     }
     this.opcode = opcode;
     this.length = length;
