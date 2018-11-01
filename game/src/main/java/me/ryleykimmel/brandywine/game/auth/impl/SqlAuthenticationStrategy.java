@@ -2,6 +2,9 @@ package me.ryleykimmel.brandywine.game.auth.impl;
 
 import com.google.common.base.Preconditions;
 import com.lambdaworks.crypto.SCryptUtil;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 import me.ryleykimmel.brandywine.game.auth.AuthenticationStrategy;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.model.player.PlayerCredentials;
@@ -11,10 +14,6 @@ import org.sql2o.Query;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 import org.sql2o.data.Row;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
 
 /**
  * An {@link AuthenticationStrategy} which utilizes jdbc-SQL to validate requests.
@@ -64,7 +63,7 @@ public final class SqlAuthenticationStrategy implements AuthenticationStrategy {
       String remoteAddress = player.getSession().getRemoteAddress().getHostString();
 
       Query select = connection
-                       .createQuery("SELECT * FROM failed_logins WHERE remote_addr = :remote_addr");
+          .createQuery("SELECT * FROM failed_logins WHERE remote_addr = :remote_addr");
       select.addParameter("remote_addr", remoteAddress);
 
       List<Row> results = select.executeAndFetchTable().rows();
@@ -79,7 +78,7 @@ public final class SqlAuthenticationStrategy implements AuthenticationStrategy {
 
         if (now.isAfter(expire)) {
           Query delete = connection.createQuery(
-            "DELETE FROM failed_logins WHERE remote_addr = :remote_addr");
+              "DELETE FROM failed_logins WHERE remote_addr = :remote_addr");
           delete.addParameter("remote_addr", remoteAddress);
           delete.executeUpdate();
         } else if (count >= 5) {
@@ -104,7 +103,7 @@ public final class SqlAuthenticationStrategy implements AuthenticationStrategy {
 
         if (!SCryptUtil.check(password, remotePassword)) {
           Query insert = connection.createQuery(
-            "INSERT INTO failed_logins (count, timestamp, remote_addr) VALUES (:count, :timestamp, :remote_addr) ON DUPLICATE KEY UPDATE count = VALUES(count), timestamp = VALUES(timestamp), remote_addr = VALUES(remote_addr)");
+              "INSERT INTO failed_logins (count, timestamp, remote_addr) VALUES (:count, :timestamp, :remote_addr) ON DUPLICATE KEY UPDATE count = VALUES(count), timestamp = VALUES(timestamp), remote_addr = VALUES(remote_addr)");
           insert.addParameter("count", count + 1);
           insert.addParameter("timestamp", System.currentTimeMillis());
           insert.addParameter("remote_addr", remoteAddress);

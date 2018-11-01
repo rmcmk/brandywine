@@ -3,14 +3,18 @@ package me.ryleykimmel.brandywine.game.area;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
-import me.ryleykimmel.brandywine.game.model.Entity;
-import me.ryleykimmel.brandywine.game.model.EntityType;
-import me.ryleykimmel.brandywine.game.model.Position;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import me.ryleykimmel.brandywine.game.model.Entity;
+import me.ryleykimmel.brandywine.game.model.EntityType;
+import me.ryleykimmel.brandywine.game.model.Position;
 
 /**
  * An 8x8 area of the map.
@@ -73,8 +77,7 @@ public final class Region {
   }
 
   /**
-   * Adds a {@link Entity} to the Region. Note that this does not spawn the Entity, or do any other
-   * action other than register it to this Region.
+   * Adds a {@link Entity} to the Region. Note that this does not spawn the Entity, or do any other action other than register it to this Region.
    *
    * @param entity The Entity.
    * @param notify Whether or not the {@link RegionListener}s for this Region should be notified.
@@ -93,8 +96,7 @@ public final class Region {
   }
 
   /**
-   * Adds a {@link Entity} to the Region. Note that this does not spawn the Entity, or do any other
-   * action other than register it to this Region.
+   * Adds a {@link Entity} to the Region. Note that this does not spawn the Entity, or do any other action other than register it to this Region.
    * <p>
    * By default, this method notifies RegionListeners for this region of the addition.
    *
@@ -140,9 +142,8 @@ public final class Region {
   }
 
   /**
-   * Gets an intermediate {@link Stream} from the {@link Set} of {@link Entity}s with the specified
-   * {@link EntityType} (s). Type will be inferred from the call, so ensure that the Entity type and
-   * the reference correspond, or this method will fail at runtime.
+   * Gets an intermediate {@link Stream} from the {@link Set} of {@link Entity}s with the specified {@link EntityType} (s). Type will be inferred from the call, so ensure that the
+   * Entity type and the reference correspond, or this method will fail at runtime.
    *
    * @param types The {@link EntityType}s.
    * @return The Stream of Entity objects.
@@ -151,12 +152,11 @@ public final class Region {
   public <T extends Entity> Stream<T> getEntities(EntityType... types) {
     Set<EntityType> set = ImmutableSet.copyOf(types);
     return (Stream<T>) entities.values().stream().flatMap(Collection::stream)
-                         .filter(entity -> set.contains(entity.getType()));
+        .filter(entity -> set.contains(entity.getType()));
   }
 
   /**
-   * Gets a shallow copy of the {@link Set} of {@link Entity} objects at the specified
-   * {@link Position}. The returned type will be immutable.
+   * Gets a shallow copy of the {@link Set} of {@link Entity} objects at the specified {@link Position}. The returned type will be immutable.
    *
    * @param position The Position containing the entities.
    * @return The Set. Will be immutable.
@@ -167,9 +167,8 @@ public final class Region {
   }
 
   /**
-   * Gets a shallow copy of the {@link Set} of {@link Entity}s with the specified {@link EntityType}
-   * (s). The returned type will be immutable. Type will be inferred from the call, so ensure that
-   * the Entity type and the reference correspond, or this method will fail at runtime.
+   * Gets a shallow copy of the {@link Set} of {@link Entity}s with the specified {@link EntityType} (s). The returned type will be immutable. Type will be inferred from the call,
+   * so ensure that the Entity type and the reference correspond, or this method will fail at runtime.
    *
    * @param position The {@link Position} containing the entities.
    * @param types The {@link EntityType}s.
@@ -183,13 +182,13 @@ public final class Region {
 
     Set<EntityType> set = ImmutableSet.copyOf(types);
     @SuppressWarnings("unchecked")
-    Stream<T> filtered = (Stream<T>) local.stream().filter(entity -> set.contains(entity.getType()));
+    Stream<T> filtered = (Stream<T>) local.stream()
+        .filter(entity -> set.contains(entity.getType()));
     return ImmutableSet.copyOf(filtered.collect(Collectors.toSet()));
   }
 
   /**
-   * Gets the {@link Set} of {@link RegionCoordinates} of Regions that are viewable from the
-   * specified {@link Position}.
+   * Gets the {@link Set} of {@link RegionCoordinates} of Regions that are viewable from the specified {@link Position}.
    *
    * @return The Set of RegionCoordinates.
    */
@@ -221,8 +220,7 @@ public final class Region {
    * Removes an {@link Entity} from this Region.
    *
    * @param entity The Entity.
-   * @throws IllegalArgumentException If the Entity does not belong in this Region, or if it was
-   * never added.
+   * @throws IllegalArgumentException If the Entity does not belong in this Region, or if it was never added.
    */
   public void removeEntity(Entity entity) {
     Position position = entity.getPosition();
@@ -232,7 +230,7 @@ public final class Region {
 
     if (local == null || !local.remove(entity)) {
       throw new IllegalArgumentException("Entity (" + entity + ") belongs in (" + toString()
-                                           + ") but does not exist.");
+          + ") but does not exist.");
     }
 
     notifyListeners(entity, EntityUpdateType.REMOVE);
@@ -240,7 +238,9 @@ public final class Region {
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("coordinates", coordinates).toString();
+    return MoreObjects.toStringHelper(this)
+        .add("coordinates", coordinates)
+        .toString();
   }
 
   /**
@@ -251,7 +251,7 @@ public final class Region {
    */
   private void checkPosition(Position position) {
     Preconditions.checkArgument(coordinates.equals(RegionCoordinates.fromPosition(position)),
-      "Position is not included in this Region.");
+        "Position is not included in this Region.");
   }
 
 

@@ -1,7 +1,6 @@
 package me.ryleykimmel.brandywine.common.util;
 
 import io.netty.buffer.ByteBuf;
-
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 
@@ -11,14 +10,12 @@ import java.nio.charset.StandardCharsets;
 public final class ByteBufUtil {
 
   /**
-   * The terminator used within the client, equal to <tt>10</tt> and otherwise know as the Jagex
-   * {@code String} terminator.
+   * The terminator used within the client, equal to <tt>10</tt> and otherwise know as the Jagex {@code String} terminator.
    */
   public static final char J_STRING_TERMINATOR = '\n';
 
   /**
-   * The default {@code String} terminator, equal to <tt>0</tt> and otherwise known as the 'null'
-   * {@code String} terminator.
+   * The default {@code String} terminator, equal to <tt>0</tt> and otherwise known as the 'null' {@code String} terminator.
    */
   public static final char DEFAULT_STRING_TERMINATOR = '\0';
 
@@ -69,8 +66,7 @@ public final class ByteBufUtil {
   }
 
   /**
-   * Writes the specified String to the specified ByteBuf, followed by the specified terminator,
-   * indicating the end of the written String.
+   * Writes the specified String to the specified ByteBuf, followed by the specified terminator, indicating the end of the written String.
    *
    * @param buffer The ByteBuf to write the String to.
    * @param string The String to write.
@@ -82,11 +78,9 @@ public final class ByteBufUtil {
   }
 
   /**
-   * Gets a {@link String} from the specified {@link ByteBuf}, the ByteBuf will continue to get
-   * until the specified {@code terminator} is reached.
+   * Gets a {@link String} from the specified {@link ByteBuf}, the ByteBuf will continue to get until the specified {@code terminator} is reached.
    * <p>
-   * We use a {@link ByteArrayOutputStream} as it is self expanding. We don't want to waste precious
-   * time determining a fixed length for the {@code String}.
+   * We use a {@link ByteArrayOutputStream} as it is self expanding. We don't want to waste precious time determining a fixed length for the {@code String}.
    * </p>
    *
    * @param buffer The ByteBuf to read from.

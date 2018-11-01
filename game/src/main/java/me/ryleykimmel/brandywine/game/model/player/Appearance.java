@@ -2,7 +2,6 @@ package me.ryleykimmel.brandywine.game.model.player;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -158,7 +157,7 @@ public final class Appearance {
    */
   private Feature get(int id) {
     return Preconditions
-             .checkNotNull(features.get(id), "Feature for id: " + id + " does not exist.");
+        .checkNotNull(features.get(id), "Feature for id: " + id + " does not exist.");
   }
 
   /**

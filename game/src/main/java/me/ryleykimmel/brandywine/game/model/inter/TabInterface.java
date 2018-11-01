@@ -1,7 +1,7 @@
 package me.ryleykimmel.brandywine.game.model.inter;
 
-import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.message.OpenTabInterfaceMessage;
+import me.ryleykimmel.brandywine.game.model.player.Player;
 
 /**
  * Represents an Interface within the tab area.
@@ -123,7 +123,7 @@ public final class TabInterface extends Interface {
      *
      * @param id The id of this Tab.
      */
-    private Tab(int id) {
+    Tab(int id) {
       this.id = id;
     }
 

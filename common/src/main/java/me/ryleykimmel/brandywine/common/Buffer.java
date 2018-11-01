@@ -1,12 +1,11 @@
 package me.ryleykimmel.brandywine.common;
 
 import com.google.common.base.Preconditions;
-
 import java.nio.ByteBuffer;
 
 /**
- * A wrapper for {@link ByteBuffer} that adds methods to read unsigned data types and specific
- * string types. All methods read and places values in big-endian format unless otherwise stated.
+ * A wrapper for {@link ByteBuffer} that adds methods to read unsigned data types and specific string types. All methods read and places values in big-endian format unless
+ * otherwise stated.
  */
 public final class Buffer {
 
@@ -142,9 +141,8 @@ public final class Buffer {
   }
 
   /**
-   * Fills <strong>this </strong> Buffer with data from the specified Buffer. This method fills this
-   * Buffer until it is full (i.e. {@code buffer.remaining = 0} ) and so the source Buffer must have
-   * more bytes remaining than this Buffer. This method flips this Buffer after filling.
+   * Fills <strong>this </strong> Buffer with data from the specified Buffer. This method fills this Buffer until it is full (i.e. {@code buffer.remaining = 0} ) and so the source
+   * Buffer must have more bytes remaining than this Buffer. This method flips this Buffer after filling.
    *
    * @param source The source Buffer.
    * @return This Buffer, for chaining.
@@ -153,7 +151,7 @@ public final class Buffer {
     int remaining = remaining(), sourcePosition = source.position();
 
     Preconditions.checkArgument(remaining <= source.remaining(),
-      "Source buffer must not have less remaining bytes than this buffer.");
+        "Source buffer must not have less remaining bytes than this buffer.");
 
     buffer.put(source.array(), sourcePosition, remaining);
     source.position(sourcePosition + remaining);
@@ -171,8 +169,7 @@ public final class Buffer {
   }
 
   /**
-   * Places bytes from <strong>this </strong> buffer into the specified buffer, writing until the
-   * specified buffer is filled (i.e. {@code buffer.remaining() == 0} ).
+   * Places bytes from <strong>this </strong> buffer into the specified buffer, writing until the specified buffer is filled (i.e. {@code buffer.remaining() == 0} ).
    *
    * @param buffer The byte buffer.
    * @return This buffer, for chaining.
@@ -194,8 +191,7 @@ public final class Buffer {
   }
 
   /**
-   * Gets {@code length} bytes and places them in the specified byte array, starting from {@code
-   * offset}.
+   * Gets {@code length} bytes and places them in the specified byte array, starting from {@code offset}.
    *
    * @param bytes The byte array.
    * @param offset The byte array offset.
@@ -444,8 +440,7 @@ public final class Buffer {
   }
 
   /**
-   * Places the contents of the specified byte array into this buffer, starting from {@code offset}
-   * and reading {@code length} bytes.
+   * Places the contents of the specified byte array into this buffer, starting from {@code offset} and reading {@code length} bytes.
    *
    * @param bytes The byte array.
    * @param offset The offset.

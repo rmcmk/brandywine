@@ -2,14 +2,13 @@ package me.ryleykimmel.brandywine.network.frame.codec;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
+import java.util.List;
 import me.ryleykimmel.brandywine.network.Session;
 import me.ryleykimmel.brandywine.network.frame.Frame;
 import me.ryleykimmel.brandywine.network.frame.FrameMetadata;
 import me.ryleykimmel.brandywine.network.frame.FrameMetadataSet;
 import me.ryleykimmel.brandywine.network.isaac.IsaacRandom;
 import me.ryleykimmel.brandywine.network.isaac.IsaacRandomPair;
-
-import java.util.List;
 
 /**
  * A ciphered codec for encoding and decoding Frames.

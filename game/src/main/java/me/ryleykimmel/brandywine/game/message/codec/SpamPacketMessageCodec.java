@@ -9,9 +9,9 @@ import me.ryleykimmel.brandywine.network.message.MessageCodec;
  */
 public final class SpamPacketMessageCodec extends MessageCodec<SpamPacketMessage> {
 
-	@Override
-	public SpamPacketMessage decode(FrameReader frame) {
-		return new SpamPacketMessage();
-	}
+  @Override
+  public SpamPacketMessage decode(FrameReader frame) {
+    return new SpamPacketMessage();
+  }
 
 }

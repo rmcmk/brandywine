@@ -1,16 +1,15 @@
 package me.ryleykimmel.brandywine.game.message.codec;
 
 import io.netty.buffer.ByteBuf;
+import java.math.BigInteger;
+import java.security.interfaces.RSAPrivateKey;
+import java.util.Arrays;
 import me.ryleykimmel.brandywine.common.rsa.RsaKeyPairSupplier;
 import me.ryleykimmel.brandywine.common.util.ByteBufUtil;
 import me.ryleykimmel.brandywine.fs.FileSystem;
 import me.ryleykimmel.brandywine.game.message.LoginMessage;
 import me.ryleykimmel.brandywine.network.frame.FrameReader;
 import me.ryleykimmel.brandywine.network.message.MessageCodec;
-
-import java.math.BigInteger;
-import java.security.interfaces.RSAPrivateKey;
-import java.util.Arrays;
 
 /**
  * MessageCodec for the {@link LoginMessage}.
@@ -56,7 +55,8 @@ public final class LoginMessageCodec extends MessageCodec<LoginMessage> {
     buffer.readBytes(bytes);
 
     BigInteger encodedBigInteger = new BigInteger(bytes);
-    BigInteger decodedBigInteger = encodedBigInteger.modPow(privateKey.getPrivateExponent(), privateKey.getModulus());
+    BigInteger decodedBigInteger = encodedBigInteger
+        .modPow(privateKey.getPrivateExponent(), privateKey.getModulus());
     cipheredBuffer.writeBytes(decodedBigInteger.toByteArray());
 
     try {
@@ -70,7 +70,8 @@ public final class LoginMessageCodec extends MessageCodec<LoginMessage> {
       String username = ByteBufUtil.readJString(cipheredBuffer);
       String password = ByteBufUtil.readJString(cipheredBuffer);
 
-      return new LoginMessage(dummy, clientVersion, detail, archiveChecksums, blockLength, blockOperationCode, clientSessionId, serverSessionId, userId, username, password);
+      return new LoginMessage(dummy, clientVersion, detail, archiveChecksums, blockLength,
+          blockOperationCode, clientSessionId, serverSessionId, userId, username, password);
     } finally {
       cipheredBuffer.release();
     }

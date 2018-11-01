@@ -42,7 +42,7 @@ public final class Index {
    */
   public static Index decode(Buffer buffer) {
     Preconditions.checkArgument(buffer.remaining() == BYTES,
-      "Incorrect buffer length: " + buffer.remaining() + ", expected: " + BYTES);
+        "Incorrect buffer length: " + buffer.remaining() + ", expected: " + BYTES);
 
     int size = buffer.getUnsignedTriByte();
     int sector = buffer.getUnsignedTriByte();

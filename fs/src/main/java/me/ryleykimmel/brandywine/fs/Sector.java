@@ -56,7 +56,7 @@ public final class Sector {
    */
   public static Sector decode(Buffer buffer) {
     Preconditions.checkArgument(buffer.remaining() >= BYTES,
-      "Incorrect buffer length: " + buffer.remaining() + ", expected: " + BYTES);
+        "Incorrect buffer length: " + buffer.remaining() + ", expected: " + BYTES);
 
     int id = buffer.getUnsignedShort();
     int block = buffer.getUnsignedShort();

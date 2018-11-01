@@ -1,8 +1,8 @@
 package script
 
+import me.ryleykimmel.brandywine.game.message.ServerChatMessage
 import me.ryleykimmel.brandywine.game.model.*
 import me.ryleykimmel.brandywine.game.model.player.Player
-import me.ryleykimmel.brandywine.game.message.ServerChatMessage
 import java.util.concurrent.ThreadLocalRandom
 import java.util.stream.Stream
 

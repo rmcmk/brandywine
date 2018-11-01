@@ -2,14 +2,13 @@ package me.ryleykimmel.brandywine.network.frame;
 
 import com.google.common.base.Preconditions;
 import io.netty.buffer.ByteBufAllocator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import me.ryleykimmel.brandywine.network.Session;
 import me.ryleykimmel.brandywine.network.message.Message;
 import me.ryleykimmel.brandywine.network.message.MessageCodec;
 import me.ryleykimmel.brandywine.network.message.MessageListener;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * A collection of FrameMetadata for upstream and downstream Frames.
@@ -29,34 +28,34 @@ public final class FrameMetadataSet {
   /**
    * Delegate for {@link FrameMetadataSet#register(FrameMapping)}.
    *
-   * @param message  The MessageCodec this FrameMapping is mapped to.
-   * @param codec    The Message class this FrameMapping is mapped to.
+   * @param message The MessageCodec this FrameMapping is mapped to.
+   * @param codec The Message class this FrameMapping is mapped to.
    * @param listener The MessageListener this FrameMapping is mapped to.
-   * @param opcode   The opcode of the Frame.
-   * @param length   The length, in bytes, of the Frame.
-   * @param <T>      The Message type.
+   * @param opcode The opcode of the Frame.
+   * @param length The length, in bytes, of the Frame.
+   * @param <T> The Message type.
    */
   public <T extends Message> void register(Class<T> message,
-                                           MessageCodec<T> codec,
-                                           MessageListener<T> listener,
-                                           int opcode,
-                                           int length) {
+      MessageCodec<T> codec,
+      MessageListener<T> listener,
+      int opcode,
+      int length) {
     register(FrameMapping.create(message, codec, listener, opcode, length));
   }
 
   /**
    * Delegate for {@link FrameMetadataSet#register(FrameMapping)}.
    *
-   * @param message  The MessageCodec this FrameMapping is mapped to.
-   * @param codec    The Message class this FrameMapping is mapped to.
-   * @param opcode   The opcode of the Frame.
-   * @param length   The length, in bytes, of the Frame.
-   * @param <T>      The Message type.
+   * @param message The MessageCodec this FrameMapping is mapped to.
+   * @param codec The Message class this FrameMapping is mapped to.
+   * @param opcode The opcode of the Frame.
+   * @param length The length, in bytes, of the Frame.
+   * @param <T> The Message type.
    */
   public <T extends Message> void register(Class<T> message,
-                                           MessageCodec<T> codec,
-                                           int opcode,
-                                           int length) {
+      MessageCodec<T> codec,
+      int opcode,
+      int length) {
     register(FrameMapping.create(message, codec, opcode, length));
   }
 
@@ -81,7 +80,7 @@ public final class FrameMetadataSet {
   @SuppressWarnings("unchecked")
   public <T extends Message> T decode(Frame frame) {
     MessageCodec<T> codec = (MessageCodec<T>) getMapping(frame.getOpcode()).map(FrameMapping::getCodec).orElseThrow(
-            () -> new NullPointerException("No FrameMapping found for opcode: " + frame.getOpcode()));
+        () -> new NullPointerException("No FrameMapping found for opcode: " + frame.getOpcode()));
     FrameReader reader = new FrameReader(frame);
     return codec.decode(reader);
   }
@@ -96,7 +95,7 @@ public final class FrameMetadataSet {
   @SuppressWarnings("unchecked")
   public <T extends Message> Frame encode(T message, ByteBufAllocator allocator) {
     FrameMapping<T> mapping = (FrameMapping<T>) getMapping(message.getClass()).orElseThrow(
-            () -> new NullPointerException("No FrameMapping found for message: " + message.getClass().getSimpleName()));
+        () -> new NullPointerException("No FrameMapping found for message: " + message.getClass().getSimpleName()));
     FrameMetadata metadata = mapping.getMetadata();
     FrameBuilder builder = new FrameBuilder(metadata, allocator);
     mapping.getCodec().encode(message, builder);
@@ -126,7 +125,7 @@ public final class FrameMetadataSet {
    */
   public <T extends Message> FrameMetadata getMetadata(Class<T> clazz) {
     return getMapping(clazz).orElseThrow(
-            () -> new IllegalArgumentException("Mapping for " + clazz.getSimpleName() + " not found.")).getMetadata();
+        () -> new IllegalArgumentException("Mapping for " + clazz.getSimpleName() + " not found.")).getMetadata();
   }
 
   /**
@@ -137,7 +136,7 @@ public final class FrameMetadataSet {
    */
   public FrameMetadata getMetadata(int opcode) {
     return getMapping(opcode).orElseThrow(
-            () -> new IllegalArgumentException("Mapping for " + opcode + " not found.")).getMetadata();
+        () -> new IllegalArgumentException("Mapping for " + opcode + " not found.")).getMetadata();
   }
 
   /**

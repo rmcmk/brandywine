@@ -1,7 +1,7 @@
 package me.ryleykimmel.brandywine.game.message.codec;
 
-import me.ryleykimmel.brandywine.game.model.skill.Skill;
 import me.ryleykimmel.brandywine.game.message.UpdateSkillMessage;
+import me.ryleykimmel.brandywine.game.model.skill.Skill;
 import me.ryleykimmel.brandywine.network.frame.DataOrder;
 import me.ryleykimmel.brandywine.network.frame.DataType;
 import me.ryleykimmel.brandywine.network.frame.FrameBuilder;

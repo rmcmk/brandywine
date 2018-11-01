@@ -46,7 +46,7 @@ public final class AppearancePlayerBlock extends UpdateBlock {
    * @param encodedUsername The Player's encoded username.
    */
   public AppearancePlayerBlock(Appearance appearance, int combatLevel, int totalLevel,
-                                long encodedUsername) {
+      long encodedUsername) {
     super(MASK);
     this.appearance = appearance;
     this.combatLevel = combatLevel;

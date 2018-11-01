@@ -60,7 +60,7 @@ public enum Direction {
    *
    * @param value The value of this Direction.
    */
-  private Direction(int value) {
+  Direction(int value) {
     this.value = value;
   }
 

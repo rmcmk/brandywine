@@ -2,7 +2,6 @@ package me.ryleykimmel.brandywine.game.command;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
-
 import java.util.Arrays;
 
 /**
@@ -124,7 +123,7 @@ public final class CommandArguments {
       return Integer.parseInt(argument);
     } catch (NumberFormatException cause) {
       throw new NumberFormatException("Argument: " + argument + " at index: " + index
-                                        + " cannot be parsed as an integer.");
+          + " cannot be parsed as an integer.");
     }
   }
 
@@ -137,7 +136,8 @@ public final class CommandArguments {
   public boolean getBoolean(int index) {
     String argument = checkIndex(index);
     if (!argument.equalsIgnoreCase("true") && !argument.equalsIgnoreCase("false")) {
-      throw new IllegalArgumentException("Only \"true\" or \"false\" is accepted for boolean input.");
+      throw new IllegalArgumentException(
+          "Only \"true\" or \"false\" is accepted for boolean input.");
     }
     return Boolean.parseBoolean(argument);
   }
@@ -154,7 +154,7 @@ public final class CommandArguments {
       return Long.parseLong(argument);
     } catch (NumberFormatException cause) {
       throw new NumberFormatException("Argument: " + argument + " at index: " + index
-                                        + " cannot be parsed as a long.");
+          + " cannot be parsed as a long.");
     }
   }
 
@@ -170,7 +170,7 @@ public final class CommandArguments {
       return Double.parseDouble(argument);
     } catch (NumberFormatException cause) {
       throw new NumberFormatException("Argument: " + argument + " at index: " + index
-                                        + " cannot be parsed as a double.");
+          + " cannot be parsed as a double.");
     }
   }
 
@@ -181,15 +181,15 @@ public final class CommandArguments {
    * @return The argument at {@code index}.
    */
   private String checkIndex(int index) {
-    Preconditions.checkElementIndex(index, arguments.length,
-      "Index out of bounds: " + index + " length: " + arguments.length);
-    return Preconditions
-             .checkNotNull(arguments[index], "Argument for index: " + index + " is null.");
+    Preconditions.checkElementIndex(index, arguments.length, "Index out of bounds: " + index + " length: " + arguments.length);
+    return Preconditions.checkNotNull(arguments[index], "Argument for index: " + index + " is null.");
   }
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("arguments", Arrays.toString(arguments)).toString();
+    return MoreObjects.toStringHelper(this)
+        .add("arguments", Arrays.toString(arguments))
+        .toString();
   }
 
 }

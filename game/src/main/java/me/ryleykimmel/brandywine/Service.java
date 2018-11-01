@@ -2,9 +2,8 @@ package me.ryleykimmel.brandywine;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Stopwatch;
-import me.ryleykimmel.brandywine.game.GamePulseHandler;
-
 import java.util.concurrent.TimeUnit;
+import me.ryleykimmel.brandywine.game.GamePulseHandler;
 
 /**
  * Represents a Service that is executed every {@code n} milliseconds.
@@ -32,8 +31,7 @@ public abstract class Service {
   private int currentDelay;
 
   /**
-   * Constructs a new {@link Service} with the default interval of
-   * {@link GamePulseHandler#PULSE_DELAY}.
+   * Constructs a new {@link Service} with the default interval of {@link GamePulseHandler#PULSE_DELAY}.
    */
   public Service() {
     this(GamePulseHandler.PULSE_DELAY);
@@ -42,8 +40,7 @@ public abstract class Service {
   /**
    * Constructs a new {@link Service} with the specified interval.
    *
-   * @param interval The interval, in milliseconds representing how often this Service will be
-   * executed.
+   * @param interval The interval, in milliseconds representing how often this Service will be executed.
    */
   public Service(long interval) {
     this.interval = interval;
@@ -53,8 +50,7 @@ public abstract class Service {
   }
 
   /**
-   * Pulses this Service, counting down the {@code currentDelay} until it reaches <tt>0</tt> then
-   * executes this Service.
+   * Pulses this Service, counting down the {@code currentDelay} until it reaches <tt>0</tt> then executes this Service.
    *
    * @return How long this Service took to pulse this iteration, in milliseconds.
    */

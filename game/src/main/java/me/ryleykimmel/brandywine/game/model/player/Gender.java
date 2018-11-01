@@ -25,7 +25,7 @@ public enum Gender {
    *
    * @param value The value of the Gender.
    */
-  private Gender(int value) {
+  Gender(int value) {
     this.value = value;
   }
 

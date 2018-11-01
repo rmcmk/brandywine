@@ -1,10 +1,9 @@
 package me.ryleykimmel.brandywine.game.message;
 
+import java.util.List;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.update.PlayerDescriptor;
 import me.ryleykimmel.brandywine.network.message.Message;
-
-import java.util.List;
 
 /**
  * A {@link Message} which updates Players.
@@ -46,7 +45,7 @@ public final class PlayerUpdateMessage extends Message {
    * @param descriptors The surrounding Players descriptors.
    */
   public PlayerUpdateMessage(Position lastKnownRegion, Position position, int localPlayerCount,
-                              PlayerDescriptor descriptor, List<PlayerDescriptor> descriptors) {
+      PlayerDescriptor descriptor, List<PlayerDescriptor> descriptors) {
     this.lastKnownRegion = lastKnownRegion;
     this.position = position;
     this.localPlayerCount = localPlayerCount;

@@ -2,7 +2,6 @@ package me.ryleykimmel.brandywine.common;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -55,8 +54,7 @@ public final class Assertions {
    *
    * @param string The string to check.
    * @param message The message of the exception thrown if the check fails.
-   * @throws IllegalArgumentException If the string is {@code null} or {@link String#isEmpty()
-   * empty}.
+   * @throws IllegalArgumentException If the string is {@code null} or {@link String#isEmpty() empty}.
    */
   public static void checkNonEmpty(String string, String message) {
     Preconditions.checkArgument(!Strings.isNullOrEmpty(string), message);
@@ -120,19 +118,17 @@ public final class Assertions {
   }
 
   /**
-   * Checks that the specified value is between the {@code start} and {@code end} values, inclusive
-   * (i.e. {@code start <= value <= end}.
+   * Checks that the specified value is between the {@code start} and {@code end} values, inclusive (i.e. {@code start <= value <= end}.
    *
    * @param start The start value.
    * @param end The end value.
    * @param value The value to check.
    * @param message The message of the exception thrown if the check fails.
-   * @throws IllegalArgumentException If {@code end} is less than {@code start}, or if the check
-   * fails.
+   * @throws IllegalArgumentException If {@code end} is less than {@code start}, or if the check fails.
    */
   public static void checkWithin(int start, int end, int value, String message) {
     Preconditions
-      .checkArgument(start <= end, "End value must be greater than or equal to start value.");
+        .checkArgument(start <= end, "End value must be greater than or equal to start value.");
     Preconditions.checkArgument(value >= start && value <= end, message);
   }
 

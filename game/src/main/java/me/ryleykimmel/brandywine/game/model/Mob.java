@@ -1,12 +1,11 @@
 package me.ryleykimmel.brandywine.game.model;
 
+import java.util.HashSet;
+import java.util.Set;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.model.skill.SkillSet;
 import me.ryleykimmel.brandywine.game.update.UpdateBlock;
 import me.ryleykimmel.brandywine.network.message.Message;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Represents a mobile Entity within the game World.
@@ -204,9 +203,7 @@ public abstract class Mob extends Entity {
    * @param block The UpdateBlock to flag.
    */
   public final void flagUpdate(UpdateBlock block) {
-    if (!pendingUpdates.contains(block)) {
-      pendingUpdates.add(block);
-    }
+    pendingUpdates.add(block);
   }
 
   /**

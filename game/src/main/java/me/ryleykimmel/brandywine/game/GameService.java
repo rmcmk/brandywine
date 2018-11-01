@@ -1,11 +1,10 @@
 package me.ryleykimmel.brandywine.game;
 
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import me.ryleykimmel.brandywine.Service;
 import me.ryleykimmel.brandywine.game.model.World;
 import me.ryleykimmel.brandywine.game.model.player.Player;
-
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Services the game every pulse.

@@ -23,8 +23,7 @@ public final class LoginHandshakeResponseMessage extends Message {
   private final long sessionKey;
 
   /**
-   * Constructs a new {@link LoginHandshakeResponseMessage} with the specified status, dummy and
-   * session key.
+   * Constructs a new {@link LoginHandshakeResponseMessage} with the specified status, dummy and session key.
    *
    * @param status The status of the response.
    * @param dummy The dummy bytes.

@@ -8,7 +8,8 @@ import me.ryleykimmel.brandywine.network.frame.FrameReader;
  *
  * @param <T> The Message type.
  */
-public abstract class MessageCodec<T extends Message> implements MessageEncoder<T>, MessageDecoder<T> {
+public abstract class MessageCodec<T extends Message> implements MessageEncoder<T>,
+    MessageDecoder<T> {
 
   @Override
   public T decode(FrameReader frame) {

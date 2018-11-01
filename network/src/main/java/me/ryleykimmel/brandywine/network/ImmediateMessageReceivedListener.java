@@ -10,18 +10,18 @@ import org.apache.logging.log4j.Logger;
  */
 public final class ImmediateMessageReceivedListener implements MessageReceivedListener {
 
-    /**
-     * The Logger for this class.
-     */
-    private static final Logger logger = LogManager.getLogger(ImmediateMessageReceivedListener.class);
+  /**
+   * The Logger for this class.
+   */
+  private static final Logger logger = LogManager.getLogger(ImmediateMessageReceivedListener.class);
 
-    @Override
-    public void messageReceived(Session session, Message message) {
-        try {
-            session.getFrameMetadataSet().handle(message, session);
-        } catch (Exception cause) {
-            logger.error("Uncaught exception while handling message: " + message, cause);
-        }
+  @Override
+  public void messageReceived(Session session, Message message) {
+    try {
+      session.getFrameMetadataSet().handle(message, session);
+    } catch (Exception cause) {
+      logger.error("Uncaught exception while handling message: " + message, cause);
     }
+  }
 
 }

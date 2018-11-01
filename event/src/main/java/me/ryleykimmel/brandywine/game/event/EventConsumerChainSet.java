@@ -35,7 +35,8 @@ public final class EventConsumerChainSet {
    */
   public <E extends Event> void addConsumer(Class<E> clazz, EventConsumer<E> consumer) {
     @SuppressWarnings("unchecked")
-    EventConsumerChain<E> chain = (EventConsumerChain<E>) chains.computeIfAbsent(clazz, EventConsumerChain::new);
+    EventConsumerChain<E> chain = (EventConsumerChain<E>) chains
+        .computeIfAbsent(clazz, EventConsumerChain::new);
     chain.add(consumer);
   }
 

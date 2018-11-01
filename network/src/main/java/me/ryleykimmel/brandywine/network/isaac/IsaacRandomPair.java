@@ -3,8 +3,8 @@ package me.ryleykimmel.brandywine.network.isaac;
 import java.util.Arrays;
 
 /**
- * A pair of two {@link IsaacRandom} random number generators used as a stream cipher. One takes the
- * role of an encoder for this endpoint, the other takes the role of a decoder for this endpoint.
+ * A pair of two {@link IsaacRandom} random number generators used as a stream cipher. One takes the role of an encoder for this endpoint, the other takes the role of a decoder for
+ * this endpoint.
  */
 public final class IsaacRandomPair {
 
@@ -17,6 +17,17 @@ public final class IsaacRandomPair {
    * The IsaacRandom number generator used to encode data.
    */
   private final IsaacRandom encodingRandom;
+
+  /**
+   * Constructs a new {@link IsaacRandomPair} with the specified encoding and decoding random.
+   *
+   * @param encodingRandom The IsaacRandom number generator used for encoding.
+   * @param decodingRandom The IsaacRandom number generator used for decoding.
+   */
+  private IsaacRandomPair(IsaacRandom encodingRandom, IsaacRandom decodingRandom) {
+    this.encodingRandom = encodingRandom;
+    this.decodingRandom = decodingRandom;
+  }
 
   /**
    * Constructs a new IsaacRandomPair from the specified seed.
@@ -32,17 +43,6 @@ public final class IsaacRandomPair {
     IsaacRandom encodingRandom = new IsaacRandom(copy);
 
     return new IsaacRandomPair(encodingRandom, decodingRandom);
-  }
-
-  /**
-   * Constructs a new {@link IsaacRandomPair} with the specified encoding and decoding random.
-   *
-   * @param encodingRandom The IsaacRandom number generator used for encoding.
-   * @param decodingRandom The IsaacRandom number generator used for decoding.
-   */
-  private IsaacRandomPair(IsaacRandom encodingRandom, IsaacRandom decodingRandom) {
-    this.encodingRandom = encodingRandom;
-    this.decodingRandom = decodingRandom;
   }
 
   /**

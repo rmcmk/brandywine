@@ -2,9 +2,8 @@ package me.ryleykimmel.brandywine.network.frame;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
-import me.ryleykimmel.brandywine.common.Assertions;
-
 import java.util.Objects;
+import me.ryleykimmel.brandywine.common.Assertions;
 
 /**
  * Meta information configuration for Frames.
@@ -40,7 +39,8 @@ public final class FrameMetadata {
    * Constructs a new {@link FrameMetadata}.
    *
    * @param opcode The identifier. Must be greater than zero and less than {@link FrameMetadata#MAXIMUM_OPCODE},
-   * @param length The length of the Frame. Must be either greater than or equal to zero or one of: {@link FrameMetadata#VARIABLE_BYTE_LENGTH} or {@link FrameMetadata#VARIABLE_SHORT_LENGTH}.
+   * @param length The length of the Frame. Must be either greater than or equal to zero or one of: {@link FrameMetadata#VARIABLE_BYTE_LENGTH} or {@link
+   * FrameMetadata#VARIABLE_SHORT_LENGTH}.
    */
   public FrameMetadata(int opcode, int length) {
     Assertions.checkWithin(0, MAXIMUM_OPCODE, opcode, "Invalid opcode: " + opcode);
@@ -80,7 +80,10 @@ public final class FrameMetadata {
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("opcode", opcode).add("length", length).toString();
+    return MoreObjects.toStringHelper(this)
+        .add("opcode", opcode)
+        .add("length", length)
+        .toString();
   }
 
   @Override

@@ -1,15 +1,14 @@
 package me.ryleykimmel.brandywine.game.message.codec;
 
-import me.ryleykimmel.brandywine.game.model.Position;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import me.ryleykimmel.brandywine.game.message.MovementMessage;
+import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.network.frame.DataOrder;
 import me.ryleykimmel.brandywine.network.frame.DataTransformation;
 import me.ryleykimmel.brandywine.network.frame.DataType;
 import me.ryleykimmel.brandywine.network.frame.FrameReader;
 import me.ryleykimmel.brandywine.network.message.MessageCodec;
-
-import java.util.ArrayDeque;
-import java.util.Deque;
 
 /**
  * MessageCodec for the {@link MovementMessage}.

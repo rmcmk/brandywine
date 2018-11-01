@@ -4,15 +4,17 @@ import com.google.common.base.MoreObjects;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelPipeline;
 import io.netty.util.AttributeKey;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import me.ryleykimmel.brandywine.game.GameService;
 import me.ryleykimmel.brandywine.game.message.InitializePlayerMessage;
+import me.ryleykimmel.brandywine.game.message.LoginResponseMessage;
 import me.ryleykimmel.brandywine.game.message.RebuildRegionMessage;
 import me.ryleykimmel.brandywine.game.model.EntityType;
 import me.ryleykimmel.brandywine.game.model.Mob;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.game.model.World;
 import me.ryleykimmel.brandywine.game.model.inter.InterfaceSet;
-import me.ryleykimmel.brandywine.game.message.LoginResponseMessage;
 import me.ryleykimmel.brandywine.game.model.skill.LevelUpSkillListener;
 import me.ryleykimmel.brandywine.game.model.skill.SynchronizationSkillListener;
 import me.ryleykimmel.brandywine.game.update.blocks.AppearancePlayerBlock;
@@ -23,11 +25,6 @@ import me.ryleykimmel.brandywine.network.frame.codec.FrameCodec;
 import me.ryleykimmel.brandywine.network.frame.codec.FrameMessageCodec;
 import me.ryleykimmel.brandywine.network.isaac.IsaacRandomPair;
 import me.ryleykimmel.brandywine.network.message.Message;
-
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import static me.ryleykimmel.brandywine.network.Session.*;
 
 /**
  * Represents a Player character.
@@ -146,12 +143,13 @@ public final class Player extends Mob {
 
     Session session = getSession();
     ChannelFuture future = session.writeAndFlush(new LoginResponseMessage(
-            ResponseCode.STATUS_OK, privileges.getCrownId(), false));
+        ResponseCode.STATUS_OK, privileges.getCrownId(), false));
 
     // Await final login message to complete before resuming the login procedure
     future.addListener(listener -> {
       ChannelPipeline pipeline = session.getChannel().pipeline();
-      pipeline.replace(FrameCodec.class, "ciphered_frame_codec", new CipheredFrameCodec(session, IsaacRandomPair.fromSeed(credentials.getSessionIds())));
+      pipeline.replace(FrameCodec.class, "ciphered_frame_codec",
+          new CipheredFrameCodec(session, IsaacRandomPair.fromSeed(credentials.getSessionIds())));
       pipeline.replace(FrameMessageCodec.class, "message_codec", new FrameMessageCodec(session));
 
       session.onClose(__ -> world.getService(GameService.class).removePlayer(this));
@@ -258,8 +256,7 @@ public final class Player extends Mob {
   /**
    * Gets whether or not the map region has changed.
    *
-   * @return {@code true} if the map region has changed and an update is required, otherwise {@code
-   * false}.
+   * @return {@code true} if the map region has changed and an update is required, otherwise {@code false}.
    */
   public boolean hasMapRegionChanged() {
     return mapRegionChanged;
@@ -409,7 +406,9 @@ public final class Player extends Mob {
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("username", getUsername()).toString();
+    return MoreObjects.toStringHelper(this)
+        .add("username", getUsername())
+        .toString();
   }
 
 }

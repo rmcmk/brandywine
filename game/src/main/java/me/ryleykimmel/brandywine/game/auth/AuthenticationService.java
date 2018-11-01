@@ -1,15 +1,14 @@
 package me.ryleykimmel.brandywine.game.auth;
 
 import com.google.common.base.Preconditions;
-import me.ryleykimmel.brandywine.Service;
-import me.ryleykimmel.brandywine.common.util.ThreadFactoryUtil;
-import me.ryleykimmel.brandywine.game.GameService;
-import me.ryleykimmel.brandywine.network.ResponseCode;
-
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import me.ryleykimmel.brandywine.Service;
+import me.ryleykimmel.brandywine.common.util.ThreadFactoryUtil;
+import me.ryleykimmel.brandywine.game.GameService;
+import me.ryleykimmel.brandywine.network.ResponseCode;
 
 /**
  * Services AuthenticationRequests every pulse.
@@ -40,7 +39,7 @@ public final class AuthenticationService extends Service {
    * An {@link ExecutorService} for executing {@link AuthenticationWorker}s.
    */
   private final ExecutorService executor = Executors.newCachedThreadPool(
-    ThreadFactoryUtil.create(this).build());
+      ThreadFactoryUtil.create(this).build());
 
   /**
    * The service used to queue game requests.

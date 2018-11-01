@@ -1,10 +1,9 @@
 package me.ryleykimmel.brandywine.game.auth;
 
-import me.ryleykimmel.brandywine.game.model.player.Player;
-import me.ryleykimmel.brandywine.network.ResponseCode;
-
 import java.io.IOException;
 import java.sql.SQLException;
+import me.ryleykimmel.brandywine.game.model.player.Player;
+import me.ryleykimmel.brandywine.network.ResponseCode;
 
 /**
  * The strategy to use when authenticating requests.

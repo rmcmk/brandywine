@@ -1,5 +1,8 @@
 package me.ryleykimmel.brandywine.game.model;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import me.ryleykimmel.brandywine.Service;
 import me.ryleykimmel.brandywine.ServiceSet;
 import me.ryleykimmel.brandywine.game.area.Region;
@@ -13,10 +16,6 @@ import me.ryleykimmel.brandywine.game.model.npc.Npc;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.update.ParallelUpdater;
 import me.ryleykimmel.brandywine.game.update.Updater;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * A representation of the in-game World, containing repositories of {@link Entity}'s and other things relevant to the World.

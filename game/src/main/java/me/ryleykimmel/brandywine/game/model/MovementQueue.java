@@ -1,10 +1,9 @@
 package me.ryleykimmel.brandywine.game.model;
 
-import me.ryleykimmel.brandywine.game.message.ResetDestinationMessage;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Queue;
+import me.ryleykimmel.brandywine.game.message.ResetDestinationMessage;
 
 /**
  * A queue of {@link Direction}s which a {@link Mob} will follow.

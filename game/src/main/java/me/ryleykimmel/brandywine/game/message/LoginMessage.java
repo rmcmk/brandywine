@@ -78,16 +78,16 @@ public final class LoginMessage extends Message {
    * @param password The password of the connecting client.
    */
   public LoginMessage(int dummy,
-                      int clientVersion,
-                      int detail,
-                      int[] archiveChecksums,
-                      int blockLength,
-                      int blockOperationCode,
-                      long clientSessionId,
-                      long serverSessionId,
-                      int userId,
-                      String username,
-                      String password) {
+      int clientVersion,
+      int detail,
+      int[] archiveChecksums,
+      int blockLength,
+      int blockOperationCode,
+      long clientSessionId,
+      long serverSessionId,
+      int userId,
+      String username,
+      String password) {
     this.dummy = dummy;
     this.clientVersion = clientVersion;
     this.detail = detail;

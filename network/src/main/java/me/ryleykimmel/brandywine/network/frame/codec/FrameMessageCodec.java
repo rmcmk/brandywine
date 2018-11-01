@@ -5,12 +5,11 @@ import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageCodec;
+import java.util.List;
 import me.ryleykimmel.brandywine.network.Session;
 import me.ryleykimmel.brandywine.network.frame.Frame;
 import me.ryleykimmel.brandywine.network.frame.FrameMetadataSet;
 import me.ryleykimmel.brandywine.network.message.Message;
-
-import java.util.List;
 
 /**
  * A standard codec used for decoding and encoding {@link Frame} and {@link Message} objects.
@@ -18,14 +17,14 @@ import java.util.List;
 public final class FrameMessageCodec extends MessageToMessageCodec<Frame, Message> {
 
   /**
-   * A {@link PooledByteBufAllocator} responsible for allocating {@link ByteBuf buffers}.
-   */
-  private final ByteBufAllocator allocator = new PooledByteBufAllocator();
-
-  /**
    * The Session for this FrameMessageCodec.
    */
   protected final Session session;
+
+  /**
+   * A {@link PooledByteBufAllocator} responsible for allocating {@link ByteBuf buffers}.
+   */
+  private final ByteBufAllocator allocator = new PooledByteBufAllocator();
 
   /**
    * Constructs a new {@link FrameMessageCodec}.

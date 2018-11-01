@@ -64,9 +64,8 @@ public final class FrameBuilder extends FrameBuffer implements Builder<Frame> {
   }
 
   /**
-   * Writes a single number of the specified DataType in the specified DataOrder and performs the
-   * specified DataTransformation if and only if this buffer is in {@link AccessMode#BYTE_ACCESS
-   * byte access}.
+   * Writes a single number of the specified DataType in the specified DataOrder and performs the specified DataTransformation if and only if this buffer is in {@link
+   * AccessMode#BYTE_ACCESS byte access}.
    *
    * @param type The type of the number to write.
    * @param order The DataOrder to write the number in.
@@ -141,8 +140,7 @@ public final class FrameBuilder extends FrameBuffer implements Builder<Frame> {
   }
 
   /**
-   * Writes a single number of the specified DataType in the {@link DataOrder#BIG big data order}
-   * and performs the specified DataTransformation if and only if this buffer is in
+   * Writes a single number of the specified DataType in the {@link DataOrder#BIG big data order} and performs the specified DataTransformation if and only if this buffer is in
    * {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param type The type of the number to write.
@@ -154,8 +152,7 @@ public final class FrameBuilder extends FrameBuffer implements Builder<Frame> {
   }
 
   /**
-   * Writes a single number of the specified DataType in the {@link DataOrder#BIG big data order} if
-   * and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
+   * Writes a single number of the specified DataType in the {@link DataOrder#BIG big data order} if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param type The type of the number to write.
    * @param value The value of the number.
@@ -165,8 +162,7 @@ public final class FrameBuilder extends FrameBuffer implements Builder<Frame> {
   }
 
   /**
-   * Writes a single number of the specified DataType in the specified DataOrder if and only if this
-   * buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
+   * Writes a single number of the specified DataType in the specified DataOrder if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param type The type of the number to write.
    * @param order The DataOrder to write the number in.
@@ -177,8 +173,7 @@ public final class FrameBuilder extends FrameBuffer implements Builder<Frame> {
   }
 
   /**
-   * Writes the specified amount of bits with the specified value, if and only if this buffer is in
-   * {@link AccessMode#BIT_ACCESS bit access}.
+   * Writes the specified amount of bits with the specified value, if and only if this buffer is in {@link AccessMode#BIT_ACCESS bit access}.
    *
    * @param amount The number of bits to write.
    * @param value The value.
@@ -217,8 +212,7 @@ public final class FrameBuilder extends FrameBuffer implements Builder<Frame> {
   }
 
   /**
-   * Writes the specified bytes if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte
-   * access}.
+   * Writes the specified bytes if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param bytes The bytes to write.
    */
@@ -228,8 +222,7 @@ public final class FrameBuilder extends FrameBuffer implements Builder<Frame> {
   }
 
   /**
-   * Writes the bytes from the specified ByteBuf if and only if this buffer is in
-   * {@link AccessMode#BYTE_ACCESS byte access}.
+   * Writes the bytes from the specified ByteBuf if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param buf The ByteBuf to write from.
    */
@@ -239,8 +232,7 @@ public final class FrameBuilder extends FrameBuffer implements Builder<Frame> {
   }
 
   /**
-   * Writes all of the bytes from the specified FrameBuilder if and only if the specified
-   * FrameBuilder and this FrameBuilder is in {@link AccessMode#BYTE_ACCESS byte access}.
+   * Writes all of the bytes from the specified FrameBuilder if and only if the specified FrameBuilder and this FrameBuilder is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param builder The FrameBuilder to write from.
    */
@@ -250,8 +242,7 @@ public final class FrameBuilder extends FrameBuffer implements Builder<Frame> {
   }
 
   /**
-   * Writes the specified bytes and performs the specified DataTransformation if and only if this
-   * buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
+   * Writes the specified bytes and performs the specified DataTransformation if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param transformation The DataTransformation to perform on the number.
    * @param bytes The bytes to write.
@@ -267,8 +258,7 @@ public final class FrameBuilder extends FrameBuffer implements Builder<Frame> {
   }
 
   /**
-   * Writes the specified bytes, in reverse, if and only if this buffer is in
-   * {@link AccessMode#BYTE_ACCESS byte access}.
+   * Writes the specified bytes, in reverse, if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param bytes The bytes to write.
    */
@@ -280,8 +270,7 @@ public final class FrameBuilder extends FrameBuffer implements Builder<Frame> {
   }
 
   /**
-   * Writes the bytes from the specified ByteBuf, in reverse, if and only if this buffer is in
-   * {@link AccessMode#BYTE_ACCESS byte access}.
+   * Writes the bytes from the specified ByteBuf, in reverse, if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param buf The ByteBuf to write from.
    */
@@ -292,8 +281,7 @@ public final class FrameBuilder extends FrameBuffer implements Builder<Frame> {
   }
 
   /**
-   * Writes the specified bytes, in reverse and performs the specified DataTransformation if and
-   * only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
+   * Writes the specified bytes, in reverse and performs the specified DataTransformation if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param transformation The DataTransformation to perform on the bytes.
    * @param bytes The bytes to write.
@@ -309,8 +297,7 @@ public final class FrameBuilder extends FrameBuffer implements Builder<Frame> {
   }
 
   /**
-   * Writes a single smart if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte
-   * access}.
+   * Writes a single smart if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param value The value of the smart.
    */
@@ -324,8 +311,7 @@ public final class FrameBuilder extends FrameBuffer implements Builder<Frame> {
   }
 
   /**
-   * Writes a single String if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte
-   * access}.
+   * Writes a single String if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param value The value of the String.
    */

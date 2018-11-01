@@ -1,8 +1,7 @@
 package me.ryleykimmel.brandywine.game.model.inter;
 
-import me.ryleykimmel.brandywine.game.model.player.Player;
-
 import java.util.Objects;
+import me.ryleykimmel.brandywine.game.model.player.Player;
 
 /**
  * Represents an in-game Interface.

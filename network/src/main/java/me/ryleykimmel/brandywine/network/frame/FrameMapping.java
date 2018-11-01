@@ -1,10 +1,9 @@
 package me.ryleykimmel.brandywine.network.frame;
 
+import java.util.Optional;
 import me.ryleykimmel.brandywine.network.message.Message;
 import me.ryleykimmel.brandywine.network.message.MessageCodec;
 import me.ryleykimmel.brandywine.network.message.MessageListener;
-
-import java.util.Optional;
 
 /**
  * Represents a mapping of {@link Message}s to {@link FrameMetadata}.
@@ -35,15 +34,16 @@ public final class FrameMapping<T extends Message> {
 
   /**
    * Constructs a new {@link FrameMapping}.
-   *  @param messageClass The MessageCodec this FrameMapping is mapped to.
+   *
+   * @param messageClass The MessageCodec this FrameMapping is mapped to.
    * @param codec The Message class this FrameMapping is mapped to.
    * @param listener The MessageListener this FrameMapping is mapped to.
    * @param metadata The FrameMetadata this FrameMapping is mapped to.
    */
   private FrameMapping(Class<T> messageClass,
-                       MessageCodec<T> codec,
-                       MessageListener<T> listener,
-                       FrameMetadata metadata) {
+      MessageCodec<T> codec,
+      MessageListener<T> listener,
+      FrameMetadata metadata) {
     this.messageClass = messageClass;
     this.codec = codec;
     this.listener = listener;
@@ -61,9 +61,9 @@ public final class FrameMapping<T extends Message> {
    * @return A newly constructed {@link FrameMapping}, never {@code null}.
    */
   public static <T extends Message> FrameMapping<T> create(Class<T> messageClass,
-                                                           MessageCodec<T> codec,
-                                                           int opcode,
-                                                           int length) {
+      MessageCodec<T> codec,
+      int opcode,
+      int length) {
     return new FrameMapping<>(messageClass, codec, null, new FrameMetadata(opcode, length));
   }
 
@@ -79,10 +79,10 @@ public final class FrameMapping<T extends Message> {
    * @return A newly constructed {@link FrameMapping}, never {@code null}.
    */
   public static <T extends Message> FrameMapping<T> create(Class<T> messageClass,
-                                                           MessageCodec<T> codec,
-                                                           MessageListener<T> listener,
-                                                           int opcode,
-                                                           int length) {
+      MessageCodec<T> codec,
+      MessageListener<T> listener,
+      int opcode,
+      int length) {
     return new FrameMapping<>(messageClass, codec, listener, new FrameMetadata(opcode, length));
   }
 

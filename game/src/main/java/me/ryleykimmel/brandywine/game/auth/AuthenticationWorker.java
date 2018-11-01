@@ -3,8 +3,8 @@ package me.ryleykimmel.brandywine.game.auth;
 import com.google.common.base.Preconditions;
 import io.netty.channel.ChannelFutureListener;
 import me.ryleykimmel.brandywine.game.GameService;
-import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.message.LoginResponseMessage;
+import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.network.ResponseCode;
 import me.ryleykimmel.brandywine.network.Session;
 import org.apache.logging.log4j.LogManager;
@@ -43,7 +43,7 @@ public final class AuthenticationWorker implements Runnable {
    * @param request The request to authenticate.
    */
   public AuthenticationWorker(GameService service, AuthenticationStrategy strategy,
-                               AuthenticationRequest request) {
+      AuthenticationRequest request) {
     this.service = Preconditions.checkNotNull(service, "GameService may not be null.");
     this.strategy = Preconditions.checkNotNull(strategy, "AuthenticationStrategy may not be null.");
     this.request = Preconditions.checkNotNull(request, "AuthenticationRequest may not be null.");
@@ -86,7 +86,8 @@ public final class AuthenticationWorker implements Runnable {
    * @param response The response to send.
    */
   private void closeWithResponse(Session session, ResponseCode response) {
-    session.writeAndFlush(new LoginResponseMessage(response)).addListener(ChannelFutureListener.CLOSE);
+    session.writeAndFlush(new LoginResponseMessage(response))
+        .addListener(ChannelFutureListener.CLOSE);
   }
 
 }

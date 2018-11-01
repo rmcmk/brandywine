@@ -56,7 +56,7 @@ public final class Position {
     this.x = x;
     this.y = y;
     this.height = Preconditions.checkElementIndex(height, HEIGHT_LEVELS,
-      "Height must be [0, 3), received " + height + ".");
+        "Height must be [0, 3), received " + height + ".");
   }
 
   /**
@@ -199,8 +199,7 @@ public final class Position {
   }
 
   /**
-   * Gets the distance between this position and another position. Only x and y are considered (i.e.
-   * 2 dimensions).
+   * Gets the distance between this position and another position. Only x and y are considered (i.e. 2 dimensions).
    *
    * @param other The other position.
    * @return The distance.
@@ -274,8 +273,11 @@ public final class Position {
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("x", x).add("y", y).add("height", height)
-             .toString();
+    return MoreObjects.toStringHelper(this)
+        .add("x", x)
+        .add("y", y)
+        .add("height", height)
+        .toString();
   }
 
 

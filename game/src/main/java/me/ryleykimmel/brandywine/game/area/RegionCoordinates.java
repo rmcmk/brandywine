@@ -4,8 +4,7 @@ import com.google.common.base.MoreObjects;
 import me.ryleykimmel.brandywine.game.model.Position;
 
 /**
- * An immutable class representing the coordinates of a region, where the coordinates ({@code x, y})
- * are the top-left of the region.
+ * An immutable class representing the coordinates of a region, where the coordinates ({@code x, y}) are the top-left of the region.
  */
 public final class RegionCoordinates {
 
@@ -51,8 +50,7 @@ public final class RegionCoordinates {
   }
 
   /**
-   * Gets the absolute x coordinate of this Region (which can be compared directly against
-   * {@link Position#getX()}.
+   * Gets the absolute x coordinate of this Region (which can be compared directly against {@link Position#getX()}.
    *
    * @return The absolute x coordinate.
    */
@@ -61,8 +59,7 @@ public final class RegionCoordinates {
   }
 
   /**
-   * Gets the absolute y coordinate of this Region (which can be compared directly against
-   * {@link Position#getY()}.
+   * Gets the absolute y coordinate of this Region (which can be compared directly against {@link Position#getY()}.
    *
    * @return The absolute y coordinate.
    */
@@ -71,8 +68,7 @@ public final class RegionCoordinates {
   }
 
   /**
-   * Gets the x coordinate (equivalent to the {@link Position#getTopLeftRegionX()} of a position
-   * within this region).
+   * Gets the x coordinate (equivalent to the {@link Position#getTopLeftRegionX()} of a position within this region).
    *
    * @return The x coordinate.
    */
@@ -81,8 +77,7 @@ public final class RegionCoordinates {
   }
 
   /**
-   * Gets the y coordinate (equivalent to the {@link Position#getTopLeftRegionY()} of a position
-   * within this region).
+   * Gets the y coordinate (equivalent to the {@link Position#getTopLeftRegionY()} of a position within this region).
    *
    * @return The y coordinate.
    */
@@ -97,7 +92,10 @@ public final class RegionCoordinates {
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("x", x).add("y", y).toString();
+    return MoreObjects.toStringHelper(this)
+        .add("x", x)
+        .add("y", y)
+        .toString();
   }
 
 }

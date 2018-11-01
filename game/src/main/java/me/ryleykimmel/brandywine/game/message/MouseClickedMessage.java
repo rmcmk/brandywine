@@ -3,8 +3,8 @@ package me.ryleykimmel.brandywine.game.message;
 import me.ryleykimmel.brandywine.network.message.Message;
 
 /**
- * A {@link Message} sent by the client to indicate when the mouse button/s have been clicked. This can be used in
- * combination with {@link FocusUpdateMessage} to work out if the player is clicking whilst the client is closed.
+ * A {@link Message} sent by the client to indicate when the mouse button/s have been clicked. This can be used in combination with {@link FocusUpdateMessage} to work out if the
+ * player is clicking whilst the client is closed.
  */
 public final class MouseClickedMessage extends Message {
 

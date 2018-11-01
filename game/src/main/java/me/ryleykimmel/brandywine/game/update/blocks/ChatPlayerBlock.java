@@ -1,7 +1,7 @@
 package me.ryleykimmel.brandywine.game.update.blocks;
 
-import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.message.ChatMessage;
+import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.game.update.UpdateBlock;
 import me.ryleykimmel.brandywine.network.frame.DataTransformation;
 import me.ryleykimmel.brandywine.network.frame.DataType;

@@ -1,7 +1,6 @@
 package me.ryleykimmel.brandywine.common;
 
 import com.google.common.collect.Iterables;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,8 +46,7 @@ public final class Strings {
   }
 
   /**
-   * Capitalizes the first character in the specified String as well as the first character in
-   * subsequent sentences within the specified String.
+   * Capitalizes the first character in the specified String as well as the first character in subsequent sentences within the specified String.
    *
    * @param string The String to capitalize.
    * @return The capitalized String.
@@ -73,11 +71,9 @@ public final class Strings {
   }
 
   /**
-   * Substitutes each {@code %s} in {@code template} with an argument. These are matched by
-   * position: the first {@code %s} gets {@code args[0]}, etc.
+   * Substitutes each {@code %s} in {@code template} with an argument. These are matched by position: the first {@code %s} gets {@code args[0]}, etc.
    *
-   * @param string A {@code String} containing 0 or more {@code %s} place holders, may not be {@code
-   * null}.
+   * @param string A {@code String} containing 0 or more {@code %s} place holders, may not be {@code null}.
    * @param args The arguments to be substituted into the message template.
    * @return The formatted String.
    */
@@ -93,7 +89,7 @@ public final class Strings {
         break;
       }
 
-      builder.append(string.substring(templateStart, placeholderStart));
+      builder.append(string, templateStart, placeholderStart);
       builder.append(args[index++]);
       templateStart = placeholderStart + 2;
     }

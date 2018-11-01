@@ -8,10 +8,11 @@ import me.ryleykimmel.brandywine.network.frame.FrameMetadataSet;
  */
 public interface MessageRegistrar {
 
-    /**
-     * Returns a collection of mapped {@link Frame}s to {@link Message}s
-     *
-     * @return A collection of FrameMetadata for upstream and downstream Frames.
-     */
-    FrameMetadataSet build();
+  /**
+   * Returns a collection of mapped {@link Frame}s to {@link Message}s
+   *
+   * @return A collection of FrameMetadata for upstream and downstream Frames.
+   */
+  FrameMetadataSet build();
+
 }

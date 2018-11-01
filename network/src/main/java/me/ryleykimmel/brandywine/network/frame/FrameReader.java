@@ -25,8 +25,7 @@ public final class FrameReader extends FrameBuffer {
   }
 
   /**
-   * Reads a single String if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte
-   * access}.
+   * Reads a single String if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @return The read String.
    */
@@ -36,8 +35,7 @@ public final class FrameReader extends FrameBuffer {
   }
 
   /**
-   * Reads a single signed smart if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte
-   * access}.
+   * Reads a single signed smart if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @return The read smart.
    */
@@ -49,8 +47,7 @@ public final class FrameReader extends FrameBuffer {
   }
 
   /**
-   * Reads a single unsigned smart if and only if this buffer is in {@link AccessMode#BYTE_ACCESS
-   * byte access}.
+   * Reads a single unsigned smart if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @return The read String.
    */
@@ -62,8 +59,8 @@ public final class FrameReader extends FrameBuffer {
   }
 
   /**
-   * Reads a single signed number of the specified DataType in the {@link DataOrder#BIG big}
-   * DataOrder if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access} .
+   * Reads a single signed number of the specified DataType in the {@link DataOrder#BIG big} DataOrder if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}
+   * .
    *
    * @param type The type of the number to read.
    * @return The read number, signed.
@@ -73,8 +70,7 @@ public final class FrameReader extends FrameBuffer {
   }
 
   /**
-   * Reads a single signed number of the specified DataType in the specified DataOrder if and only
-   * if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
+   * Reads a single signed number of the specified DataType in the specified DataOrder if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param type The type of the number to read.
    * @param order The DataOrder to read the number in.
@@ -85,9 +81,8 @@ public final class FrameReader extends FrameBuffer {
   }
 
   /**
-   * Reads a single signed number of the specified DataType in the {@link DataOrder#BIG big}
-   * DataOrder and performs the specified DataTransformation on the number if and only if this
-   * buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
+   * Reads a single signed number of the specified DataType in the {@link DataOrder#BIG big} DataOrder and performs the specified DataTransformation on the number if and only if
+   * this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param type The type of the number to read.
    * @param transformation The DataTransformation to perform on the number.
@@ -98,8 +93,7 @@ public final class FrameReader extends FrameBuffer {
   }
 
   /**
-   * Reads a single signed number of the specified DataType in the specified DataOrder and performs
-   * the specified DataTransformation on the number if and only if this buffer is in
+   * Reads a single signed number of the specified DataType in the specified DataOrder and performs the specified DataTransformation on the number if and only if this buffer is in
    * {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param type The type of the number to read.
@@ -119,8 +113,8 @@ public final class FrameReader extends FrameBuffer {
   }
 
   /**
-   * Reads a single unsigned number of the specified DataType in the {@link DataOrder#BIG big}
-   * DataOrder if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
+   * Reads a single unsigned number of the specified DataType in the {@link DataOrder#BIG big} DataOrder if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte
+   * access}.
    *
    * @param type The type of the number to read.
    * @return The read number, unsigned.
@@ -130,8 +124,7 @@ public final class FrameReader extends FrameBuffer {
   }
 
   /**
-   * Reads a single unsigned number of the specified DataType in the specified DataOrder if and only
-   * if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
+   * Reads a single unsigned number of the specified DataType in the specified DataOrder if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param type The type of the number to read.
    * @param order The DataOrder to read the number in.
@@ -142,9 +135,8 @@ public final class FrameReader extends FrameBuffer {
   }
 
   /**
-   * Reads a single unsigned number of the specified DataType in the {@link DataOrder#BIG big}
-   * DataOrder and performs the specified DataTransformation on the number if and only if this
-   * buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
+   * Reads a single unsigned number of the specified DataType in the {@link DataOrder#BIG big} DataOrder and performs the specified DataTransformation on the number if and only if
+   * this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param type The type of the number to read.
    * @param transformation The DataTransformation to perform on the number.
@@ -155,9 +147,8 @@ public final class FrameReader extends FrameBuffer {
   }
 
   /**
-   * Reads a single unsigned number of the specified DataType in the specified DataOrder and
-   * performs the specified DataTransformation on the number if and only if this buffer is in
-   * {@link AccessMode#BYTE_ACCESS byte access}.
+   * Reads a single unsigned number of the specified DataType in the specified DataOrder and performs the specified DataTransformation on the number if and only if this buffer is
+   * in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param type The type of the number to read.
    * @param order The DataOrder to read the number in.
@@ -170,9 +161,8 @@ public final class FrameReader extends FrameBuffer {
   }
 
   /**
-   * Reads a single number of the specified DataType in the specified DataOrder and performs the
-   * specified DataTransformation on the number if and only if this buffer is in
-   * {@link AccessMode#BYTE_ACCESS byte access}.
+   * Reads a single number of the specified DataType in the specified DataOrder and performs the specified DataTransformation on the number if and only if this buffer is in {@link
+   * AccessMode#BYTE_ACCESS byte access}.
    *
    * @param type The type of the number to read.
    * @param order The DataOrder to read the number in.
@@ -200,9 +190,9 @@ public final class FrameReader extends FrameBuffer {
 
       case MIDDLE:
         Preconditions.checkArgument(transformation == DataTransformation.NONE,
-          "middle endian cannot be transformed");
+            "middle endian cannot be transformed");
         Preconditions
-          .checkArgument(type == DataType.INT, "middle endian can only be used with an integer");
+            .checkArgument(type == DataType.INT, "middle endian can only be used with an integer");
 
         longValue |= (buffer.readByte() & 0xFF) << 8;
         longValue |= buffer.readByte() & 0xFF;
@@ -212,9 +202,9 @@ public final class FrameReader extends FrameBuffer {
 
       case INVERSED_MIDDLE:
         Preconditions.checkArgument(transformation == DataTransformation.NONE,
-          "inversed middle endian cannot be transformed");
+            "inversed middle endian cannot be transformed");
         Preconditions.checkArgument(type == DataType.INT,
-          "inversed middle endian can only be used with an integer");
+            "inversed middle endian can only be used with an integer");
 
         longValue |= (buffer.readByte() & 0xFF) << 16;
         longValue |= (buffer.readByte() & 0xFF) << 24;
@@ -254,8 +244,7 @@ public final class FrameReader extends FrameBuffer {
   }
 
   /**
-   * Reads the specified amount of bits if and only if this buffer is in
-   * {@link AccessMode#BIT_ACCESS bit access}.
+   * Reads the specified amount of bits if and only if this buffer is in {@link AccessMode#BIT_ACCESS bit access}.
    *
    * @param amount The amount of bits to read.
    * @return The value of the bits.
@@ -284,8 +273,7 @@ public final class FrameReader extends FrameBuffer {
   }
 
   /**
-   * Reads {@code length} bytes into a byte array if and only if this buffer is in
-   * {@link AccessMode#BYTE_ACCESS byte access}.
+   * Reads {@code length} bytes into a byte array if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param length The amount of bytes to read.
    * @return The byte array.
@@ -295,8 +283,7 @@ public final class FrameReader extends FrameBuffer {
   }
 
   /**
-   * Reads {@code length} bytes into a byte array if and only if this buffer is in
-   * {@link AccessMode#BYTE_ACCESS byte access}.
+   * Reads {@code length} bytes into a byte array if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param transformation The DataTransformation to perform on the bytes.
    * @param length The amount of bytes to read.
@@ -315,8 +302,7 @@ public final class FrameReader extends FrameBuffer {
   }
 
   /**
-   * Reads {@code length} bytes into a byte array, in reverse, if and only if this buffer is in
-   * {@link AccessMode#BYTE_ACCESS byte access}.
+   * Reads {@code length} bytes into a byte array, in reverse, if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param length The amount of bytes to read.
    * @return The byte array.
@@ -326,8 +312,7 @@ public final class FrameReader extends FrameBuffer {
   }
 
   /**
-   * Reads {@code length} bytes into a byte array, in reverse, if and only if this buffer is in
-   * {@link AccessMode#BYTE_ACCESS byte access}.
+   * Reads {@code length} bytes into a byte array, in reverse, if and only if this buffer is in {@link AccessMode#BYTE_ACCESS byte access}.
    *
    * @param transformation The DataTransformation to perform on the bytes.
    * @param length The amount of bytes to read.

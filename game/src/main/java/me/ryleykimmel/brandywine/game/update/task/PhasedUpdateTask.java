@@ -3,8 +3,7 @@ package me.ryleykimmel.brandywine.game.update.task;
 import java.util.concurrent.Phaser;
 
 /**
- * An UpdateTask which wraps around another UpdateTask and notifies the specified Phaser when the
- * task has completed.
+ * An UpdateTask which wraps around another UpdateTask and notifies the specified Phaser when the task has completed.
  */
 public final class PhasedUpdateTask implements UpdateTask {
 

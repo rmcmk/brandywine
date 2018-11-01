@@ -3,7 +3,6 @@ package me.ryleykimmel.brandywine;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import io.netty.util.internal.StringUtil;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -28,7 +27,7 @@ public final class ServiceSet {
   public <T extends Service> T get(Class<T> clazz) {
     Preconditions.checkNotNull(clazz, "Service type may not be null.");
     return (T) Preconditions.checkNotNull(services.get(clazz),
-      "Service for: " + StringUtil.simpleClassName(clazz) + " does not exist.");
+        "Service for: " + StringUtil.simpleClassName(clazz) + " does not exist.");
   }
 
   /**

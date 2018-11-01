@@ -2,7 +2,6 @@ package me.ryleykimmel.brandywine.game.model.skill;
 
 import com.google.common.base.Preconditions;
 import com.google.common.primitives.Ints;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

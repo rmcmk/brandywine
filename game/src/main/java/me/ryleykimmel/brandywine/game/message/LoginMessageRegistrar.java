@@ -17,33 +17,38 @@ import me.ryleykimmel.brandywine.network.message.MessageRegistrar;
  */
 public final class LoginMessageRegistrar implements MessageRegistrar {
 
-    /**
-     * The World of this MessageRegistrar.
-     */
-    private final World world;
+  /**
+   * The World of this MessageRegistrar.
+   */
+  private final World world;
 
-    /**
-     * Constructs a new {@link LoginMessageRegistrar}.
-     *
-     * @param world The World of this MessageRegistrar.
-     */
-    public LoginMessageRegistrar(World world) {
-        this.world = world;
-    }
+  /**
+   * Constructs a new {@link LoginMessageRegistrar}.
+   *
+   * @param world The World of this MessageRegistrar.
+   */
+  public LoginMessageRegistrar(World world) {
+    this.world = world;
+  }
 
-    @Override
-    public FrameMetadataSet build() {
-        FrameMetadataSet metadata = new FrameMetadataSet();
-        metadata.register(LoginHandshakeResponseMessage.class, new LoginHandshakeResponseMessageCodec(), 1, 17);
-        metadata.register(LoginResponseMessage.class, new LoginResponseMessageCodec(), 2, 3);
+  @Override
+  public FrameMetadataSet build() {
+    FrameMetadataSet metadata = new FrameMetadataSet();
+    metadata
+        .register(LoginHandshakeResponseMessage.class, new LoginHandshakeResponseMessageCodec(), 1,
+            17);
+    metadata.register(LoginResponseMessage.class, new LoginResponseMessageCodec(), 2, 3);
 
-        metadata.register(LoginHandshakeMessage.class, new LoginHandshakeMessageCodec(), new LoginHandshakeMessageListener(), 14, 1);
+    metadata.register(LoginHandshakeMessage.class, new LoginHandshakeMessageCodec(),
+        new LoginHandshakeMessageListener(), 14, 1);
 
-        LoginMessageCodec loginMessageCodec = new LoginMessageCodec();
-        LoginMessageListener loginMessageListener = new LoginMessageListener(world);
-        metadata.register(LoginMessage.class, loginMessageCodec, loginMessageListener, 16, FrameMetadata.VARIABLE_SHORT_LENGTH);
-        metadata.register(LoginMessage.class, loginMessageCodec, loginMessageListener, 18, FrameMetadata.VARIABLE_SHORT_LENGTH);
-        return metadata;
-    }
+    LoginMessageCodec loginMessageCodec = new LoginMessageCodec();
+    LoginMessageListener loginMessageListener = new LoginMessageListener(world);
+    metadata.register(LoginMessage.class, loginMessageCodec, loginMessageListener, 16,
+        FrameMetadata.VARIABLE_SHORT_LENGTH);
+    metadata.register(LoginMessage.class, loginMessageCodec, loginMessageListener, 18,
+        FrameMetadata.VARIABLE_SHORT_LENGTH);
+    return metadata;
+  }
 
 }

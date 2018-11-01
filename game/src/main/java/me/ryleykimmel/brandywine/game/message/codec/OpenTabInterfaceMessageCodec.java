@@ -1,7 +1,7 @@
 package me.ryleykimmel.brandywine.game.message.codec;
 
-import me.ryleykimmel.brandywine.game.model.inter.TabInterface;
 import me.ryleykimmel.brandywine.game.message.OpenTabInterfaceMessage;
+import me.ryleykimmel.brandywine.game.model.inter.TabInterface;
 import me.ryleykimmel.brandywine.network.frame.DataTransformation;
 import me.ryleykimmel.brandywine.network.frame.DataType;
 import me.ryleykimmel.brandywine.network.frame.FrameBuilder;

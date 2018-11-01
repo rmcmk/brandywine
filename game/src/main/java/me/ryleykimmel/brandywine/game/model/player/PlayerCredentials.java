@@ -1,9 +1,8 @@
 package me.ryleykimmel.brandywine.game.model.player;
 
 import com.google.common.base.MoreObjects;
-import me.ryleykimmel.brandywine.common.util.NameUtil;
-
 import java.util.Arrays;
+import me.ryleykimmel.brandywine.common.util.NameUtil;
 
 /**
  * Represents the credentials of a Player.
@@ -36,8 +35,7 @@ public final class PlayerCredentials {
   private final int[] sessionIds;
 
   /**
-   * Constructs a new {@link PlayerCredentials} with the specified user id, username, password and
-   * session ids.
+   * Constructs a new {@link PlayerCredentials} with the specified user id, username, password and session ids.
    *
    * @param userId The user id.
    * @param username The username.
@@ -99,9 +97,13 @@ public final class PlayerCredentials {
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("userId", userId).add("username", username)
-             .add("password", password).add("encodedUsername", encodedUsername)
-             .add("sessionIds", Arrays.toString(sessionIds)).toString();
+    return MoreObjects.toStringHelper(this)
+        .add("userId", userId)
+        .add("username", username)
+        .add("password", password)
+        .add("encodedUsername", encodedUsername)
+        .add("sessionIds", Arrays.toString(sessionIds))
+        .toString();
   }
 
 }

@@ -1,12 +1,11 @@
 package me.ryleykimmel.brandywine.fs.def.bldr;
 
 import com.google.common.base.MoreObjects;
-import me.ryleykimmel.brandywine.fs.def.DefinitionBuilder;
-import me.ryleykimmel.brandywine.fs.def.impl.ItemDefinition;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import me.ryleykimmel.brandywine.fs.def.DefinitionBuilder;
+import me.ryleykimmel.brandywine.fs.def.impl.ItemDefinition;
 
 /**
  * A {@link DefinitionBuilder} for {@link ItemDefinition item definitions}.
@@ -17,11 +16,6 @@ public final class ItemDefinitionBuilder extends DefinitionBuilder<ItemDefinitio
    * The default ground scale values.
    */
   private static final List<Integer> DEFAULT_GROUND_SCALES = Arrays.asList(128, 128, 128);
-
-  /**
-   * The description of this item.
-   */
-  private String description = "null";
 
   /**
    * The ground menu actions of this item.
@@ -37,6 +31,11 @@ public final class ItemDefinitionBuilder extends DefinitionBuilder<ItemDefinitio
    * The inventory menu actions of this item.
    */
   private final List<String> inventoryMenuActions = new ArrayList<>(5);
+
+  /**
+   * The description of this item.
+   */
+  private String description = "null";
 
   /**
    * The members flag of this item.
@@ -85,8 +84,8 @@ public final class ItemDefinitionBuilder extends DefinitionBuilder<ItemDefinitio
   @Override
   public ItemDefinition build() {
     return new ItemDefinition(description, groundMenuActions, groundScales, id,
-                               inventoryMenuActions, members, name, noteInfoId, noteTemplateId,
-                               stackable, team, value);
+        inventoryMenuActions, members, name, noteInfoId, noteTemplateId,
+        stackable, team, value);
   }
 
   /**
@@ -190,11 +189,20 @@ public final class ItemDefinitionBuilder extends DefinitionBuilder<ItemDefinitio
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("id", id).add("description", description)
-             .add("groundMenuActions", groundMenuActions).add("groundScales", groundScales)
-             .add("inventoryMenuActions", inventoryMenuActions).add("members", members)
-             .add("name", name).add("noteInfoId", noteInfoId).add("noteTemplateId", noteTemplateId)
-             .add("stackable", stackable).add("team", team).add("value", value).toString();
+    return MoreObjects.toStringHelper(this)
+        .add("id", id)
+        .add("description", description)
+        .add("groundMenuActions", groundMenuActions)
+        .add("groundScales", groundScales)
+        .add("inventoryMenuActions", inventoryMenuActions)
+        .add("members", members)
+        .add("name", name)
+        .add("noteInfoId", noteInfoId)
+        .add("noteTemplateId", noteTemplateId)
+        .add("stackable", stackable)
+        .add("team", team)
+        .add("value", value)
+        .toString();
   }
 
 }

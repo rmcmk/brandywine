@@ -9,9 +9,9 @@ import me.ryleykimmel.brandywine.game.update.blocks.ChatPlayerBlock;
  */
 public final class ChatMessageListener implements GameMessageListener<ChatMessage> {
 
-    @Override
-    public void handle(Player player, ChatMessage message) {
-        player.flagUpdate(ChatPlayerBlock.create(player, message));
-    }
+  @Override
+  public void handle(Player player, ChatMessage message) {
+    player.flagUpdate(ChatPlayerBlock.create(player, message));
+  }
 
 }

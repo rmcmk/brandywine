@@ -35,7 +35,7 @@ public enum DataType {
    *
    * @param bytes The amount of {@code byte}s a signle data type consumes.
    */
-  private DataType(int bytes) {
+  DataType(int bytes) {
     this.bytes = bytes;
   }
 

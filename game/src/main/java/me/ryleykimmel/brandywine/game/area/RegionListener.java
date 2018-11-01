@@ -3,8 +3,7 @@ package me.ryleykimmel.brandywine.game.area;
 import me.ryleykimmel.brandywine.game.model.Entity;
 
 /**
- * A class that should be implemented by listeners that execute actions when an entity is added,
- * moved, or removed from a region.
+ * A class that should be implemented by listeners that execute actions when an entity is added, moved, or removed from a region.
  */
 @FunctionalInterface
 public interface RegionListener {

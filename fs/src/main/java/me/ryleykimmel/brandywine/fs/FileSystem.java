@@ -1,11 +1,6 @@
 package me.ryleykimmel.brandywine.fs;
 
 import com.google.common.base.Preconditions;
-import me.ryleykimmel.brandywine.common.Buffer;
-import me.ryleykimmel.brandywine.fs.archive.Archive;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
 import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
@@ -14,10 +9,13 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.CRC32;
+import me.ryleykimmel.brandywine.common.Buffer;
+import me.ryleykimmel.brandywine.fs.archive.Archive;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
- * A file system which consists of data and index files, index files point to blocks in the data
- * file, which contains the actual data.
+ * A file system which consists of data and index files, index files point to blocks in the data file, which contains the actual data.
  */
 public final class FileSystem {
 
@@ -145,7 +143,7 @@ public final class FileSystem {
    * @param archiveChecksumTable A table of the Archive checksums.
    */
   private FileSystem(Cache[] caches, Archive[] archives, int[] archiveChecksums,
-                     Buffer archiveChecksumTable) {
+      Buffer archiveChecksumTable) {
     this.caches = caches;
     this.archives = archives;
     this.archiveChecksums = archiveChecksums;
@@ -156,8 +154,7 @@ public final class FileSystem {
    * Constructs and initializes a {@link FileSystem} from the specified {@code directory}.
    *
    * @param directory The directory of the FileSystem.
-   * @return The created FileSystem, never {@code
-   * null}.
+   * @return The created FileSystem, never {@code null}.
    * @throws IOException If some I/O exception occurs.
    */
   public static FileSystem create(String directory) throws IOException {
@@ -187,7 +184,7 @@ public final class FileSystem {
     }
 
     Cache cache = Preconditions.checkNotNull(caches[CONFIG_INDEX],
-     "Configuration cache is null - unable to decode archives");
+        "Configuration cache is null - unable to decode archives");
 
     Buffer archiveChecksumTable = buildArchiveHashTable(cache);
     for (int index = 0; index < archiveChecksums.length; index++) {
@@ -203,7 +200,7 @@ public final class FileSystem {
     logger.info("Decoded {} archives from the configuration cache.", archives.length);
 
     FileSystem fileSystem = new FileSystem(caches, archives, archiveChecksums,
-                                           archiveChecksumTable);
+        archiveChecksumTable);
 
     return fileSystem;
   }
@@ -250,7 +247,7 @@ public final class FileSystem {
    */
   public Archive getArchive(int id) {
     Preconditions
-     .checkElementIndex(id, archives.length, "Archive for id: " + id + " does not exist");
+        .checkElementIndex(id, archives.length, "Archive for id: " + id + " does not exist");
     Preconditions.checkNotNull(archives[id], "Archive for id: " + id + " is null");
 
     return archives[id];
@@ -263,8 +260,7 @@ public final class FileSystem {
    * </p>
    *
    * @param id The id of the Cache to fetch.
-   * @return The Cache for the specified id, never {@code
-   * null}.
+   * @return The Cache for the specified id, never {@code null}.
    */
   public Cache getCache(int id) {
     Preconditions.checkElementIndex(id, caches.length, "Cache for id: " + id + " does not exist");
@@ -274,8 +270,7 @@ public final class FileSystem {
   }
 
   /**
-   * Gets the specified Index as a {@link Buffer} from some {@link Cache} as specified by the
-   * {@code index}
+   * Gets the specified Index as a {@link Buffer} from some {@link Cache} as specified by the {@code index}
    *
    * @param index The index of the Cache.
    * @param id The id of the File.

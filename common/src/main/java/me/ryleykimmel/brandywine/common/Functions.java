@@ -28,16 +28,14 @@ public final class Functions {
    * The intended use of this Function is for {@link Stream#flatMap(Function)}.
    *
    * @param clazz The type of {@code T}.
-   * @return A Stream of instances of {@code T} if the specified Object
-   * {@link Class#isInstance(Object) is an instance of T} otherwise {@link Stream#empty()}.
+   * @return A Stream of instances of {@code T} if the specified Object {@link Class#isInstance(Object) is an instance of T} otherwise {@link Stream#empty()}.
    */
   public static <T> Function<Object, Stream<T>> instancesOf(Class<T> clazz) {
     return object -> clazz.isInstance(object) ? Stream.of(clazz.cast(object)) : Stream.empty();
   }
 
   /**
-   * Gets an IntStream of character values from the specified {@code char}s. Any char which maps to
-   * a surrogate code point is passed through uninterpreted.
+   * Gets an IntStream of character values from the specified {@code char}s. Any char which maps to a surrogate code point is passed through uninterpreted.
    * <p>
    * <p>
    * If the sequence is mutated while the stream is being read, the result is undefined.
@@ -74,8 +72,8 @@ public final class Functions {
     }
 
     return StreamSupport.intStream(
-      () -> Spliterators.spliterator(new CharIterator(), chars.length, Spliterator.ORDERED),
-      Spliterator.SUBSIZED | Spliterator.SIZED | Spliterator.ORDERED, false);
+        () -> Spliterators.spliterator(new CharIterator(), chars.length, Spliterator.ORDERED),
+        Spliterator.SUBSIZED | Spliterator.SIZED | Spliterator.ORDERED, false);
   }
 
 }

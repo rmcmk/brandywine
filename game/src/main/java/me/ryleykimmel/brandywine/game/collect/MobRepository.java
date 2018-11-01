@@ -2,15 +2,17 @@ package me.ryleykimmel.brandywine.game.collect;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.stream.IntStream;
 import me.ryleykimmel.brandywine.game.model.Mob;
 
-import java.lang.reflect.Array;
-import java.util.*;
-import java.util.stream.IntStream;
-
 /**
- * A {@link MobRepository} is a repository of {@link Mob}s that are currently active in the game
- * World.
+ * A {@link MobRepository} is a repository of {@link Mob}s that are currently active in the game World.
  *
  * @param <T> The type of Mob.
  */
@@ -53,8 +55,7 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
    * Adds a Mob to the repository.
    *
    * @param mob The Mob to add.
-   * @return {@code true} if the Mob was added, {@code false} if the size has reached the capacity
-   * of this repository.
+   * @return {@code true} if the Mob was added, {@code false} if the size has reached the capacity of this repository.
    */
   public boolean add(T mob) {
     if (size == capacity()) {
@@ -94,7 +95,7 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
    */
   public T get(int index) {
     int normalized = Preconditions.checkElementIndex(index - 1, capacity,
-      "index: " + index + " is out of bounds, capacity: " + capacity);
+        "index: " + index + " is out of bounds, capacity: " + capacity);
     return mobs[normalized];
   }
 
@@ -122,8 +123,8 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
     Mob mob = get(index);
 
     Preconditions.checkArgument(mob.getIndex() == index,
-      "Mob index mismatch, unable to remove Mob. [index=" + mob.getIndex() + ", expected=" + index
-        + "]");
+        "Mob index mismatch, unable to remove Mob. [index=" + mob.getIndex() + ", expected=" + index
+            + "]");
 
     int normalized = index - 1;
 
@@ -144,10 +145,12 @@ public final class MobRepository<T extends Mob> implements Iterable<T> {
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("mobs", Arrays.toString(mobs)).add("size", size)
-             .add("capacity", capacity).toString();
+    return MoreObjects.toStringHelper(this)
+        .add("mobs", Arrays.toString(mobs))
+        .add("size", size)
+        .add("capacity", capacity)
+        .toString();
   }
-
 
   /**
    * An Iterator for some MobRepository.

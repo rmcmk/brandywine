@@ -2,12 +2,10 @@ package me.ryleykimmel.brandywine.common.util;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import io.netty.util.internal.StringUtil;
-
 import java.util.concurrent.ThreadFactory;
 
 /**
- * A static-utility class containing helper/utility methods for {@link ThreadFactory thread
- * factories}.
+ * A static-utility class containing helper/utility methods for {@link ThreadFactory thread factories}.
  */
 public final class ThreadFactoryUtil {
 

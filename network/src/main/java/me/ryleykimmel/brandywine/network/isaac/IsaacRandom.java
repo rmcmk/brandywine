@@ -1,13 +1,11 @@
 package me.ryleykimmel.brandywine.network.isaac;
 
 import com.google.common.base.Preconditions;
-
 import java.util.Random;
 
 /**
  * <p>
- * An implementation of the <a href="http://www.burtleburtle.net/bob/rand/isaacafa.html">ISAAC</a>
- * psuedorandom number generator.
+ * An implementation of the <a href="http://www.burtleburtle.net/bob/rand/isaacafa.html">ISAAC</a> psuedorandom number generator.
  * </p>
  * <p>
  * <pre>
@@ -26,14 +24,14 @@ import java.util.Random;
 public final class IsaacRandom extends Random {
 
   /**
-   * use serialVersionUID from JDK 1.1 for interoperability
-   */
-  private static final long serialVersionUID = 7408360375871648078L;
-
-  /**
    * The expected seed length.
    */
   public static final int SEED_LENGTH = 4;
+
+  /**
+   * use serialVersionUID from JDK 1.1 for interoperability
+   */
+  private static final long serialVersionUID = 7408360375871648078L;
 
   /**
    * The golden ratio.
@@ -92,7 +90,7 @@ public final class IsaacRandom extends Random {
    */
   public IsaacRandom(int[] seed) {
     Preconditions.checkArgument(seed.length == SEED_LENGTH,
-      "Invalid seed length: [" + seed.length + "] expected: " + SEED_LENGTH);
+        "Invalid seed length: [" + seed.length + "] expected: " + SEED_LENGTH);
     System.arraycopy(seed, 0, results, 0, SEED_LENGTH);
     init();
   }

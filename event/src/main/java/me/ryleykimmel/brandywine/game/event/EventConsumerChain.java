@@ -1,7 +1,6 @@
 package me.ryleykimmel.brandywine.game.event;
 
 import com.google.common.base.MoreObjects;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -52,9 +51,9 @@ public final class EventConsumerChain<E extends Event> {
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
-            .add("type", type)
-            .add("consumers", consumers)
-            .toString();
+        .add("type", type)
+        .add("consumers", consumers)
+        .toString();
   }
 
 }

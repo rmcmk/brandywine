@@ -18,8 +18,7 @@ public final class InitializePlayerMessage extends Message {
   private final int index;
 
   /**
-   * Constructs a new {@link InitializePlayerMessage} with the specified membership status and
-   * internal index.
+   * Constructs a new {@link InitializePlayerMessage} with the specified membership status and internal index.
    *
    * @param member The membership status.
    * @param index The internal index.

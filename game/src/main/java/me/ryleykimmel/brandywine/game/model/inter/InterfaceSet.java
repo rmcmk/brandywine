@@ -1,12 +1,11 @@
 package me.ryleykimmel.brandywine.game.model.inter;
 
-import me.ryleykimmel.brandywine.game.model.player.Player;
-import me.ryleykimmel.brandywine.game.message.CloseInterfaceMessage;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import me.ryleykimmel.brandywine.game.message.CloseInterfaceMessage;
+import me.ryleykimmel.brandywine.game.model.player.Player;
 
 /**
  * Maintains a set of open Interfaces.
@@ -98,8 +97,7 @@ public final class InterfaceSet {
   /**
    * Closes all Interfaces in this InterfaceSet.
    * <p>
-   * - Tabs cannot be closed, only hidden from view or changed.
-   * - Static overlays must be closed by notifying the InterfacesClosedEvent, use {@link InterfaceSet#closeAndNotify()}.
+   * - Tabs cannot be closed, only hidden from view or changed. - Static overlays must be closed by notifying the InterfacesClosedEvent, use {@link InterfaceSet#closeAndNotify()}.
    * </p>
    *
    * @param notify {@code true} if the EventListeners should be notified of this event.
@@ -126,7 +124,7 @@ public final class InterfaceSet {
    */
   private void remove(InterfaceType type) {
     Set<Interface> remove = interfaces.values().stream().filter(inter -> inter.getType() == type)
-                              .collect(Collectors.toSet());
+        .collect(Collectors.toSet());
     remove.forEach(inter -> interfaces.remove(inter.getId()));
   }
 

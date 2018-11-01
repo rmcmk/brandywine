@@ -1,10 +1,9 @@
 package me.ryleykimmel.brandywine.game.update;
 
-import me.ryleykimmel.brandywine.game.model.Mob;
-import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
-
 import java.util.HashMap;
 import java.util.Map;
+import me.ryleykimmel.brandywine.game.model.Mob;
+import me.ryleykimmel.brandywine.network.frame.FrameBuilder;
 
 /**
  * Represents a Descriptor which encodes UpdateBlocks and other Descriptors.

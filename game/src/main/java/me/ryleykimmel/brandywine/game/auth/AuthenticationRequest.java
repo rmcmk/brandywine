@@ -20,8 +20,7 @@ public final class AuthenticationRequest {
   private final PlayerCredentials credentials;
 
   /**
-   * Constructs a new {@link AuthenticationRequest} with the specified LoginSession and
-   * PlayerCredentials.
+   * Constructs a new {@link AuthenticationRequest} with the specified LoginSession and PlayerCredentials.
    *
    * @param session The Session who is making the request.
    * @param credentials The PlayerCredentials that are requesting authentication.
@@ -51,8 +50,10 @@ public final class AuthenticationRequest {
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("session", session).add("credentials", credentials)
-             .toString();
+    return MoreObjects.toStringHelper(this)
+        .add("session", session)
+        .add("credentials", credentials)
+        .toString();
   }
 
 }

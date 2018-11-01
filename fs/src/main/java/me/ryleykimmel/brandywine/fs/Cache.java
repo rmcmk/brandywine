@@ -1,10 +1,9 @@
 package me.ryleykimmel.brandywine.fs;
 
 import com.google.common.base.Preconditions;
-import me.ryleykimmel.brandywine.common.Buffer;
-
 import java.io.IOException;
 import java.nio.channels.SeekableByteChannel;
+import me.ryleykimmel.brandywine.common.Buffer;
 
 /**
  * Represents a Cache within a FileSystem.
@@ -67,7 +66,7 @@ public final class Cache {
     for (int block = 0; read < size; block++) {
       Sector sector = getSector(next);
       Preconditions.checkArgument(sector.getBlock() == block,
-        "Block mismatch, expected: " + block + ", actual: " + sector.getBlock());
+          "Block mismatch, expected: " + block + ", actual: " + sector.getBlock());
 
       int unread = Math.min(CHUNK_SIZE, size - read);
       long position = (long) next * BLOCK_SIZE + Sector.BYTES;
@@ -84,9 +83,9 @@ public final class Cache {
 
       if (size > read) {
         Preconditions.checkArgument(sector.getIndex() == indexId,
-          "Index id mismatch, expected: " + indexId + " actual: " + sector.getIndex());
+            "Index id mismatch, expected: " + indexId + " actual: " + sector.getIndex());
         Preconditions.checkArgument(sector.getId() == id,
-          "Id mismatch, expected: " + id + ", actual: " + sector.getId());
+            "Id mismatch, expected: " + id + ", actual: " + sector.getId());
       }
     }
 

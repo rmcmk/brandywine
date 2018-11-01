@@ -45,7 +45,7 @@ public final class TeleportPlayerDescriptor extends PlayerDescriptor {
    * @param lastKnownRegion The last known region of our Player.
    */
   public TeleportPlayerDescriptor(Player player, boolean mapRegionChanged, Position position,
-                                   Position lastKnownRegion) {
+      Position lastKnownRegion) {
     super(player);
     this.mapRegionChanged = mapRegionChanged;
     this.position = position;

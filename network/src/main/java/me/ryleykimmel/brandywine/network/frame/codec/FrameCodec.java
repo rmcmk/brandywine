@@ -4,13 +4,12 @@ import com.google.common.base.Preconditions;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageCodec;
+import java.util.List;
 import me.ryleykimmel.brandywine.network.Session;
 import me.ryleykimmel.brandywine.network.frame.Frame;
 import me.ryleykimmel.brandywine.network.frame.FrameMetadata;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.List;
 
 /**
  * A codec for encoding and decoding Frames.
@@ -89,8 +88,7 @@ public class FrameCodec extends ByteToMessageCodec<Frame> {
    */
   protected void decodeOpcode(ByteBuf buffer, List<Object> out) {
     int opcode = buffer.readUnsignedByte();
-    out.add(new Frame(session.getFrameMetadataSet().getMetadata(opcode),
-            buffer.readBytes(buffer.readableBytes())));
+    out.add(new Frame(session.getFrameMetadataSet().getMetadata(opcode), buffer.readBytes(buffer.readableBytes())));
   }
 
   /**

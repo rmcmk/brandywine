@@ -1,9 +1,8 @@
 package me.ryleykimmel.brandywine.game.message;
 
+import java.util.Queue;
 import me.ryleykimmel.brandywine.game.model.Position;
 import me.ryleykimmel.brandywine.network.message.Message;
-
-import java.util.Queue;
 
 /**
  * A {@link Message} which requests movement.
@@ -21,8 +20,7 @@ public final class MovementMessage extends Message {
   private final Queue<Position> steps;
 
   /**
-   * Constructs a new {@link MovementMessage} with the specified Queue of Positions and the running
-   * flag.
+   * Constructs a new {@link MovementMessage} with the specified Queue of Positions and the running flag.
    *
    * @param steps A {@link Queue} of Positions the client is attempting to move to.
    * @param running Whether or not we should run.
