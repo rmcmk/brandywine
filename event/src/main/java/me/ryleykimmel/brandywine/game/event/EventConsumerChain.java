@@ -44,24 +44,17 @@ public final class EventConsumerChain<E extends Event> {
    * Notifies each {@link EventConsumer} in this chain that an {@link Event} has occurred.
    *
    * @param event The event.
-   * @return {@code true} if the Event should continue on with its outcome.
    */
-  public boolean notify(E event) {
-    for (EventConsumer<E> consumer : consumers) {
-      consumer.accept(event);
-
-      if (event.terminated()) {
-        return false;
-      }
-    }
-
-    return true;
+  public void notify(E event) {
+    consumers.forEach(consumer -> consumer.accept(event));
   }
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("type", type).add("consumers", consumers)
-             .toString();
+    return MoreObjects.toStringHelper(this)
+            .add("type", type)
+            .add("consumers", consumers)
+            .toString();
   }
 
 }

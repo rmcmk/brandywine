@@ -91,10 +91,9 @@ public final class World {
    * Notifies the appropriate {@link EventConsumerChain} that an {@link Event} has occurred.
    *
    * @param event The Event.
-   * @return {@code true} if the Event should continue on with its outcome.
    */
-  public <E extends Event> boolean notify(E event) {
-    return events.notify(event);
+  public <E extends Event> void notify(E event) {
+    events.notify(event);
   }
 
   /**

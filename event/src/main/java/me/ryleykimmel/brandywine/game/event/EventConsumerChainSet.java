@@ -19,10 +19,12 @@ public final class EventConsumerChainSet {
    * @param event The Event.
    * @return {@code true} if the Event should continue on with its outcome.
    */
-  public <E extends Event> boolean notify(E event) {
+  public <E extends Event> void notify(E event) {
     @SuppressWarnings("unchecked")
     EventConsumerChain<E> chain = (EventConsumerChain<E>) chains.get(event.getClass());
-    return chain == null || chain.notify(event);
+    if (chain != null) {
+      chain.notify(event);
+    }
   }
 
   /**
@@ -33,8 +35,7 @@ public final class EventConsumerChainSet {
    */
   public <E extends Event> void addConsumer(Class<E> clazz, EventConsumer<E> consumer) {
     @SuppressWarnings("unchecked")
-    EventConsumerChain<E> chain = (EventConsumerChain<E>) chains.computeIfAbsent(clazz,
-      EventConsumerChain::new);
+    EventConsumerChain<E> chain = (EventConsumerChain<E>) chains.computeIfAbsent(clazz, EventConsumerChain::new);
     chain.add(consumer);
   }
 
