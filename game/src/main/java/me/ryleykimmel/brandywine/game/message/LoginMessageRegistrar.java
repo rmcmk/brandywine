@@ -34,20 +34,15 @@ public final class LoginMessageRegistrar implements MessageRegistrar {
   @Override
   public FrameMetadataSet build() {
     FrameMetadataSet metadata = new FrameMetadataSet();
-    metadata
-        .register(LoginHandshakeResponseMessage.class, new LoginHandshakeResponseMessageCodec(), 1,
-            17);
+    metadata.register(LoginHandshakeResponseMessage.class, new LoginHandshakeResponseMessageCodec(), 1, 17);
     metadata.register(LoginResponseMessage.class, new LoginResponseMessageCodec(), 2, 3);
 
-    metadata.register(LoginHandshakeMessage.class, new LoginHandshakeMessageCodec(),
-        new LoginHandshakeMessageListener(), 14, 1);
+    metadata.register(LoginHandshakeMessage.class, new LoginHandshakeMessageCodec(), new LoginHandshakeMessageListener(), 14, 1);
 
     LoginMessageCodec loginMessageCodec = new LoginMessageCodec();
     LoginMessageListener loginMessageListener = new LoginMessageListener(world);
-    metadata.register(LoginMessage.class, loginMessageCodec, loginMessageListener, 16,
-        FrameMetadata.VARIABLE_SHORT_LENGTH);
-    metadata.register(LoginMessage.class, loginMessageCodec, loginMessageListener, 18,
-        FrameMetadata.VARIABLE_SHORT_LENGTH);
+    metadata.register(LoginMessage.class, loginMessageCodec, loginMessageListener, 16, FrameMetadata.VARIABLE_SHORT_LENGTH);
+    metadata.register(LoginMessage.class, loginMessageCodec, loginMessageListener, 18, FrameMetadata.VARIABLE_SHORT_LENGTH);
     return metadata;
   }
 

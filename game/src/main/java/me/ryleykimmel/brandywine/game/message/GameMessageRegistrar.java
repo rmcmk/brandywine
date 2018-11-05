@@ -54,29 +54,22 @@ public final class GameMessageRegistrar implements MessageRegistrar {
     metadata.register(OpenTabInterfaceMessage.class, new OpenTabInterfaceMessageCodec(), 71, 3);
     metadata.register(RebuildRegionMessage.class, new RebuildRegionMessageCodec(), 73, 4);
     metadata.register(ResetDestinationMessage.class, new ResetDestinationMessageCodec(), 78, 0);
-    metadata.register(PlayerUpdateMessage.class, new PlayerUpdateMessageCodec(), 81,
-        VARIABLE_SHORT_LENGTH);
+    metadata.register(PlayerUpdateMessage.class, new PlayerUpdateMessageCodec(), 81, VARIABLE_SHORT_LENGTH);
     metadata.register(ArrowKeyMessage.class, new ArrowKeyMessageCodec(), 86, 4);
     metadata.register(CloseInterfaceMessage.class, new CloseInterfaceMessageCodec(), 130, 0);
     metadata.register(UpdateSkillMessage.class, new UpdateSkillMessageCodec(), 134, 6);
     metadata.register(MouseClickedMessage.class, new MouseClickedMessageCodec(), 241, 4);
     metadata.register(InitializePlayerMessage.class, new InitializePlayerMessageCodec(), 249, 3);
-    metadata
-        .register(ServerChatMessage.class, new ServerChatMessageCodec(), 253, VARIABLE_BYTE_LENGTH);
+    metadata.register(ServerChatMessage.class, new ServerChatMessageCodec(), 253, VARIABLE_BYTE_LENGTH);
 
     MovementMessageCodec movementMessageCodec = new MovementMessageCodec();
     MovementMessageListener movementMessageListener = new MovementMessageListener();
-    metadata.register(MovementMessage.class, movementMessageCodec, movementMessageListener, 164,
-        VARIABLE_BYTE_LENGTH); // game movement
-    metadata.register(MovementMessage.class, movementMessageCodec, movementMessageListener, 248,
-        VARIABLE_BYTE_LENGTH); // minimap movement
-    metadata.register(MovementMessage.class, movementMessageCodec, movementMessageListener, 98,
-        VARIABLE_BYTE_LENGTH); // command movement
+    metadata.register(MovementMessage.class, movementMessageCodec, movementMessageListener, 164, VARIABLE_BYTE_LENGTH); // game movement
+    metadata.register(MovementMessage.class, movementMessageCodec, movementMessageListener, 248, VARIABLE_BYTE_LENGTH); // minimap movement
+    metadata.register(MovementMessage.class, movementMessageCodec, movementMessageListener, 98, VARIABLE_BYTE_LENGTH); // command movement
 
-    metadata.register(ChatMessage.class, new ChatMessageCodec(), new ChatMessageListener(), 4,
-        VARIABLE_BYTE_LENGTH);
-    metadata.register(CommandMessage.class, new CommandMessageCodec(), new CommandMessageListener(),
-        103, VARIABLE_BYTE_LENGTH);
+    metadata.register(ChatMessage.class, new ChatMessageCodec(), new ChatMessageListener(), 4, VARIABLE_BYTE_LENGTH);
+    metadata.register(CommandMessage.class, new CommandMessageCodec(), new CommandMessageListener(), 103, VARIABLE_BYTE_LENGTH);
 
     SpamPacketMessageCodec spamMessageCodec = new SpamPacketMessageCodec();
     metadata.register(SpamPacketMessage.class, spamMessageCodec, 77, VARIABLE_BYTE_LENGTH);
