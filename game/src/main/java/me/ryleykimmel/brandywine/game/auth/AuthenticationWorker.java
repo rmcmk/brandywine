@@ -52,8 +52,7 @@ public final class AuthenticationWorker implements Runnable {
   @Override
   public void run() {
     Session session = request.getSession();
-    Player player = new Player(request.getCredentials(), service.getWorld());
-    player.setSession(session);
+    Player player = new Player(session, request.getCredentials(), service.getWorld());
 
     try {
       ResponseCode response = strategy.authenticate(player);

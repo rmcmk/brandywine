@@ -63,13 +63,13 @@ public final class GameMessageRegistrar implements MessageRegistrar {
     metadata.register(ServerChatMessage.class, new ServerChatMessageCodec(), 253, VARIABLE_BYTE_LENGTH);
 
     MovementMessageCodec movementMessageCodec = new MovementMessageCodec();
-    MovementMessageListener movementMessageListener = new MovementMessageListener();
+    MovementMessageListener movementMessageListener = new MovementMessageListener(world);
     metadata.register(MovementMessage.class, movementMessageCodec, movementMessageListener, 164, VARIABLE_BYTE_LENGTH); // game movement
     metadata.register(MovementMessage.class, movementMessageCodec, movementMessageListener, 248, VARIABLE_BYTE_LENGTH); // minimap movement
     metadata.register(MovementMessage.class, movementMessageCodec, movementMessageListener, 98, VARIABLE_BYTE_LENGTH); // command movement
 
-    metadata.register(ChatMessage.class, new ChatMessageCodec(), new ChatMessageListener(), 4, VARIABLE_BYTE_LENGTH);
-    metadata.register(CommandMessage.class, new CommandMessageCodec(), new CommandMessageListener(), 103, VARIABLE_BYTE_LENGTH);
+    metadata.register(ChatMessage.class, new ChatMessageCodec(), new ChatMessageListener(world), 4, VARIABLE_BYTE_LENGTH);
+    metadata.register(CommandMessage.class, new CommandMessageCodec(), new CommandMessageListener(world), 103, VARIABLE_BYTE_LENGTH);
 
     SpamPacketMessageCodec spamMessageCodec = new SpamPacketMessageCodec();
     metadata.register(SpamPacketMessage.class, spamMessageCodec, 77, VARIABLE_BYTE_LENGTH);

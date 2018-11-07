@@ -1,7 +1,7 @@
 package me.ryleykimmel.brandywine.game;
 
-import me.ryleykimmel.brandywine.Service;
-import me.ryleykimmel.brandywine.ServiceSet;
+import me.ryleykimmel.brandywine.service.Service;
+import me.ryleykimmel.brandywine.service.ServiceSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

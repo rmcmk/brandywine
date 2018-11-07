@@ -1,6 +1,6 @@
 package me.ryleykimmel.brandywine.game.message.listener;
 
-import com.google.common.base.Preconditions;
+import me.ryleykimmel.brandywine.game.model.World;
 import me.ryleykimmel.brandywine.game.model.player.Player;
 import me.ryleykimmel.brandywine.network.Session;
 import me.ryleykimmel.brandywine.network.message.Message;
@@ -11,16 +11,25 @@ import me.ryleykimmel.brandywine.network.message.MessageListener;
  *
  * @param <T> The Message type.
  */
-public interface GameMessageListener<T extends Message> extends MessageListener<T> {
+public abstract class GameMessageListener<T extends Message> implements MessageListener<T> {
+
+  /**
+   * The World listening to this {@link Message}.
+   */
+  protected final World world;
+
+  /**
+   * Constructs a new {@link GameMessageListener}.
+   *
+   * @param world The World listening to this {@link Message}.
+   */
+  public GameMessageListener(World world) {
+    this.world = world;
+  }
 
   @Override
-  default void handle(Session session, T message) {
-    Preconditions.checkArgument(session.hasAttr(Player.ATTRIBUTE_KEY),
-        "No player present [message: %s session: %s]",
-        message.getClass().getSimpleName(),
-        session.toString());
-
-    handle(session.attr(Player.ATTRIBUTE_KEY).get(), message);
+  public final void handle(Session session, T message) {
+    world.findPlayer(session.getActivePlayer()).ifPresent(player -> handle(player, message));
   }
 
   /**
@@ -29,6 +38,6 @@ public interface GameMessageListener<T extends Message> extends MessageListener<
    * @param player The Player which received the Message.
    * @param message The Message to process.
    */
-  void handle(Player player, T message);
+  abstract void handle(Player player, T message);
 
 }

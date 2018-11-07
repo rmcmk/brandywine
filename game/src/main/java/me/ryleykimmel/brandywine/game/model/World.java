@@ -3,8 +3,8 @@ package me.ryleykimmel.brandywine.game.model;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import me.ryleykimmel.brandywine.Service;
-import me.ryleykimmel.brandywine.ServiceSet;
+import me.ryleykimmel.brandywine.service.Service;
+import me.ryleykimmel.brandywine.service.ServiceSet;
 import me.ryleykimmel.brandywine.game.area.Region;
 import me.ryleykimmel.brandywine.game.area.RegionRepository;
 import me.ryleykimmel.brandywine.game.collect.MobRepository;
@@ -173,7 +173,7 @@ public final class World {
    * @return {@code true} if and only if the username is online otherwise {@code false}.
    */
   public boolean isOnline(long username) {
-    return get(username).isPresent();
+    return findPlayer(username).isPresent();
   }
 
   /**
@@ -182,7 +182,7 @@ public final class World {
    * @param username The encoded username of the Player.
    * @return The Player, wrapped in an Optional.
    */
-  public Optional<Player> get(long username) {
+  public Optional<Player> findPlayer(long username) {
     Player player = players.get(username);
     return Optional.ofNullable(player);
   }

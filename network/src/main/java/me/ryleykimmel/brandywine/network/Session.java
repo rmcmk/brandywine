@@ -1,10 +1,10 @@
 package me.ryleykimmel.brandywine.network;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Preconditions;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
 import java.net.InetSocketAddress;
 import java.security.SecureRandom;
@@ -22,6 +22,15 @@ import org.apache.logging.log4j.Logger;
  * flushing, etc.
  */
 public final class Session {
+
+  /**
+   * An {@link AttributeKey} representing an active players identifier within the game world.
+   * <p>
+   * A Session effectively has two states which is can process messages. Pre-game and in-game. The pre-game state occurs when this attribute is <strong>not</strong> set otherwise,
+   * if this attribute is set, this Session has been authenticated and is considered in-game.
+   * </p>
+   */
+  private static final AttributeKey<Long> ACTIVE_PLAYER = AttributeKey.valueOf("active.player");
 
   /**
    * The maximum amount of queued {@link Message}'s any single Session can contain at once.
@@ -49,6 +58,16 @@ public final class Session {
   private final Queue<Message> receivedMessages = new ArrayDeque<>(MAXIMUM_QUEUED_MESSAGES);
 
   /**
+   * Represents a {@link MessageReceivedListener} which queues {@link Message}s so they can be dealt with later.
+   */
+  private final MessageReceivedListener queuedMessageReceivedListener = new QueuedMessageReceivedListener(receivedMessages);
+
+  /**
+   * Represents a {@link MessageReceivedListener} which immediately processes {@link Message}s.
+   */
+  private final MessageReceivedListener immediateMessageReceivedListener = new ImmediateMessageReceivedListener();
+
+  /**
    * The SocketChannel this Session is listening on.
    */
   private final SocketChannel channel;
@@ -56,12 +75,12 @@ public final class Session {
   /**
    * A {@link FrameMetadataSet} containing info about game related {@link Message}'s.
    */
-  private FrameMetadataSet frameMetadataSet;
+  private final FrameMetadataSet gameFrameMetadataSet;
 
   /**
-   * The MessageReceivedListener which listens for calls to {@link Session#messageReceived(Message)}.
+   * A {@link FrameMetadataSet} containing info about login related {@link Message}'s.
    */
-  private MessageReceivedListener messageReceivedListener;
+  private final FrameMetadataSet loginFrameMetadataSet;
 
   /**
    * Whether or not this Session has been closed.
@@ -72,14 +91,13 @@ public final class Session {
    * Constructs a new {@link Session}.
    *
    * @param channel The SocketChannel this Session is listening on.
-   * @param frameMetadataSet A {@link FrameMetadataSet} containing info about {@link Message}'s.
-   * @param messageReceivedListener The MessageReceivedListener which listens for calls to {@link Session#messageReceived(Message)}.
+   * @param gameFrameMetadataSet A {@link FrameMetadataSet} containing info about game {@link Message}'s.
+   * @param loginFrameMetadataSet A {@link FrameMetadataSet} containing info about login {@link Message}'s.
    */
-  public Session(SocketChannel channel, FrameMetadataSet frameMetadataSet,
-      MessageReceivedListener messageReceivedListener) {
+  public Session(SocketChannel channel, FrameMetadataSet gameFrameMetadataSet, FrameMetadataSet loginFrameMetadataSet) {
     this.channel = channel;
-    this.frameMetadataSet = frameMetadataSet;
-    this.messageReceivedListener = messageReceivedListener;
+    this.gameFrameMetadataSet = Preconditions.checkNotNull(gameFrameMetadataSet);
+    this.loginFrameMetadataSet = Preconditions.checkNotNull(loginFrameMetadataSet);
   }
 
   /**
@@ -148,20 +166,17 @@ public final class Session {
    * @param message The Message to queue.
    */
   public void messageReceived(Message message) {
-    messageReceivedListener.messageReceived(this, message);
+    getMessageReceivedListener().messageReceived(this, message);
   }
 
   /**
    * Handles all pending {@link Message}'s in the {@link Session#receivedMessages} queue.
-   * <p>
-   * The Message's polled here must belong to the {@link Session#frameMetadataSet} otherwise nothing will happen.
-   * </p>
    */
   public void dequeueReceivedMessages() {
     Message message;
     while ((message = receivedMessages.poll()) != null) {
       try {
-        frameMetadataSet.handle(message, this);
+        getFrameMetadataSet().handle(message, this);
       } catch (Exception cause) {
         logger.error("Uncaught exception while handling message: " + message, cause);
       }
@@ -174,14 +189,22 @@ public final class Session {
    * @return An instance of {@link FrameMetadataSet}, never {@code null}.
    */
   public FrameMetadataSet getFrameMetadataSet() {
-    return frameMetadataSet;
+    return channel.hasAttr(ACTIVE_PLAYER) ? gameFrameMetadataSet : loginFrameMetadataSet;
+  }
+
+  /**
+   * Grabs the active {@link MessageReceivedListener} from this Session based on its state.
+   *
+   * @return An instance of {@link MessageReceivedListener}, never {@code null}.
+   */
+  public MessageReceivedListener getMessageReceivedListener() {
+    return channel.hasAttr(ACTIVE_PLAYER) ? queuedMessageReceivedListener : immediateMessageReceivedListener;
   }
 
   /**
    * Closes this Session.
    * <p>
-   * This method is not intended to provide additional functionality or be overridden. If you wish to perform other events on channel close see {@link
-   * Session#onClose(ChannelFutureListener)}.
+   * This method is not intended to provide additional functionality. If you wish to perform other events on channel close see {@link Session#onClose(ChannelFutureListener)}.
    * </p>
    */
   public void close() {
@@ -189,8 +212,8 @@ public final class Session {
       return;
     }
 
-    channel.close();
     closed = true;
+    channel.close();
   }
 
   /**
@@ -208,7 +231,7 @@ public final class Session {
    * @return {@code true} if this Session is closed or is no longer active.
    */
   public boolean isClosed() {
-    return closed; // TODO: Other tests?
+    return closed;
   }
 
   /**
@@ -230,25 +253,29 @@ public final class Session {
   }
 
   /**
-   * Tests if the specified {@link AttributeKey} exists.
+   * Sets the {@link Session#ACTIVE_PLAYER} attribute for this Session.
    *
-   * @param key The AttributeKey.
-   * @param <T> The Attributes type.
-   * @return {@code true} iff the specified {@link AttributeKey} exists.
+   * @param identifier The identifier of the active player.
+   * @throws IllegalStateException Iff the active player is already present.
    */
-  public <T> boolean hasAttr(AttributeKey<T> key) {
-    return channel.hasAttr(key);
+  public void setActivePlayer(long identifier) {
+    if (channel.hasAttr(ACTIVE_PLAYER)) {
+      throw new IllegalStateException("Active player for " + toString() + " already set.");
+    }
+    channel.attr(ACTIVE_PLAYER).setIfAbsent(identifier);
   }
 
   /**
-   * Gets the Attribute for the specified AttributeKey.
+   * Gets the active player from this Session, if it exists.
    *
-   * @param key The AttributeKey.
-   * @param <T> The Attributes type.
-   * @return The Attribute for the specified key.
+   * @return The active player from this session, if it exists.
+   * @throws IllegalStateException Iff the active player is not present.
    */
-  public <T> Attribute<T> attr(AttributeKey<T> key) {
-    return channel.attr(key);
+  public long getActivePlayer() {
+    if (channel.hasAttr(ACTIVE_PLAYER)) {
+      return channel.attr(ACTIVE_PLAYER).get();
+    }
+    throw new IllegalStateException(toString() + " has no active player set.");
   }
 
   @Override

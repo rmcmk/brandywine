@@ -3,8 +3,6 @@ package me.ryleykimmel.brandywine.game.model.player;
 import com.google.common.base.MoreObjects;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelPipeline;
-import io.netty.util.AttributeKey;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import me.ryleykimmel.brandywine.game.GameService;
 import me.ryleykimmel.brandywine.game.message.InitializePlayerMessage;
@@ -30,11 +28,6 @@ import me.ryleykimmel.brandywine.network.message.Message;
  * Represents a Player character.
  */
 public final class Player extends Mob {
-
-  /**
-   * Represents this Player as an AttributeKey.
-   */
-  public static final AttributeKey<Player> ATTRIBUTE_KEY = AttributeKey.valueOf("player");
 
   /**
    * The current amount of appearance tickets.
@@ -69,7 +62,7 @@ public final class Player extends Mob {
   /**
    * The Session this Player is attached to.
    */
-  private Optional<Session> session = Optional.empty();
+  private final Session session;
 
   /**
    * The current maximum viewing distance of this player.
@@ -104,12 +97,14 @@ public final class Player extends Mob {
   /**
    * Constructs a new {@link Player}.
    *
+   * @param session The Session this Player is attached to.
    * @param credentials The credentials of this Player.
    * @param world The World this Player is in.
    */
-  public Player(PlayerCredentials credentials, World world) {
+  public Player(Session session, PlayerCredentials credentials, World world) {
     super(world, EntityType.PLAYER);
     this.credentials = credentials;
+    this.session = session;
 
     appearance.init();
     skills.init();
@@ -131,7 +126,7 @@ public final class Player extends Mob {
 
   @Override
   public void write(Message message) {
-    getSession().voidWrite(message);
+    session.voidWrite(message);
   }
 
   /**
@@ -141,7 +136,6 @@ public final class Player extends Mob {
     lastKnownRegion = position;
     teleport(position);
 
-    Session session = getSession();
     ChannelFuture future = session.writeAndFlush(new LoginResponseMessage(
         ResponseCode.STATUS_OK, privileges.getCrownId(), false));
 
@@ -153,7 +147,7 @@ public final class Player extends Mob {
       pipeline.replace(FrameMessageCodec.class, "message_codec", new FrameMessageCodec(session));
 
       session.onClose(__ -> world.getService(GameService.class).removePlayer(this));
-      session.attr(ATTRIBUTE_KEY).set(this);
+      session.setActivePlayer(getEncodedUsername());
 
       write(new InitializePlayerMessage(isMember(), getIndex()));
       write(new RebuildRegionMessage(position));
@@ -170,7 +164,7 @@ public final class Player extends Mob {
    * Disconnects this Player from the World.
    */
   public void disconnect() {
-    getSession().close();
+    session.close();
   }
 
   /**
@@ -187,16 +181,7 @@ public final class Player extends Mob {
    * @return The Session this Player is attached to.
    */
   public Session getSession() {
-    return session.orElseThrow(() -> new IllegalStateException("Session has not been configured!"));
-  }
-
-  /**
-   * Sets the Session for this Player.
-   *
-   * @param session The Session for this Player.
-   */
-  public void setSession(Session session) {
-    this.session = Optional.of(session);
+    return session;
   }
 
   /**
